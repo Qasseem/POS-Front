@@ -1,4 +1,111 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@font-face {
+  font-family: "inter";
+  src: url("./assets/fonts/inter/Inter-Regular.ttf");
+}
+body {
+  background-color: #f9f9f9;
+  font-family: inter;
+}
+.container-card {
+  background-color: white;
+  padding: 20px 20px 20px 20px !important;
+  border-radius: 10px;
+}
+.text-bold {
+  font-weight: bold !important;
+}
+.color-error {
+  color: #f03700;
+}
+.color-success {
+  color: #3eb200;
+}
+.color-Primary {
+  color: #2053a6 !important;
+}
+.background-Primary {
+  background: #2053a6 !important;
+}
+.font-size-16 {
+  font-size: 16px;
+}
+.font-size-14 {
+  font-size: 14px;
+}
+.displayFlex {
+  display: flex;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.displayInline {
+  display: inline;
+}
+.displayBlock {
+  display: block;
+}
+.color-grey {
+  color: #a6badb;
+}
+.float-right {
+  float: right;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.font-18 {
+  font-size: 18px;
+}
+
+.font-16 {
+  font-size: 16px;
+}
+.font-12 {
+  font-size: 12px;
+}
+
+.color-info {
+  color: #94a3b8;
+}
+.mt-2 {
+  margin-top: 10px;
+}
+
+.p-card {
+  padding: 20px;
+  border-radius: 15px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-color {
+  color: #e24c4c;
+}
+label {
+  font-size: 14px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-left: 40%;
+}
+
+.background-image {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+  background: url("./assets/iamges/images/Backgrounde.jpg") no-repeat center
+    center fixed;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+.font-weight-bold {
+  font-weight: bold;
+}
+.color-black {
+  color: #1f2937;
+}

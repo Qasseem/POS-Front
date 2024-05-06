@@ -1,0 +1,23 @@
+.p-card {
+  width: 500px;
+}
+
+.p-field {
+  margin-top: 20px;
+}
+
+.wid100 {
+  width: 100% !important;
+}
+
+input,
+p-password {
+  margin-top: 10px;
+}
+
+.save-btn {
+  width: 90%;
+  margin: auto;
+  /* align-self: center; */
+  display: block;
+}

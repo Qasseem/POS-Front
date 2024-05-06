@@ -1,0 +1,172 @@
+<div class="background-image">
+  <div class="login-container p-ai-center">
+    <div class="p-card">
+      <div><img src="../../../assets/iamges/svg/logo.svg" alt="" /></div>
+      <div class="mt-3">
+        <span class="color-Primary font-18 text-bold">{{
+          "Register.activateAccount" | translate
+        }}</span>
+      </div>
+      <div class="mt-2">
+        <span class="font-16 color-info">
+          {{ "Register.registrationMessage" | translate }}
+        </span>
+      </div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="grid">
+          <div class="p-field col-6">
+            <label class="text-bold" for="firstName"
+              >{{ "Register.firstName" | translate }}
+            </label>
+            <input
+              style="width: 100%"
+              id="firstName"
+              type="text"
+              formControlName="firstName"
+              pInputText
+            />
+            <div
+              *ngIf="
+                firstName.invalid && (firstName.dirty || firstName.touched)
+              "
+              class="p-error"
+            >
+              <div *ngIf="firstName.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="firstName.hasError('minlength')">
+                {{ "Validation.stringLenght3" | translate }}
+              </div>
+              <div *ngIf="firstName.hasError('maxlength')">
+                {{ "Validation.stringLenght20" | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-field col-6">
+            <label class="text-bold" for="lastName"
+              >{{ "Register.lastName" | translate }}
+            </label>
+            <input
+              style="width: 100%"
+              id="lastName"
+              type="text"
+              formControlName="lastName"
+              pInputText
+            />
+            <div
+              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+              class="p-error"
+            >
+              <div *ngIf="lastName.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="lastName.hasError('minlength')">
+                {{ "Validation.stringLenght3" | translate }}
+              </div>
+              <div *ngIf="lastName.hasError('maxlength')">
+                {{ "Validation.stringLenght20" | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-field">
+          <label class="text-bold" for="mail"
+            >{{ "Register.email" | translate }}
+          </label>
+          <input
+            style="width: 100%"
+            id="mail"
+            type="text"
+            formControlName="email"
+            pInputText
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="p-error"
+          >
+            <div *ngIf="email.hasError('required')">
+              {{ "Validation.required" | translate }}
+            </div>
+            <div *ngIf="email.hasError('pattern')">
+              {{ "Validation.mailFormat" | translate }}
+            </div>
+          </div>
+        </div>
+        <div formGroupName="passwords">
+          <div class="p-field">
+            <label class="text-bold" for="password"
+              >{{ "Register.password" | translate }}
+            </label>
+            <p-password
+              [prevent-keys]="[32, 37, 38, 39, 40]"
+              [toggleMask]="true"
+              [style]="{ width: '100%', 'margin-top': '10px' }"
+              [inputStyle]="{ width: '100%' }"
+              id="password"
+              formControlName="password"
+              [feedback]="false"
+            ></p-password>
+            <div
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+              class="p-error"
+            >
+              <div *ngIf="password.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="password.hasError('minlength')">
+                {{ "Validation.stringLenght6" | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-field">
+            <label class="text-bold" for="confirmPassword"
+              >{{ "Register.confirmPassword" | translate }}
+            </label>
+            <p-password
+              [prevent-keys]="[32, 37, 38, 39, 40]"
+              [toggleMask]="true"
+              [style]="{ width: '100%', 'margin-top': '10px' }"
+              [inputStyle]="{ width: '100%' }"
+              id="confirmPassword"
+              formControlName="confirm_password"
+              [feedback]="false"
+            ></p-password>
+            <div
+              *ngIf="
+                confirmPassword.invalid &&
+                (confirmPassword.dirty || confirmPassword.touched)
+              "
+              class="p-error"
+            >
+              <div *ngIf="confirmPassword.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="confirmPassword.hasError('minlength')">
+                {{ "Validation.stringLenght6" | translate }}
+              </div>
+            </div>
+          </div>
+          <div
+            class="error-color"
+            *ngIf="
+              registerForm.get(['passwords', 'password']).value !=
+                registerForm.get(['passwords', 'confirm_password']).value &&
+              registerForm.get(['passwords', 'confirm_password']).value != ''
+            "
+          >
+            {{ "Validation.passwordMatch" | translate }}
+          </div>
+        </div>
+        <button
+          class="p-field save-btn mt-3"
+          type="submit"
+          pButton
+          [label]="'Register.activate' | translate"
+          [disabled]="!registerForm.valid"
+        ></button>
+      </form>
+    </div>
+  </div>
+</div>

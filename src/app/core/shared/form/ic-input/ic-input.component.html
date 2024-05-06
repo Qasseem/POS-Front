@@ -1,0 +1,119 @@
+<div class="wrap" [ngClass]="{ 'name-ar': isArabicControl }">
+  <label *ngIf="headerName" class="font-size-14">
+    {{ headerName }}
+    <span *ngIf="optional" class="color-grey">{{
+      "customerProfile.Optional" | translate
+    }}</span>
+  </label>
+  <div *ngIf="isTextArea">
+    <textarea
+      [maxlength]="textAreaLength"
+      (input)="valueChanged($event.target['value'])"
+      [placeholder]="placeholder"
+      class="form-control form-control-lg"
+      [formControl]="control"
+      [rows]="textAreaRowLength"
+      style="font-size: 14px"
+    ></textarea>
+    <span *ngIf="showCounter" style="float: right; margin-top: 2px">
+      {{ form.get(controlName).value?.length }}/{{ textAreaLength }}</span
+    >
+  </div>
+
+  <ng-container *ngIf="!isTextArea">
+    <input
+      pInputText
+      style="margin-right: -4px; z-index: 0"
+      *ngIf="numDirective"
+      numbersOnly
+      (input)="valueChanged($event.target['value'])"
+      [placeholder]="placeholder"
+      ngxBarCodePut
+      (keyup)="keyUp($event.target['value'])"
+      autocomplete="off"
+      (onDetected)="onDetected($event)"
+      type="text"
+      class="width100"
+      [formControl]="control"
+      [ngClass]="{ englishStyle: englishStyle }"
+    />
+    <input
+      pInputText
+      *ngIf="!numDirective"
+      ngxBarCodePut
+      autocomplete="off"
+      (onDetected)="onDetected($event)"
+      (input)="valueChanged($event.target['value'])"
+      [placeholder]="placeholder"
+      [type]="inputType"
+      [formControl]="control"
+      (keyup)="keyUp($event.target['value'])"
+      (focusout)="focusout($event.target['value'])"
+      class="width100"
+      [ngClass]="{ englishStyle: englishStyle }"
+    />
+  </ng-container>
+</div>
+
+<div *ngIf="form.get(controlName).touched">
+  <!-- <div
+    class="color-error font-size-14 pl-20"
+    *ngIf="
+      form.get(controlName).invalid &&
+      form.get(controlName).hasError('required')
+    "
+  >
+    <i class="fas fa-hashtag"></i>
+    {{ "validations.required" | translate }}
+  </div> -->
+  <div
+    class="color-error pl-20"
+    *ngIf="
+      form.get(controlName).invalid && form.get(controlName).hasError('pattern')
+    "
+  >
+    {{ patternMessage }}
+  </div>
+  <div
+    class="color-error font-size-14 pl-20"
+    *ngIf="
+      form.get(controlName).invalid &&
+      form.get(controlName).hasError('maxlength')
+    "
+  >
+    <i class="fas fa-hashtag"></i>
+    {{ "validations.maxLength" | translate }} {{ maxLengthValue }}
+    {{ "validations.character" | translate }}
+  </div>
+  <div
+    class="color-error font-size-14 pl-20"
+    *ngIf="
+      form.get(controlName).invalid &&
+      form.get(controlName).hasError('minlength')
+    "
+  >
+    <i class="fas fa-hashtag"></i>
+    {{ "validations.minLength" | translate }} {{ minLengthValue
+    }}{{ "validations.character" | translate }}
+  </div>
+
+  <div
+    class="color-error font-size-14 pl-20"
+    *ngIf="
+      form.get(controlName).invalid && form.get(controlName).hasError('max')
+    "
+  >
+    <i class="fas fa-hashtag"></i>
+    {{ "validations.max" | translate }} "{{ maxValue }}"
+  </div>
+
+  <div
+    class="color-error font-size-14 pl-20"
+    *ngIf="
+      form.get(controlName).invalid && form.get(controlName).hasError('min')
+    "
+  >
+    <i class="fas fa-hashtag"></i>
+    {{ "validations.min" | translate }} "{{ minValue }}"
+  </div>
+</div>

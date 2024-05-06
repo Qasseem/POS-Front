@@ -1,0 +1,153 @@
+<div class="grid">
+  <div *ngIf="sidebarVisible" class="col-2 padding0">
+    <div class="containerSideMenuOpen">
+      <div class="displayFlex" style="justify-content: space-between">
+        <img src="../../../assets/iamges/svg/logo.svg" alt="" />
+        <img
+          [ngStyle]="
+            storage.getLang() == 'ar' ? { transform: 'rotate(180deg)' } : {}
+          "
+          (click)="sidebarVisible = !sidebarVisible"
+          src="../../../assets/iamges/svg/Arrow.svg"
+          alt="menu icon"
+        />
+      </div>
+      <p-scrollPanel [style]="{ width: '100%', height: '90vh' }">
+        <p-panelMenu [model]="items1"></p-panelMenu>
+      </p-scrollPanel>
+    </div>
+  </div>
+  <div *ngIf="!sidebarVisible" class="padding0 width5">
+    <div class="containerSideMenuClosed">
+      <div
+        [ngStyle]="
+          storage.getLang() == 'ar'
+            ? { 'margin-right': '7px' }
+            : { 'margin-left': '7px' }
+        "
+      >
+        <img
+          src="../../../assets/iamges/svg/logoA.svg"
+          class="mb-2"
+          alt="afaqy logo"
+          height="25"
+        />
+        <img
+          [ngStyle]="
+            storage.getLang() == 'ar' ? {} : { transform: 'rotate(180deg)' }
+          "
+          (click)="sidebarVisible = !sidebarVisible"
+          src="../../../assets/iamges/svg/Arrow.svg"
+          alt="menu icon"
+        />
+      </div>
+      <ul class="menu-wrap closwMenu animated fadeIn">
+        <!-- 'item-toggle-on closwMenu': item.toggle === 'on', -->
+
+        <li
+          *ngFor="let item of items2; let i = index"
+          class="menu-item dropdownn"
+          [ngClass]="{
+          'parent-li': 'i==1',
+        }"
+        >
+          <a
+            *ngIf="item.routerLink"
+            routerLinkActive="active"
+            class="menu-link closeMenu"
+          >
+            <div
+              [ngClass]="{
+                'ml-2 mr-0': storage.getLang() == 'ar'
+              }"
+              class="placeholder"
+            >
+              <i class="{{ item.icon }}"></i>
+            </div>
+          </a>
+          <a class="menu-link closeMenu dropbtn" *ngIf="!item.routerLink">
+            <div
+              [ngClass]="{
+                'ml-2 mr-0': storage.getLang() == 'ar'
+              }"
+              class="placeholder"
+            >
+              <i
+                style="color: #2053a6"
+                class="{{ item.icon }}"
+                *ngIf="item.icon"
+              ></i>
+            </div>
+
+            <div
+              [ngClass]="{
+                'marginRight dropdown-contentArabic ': storage.getLang() == 'ar'
+              }"
+              class="dropdown-content"
+            >
+              <div class="labelSideMenu">
+                <h2 style="color: #acacac; font-size: 12px">
+                  {{ items2[i].label }}
+                </h2>
+              </div>
+
+              <a
+                (click)="navigate(sub.routerLink)"
+                *ngFor="let sub of items2[i].items"
+                >{{ sub.label }}</a
+              >
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col">
+    <div
+      style="position: absolute; z-index: 2"
+      [ngStyle]="sidebarVisible ? { width: '82%' } : { width: '94%' }"
+    >
+      <div class="header">
+        <span class="font-weight-bold color-black ml-3">
+          {{ moduleHeader | translate }}
+        </span>
+
+        <div class="displayFlex">
+          <button
+            [ngClass]="{
+              active: storage.getLang() == 'ar',
+              notActive: storage.getLang() == 'en'
+            }"
+            (click)="changeLangage('ar')"
+          >
+            Arabic
+          </button>
+          <div class="divider"></div>
+          <button
+            [ngClass]="{
+              active: storage.getLang() == 'en',
+              notActive: storage.getLang() == 'ar'
+            }"
+            (click)="changeLangage('en')"
+          >
+            English
+          </button>
+
+          <button
+            (click)="logOut()"
+            [ngClass]="{
+              borderLeft: storage.getLang() == 'en',
+              borderRight: storage.getLang() == 'ar'
+            }"
+            class="logout-button"
+          >
+            {{ "logOut" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="height: 70px"></div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

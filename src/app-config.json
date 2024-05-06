@@ -1,0 +1,8 @@
+{
+  "api": "https://stagebe.icsa.afaqy.sa",
+  "localhost": "http://localhost:3235",
+  "localhost7": "https://localhost:44312",
+  "training": "https://trainingbe.icsa.afaqy.sa",
+  "prod": "https://crmbackend.afaqy.sa",
+  "country": "KSA"
+}

@@ -1,0 +1,31 @@
+<label class="font-size-14">{{ ddlHeader }}</label>
+<p-dropdown
+  [style]="{ width: '100%' }"
+  [options]="itemsData"
+  [formControl]="control"
+  [optionLabel]="nameEn"
+  [filter]="isSearchable"
+  [filterBy]="nameEn"
+  (onLazyLoad)="onScrollToEnd()"
+  [lazy]="true"
+  [virtualScrollItemSize]="5"
+  (onChange)="itemSelected($event)"
+  [virtualScroll]="true"
+>
+  <ng-template let-item pTemplate="item">
+    <div class="itemDpContiner">
+      <div class="card-body">
+        <div class="card-text">
+          <div>
+            <span style="margin-left: 5px">
+              {{ item[nameEn] }}
+            </span>
+          </div>
+          <!--  <div *ngIf="showArabicName" style="color: #969696; font-size: 14px">
+            {{ item[nameAr] }}
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dropdown>

@@ -1,0 +1,79 @@
+<div class="background-image">
+  <div class="login-container">
+    <div class="p-card">
+      <div><img src="../../../assets/iamges/svg/logo.svg" alt="" /></div>
+      <div class="mt-3">
+        <span class="color-Primary font-18 text-bold">{{
+          "Register.login" | translate
+        }}</span>
+      </div>
+      <div class="mt-2">
+        <span class="font-16 color-info">
+          {{ "Register.loginMessage" | translate }}
+        </span>
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="p-field">
+          <label class="text-bold" for="username">{{
+            "Register.email" | translate
+          }}</label>
+          <input
+            style="width: 100%"
+            id="username"
+            type="text"
+            formControlName="email"
+            pInputText
+          />
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="p-error"
+          >
+            <div *ngIf="email.hasError('required')">
+              {{ "Validation.required" | translate }}
+            </div>
+            <div *ngIf="email.hasError('pattern')">
+              {{ "Validation.mailFormat" | translate }}
+            </div>
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label class="text-bold" for="password">{{
+            "Register.password" | translate
+          }}</label>
+          <p-password
+            [toggleMask]="true"
+            [style]="{ width: '100%', 'margin-top': '10px' }"
+            [inputStyle]="{ width: '100%' }"
+            id="password"
+            formControlName="password"
+            [feedback]="false"
+          ></p-password>
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="p-error"
+          >
+            <div *ngIf="password.hasError('required')">
+              {{ "Validation.required" | translate }}
+            </div>
+            <div *ngIf="password.hasError('minlength')">
+              {{ "Validation.stringLenght6" | translate }}
+            </div>
+          </div>
+        </div>
+        <div style="margin-bottom: 150px">
+          <span (click)="goToForgotPage()" class="forget-password">{{
+            "Register.forgotPassword" | translate
+          }}</span>
+        </div>
+        <button
+          class="p-field save-btn mt-3"
+          type="submit"
+          pButton
+          [label]="'Register.login' | translate"
+          [disabled]="!loginForm.valid"
+        ></button>
+      </form>
+    </div>
+  </div>
+</div>
