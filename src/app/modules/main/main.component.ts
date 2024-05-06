@@ -15,53 +15,33 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class MainComponent implements OnInit {
   sidebarVisible = true;
-  items: any[] = [];
-  items1 = [
+  items = [
     {
-      label: this.translateService.instant('customer'),
-      icon: 'pi pi-fw pi-user',
+      label: this.translateService.instant('Merchants'),
+      icon: 'pi pi-users',
       expanded: true,
-      routerLink: '',
-      items: [
-        {
-          label: this.translateService.instant(
-            'customerProfile.customerProfile'
-          ),
-
-          command: (event) => {
-            this.clickItem(event);
-          },
-          routerLink: '/main/customerProfile/details', // Add your route here
-          routerLinkActiveOptions: { exact: false },
-          style: { 'background-color': 'blue' },
-        },
-      ],
+      routerLink: '/main/merchant',
+      active: true,
+    },
+    {
+      label: this.translateService.instant('Terminals'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/merchant',
+      active: false,
     },
   ];
-  items2 = [
-    {
-      icon: 'pi pi-fw pi-user',
-      label: this.translateService.instant('customer'),
 
+  dashboardItems = [
+    {
+      label: this.translateService.instant('Dashboard'),
+      icon: 'pi pi-users',
       expanded: true,
-      routerLink: '',
-      items: [
-        {
-          label: this.translateService.instant(
-            'customerProfile.customerProfile'
-          ),
-          command: (event) => {
-            this.clickItem(event);
-          },
-          routerLink: '/main/customerProfile/details', // Add your route here
-          routerLinkActiveOptions: { exact: false },
-          style: { 'background-color': 'blue' },
-        },
-      ],
+      routerLink: '/main/merchant',
+      active: false,
     },
   ];
   moduleHeader: string;
-  sub1: any;
 
   constructor(
     private authService: AuthService,
@@ -71,23 +51,14 @@ export class MainComponent implements OnInit {
     private appTranslateService: AppTranslateService,
     private loading: NgxSpinnerService
   ) {
-    this.items = this.authService.items;
     if (this.authService.items.length == 0) {
       // this.getUserMenu();
     }
     this.translateService.setDefaultLang(this.storage.getLang());
     this.translateService.use(this.storage.getLang());
-    this.sub1 = router.events.subscribe((val) => {
-      let moduleName = this.router.url.split('/')[2]
-        ? this.router.url.split('/')[2]
-        : this.router.url.split('/')[1];
-      this.moduleHeader = 'parentsModulesName.' + moduleName;
-    });
   }
 
-  ngOnDestroy(): void {
-    this.sub1.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   changeLangage(lang: string) {
     location.reload();
@@ -99,52 +70,17 @@ export class MainComponent implements OnInit {
     console.log(event);
     // this.items.push(event.item);
   }
-  getUserMenu() {
-    this.authService.getMenuLinks().subscribe((resp: APIResponseInterface) => {
-      console.log(resp);
-      if (resp.success) {
-        this.generateMenuItems(resp.data);
-      }
-    });
-  }
-
-  generateMenuItems(data: []) {
-    if (data && data.length > 0) {
-      data.map((parentItem: any, index) => {
-        this.authService.items.push({
-          label: parentItem?.nameEn,
-          icon: 'pi pi-fw pi-file',
-          expanded: false, //parentItem?.path == 'simcards',
-          expexpanded: false,
-          id: parentItem?.id.toString(),
-          items: [],
-        });
-        parentItem.pages.map((item) => {
-          this.authService.items[index]?.items.push({
-            label: item?.nameEn,
-            icon: 'pi pi-fw pi-file',
-            id: item?.id.toString(),
-            expexpanded: false,
-            items: [],
-            routerLink: [item?.path],
-            command: (event) => {
-              this.clickItem(event);
-            },
-          });
-        });
-      });
-    }
-    this.items = this.authService.items;
-    console.log(this.authService.items);
-  }
 
   ngOnInit() {}
 
   setActiveItem(ss) {
     console.log(ss);
   }
-  navigate(path) {
-    this.router.navigate([path]);
+  navigate(item) {
+    this.items.forEach((x) => (x.active = false));
+    this.dashboardItems.forEach((x) => (x.active = false));
+    item.active = true;
+    this.router.navigate([item.routerLink]);
   }
   logOut(): void {
     this.loading.show();

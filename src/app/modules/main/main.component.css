@@ -246,7 +246,7 @@
   position: fixed;
   width: 16%;
   background-color: white;
-  padding: 30px 15px;
+  height: 100%;
 }
 .width5 {
   width: 5%;

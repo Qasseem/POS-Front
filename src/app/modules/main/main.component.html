@@ -1,7 +1,10 @@
 <div class="grid">
-  <div *ngIf="sidebarVisible" class="col-2 padding0">
-    <div class="containerSideMenuOpen">
-      <div class="displayFlex" style="justify-content: space-between">
+  <div *ngIf="sidebarVisible" class="col-2 padding0" style="font-size: 12px">
+    <div class="containerSideMenuOpen background-Primary">
+      <div
+        class="displayFlex background-Primary"
+        style="justify-content: space-between; padding: 15px"
+      >
         <img src="../../../assets/iamges/svg/logo.svg" alt="" />
         <img
           [ngStyle]="
@@ -12,9 +15,42 @@
           alt="menu icon"
         />
       </div>
-      <p-scrollPanel [style]="{ width: '100%', height: '90vh' }">
-        <p-panelMenu [model]="items1"></p-panelMenu>
-      </p-scrollPanel>
+
+      <div class="m-3">
+        <span class="color-grey">DASHBOARD</span>
+      </div>
+      <div
+        (click)="navigate(item)"
+        style="color: white; cursor: pointer"
+        *ngFor="let item of dashboardItems"
+        class="p-2"
+        [ngStyle]="{ 'background-color': item.active ? '#003364' : null }"
+      >
+        <i
+          [class]="item.icon"
+          style="font-size: 1rem"
+          [ngStyle]="{ color: item.active ? '#0080F9' : 'white' }"
+        ></i>
+        <span class="ml-3 mr-3" style="color: white">{{ item.label }}</span>
+      </div>
+      <!-- //////// -->
+      <div class="m-3">
+        <span class="color-grey">MAIN MODULES</span>
+      </div>
+      <div
+        (click)="navigate(item)"
+        style="color: white; cursor: pointer"
+        *ngFor="let item of items"
+        class="p-3"
+        [ngStyle]="{ 'background-color': item.active ? '#003364' : null }"
+      >
+        <i
+          [class]="item.icon"
+          style="font-size: 1rem"
+          [ngStyle]="{ color: item.active ? '#0080F9' : 'white' }"
+        ></i>
+        <span class="ml-3 mr-3" style="color: white">{{ item.label }}</span>
+      </div>
     </div>
   </div>
   <div *ngIf="!sidebarVisible" class="padding0 width5">
@@ -41,65 +77,6 @@
           alt="menu icon"
         />
       </div>
-      <ul class="menu-wrap closwMenu animated fadeIn">
-        <!-- 'item-toggle-on closwMenu': item.toggle === 'on', -->
-
-        <li
-          *ngFor="let item of items2; let i = index"
-          class="menu-item dropdownn"
-          [ngClass]="{
-          'parent-li': 'i==1',
-        }"
-        >
-          <a
-            *ngIf="item.routerLink"
-            routerLinkActive="active"
-            class="menu-link closeMenu"
-          >
-            <div
-              [ngClass]="{
-                'ml-2 mr-0': storage.getLang() == 'ar'
-              }"
-              class="placeholder"
-            >
-              <i class="{{ item.icon }}"></i>
-            </div>
-          </a>
-          <a class="menu-link closeMenu dropbtn" *ngIf="!item.routerLink">
-            <div
-              [ngClass]="{
-                'ml-2 mr-0': storage.getLang() == 'ar'
-              }"
-              class="placeholder"
-            >
-              <i
-                style="color: #2053a6"
-                class="{{ item.icon }}"
-                *ngIf="item.icon"
-              ></i>
-            </div>
-
-            <div
-              [ngClass]="{
-                'marginRight dropdown-contentArabic ': storage.getLang() == 'ar'
-              }"
-              class="dropdown-content"
-            >
-              <div class="labelSideMenu">
-                <h2 style="color: #acacac; font-size: 12px">
-                  {{ items2[i].label }}
-                </h2>
-              </div>
-
-              <a
-                (click)="navigate(sub.routerLink)"
-                *ngFor="let sub of items2[i].items"
-                >{{ sub.label }}</a
-              >
-            </div>
-          </a>
-        </li>
-      </ul>
     </div>
   </div>
 

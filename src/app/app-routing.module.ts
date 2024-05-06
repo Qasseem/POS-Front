@@ -45,6 +45,7 @@ const routes: Routes = [
       import('./modules/main/main.module').then((m) => m.MainModule),
     canActivate: [AuthGuard],
   },
+
   {
     path: '404',
     loadChildren: () =>

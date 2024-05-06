@@ -4,6 +4,7 @@
   font-family: "inter";
   src: url("./assets/fonts/inter/Inter-Regular.ttf");
 }
+
 body {
   background-color: #f9f9f9;
   font-family: inter;
@@ -108,4 +109,8 @@ label {
 }
 .color-black {
   color: #1f2937;
+}
+
+.p-paginator-bottom {
+  border-radius: 0px 0px 10px 10px !important;
 }
