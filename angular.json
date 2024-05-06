@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "myafaqy_customers_angular": {
+    "oc": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/myafaqy_customers_angular",
+            "outputPath": "dist/oc",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -77,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "myafaqy_customers_angular:build:production"
+              "browserTarget": "oc:build:production"
             },
             "development": {
-              "browserTarget": "myafaqy_customers_angular:build:development"
+              "browserTarget": "oc:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "myafaqy_customers_angular:build"
+            "browserTarget": "oc:build"
           }
         },
         "test": {
