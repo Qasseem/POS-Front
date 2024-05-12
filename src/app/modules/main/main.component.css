@@ -243,9 +243,6 @@
   padding: 0;
 }
 .containerSideMenuOpen {
-  position: fixed;
-  width: 16%;
-  background-color: white;
   height: 100%;
 }
 .width5 {

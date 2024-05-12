@@ -7,14 +7,34 @@ import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
   styleUrls: ['./all-merchant.component.css'],
 })
 export class AllMerchantComponent implements OnInit {
+  customerInfo(row: any): any {
+    const dolphinId = row.dolphinId || 0;
+    const id = row.id;
+    const URL = `/home/customers/info/${id}/${dolphinId}`;
+    return URL;
+  }
   public columns: ColumnsInterface[] = [
     {
       field: 'name',
       header: 'Name',
     },
+
     {
-      field: 'country',
-      header: 'Country',
+      field: [
+        { label: 'createBy', custom: 'firstLabel' },
+        { label: 'createDate', custom: 'default' },
+      ],
+      header: 'Create by',
+      customCell: 'multiLabel',
+    },
+    {
+      field: [
+        { label: 'nameEn', custom: 'navigator' },
+        { label: 'nameAr', custom: 'icon' },
+      ],
+      header: 'CustomerName',
+      customCell: 'multiLabel',
+      action: (row) => this.customerInfo(row),
     },
   ];
 

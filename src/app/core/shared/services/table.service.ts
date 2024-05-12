@@ -14,10 +14,10 @@ export class TableService {
         country: `Property2 ${i}`,
         company: `Property3 ${i}`,
         representative: `Property4 ${i}`,
-        prop5: `Property5 ${i}`,
-        prop6: `Property6 ${i}`,
-        prop7: `Property7 ${i}`,
-        prop8: `Property8 ${i}`,
+        nameAr: `Property5 ${i}`,
+        nameEn: `Property6 ${i}`,
+        createBy: `Property7 ${i}`,
+        createDate: `Property8 ${i}`,
         prop9: `Property9 ${i}`,
       };
       data.push(item);

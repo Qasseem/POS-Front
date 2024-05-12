@@ -11,6 +11,23 @@ import { ColumnsInterface } from '../../../models/Interfaces';
 export class TableComponent implements OnInit {
   constructor(private tableService: TableService) {}
   @Input() columns: ColumnsInterface[];
+
+  actions = [
+    {
+      label: 'Options',
+      items: [
+        {
+          label: 'Refresh',
+          icon: 'pi pi-refresh',
+        },
+        {
+          label: 'Export',
+          icon: 'pi pi-upload',
+        },
+      ],
+    },
+  ];
+
   items!: any[];
   value1;
   first = 0;

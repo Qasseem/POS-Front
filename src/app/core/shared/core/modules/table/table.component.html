@@ -25,13 +25,13 @@
     [lazy]="true"
     (onLazyLoad)="loadItems($event)"
     dataKey="id"
+    [styleClass]="'p-datatable-sm'"
     [selection]="selectedItems"
     (selectionChange)="onSelectionChange($event)"
     [selectAll]="selectAll"
     (selectAllChange)="onSelectAllChange($event)"
     [paginator]="true"
     [rows]="10"
-    [styleClass]="'p-datatable-sm'"
     [totalRecords]="totalRecords"
     [loading]="loading"
     [first]="first"
@@ -48,16 +48,47 @@
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
+    <ng-template pTemplate="body" let-rowData let-item>
       <tr>
         <td *ngFor="let col of columns">
-          <span [pTooltip]="item[col['field']]">
+          <span *ngIf="!col?.customCell" [pTooltip]="item[col['field']]">
             {{ item[col["field"]] }}
           </span>
+          <div *ngIf="col.customCell === 'multiLabel'">
+            <div *ngFor="let item of col.field">
+              <div *ngIf="item.custom === 'navigator'">
+                <a
+                  [routerLink]="col.action(rowData)"
+                  (click)="col.action(rowData)"
+                  style="font-size: 14px; color: #2053a6; cursor: pointer"
+                >
+                  {{ rowData[item.label] }}
+                </a>
+              </div>
+
+              <span style="color: #969696" *ngIf="item.custom === 'default'">
+                {{ rowData[item.label] }}
+              </span>
+              <span style="color: #969696" *ngIf="item.custom === 'icon'">
+                {{ rowData[item.label] }}
+              </span>
+              <span style="color: #414141" *ngIf="item.custom === 'firstLabel'">
+                {{ rowData[item.label] }}
+              </span>
+            </div>
+          </div>
         </td>
-        <td>
-          <i class="pi pi-pencil ml-3" style="font-size: 1rem"></i>
-          <i class="pi pi-trash ml-3" style="font-size: 1rem"></i>
+        <td #myTDdiv>
+          <!-- <i class="pi pi-pencil ml-3" style="font-size: 1rem"></i> -->
+          <div class="card flex justify-content-center">
+            <p-menu
+              [appendTo]="myTDdiv"
+              #menu
+              [model]="actions"
+              [popup]="true"
+            />
+            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
+          </div>
         </td>
       </tr>
     </ng-template>

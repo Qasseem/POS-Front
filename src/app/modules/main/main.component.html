@@ -1,11 +1,12 @@
-<div class="grid">
-  <div *ngIf="sidebarVisible" class="col-2 padding0" style="font-size: 12px">
-    <div class="containerSideMenuOpen background-Primary">
+<div class="grid" style="background-color: aliceblue">
+  <div *ngIf="sidebarVisible" class="col-2 p-0" style="font-size: 12px">
+    <div class="containerSideMenuOpen" style="background-color: aliceblue">
+      <!-- //////// -->
       <div
-        class="displayFlex background-Primary"
+        class="displayFlex"
         style="justify-content: space-between; padding: 15px"
       >
-        <img src="../../../assets/iamges/svg/logo.svg" alt="" />
+        PayMob
         <img
           [ngStyle]="
             storage.getLang() == 'ar' ? { transform: 'rotate(180deg)' } : {}
@@ -15,41 +16,23 @@
           alt="menu icon"
         />
       </div>
-
-      <div class="m-3">
-        <span class="color-grey">DASHBOARD</span>
-      </div>
       <div
         (click)="navigate(item)"
-        style="color: white; cursor: pointer"
-        *ngFor="let item of dashboardItems"
-        class="p-2"
-        [ngStyle]="{ 'background-color': item.active ? '#003364' : null }"
-      >
-        <i
-          [class]="item.icon"
-          style="font-size: 1rem"
-          [ngStyle]="{ color: item.active ? '#0080F9' : 'white' }"
-        ></i>
-        <span class="ml-3 mr-3" style="color: white">{{ item.label }}</span>
-      </div>
-      <!-- //////// -->
-      <div class="m-3">
-        <span class="color-grey">MAIN MODULES</span>
-      </div>
-      <div
-        (click)="navigate(item)"
-        style="color: white; cursor: pointer"
+        style="cursor: pointer; border-radius: 10px 0px 0px 10px"
         *ngFor="let item of items"
-        class="p-3"
-        [ngStyle]="{ 'background-color': item.active ? '#003364' : null }"
+        class="p-3 fc-main ml-3"
+        [ngStyle]="{ 'background-color': item.active ? '#99CCFD' : null }"
       >
         <i
           [class]="item.icon"
           style="font-size: 1rem"
-          [ngStyle]="{ color: item.active ? '#0080F9' : 'white' }"
+          [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
         ></i>
-        <span class="ml-3 mr-3" style="color: white">{{ item.label }}</span>
+        <span
+          [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
+          class="ml-3 mr-3 fc-main"
+          >{{ item.label }}</span
+        >
       </div>
     </div>
   </div>
@@ -80,51 +63,12 @@
     </div>
   </div>
 
-  <div class="col">
-    <div
-      style="position: absolute; z-index: 2"
-      [ngStyle]="sidebarVisible ? { width: '82%' } : { width: '94%' }"
-    >
-      <div class="header">
-        <span class="font-weight-bold color-black ml-3">
-          {{ moduleHeader | translate }}
-        </span>
-
-        <div class="displayFlex">
-          <button
-            [ngClass]="{
-              active: storage.getLang() == 'ar',
-              notActive: storage.getLang() == 'en'
-            }"
-            (click)="changeLangage('ar')"
-          >
-            Arabic
-          </button>
-          <div class="divider"></div>
-          <button
-            [ngClass]="{
-              active: storage.getLang() == 'en',
-              notActive: storage.getLang() == 'ar'
-            }"
-            (click)="changeLangage('en')"
-          >
-            English
-          </button>
-
-          <button
-            (click)="logOut()"
-            [ngClass]="{
-              borderLeft: storage.getLang() == 'en',
-              borderRight: storage.getLang() == 'ar'
-            }"
-            class="logout-button"
-          >
-            {{ "logOut" | translate }}
-          </button>
-        </div>
-      </div>
+  <div
+    class="col p-0"
+    style="border-radius: 20px 0px 0px 0px; background-color: #f8f8f8"
+  >
+    <div>
+      <router-outlet></router-outlet>
     </div>
-    <div style="height: 70px"></div>
-    <router-outlet></router-outlet>
   </div>
 </div>
