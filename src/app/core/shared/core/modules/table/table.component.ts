@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TableService } from '../../../services/table.service';
 import { LazyLoadEvent } from 'primeng/api';
+import { ColumnsInterface } from '../../../models/Interfaces';
 
 @Component({
   selector: 'app-table',
@@ -9,7 +10,7 @@ import { LazyLoadEvent } from 'primeng/api';
 })
 export class TableComponent implements OnInit {
   constructor(private tableService: TableService) {}
-
+  @Input() columns: ColumnsInterface[];
   items!: any[];
   value1;
   first = 0;

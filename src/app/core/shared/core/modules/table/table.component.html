@@ -19,16 +19,6 @@
         ></p-button>
       </div>
     </div>
-
-    <!-- <div class="p-3">
-      <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search..." />
-        <span class="search-icon">
-          <i class="pi pi-search" style="font-size: 1rem"></i
-        ></span>
-      </div>
-      <p-button label="Submit"></p-button>
-    </div> -->
   </div>
   <p-table
     [value]="items"
@@ -41,6 +31,7 @@
     (selectAllChange)="onSelectAllChange($event)"
     [paginator]="true"
     [rows]="10"
+    [styleClass]="'p-datatable-sm'"
     [totalRecords]="totalRecords"
     [loading]="loading"
     [first]="first"
@@ -50,19 +41,20 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th>Name</th>
-        <th>Country</th>
-        <th>Company</th>
-        <th>Representative</th>
+        <th *ngFor="let col of columns">
+          {{ col?.header }}
+        </th>
+
         <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-item>
       <tr>
-        <td>{{ item.name }}</td>
-        <td>{{ item.country }}</td>
-        <td>{{ item.company }}</td>
-        <td>{{ item.representative }}</td>
+        <td *ngFor="let col of columns">
+          <span [pTooltip]="item[col['field']]">
+            {{ item[col["field"]] }}
+          </span>
+        </td>
         <td>
           <i class="pi pi-pencil ml-3" style="font-size: 1rem"></i>
           <i class="pi pi-trash ml-3" style="font-size: 1rem"></i>
