@@ -8,6 +8,8 @@ import { PNgDropdownComponent } from './form/p-ng-dropdown/p-ng-dropdown.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CalendarModule,
     TranslateModule,
     ReactiveFormsModule,
+    OverlayPanelModule,
     FormsModule,
   ],
   providers: [],
@@ -28,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PNgDropdownComponent,
     DropdownModule,
     CheckboxModule,
+    OverlayPanelModule,
     CalendarModule,
     ReactiveFormsModule,
     FormsModule,

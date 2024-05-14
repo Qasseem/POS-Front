@@ -41,4 +41,7 @@ export class AppTranslateService {
   isEnglish() {
     return true;
   }
+  currentLanguage() {
+    return 'en';
+  }
 }

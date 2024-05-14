@@ -1,0 +1,650 @@
+<div *ngIf="!searchOnly" [style]="styleContainer" class="pt-1 breadCrumb">
+  <div class="mt-1" style="margin-left: 12px; margin-right: 12px; padding: 6px">
+    <!-- <button
+      style="border-radius: 50%; height: 25px; width: 25px"
+      class="btn btn-primary"
+    >
+      50
+    </button> -->
+
+    <span *ngIf="filtersInput?.length > 0">
+      <ng-template #tolTemplate>
+        <div *ngFor="let item of tooltipData">
+          <div *ngIf="item[0] && item[1]">
+            <span>{{ "propsNames." + item[0] | translate }} </span>
+            <span>{{ ": " }}</span>
+            <span>{{ item[1] }}</span>
+          </div>
+        </div>
+      </ng-template>
+      <span
+        [tooltip]="tolTemplate"
+        *ngIf="tooltipData.length"
+        style="
+          border-radius: 50%;
+          height: 25px;
+          width: 25px;
+          background-color: #2053a6;
+        "
+        class="btn btn-primary p-0"
+      >
+        {{ tooltipData.length }}
+      </span>
+
+      <a style="cursor: pointer" (click)="op.toggle($event)">
+        <span
+          [attr.test_id]="route.url.split('/')[2] + '_Search_Fitlers_Button'"
+          style="color: #2053a6"
+        >
+          {{ "Filters" | translate }}
+        </span>
+        <img src="assets/iamges/icons/keyboard_arrow.svg" alt="drag" />
+      </a>
+    </span>
+    <span
+      *ngIf="filtersInput?.length > 0"
+      class="mb-2 mt-2 mr-2 ml-2"
+      style="border-left: 2px solid #dce3ec; height: 30px"
+    ></span>
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        [(ngModel)]="inputTextHistoryValue"
+        [attr.test_id]="route.url.split('/')[2] + '_Search_Bar'"
+        (ngModelChange)="InputSearch$.next($event); inputText($event)"
+        class="no-border"
+        type="text"
+        [placeholder]="placeholderSearch"
+      />
+    </span>
+  </div>
+</div>
+
+<div *ngIf="searchOnly" [style]="styleContainer" class="pt-1 breadCrumb">
+  <div class="mt-1" style="margin-left: 12px; margin-right: 12px; padding: 6px">
+    <!-- <button
+      style="border-radius: 50%; height: 25px; width: 25px"
+      class="btn btn-primary"
+    >
+      50
+    </button> -->
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        [(ngModel)]="inputTextHistoryValue"
+        [attr.test_id]="route.url.split('/')[2] + '_Search_Bar'"
+        (ngModelChange)="InputSearch$.next($event); inputText($event)"
+        class="no-border"
+        [style]="StyleInput"
+        type="text"
+        placeholder="Search"
+      />
+    </span>
+  </div>
+</div>
+
+<p-overlayPanel
+  #op
+  (onHide)="dismissed($event)"
+  (onShow)="show($event)"
+  [dismissable]="false"
+  [showCloseIcon]="true"
+  [style]="styleObj"
+  [autoZIndex]="false"
+>
+  <ng-template pTemplate>
+    <form
+      novalidate
+      [formGroup]="filtersForm"
+      (ngSubmit)="search(filtersForm.value)"
+    >
+      <div [hidden]="!isFilterForm">
+        <p-scrollPanel [style]="{ width: '100%' }">
+          <div class="row">
+            <div
+              class="col-md-4 mt-3 mb-0 pb-0"
+              *ngFor="let ctrl of filterControls"
+            >
+              <!-- switch for the type-->
+              <div [ngSwitch]="ctrl.type">
+                <div *ngSwitchCase="'TEXT'">
+                  <div>
+                    <div class="header mb-2">
+                      <span>
+                        {{
+                          ctrl.headerName
+                            ? ("propsNames." + ctrl.headerName | translate)
+                            : ("propsNames." + ctrl.field | translate)
+                        }}
+                        <span
+                          *ngIf="!ctrl.isFixed"
+                          style="color: #c3c3c3; font-size: smaller"
+                          [ngClass]="
+                            !language.isEnglish() ? 'float-left' : 'float-right'
+                          "
+                        >
+                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                          <i
+                            *ngIf="!ctrl.isPinned"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                          <i
+                            *ngIf="ctrl.isPinned"
+                            style="color: #31b743"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                        </span>
+                      </span>
+                    </div>
+
+                    <input
+                      [mask]="ctrl?.mask"
+                      [attr.test_id]="
+                        ctrl.headerName
+                          ? ctrl.headerName
+                          : ctrl.field + '_Filter'
+                      "
+                      (input)="getInputData($event.target.value, ctrl.field)"
+                      [formControlName]="ctrl.field"
+                      style="background-image: none"
+                      [type]="ctrl.typeInput ? ctrl.typeInput : 'text'"
+                      class="form-control"
+                    />
+                  </div>
+                  <!-- <app-input [formControlName]="ctrl.field"></app-input> -->
+                </div>
+                <div *ngSwitchCase="'NUMBER'">
+                  <div>
+                    <div class="header mb-2">
+                      <span>
+                        {{
+                          ctrl.headerName
+                            ? ("propsNames." + ctrl.headerName | translate)
+                            : ("propsNames." + ctrl.field | translate)
+                        }}
+                        <span
+                          *ngIf="!ctrl.isFixed"
+                          style="color: #c3c3c3; font-size: smaller"
+                          [ngClass]="
+                            !language.isEnglish() ? 'float-left' : 'float-right'
+                          "
+                        >
+                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                          <i
+                            *ngIf="!ctrl.isPinned"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                          <i
+                            *ngIf="ctrl.isPinned"
+                            style="color: #31b743"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                        </span>
+                      </span>
+                    </div>
+
+                    <input
+                      [mask]="ctrl?.mask"
+                      [attr.test_id]="
+                        ctrl.headerName
+                          ? ctrl.headerName
+                          : ctrl.field + '_Filter'
+                      "
+                      (input)="getInputData($event.target.value, ctrl.field)"
+                      [formControlName]="ctrl.field"
+                      style="background-image: none"
+                      [type]="'text'"
+                      class="form-control"
+                      numbersOnly
+                    />
+                  </div>
+                  <!-- <app-input [formControlName]="ctrl.field"></app-input> -->
+                </div>
+
+                <div *ngSwitchCase="'SELECT'">
+                  <div class="header mb-2">
+                    <span>
+                      {{ "propsNames." + ctrl.field | translate }}
+                      <span
+                        *ngIf="!ctrl.isFixed"
+                        style="color: #c3c3c3; font-size: smaller"
+                        [ngClass]="
+                          !language.isEnglish() ? 'float-left' : 'float-right'
+                        "
+                      >
+                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                        <i
+                          *ngIf="!ctrl.isPinned"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                        <i
+                          *ngIf="ctrl.isPinned"
+                          style="color: #31b743"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                      </span>
+                    </span>
+                  </div>
+
+                  <ic-ddl-client
+                    *ngIf="!ctrl.serverSide"
+                    [id]="ctrl.propValueName ? ctrl.propValueName : 'id'"
+                    [itemsData]="ctrl.data?.length ? ctrl.data : ctrl.ddlData"
+                    [dropdownPosition]="
+                      ctrl.ddlPosition ? ctrl.ddlPosition : 'auto'
+                    "
+                    [multipleSelectCount]="1"
+                    (dataChange)="getSelectedData($event, ctrl.field)"
+                    [relativeTo]="'.p-overlaypanel-content'"
+                    [showArabicName]="!ctrl.ddlHideArabicName"
+                    [isMultiple]="ctrl.isMultiple"
+                    [controlName]="ctrl.field"
+                    [form]="filtersForm"
+                    [isHideSelected]="false"
+                  >
+                  </ic-ddl-client>
+                </div>
+                <div *ngSwitchCase="'CHOICE'">
+                  <div class="header mb-2">
+                    <span>
+                      {{ "propsNames." + ctrl.field | translate }}
+                      <span
+                        *ngIf="!ctrl.isFixed"
+                        style="color: #c3c3c3; font-size: smaller"
+                        [ngClass]="
+                          !language.isEnglish() ? 'float-left' : 'float-right'
+                        "
+                      >
+                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                        <i
+                          *ngIf="!ctrl.isPinned"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                        <i
+                          *ngIf="ctrl.isPinned"
+                          style="color: #31b743"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                      </span>
+                    </span>
+                  </div>
+
+                  <ic-ddl-client
+                    *ngIf="!ctrl.serverSide"
+                    [itemsData]="ctrl.ddlData"
+                    [dropdownPosition]="
+                      ctrl.ddlPosition ? ctrl.ddlPosition : 'auto'
+                    "
+                    [multipleSelectCount]="1"
+                    (dataChange)="getSelectedData($event, ctrl.field)"
+                    [relativeTo]="'.p-overlaypanel-content'"
+                    [showArabicName]="!ctrl.ddlHideArabicName"
+                    [isMultiple]="ctrl.isMultiple"
+                    [controlName]="ctrl.field"
+                    [form]="filtersForm"
+                    [isHideSelected]="false"
+                  >
+                  </ic-ddl-client>
+                  <ic-ddl
+                    *ngIf="ctrl.serverSide"
+                    [id]="ctrl.propValueName ? ctrl.propValueName : 'id'"
+                    [url]="ctrl.url"
+                    [dropdownPosition]="
+                      ctrl.ddlPosition ? ctrl.ddlPosition : 'auto'
+                    "
+                    [multipleSelectCount]="1"
+                    (dataChange)="getSelectedData($event, ctrl.field)"
+                    [relativeTo]="'.p-overlaypanel-content'"
+                    [showArabicName]="!ctrl.ddlHideArabicName"
+                    [isMultiple]="ctrl.isMultiple"
+                    [controlName]="ctrl.field"
+                    [form]="filtersForm"
+                    [isHideSelected]="false"
+                    [pageSize]="ctrl.pageSize ? ctrl.pageSize : 10"
+                  >
+                  </ic-ddl>
+                </div>
+
+                <div *ngSwitchCase="'RANGE'">
+                  <div>
+                    <div class="header mb-2">
+                      <span>
+                        {{ "propsNames." + ctrl.field | translate }}
+                        <span
+                          *ngIf="!ctrl.isFixed"
+                          style="color: #c3c3c3; font-size: smaller"
+                          [ngClass]="
+                            !language.isEnglish() ? 'float-left' : 'float-right'
+                          "
+                        >
+                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                          <i
+                            *ngIf="!ctrl.isPinned"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                          <i
+                            *ngIf="ctrl.isPinned"
+                            style="color: #31b743"
+                            (click)="pin(ctrl)"
+                            class="fas fa-thumbtack"
+                          ></i>
+                        </span>
+                      </span>
+                    </div>
+
+                    <div class="row m-0 p-0">
+                      <div class="col-md-6 m-0 p-0">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span
+                              [ngClass]="
+                                language.isEnglish()
+                                  ? 'radius-left'
+                                  : 'radius-right'
+                              "
+                              class="input-group-text m-0 p-1 no-radius"
+                              id="basic-addon1"
+                              >From</span
+                            >
+                          </div>
+                          <input
+                            [formControlName]="ctrl.field + 'From'"
+                            numbersOnly
+                            (input)="
+                              getInputRangeData(
+                                $event.target.value,
+                                ctrl.field,
+                                'from'
+                              )
+                            "
+                            type="text"
+                            class="form-control no-radius"
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                            [attr.test_id]="
+                              ctrl.headerName
+                                ? ctrl.headerName
+                                : ctrl.field + 'From_Filter'
+                            "
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6 m-0 p-0">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span
+                              class="input-group-text m-0 p-1 no-radius"
+                              id="basic-addon1"
+                              >To</span
+                            >
+                          </div>
+                          <input
+                            [attr.test_id]="
+                              ctrl.headerName
+                                ? ctrl.headerName
+                                : ctrl.field + 'To_Filter'
+                            "
+                            (input)="
+                              getInputRangeData(
+                                $event.target.value,
+                                ctrl.field,
+                                'to'
+                              )
+                            "
+                            [formControlName]="ctrl.field + 'To'"
+                            numbersOnly
+                            type="text"
+                            class="form-control no-radius"
+                            [ngClass]="
+                              !language.isEnglish()
+                                ? 'radius-left'
+                                : 'radius-right'
+                            "
+                            aria-label="Username"
+                            aria-describedby="basic-addon1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngSwitchCase="'DATE'">
+                  <div class="header mb-2">
+                    <span>
+                      {{ "propsNames." + ctrl.field | translate }}
+                      <div style="margin: 0px; height: 20px" class="btn-group">
+                        <label
+                          [ngClass]="
+                            !ctrl.isDateTo && !ctrl.isDateFrom
+                              ? 'bg-color text-light'
+                              : ''
+                          "
+                          (click)="
+                            filtersForm.get(ctrl.field).setValue(null);
+                            ctrl.isDateTo = false;
+                            ctrl.isDateFrom = false
+                          "
+                          class="btn sm-button border-color"
+                          tabindex="0"
+                          role="button"
+                          >Range
+                        </label>
+                        <label
+                          [ngClass]="
+                            ctrl.isDateFrom ? 'bg-color text-light' : ''
+                          "
+                          *ngIf="ctrl.pickerType !== 'timer'"
+                          class="mr-1 ml-1"
+                          (click)="
+                            filtersForm.get(ctrl.field).setValue(null);
+                            ctrl.isDateTo = false;
+                            ctrl.isDateFrom = true
+                          "
+                          class="btn sm-button border-color"
+                          tabindex="0"
+                          role="button"
+                          >From</label
+                        >
+                        <label
+                          [ngClass]="ctrl.isDateTo ? 'bg-color text-light' : ''"
+                          (click)="
+                            filtersForm.get(ctrl.field).setValue(null);
+                            ctrl.isDateTo = true;
+                            ctrl.isDateFrom = false
+                          "
+                          class="btn sm-button border-color"
+                          tabindex="0"
+                          role="button"
+                          *ngIf="ctrl.pickerType !== 'timer'"
+                          >To</label
+                        >
+                        <span
+                          *ngIf="ctrl.pickerType == 'timer'"
+                          class="RangeOnly"
+                          >'Range Only'</span
+                        >
+                      </div>
+                      <span
+                        *ngIf="!ctrl.isFixed"
+                        style="color: #c3c3c3; font-size: smaller"
+                        [ngClass]="
+                          !language.isEnglish() ? 'float-left' : 'float-right'
+                        "
+                      >
+                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
+                        <i
+                          *ngIf="!ctrl.isPinned"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                        <i
+                          *ngIf="ctrl.isPinned"
+                          style="color: #31b743"
+                          (click)="pin(ctrl)"
+                          class="fas fa-thumbtack"
+                        ></i>
+                      </span>
+                    </span>
+                  </div>
+                  <input
+                    (dateTimeChange)="
+                      getDateData($event.value, ctrl.field, ctrl.pickerType)
+                    "
+                    style="height: 40px"
+                    class="form-control form-control-lg"
+                    [owlDateTime]="dt1"
+                    [owlDateTimeTrigger]="dt1"
+                    [formControlName]="ctrl.field"
+                    [selectMode]="
+                      ctrl.isDateTo
+                        ? 'rangeTo'
+                        : ctrl.isDateFrom
+                        ? 'rangeFrom'
+                        : 'range'
+                    "
+                    [attr.test_id]="
+                      ctrl.headerName ? ctrl.headerName : ctrl.field + '_Filter'
+                    "
+                  />
+                  <div
+                    style="color: #969696; font-size: 14px; padding-top: 25px"
+                    class="icon-claender"
+                    [ngClass]="{
+                      'icon-claender-en': language.isEnglish(),
+                      'icon-claender-ar': !language.isEnglish()
+                    }"
+                  >
+                    <span class="example-trigger" [owlDateTimeTrigger]="dt1">
+                      <i
+                        [ngClass]="{
+                          'mr-3': language.isEnglish(),
+                          'ml-3': !language.isEnglish()
+                        }"
+                        class="far fa-calendar-minus mr-3 ml-3"
+                      ></i>
+                    </span>
+                    <i
+                      *ngIf="!disabled"
+                      class="fas fa-times"
+                      title="Reset"
+                      style="color: #969696; font-size: 14px"
+                      (click)="filtersForm.get(ctrl.field).setValue(null)"
+                    ></i>
+                  </div>
+                  <owl-date-time
+                    [pickerType]="
+                      ctrl.pickerType ? ctrl.pickerType : 'calendar'
+                    "
+                    #dt1
+                  ></owl-date-time>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-scrollPanel>
+        <div class="row">
+          <!-- <div class="col-md-4">
+            <button
+              [attr.test_id]="'Add_Field_Button'"
+              *ngIf="additionalField"
+              pButton
+              pRipple
+              type="button"
+              [label]="'Add field'"
+              class="p-button-text mr-2 ml-2"
+              (click)="addNewFilter()"
+            ></button>
+            <button
+              *ngIf="additionalField"
+              pButton
+              pRipple
+              type="button"
+              [label]="'Reset to default'"
+              style="color: #c3c3c3"
+              class="p-button-text mr-2 ml-2"
+              (click)="resetToDefaults()"
+            ></button>
+          </div> -->
+          <div class="col-md-5"></div>
+          <div class="col-md-3">
+            <button
+              [attr.test_id]="route.url.split('/')[2] + '_Reset_Filter_Button'"
+              pButton
+              pRipple
+              type="button"
+              [label]="'Reset'"
+              class="p-button-text mr-2 ml-2"
+              (click)="resetForm()"
+            ></button>
+            <p-button
+              [style]="{ width: '100px', 'background-color': '#2053a6' }"
+              class="mr-2 ml-2"
+              [label]="'Apply'"
+              (click)="search(filtersForm.value)"
+              [attr.test_id]="route.url.split('/')[2] + '_Apply_Filter_Button'"
+            >
+            </p-button>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="isFilterForm">
+        <p-scrollPanel [style]="{ width: '100%' }">
+          <div class="row">
+            <div class="col-md-3" *ngFor="let ctrl of unPinnedControls">
+              <div class="p-field-checkbox m-2">
+                <p-checkbox
+                  [inputId]="ctrl.field"
+                  [(ngModel)]="ctrl.selectedToFilter"
+                  binary="true"
+                  [ngModelOptions]="{ standalone: true }"
+                  [attr.test_id]="ctrl.field + '_CheckBox'"
+                ></p-checkbox>
+                <label [for]="ctrl.field" class="ml-2 mr-2 mb-0" for="binary">{{
+                  "propsNames." + ctrl.field | translate
+                }}</label>
+              </div>
+            </div>
+          </div>
+        </p-scrollPanel>
+
+        <div class="row line"></div>
+        <div class="row">
+          <div class="col-md-2">
+            <button
+              pButton
+              pRipple
+              type="button"
+              [label]="'Filters'"
+              icon="pi pi-angle-left"
+              class="p-button-text mr-2 ml-2"
+              (click)="isFilterForm = !isFilterForm"
+            ></button>
+          </div>
+          <div class="col-md-8"></div>
+          <div class="col-md-2" style="padding-left: 45px">
+            <button
+              pButton
+              pRipple
+              type="button"
+              [label]="'Confirm'"
+              class="mr-2 ml-2"
+              (click)="addNewFilterToForm()"
+              [attr.test_id]="'Confirm_Button'"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-overlayPanel>
+<div #actualTarget></div>

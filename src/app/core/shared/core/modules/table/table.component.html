@@ -54,6 +54,21 @@
       [placeholderSearch]="placeholderSearch"
     ></app-search-bar>
   </div>
+  <div style="margin-bottom: 0" #top class="add-header">
+    <div style="margin-right: 0" class="btns-container">
+      <button
+        style="width: 126px"
+        *ngIf="options.add && !addDropdown?.length"
+        type="button"
+        (click)="goToAddPage()"
+        class="btn btn-primary create-btn"
+        appSecured="add"
+      >
+        <i style="margin-left: 0" class="fas fa-plus-circle"></i>
+        {{ "Add" | translate }}
+      </button>
+    </div>
+  </div>
 </div>
 <div class="table-with-search">
   <form

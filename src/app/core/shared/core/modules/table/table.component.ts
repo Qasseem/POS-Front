@@ -198,7 +198,8 @@ export class TableComponent implements OnInit, OnDestroy {
    * @memberof TableComponent
    */
   goToAddPage(): Promise<boolean> {
-    return this.router.navigate(['../add'], { relativeTo: this.route.parent });
+    return this.router.navigate([this.router.url + '/add']);
+    // return this.router.navigate(['../add'], { relativeTo: this.route.parent });
   }
 
   /**

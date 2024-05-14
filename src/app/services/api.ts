@@ -24,4 +24,11 @@ export const APIURL = {
     restoreFilters: '/SearchFilter/RestoreFilters',
   },
   forgotPassword: '/CustomerSecurity/ForgotPassword',
+  Merchant: {
+    Add: '/Merchant/SaveMerchant',
+    GetOne: '/Merchant/GetMerchantById',
+    Export: '/Merchant/ExportLeadGrid',
+    GetGrid: '/Merchant/GetMerchantGrid',
+    GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
+  },
 };

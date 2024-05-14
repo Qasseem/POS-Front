@@ -142,11 +142,6 @@ export class TableCoreService {
     );
   }
 
-  getUserSearchFilters(moduleId): Observable<any> {
-    return this.http.postReq(APIURL.searchFilters.getUserSearchFilters, {
-      moduleId: moduleId,
-    });
-  }
   pinFilter(filterParams): Observable<any> {
     return this.http.postReq(APIURL.searchFilters.pinFilter, filterParams);
   }

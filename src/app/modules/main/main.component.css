@@ -289,3 +289,9 @@
 .divider {
   border-left: 1px solid #e6ecf5;
 }
+
+.container {
+  height: 100vh; /* Set container height to full viewport height */
+  display: flex;
+  flex-direction: column;
+}

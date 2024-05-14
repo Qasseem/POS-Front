@@ -1,74 +1,76 @@
-<div class="grid" style="background-color: aliceblue">
-  <div *ngIf="sidebarVisible" class="col-2 p-0" style="font-size: 12px">
-    <div class="containerSideMenuOpen" style="background-color: aliceblue">
-      <!-- //////// -->
-      <div
-        class="displayFlex"
-        style="justify-content: space-between; padding: 15px"
-      >
-        PayMob
-        <img
-          [ngStyle]="
-            storage.getLang() == 'ar' ? { transform: 'rotate(180deg)' } : {}
-          "
-          (click)="sidebarVisible = !sidebarVisible"
-          src="../../../assets/iamges/svg/Arrow.svg"
-          alt="menu icon"
-        />
-      </div>
-      <div
-        (click)="navigate(item)"
-        style="cursor: pointer; border-radius: 10px 0px 0px 10px"
-        *ngFor="let item of items"
-        class="p-3 fc-main ml-3"
-        [ngStyle]="{ 'background-color': item.active ? '#99CCFD' : null }"
-      >
-        <i
-          [class]="item.icon"
-          style="font-size: 1rem"
-          [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
-        ></i>
-        <span
-          [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
-          class="ml-3 mr-3 fc-main"
-          >{{ item.label }}</span
+<div class="container">
+  <div class="grid" style="background-color: aliceblue; height: inherit">
+    <div *ngIf="sidebarVisible" class="col-2 p-0" style="font-size: 12px">
+      <div class="containerSideMenuOpen" style="background-color: aliceblue">
+        <!-- //////// -->
+        <div
+          class="displayFlex"
+          style="justify-content: space-between; padding: 15px"
         >
+          PayMob
+          <img
+            [ngStyle]="
+              storage.getLang() == 'ar' ? { transform: 'rotate(180deg)' } : {}
+            "
+            (click)="sidebarVisible = !sidebarVisible"
+            src="../../../assets/iamges/svg/Arrow.svg"
+            alt="menu icon"
+          />
+        </div>
+        <div
+          (click)="navigate(item)"
+          style="cursor: pointer; border-radius: 10px 0px 0px 10px"
+          *ngFor="let item of items"
+          class="p-3 fc-main ml-3"
+          [ngStyle]="{ 'background-color': item.active ? '#99CCFD' : null }"
+        >
+          <i
+            [class]="item.icon"
+            style="font-size: 1rem"
+            [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
+          ></i>
+          <span
+            [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
+            class="ml-3 mr-3 fc-main"
+            >{{ item.label }}</span
+          >
+        </div>
       </div>
     </div>
-  </div>
-  <div *ngIf="!sidebarVisible" class="padding0 width5">
-    <div class="containerSideMenuClosed">
-      <div
-        [ngStyle]="
-          storage.getLang() == 'ar'
-            ? { 'margin-right': '7px' }
-            : { 'margin-left': '7px' }
-        "
-      >
-        <img
-          src="../../../assets/iamges/svg/logoA.svg"
-          class="mb-2"
-          alt="afaqy logo"
-          height="25"
-        />
-        <img
+    <div *ngIf="!sidebarVisible" class="padding0 width5">
+      <div class="containerSideMenuClosed">
+        <div
           [ngStyle]="
-            storage.getLang() == 'ar' ? {} : { transform: 'rotate(180deg)' }
+            storage.getLang() == 'ar'
+              ? { 'margin-right': '7px' }
+              : { 'margin-left': '7px' }
           "
-          (click)="sidebarVisible = !sidebarVisible"
-          src="../../../assets/iamges/svg/Arrow.svg"
-          alt="menu icon"
-        />
+        >
+          <img
+            src="../../../assets/iamges/svg/logoA.svg"
+            class="mb-2"
+            alt="afaqy logo"
+            height="25"
+          />
+          <img
+            [ngStyle]="
+              storage.getLang() == 'ar' ? {} : { transform: 'rotate(180deg)' }
+            "
+            (click)="sidebarVisible = !sidebarVisible"
+            src="../../../assets/iamges/svg/Arrow.svg"
+            alt="menu icon"
+          />
+        </div>
       </div>
     </div>
-  </div>
 
-  <div
-    class="col p-0"
-    style="border-radius: 20px 0px 0px 0px; background-color: #f8f8f8"
-  >
-    <div>
-      <router-outlet></router-outlet>
+    <div
+      class="col p-2"
+      style="border-radius: 20px 0px 0px 0px; background-color: #f8f8f8"
+    >
+      <div>
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

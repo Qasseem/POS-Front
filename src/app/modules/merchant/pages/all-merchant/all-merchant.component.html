@@ -1,3 +1,16 @@
-<div class="m-3">
-  <app-table [columns]="columns"> </app-table>
+<!-- <div class="m-3">
+  <app-table [url]="" [columns]="columns"> </app-table>
+</div> -->
+<div>
+  <app-table
+    [showSearchBar]="true"
+    [url]="{
+      getAll: url.Merchant.GetGrid
+    }"
+    [columns]="columns"
+    [actions]="actions"
+    [options]="{}"
+    [filters]="filters"
+  >
+  </app-table>
 </div>

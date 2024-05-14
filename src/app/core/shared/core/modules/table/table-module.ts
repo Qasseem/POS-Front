@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ListComponent } from './components/list/list.component';
 import { PrimeNgInputsModule } from '../../../primeng/primeng-input-module';
 import { TableComponent } from './table.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { TableComponent } from './table.component';
     TranslateModule,
     PrimeNgInputsModule,
   ],
-  declarations: [ListComponent, TableComponent],
-  exports: [ListComponent, TableComponent],
+  declarations: [ListComponent, TableComponent, SearchBarComponent],
+  exports: [ListComponent, TableComponent, SearchBarComponent],
 })
 export class AppTableModule {}
