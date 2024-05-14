@@ -1,0 +1,673 @@
+<p-table
+  #dt
+  [(first)]="first"
+  [resizableColumns]="true"
+  [columns]="selectedColumns"
+  [value]="data"
+  [styleClass]="
+    lang.isEnglish() ? 'p-datatable-striped' : ' p-datatable-striped rtl'
+  "
+  [rows]="tableCore.pageOptions.limit"
+  [paginator]="true"
+  [rowsPerPageOptions]="[5, 10, 20, 50, 100]"
+  [(selection)]="selectedData"
+  [dataKey]="id"
+  [totalRecords]="tableCore.pageOptions.count"
+  (onRowSelect)="onRowSelect($event)"
+  [lazy]="!clientSide"
+  (onLazyLoad)="setPage($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+>
+  <ng-template pTemplate="header" let-columns>
+    <!-- <tr>
+      <th style="width: 300px">xcvddddddddddddddddddddddddddddddxxc</th>
+    </tr> -->
+    <tr>
+      <th *ngIf="options.check" style="width: 3rem"></th>
+      <th
+        class="col-header"
+        *ngFor="let col of columns"
+        pResizableColumn
+        style="color: #969696; font-size: 14px; line-height: 7px"
+        [style.width]="col.width ? col.width : '250px'"
+      >
+        {{ col.header }}
+      </th>
+
+      <th
+        *ngIf="actions"
+        style="color: #969696; font-size: 14px; line-height: 7px; width: 125px"
+      >
+        <div
+          class="header-wrap d-flex justify-content-between align-items-center"
+        >
+          <span class="title">{{ "common.actions" | translate }}</span>
+          <div
+            dropdown
+            container="body"
+            placement="bottom right"
+            [autoClose]="true"
+          >
+            <a
+              href="javascript:"
+              dropdownToggle
+              aria-controls="table-actions"
+              id="table-drop-action"
+              style="padding: 0.5rem; color: #969696"
+            >
+              <i class="fas fa-ellipsis-v"></i>
+            </a>
+            <ul
+              id="table-actions"
+              *dropdownMenu
+              class="dropdown-menu custome-dropdown"
+              [ngClass]="lang.isEnglish() ? 'dropdown-menu-right' : ''"
+              role="menu"
+              aria-labelledby="table-drop-action"
+            >
+              <li appSecured="export" role="menuitem" *ngIf="url && url.export">
+                <a
+                  [attr.test_id]="'Export_Button'"
+                  (click)="export()"
+                  class="dropdown-item"
+                >
+                  <i
+                    class="fas fa-download"
+                    [ngClass]="lang.isEnglish() ? 'mr-2' : 'ml-2'"
+                  ></i>
+                  {{ "common.export" | translate }}
+                </a>
+              </li>
+              <li
+                appSecured="export"
+                role="menuitem"
+                *ngIf="url && url.exportDetails"
+              >
+                <a
+                  [attr.test_id]="'Export_Button'"
+                  (click)="exportDetails()"
+                  class="dropdown-item"
+                >
+                  <i
+                    class="fas fa-download"
+                    [ngClass]="lang.isEnglish() ? 'mr-2' : 'ml-2'"
+                  ></i>
+                  {{ "common.exportDetails" | translate }}
+                </a>
+              </li>
+
+              <!-- TODO: export appSecured -->
+              <li role="menuitem" *ngIf="clientSide && options.export">
+                <a (click)="exportClientData()" class="dropdown-item">
+                  <i
+                    class="fas fa-download"
+                    [ngClass]="lang.isEnglish() ? 'mr-2' : 'ml-2'"
+                  ></i>
+                  {{ "common.export" | translate }}
+                </a>
+              </li>
+
+              <li role="menuitem" *ngIf="options.history">
+                <a (click)="goToDeletedHistoryPage()" class="dropdown-item">
+                  <i
+                    class="fas fa-eraser"
+                    [ngClass]="lang.isEnglish() ? 'mr-2' : 'ml-2'"
+                  ></i>
+                  {{ "table.deletedHistory" | translate }}
+                </a>
+              </li>
+
+              <!-- <li *ngIf="!options.globalSearch" role="menuitem">
+                <a
+                  (click)="options.search = !options.search"
+                  class="dropdown-item"
+                >
+                  <i
+                    class="fas fa-file-alt"
+                    [ngClass]="lang.isEnglish() ? 'mr-2' : 'ml-2'"
+                  ></i>
+                  {{ 'common.toggleSearch' | translate }}
+                </a>
+              </li> -->
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item disabled text-muted">Column Filtered</a>
+              </li>
+
+              <li role="menuitem">
+                <a *ngFor="let item of columnsI" class="dropdown-item">
+                  <p-checkbox
+                    name="columnsGroup"
+                    [value]="item"
+                    [label]="item.header"
+                    [inputId]="item.header"
+                    [(ngModel)]="selectedColumns"
+                    (onChange)="updateSelectedColumnsAPI()"
+                  >
+                  </p-checkbox>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </th>
+    </tr>
+    <tr *ngIf="!options.globalSearch && options.search">
+      <th *ngIf="options.check"></th>
+      <th *ngFor="let col of columns">
+        <div class="text" *ngIf="!col.filterMode || col.filterMode === 'text'">
+          <input
+            [attr.test_id]="
+              router.url.split('/')[2] + '_' + col.field + '_' + 'filter'
+            "
+            pInputText
+            *ngIf="!(col.field === 'action')"
+            type="text"
+            style="width: 100%; padding: 6px"
+            (input)="
+              clientSide
+                ? dt.filter($event.target.value, col.field, col.filterMatchMode)
+                : columnSearchHandle($event.target.value, col.field)
+            "
+          />
+        </div>
+        <div *ngIf="col.filterMode && col.filterMode === 'dropdown'">
+          <select
+            #sel
+            class="form-control"
+            (input)="
+              clientSide
+                ? dt.filter($event.value, col.field, 'equals')
+                : columnSearchHandle(sel.value, col.field)
+            "
+          >
+            <option value="">
+              {{ "common.all" | translate }}
+            </option>
+            <option
+              *ngFor="let item of col.filterDropdown"
+              [value]="item.value"
+            >
+              {{ item.label | translate }}
+            </option>
+          </select>
+        </div>
+      </th>
+      <th *ngIf="actions"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pSelectableRow]="rowData">
+      <td *ngIf="options.check">
+        <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+      </td>
+      <!-- fixDate placeholderIssue -->
+      <td
+        *ngFor="let col of columns; let i = index"
+        [pTooltip]="
+          !col.hideTooltop
+            ? rowData[col.field + 'Message']
+              ? rowData[col.field + 'Message']
+              : rowData[col.field]
+            : ''
+        "
+        [tooltipZIndex]="'99999999999999'"
+        [class]="rowData[col.field + 'Message'] ? 'bg-danger text-white' : ''"
+        class="ui-resizable-column"
+        style="
+          white-space: nowrap;
+          height: 50px;
+          color: #414141;
+          overflow: hidden;
+        "
+      >
+        <div style="font-size: 14px" *ngIf="!col.editable">
+          <div *ngIf="col.customCell; else default">
+            <div
+              *ngIf="col.customCell === 'boolean' && rowData[col.field]"
+              [class]="
+                col.filterDropdown[0].cssClasses
+                  ? col.filterDropdown[0].cssClasses
+                  : 'rounded-pill bg-success text-white'
+              "
+              class="custom-cell"
+            >
+              {{ col.filterDropdown[0].label | translate }}
+            </div>
+
+            <div
+              *ngIf="col.customCell === 'multiPages' && rowData[col.field]"
+              class="custom-cell"
+            >
+              <span *ngFor="let page of rowData[col.field]; let x = index">
+                <a
+                  [routerLink]="'/home/' + col.field + '/details/' + page?.id"
+                  style="font-size: 14px; color: #2053a6; margin-left: 5px"
+                >
+                  {{ page?.reference | strLimit : 30 }}
+                  <span *ngIf="+x + 1 !== rowData[col.field].length">,</span>
+                </a>
+              </span>
+            </div>
+
+            <div
+              *ngIf="col.customCell === 'boolean' && !rowData[col.field]"
+              class="custom-cell"
+              [class]="
+                col.filterDropdown[1].cssClasses
+                  ? col.filterDropdown[1].cssClasses
+                  : 'rounded-pill bg-danger text-white'
+              "
+            >
+              {{ col.filterDropdown[1].label | translate }}
+            </div>
+
+            <div *ngIf="col.customCell === 'date'" style="font-size: 14px">
+              {{ rowData[col.field] | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+            </div>
+            <div
+              *ngIf="col.customCell === 'dateWithoutPipe'"
+              style="font-size: 14px"
+            >
+              {{ rowData[col.field] | date : "dd-MM-yyyy" }}
+            </div>
+            <div
+              *ngIf="col.customCell === 'dateTimeWithoutPipe'"
+              style="font-size: 14px"
+            >
+              {{ rowData[col.field] | date : "dd-MM-yyyy hh:mm a" }}
+            </div>
+            <div
+              *ngIf="col.customCell === 'list' && rowData[col.field]?.length"
+            >
+              {{ rowData[col.field][0] }}
+              <span *ngIf="rowData[col.field].length - 1"> ,... </span>
+              <span *ngIf="rowData[col.field].length - 1" class="list">
+                {{ rowData[col.field].length - 1 }}
+                {{ "common.more" | translate }}
+              </span>
+            </div>
+
+            <div *ngIf="col.customCell === 'navigator'">
+              <a
+                [routerLink]="col.action(rowData)"
+                (click)="col.action(rowData)"
+                style="font-size: 14px"
+              >
+                {{ rowData[col.field] }}
+              </a>
+            </div>
+
+            <div style="font-size: 14px" *ngIf="col.customCell === 'percent'">
+              {{ rowData[col.field] / 100 | percent }}
+            </div>
+
+            <div
+              style="font-size: 14px"
+              *ngIf="col.customCell.includes('trunc')"
+            >
+              {{ rowData[col.field] | strLimit : col.customCell.slice(-2) }}
+            </div>
+
+            <div style="font-size: 14px" *ngIf="col.customCell === 'currency'">
+              {{ rowData[col.field] | currency }}
+            </div>
+            <div
+              style="font-size: 14px"
+              *ngIf="col.customCell === 'itemsTooltip'"
+            >
+              <div>
+                {{ rowData[col.field]?.length }}
+              </div>
+            </div>
+            <div *ngIf="col.customCell === 'copy'">
+              <span
+                (click)="copyToClipboard(rowData[col.field] + i)"
+                [id]="rowData[col.field] + i"
+                style="font-size: 14px"
+              >
+                <i style="color: #b5b5b5" class="fas fa-copy"></i>
+                {{ rowData[col.field] }}
+              </span>
+            </div>
+            <div *ngIf="col.customCell === 'map'">
+              <a
+                href="https://www.google.com/maps/place/{{
+                  rowData[col.mapLink.latitude]
+                }},{{ rowData[col.mapLink.longitude] }}"
+                target="_blank"
+                style="font-size: 14px"
+              >
+                {{ rowData[col.field] | strLimit : 30 }}
+              </a>
+            </div>
+
+            <div *ngIf="col.customCell === 'customStyle'">
+              <div *ngFor="let item of col.filterDropdown">
+                <div
+                  *ngIf="item.value === rowData[col.field]"
+                  [class]="item.cssClasses + ' rounded-pill'"
+                  class="custom-cell"
+                >
+                  {{ item.label | translate }}
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="col.customCell === 'multiLabel'">
+              <div *ngFor="let item of col.field">
+                <div *ngIf="item.custom === 'navigator'">
+                  <i
+                    style="font-size: 14px; color: #2053a6"
+                    class="fas fa-user"
+                  ></i>
+                  <a
+                    [routerLink]="col.action(rowData)"
+                    (click)="col.action(rowData)"
+                    style="font-size: 14px; color: #2053a6; margin-left: 5px"
+                  >
+                    {{ rowData[item.label] | strLimit : 30 }}
+                  </a>
+                </div>
+
+                <span style="color: #969696" *ngIf="item.custom === 'default'">
+                  {{ rowData[item.label] | strLimit : 30 }}
+                </span>
+                <span
+                  style="margin-left: 22px; color: #969696"
+                  *ngIf="item.custom === 'icon'"
+                >
+                  {{ rowData[item.label] | strLimit : 30 }}
+                </span>
+                <span
+                  style="color: #414141"
+                  *ngIf="item.custom === 'firstLabel'"
+                >
+                  {{ rowData[item.label] | strLimit : 30 }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="col.customCell === 'integerPipe'">
+              {{ rowData[col.field] | number : "1.0-0" }}
+            </div>
+            <div *ngIf="col.customCell === 'style'">
+              <span [style]="col.styleObj[rowData[col.field]]">
+                {{ rowData[col.field] }}
+              </span>
+            </div>
+            <div *ngIf="col.customCell === 'tags'">
+              <span *ngFor="let item of rowData[col.field]">
+                <span *ngIf="item != ''" class="tag">
+                  {{ item }}
+                </span>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="col.customCell === 'strLimit'">
+            {{ rowData[col.field] | strLimit : 50 }}
+          </div>
+          <ng-template style="font-size: 14px" #default>
+            <span style="white-space: pre">
+              {{ rowData[col.field] }}
+            </span>
+          </ng-template>
+        </div>
+
+        <div *ngIf="col.editable">
+          <div *ngIf="col.form.type === 'text'" class="form-text">
+            <input pInputText type="text" style="width: 100%; padding: 6px" />
+          </div>
+
+          <div *ngIf="col.form.type === 'password'" class="form-text">
+            <input
+              pInputText
+              type="password"
+              style="width: 100%; padding: 6px"
+            />
+          </div>
+          <div *ngIf="col.form.type === 'select'">
+            <select #sel class="form-control">
+              <option *ngFor="let item of col.form.select" [value]="item.value">
+                {{ item.name | translate }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </td>
+
+      <td *ngIf="actions">
+        <div class="actions-wrap d-flex">
+          <div class="btn-group" dropdown container="body">
+            <div
+              appSecured="details"
+              *ngIf="options.details"
+              class="btn-details"
+              [ngClass]="{
+                'mr-2': lang.isEnglish(),
+                'ml-2': !lang.isEnglish()
+              }"
+              style="padding-top: 13px"
+            >
+              <a
+                [routerLink]="activatedRoute + rowData[id]"
+                (click)="(activatedRoute + rowData[id])"
+                [ngClass]="
+                  !viewCustomPermission
+                    ? 'enable-view'
+                    : viewCustomPermission.customPermission(rowData)
+                    ? 'enable-view'
+                    : 'diable-view'
+                "
+              >
+                <i class="fas fa-eye fa-fw"></i>
+              </a>
+              <!-- <button
+                [attr.test_id]="router.url.split('/')[2] + '_' + 'view'"
+                type="button"
+                class="btn btn-sm actionButtons"
+                (click)="goToDetailsPage(rowData[id])"
+              >
+                <i class="fas fa-eye fa-fw"></i>
+              </button> -->
+            </div>
+            <div
+              *ngIf="options.historyDetails"
+              class="btn-details"
+              [ngClass]="{
+                'mr-2': lang.isEnglish(),
+                'ml-2': !lang.isEnglish()
+              }"
+            >
+              <button
+                type="button"
+                class="btn btn-sm actionButtons"
+                (click)="viewHistory(rowData)"
+              >
+                <i class="fas fa-eye fa-fw"></i>
+              </button>
+            </div>
+            <button
+              [attr.test_id]="router.url?.split('/')[2] + '_actionsBtn'"
+              hasChildren
+              id="button-container"
+              dropdownToggle
+              type="button"
+              class="btn btn-sm actionButtons"
+              aria-controls="dropdown-container"
+              [ngClass]="{ isDisabled: !checkActions(rowData) }"
+            >
+              <img
+                *ngIf="checkActions(rowData)"
+                src="../../../../../assets/images/more.svg"
+              />
+              <img
+                *ngIf="!checkActions(rowData)"
+                src="../../../../../assets/images/moreDis.svg"
+              />
+            </button>
+            <ul
+              id="dropdown-container"
+              *dropdownMenu
+              style="left: -125px"
+              class="dropdown-menu"
+              role="menu"
+              aria-labelledby="button-container"
+            >
+              <li *ngFor="let action of actions" role="menuitem">
+                <a
+                  [attr.test_id]="router.url?.split('/')[2] + '_' + 'edit'"
+                  *ngIf="
+                    action.isEdit &&
+                    (!action.customPermission
+                      ? !rowData.isBlock
+                      : action.customPermission(rowData)) &&
+                    !rowData.isBlock
+                  "
+                  class="dropdown-item tableAction"
+                  (click)="
+                    action.call
+                      ? action.call(rowData)
+                      : goToEditPage(rowData[id])
+                  "
+                  style="cursor: pointer; border-bottom: 1px solid #e6ecf5"
+                >
+                  <i [class]="action.icon || 'fas fa-pen'"></i>
+                  {{ "table.edit" | translate }}
+                </a>
+
+                <a
+                  [attr.test_id]="router.url?.split('/')[2] + '_' + 'delete'"
+                  *ngIf="
+                    action.isDelete &&
+                    (!action.customPermission
+                      ? true
+                      : action.customPermission(rowData))
+                  "
+                  class="dropdown-item tableAction"
+                  (click)="
+                    action.call
+                      ? action.call(rowData)
+                      : showDeletemodal(rowData)
+                  "
+                  style="cursor: pointer"
+                >
+                  <i [class]="action.icon || 'fas fa-trash'"></i>
+                  {{ "table.delete" | translate }}
+                </a>
+                <a
+                  [attr.test_id]="
+                    router.url.split('/')[2] +
+                    '_' +
+                    'block' +
+                    '_' +
+                    rowData.isBlock
+                  "
+                  *ngIf="
+                    action.isBlock &&
+                    (!action.customPermission
+                      ? true
+                      : action.customPermission(rowData))
+                  "
+                  class="dropdown-item tableAction"
+                  (click)="
+                    action.call ? action.call(rowData) : showBlockModal(rowData)
+                  "
+                  [appSecured]="
+                    action.permission || getBlockPermission(rowData)
+                  "
+                >
+                  <i
+                    *ngIf="rowData.isBlock"
+                    [class]="action.icon || 'fas fa-unlock-alt'"
+                  ></i>
+                  <i
+                    *ngIf="!rowData.isBlock"
+                    [class]="action.icon || 'fas fa-lock'"
+                  ></i>
+
+                  {{
+                    rowData.isBlock
+                      ? ("table.unBlock" | translate)
+                      : ("table.block" | translate)
+                  }}
+                </a>
+                <a
+                  [attr.test_id]="action.name"
+                  *ngIf="
+                    !action.isDelete &&
+                    !action.isBlock &&
+                    !action.isDetails &&
+                    !action.isEdit &&
+                    (!action.customPermission
+                      ? true
+                      : action.customPermission(rowData))
+                  "
+                  class="dropdown-item tableAction"
+                  (click)="action.call(rowData)"
+                  style="cursor: pointer"
+                >
+                  <i [class]="action.icon"></i>
+                  {{ action.name | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="paginatorright" let-state>
+    {{ state.first + 1 }} -
+    {{
+      state.totalRecords < state.rows * (state.page + 1)
+        ? state.totalRecords
+        : state.rows * (state.page + 1)
+    }}
+    {{ "common.of" | translate }}
+    {{ state.totalRecords }}
+    {{ "common.total" | translate }}
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td
+        style="font-weight: bold; text-align: center; padding-top: 30px"
+        [attr.colspan]="columns.length"
+      >
+        <div *ngIf="!noDataText">
+          <img src="assets/images/icons/Group5079.svg" alt="drag" />
+
+          <div class="mt-3">
+            <span style="font-size: smaller; color: #c3c3c3">
+              {{ "table.noDataToDisplay" | translate }}
+            </span>
+          </div>
+        </div>
+        <div *ngIf="noDataText" style="height: 120px">
+          <span style="color: #969899">
+            {{ noDataText | translate }}
+          </span>
+          <div class="container">
+            <div
+              style="
+                width: 108px;
+                height: 45px;
+                border: 1px solid #f4f4f4 !important;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 15px;
+              "
+              (click)="navToFilter()"
+            >
+              <i
+                class="fas fa-arrow-up"
+                style="margin-top: 12px; color: #3865af"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

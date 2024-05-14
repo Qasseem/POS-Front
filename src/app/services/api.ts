@@ -17,6 +17,11 @@ export const APIURL = {
     checkCommercialRecord: '/Customer/CheckCommercialRecord',
     CheckTaxiationNumber: '/Customer/CheckTaxiationNumber',
   },
-
+  searchFilters: {
+    getUserSearchFilters: '/SearchFilter/GetUserSearchFilters',
+    pinFilter: '/SearchFilter/PinFilter',
+    unPinFilter: '/SearchFilter/UnPinFilter',
+    restoreFilters: '/SearchFilter/RestoreFilters',
+  },
   forgotPassword: '/CustomerSecurity/ForgotPassword',
 };

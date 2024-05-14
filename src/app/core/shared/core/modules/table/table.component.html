@@ -1,96 +1,98 @@
-<div class="card mr-3">
-  <div class="table-header">
-    <div class="container pt-3">
-      <div class="left">
-        <div class="search-container ml-3 mr-3">
-          <input type="text" class="search-input" placeholder="Search..." />
-          <span class="search-icon">
-            <i class="pi pi-search" style="font-size: 1rem"></i
-          ></span>
+<div
+  style="
+    position: fixed;
+    z-index: 999999999999999999;
+    bottom: 0;
+    width: 84%;
+    margin-left: -15px;
+  "
+  [appSecured]="'delete'"
+  class="delete-all"
+  *ngIf="url && url.deleteAll"
+>
+  <div
+    style="
+      background: #2053a6;
+      color: white;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0;
+    "
+    [ngClass]="{ hide: isCollapsed }"
+    class="well well-lg card card-block card-header"
+  >
+    <h2>{{ selectedIds?.length }} {{ "table.selected" | translate }}</h2>
+    <button
+      style="background: #4d75b8; color: white !important"
+      class="btn"
+      (click)="openedDialog = !openedDialog"
+    >
+      {{ "table.deleteAll" | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="add-header mt-3">
+  <div
+    *ngIf="!showHeader && headerName"
+    class="mr-3 ml-3"
+    style="width: 2300px; font-weight: bold; font-size: 16px"
+  >
+    <span>
+      {{ "moduleNames." + headerName | translate }}
+    </span>
+  </div>
+  <div *ngIf="showSearchBar" style="margin-top: 12px" class="ml-3 mr-3">
+    <app-search-bar
+      [additionalField]="additionalField"
+      [searchOnly]="searchOnly"
+      (searchFilterTriggered)="searchFilterTriggered($event)"
+      (getListData)="getTableDataFromSearchBar()"
+      [filtersInput]="filters"
+      [placeholderSearch]="placeholderSearch"
+    ></app-search-bar>
+  </div>
+</div>
+<div class="table-with-search">
+  <form
+    style="width: 100%"
+    *ngIf="options.globalSearch"
+    [formGroup]="globalSearch"
+  >
+    <div class="search-btn-wrap">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroupPrepend">
+            <i class="fas fa-search"></i>
+          </span>
         </div>
-      </div>
-      <div class="right ml-3 mr-3">
-        <p-button
-          label="Export"
-          icon="pi pi-upload
-          "
-          [outlined]="true"
-          size="small"
-        ></p-button>
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          id="validationCustomUsername"
+          [placeholder]="'common.search' | translate"
+          aria-describedby="inputGroupPrepend"
+          formControlName="search"
+        />
       </div>
     </div>
+  </form>
+  <div *ngIf="toggle" class="table-wrap">
+    <app-list
+      [clientSide]="clientSide"
+      [url]="url"
+      [columnsI]="columns"
+      [actions]="actions"
+      [viewCustomPermission]="viewCustomPermission"
+      [id]="id"
+      [data]="data"
+      [options]="options"
+      [noDataText]="noDataText"
+      (selected)="getSelected($event)"
+    ></app-list>
+    <!-- TODO: removed due to check unCheck issue [IC-1477] -->
+    <!-- [selectedData]="selectedData" -->
   </div>
-  <p-table
-    [value]="items"
-    [lazy]="true"
-    (onLazyLoad)="loadItems($event)"
-    dataKey="id"
-    [styleClass]="'p-datatable-sm'"
-    [selection]="selectedItems"
-    (selectionChange)="onSelectionChange($event)"
-    [selectAll]="selectAll"
-    (selectAllChange)="onSelectAllChange($event)"
-    [paginator]="true"
-    [rows]="10"
-    [totalRecords]="totalRecords"
-    [loading]="loading"
-    [first]="first"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [rowsPerPageOptions]="[10, 25, 50]"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th *ngFor="let col of columns">
-          {{ col?.header }}
-        </th>
-
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-rowData let-item>
-      <tr>
-        <td *ngFor="let col of columns">
-          <span *ngIf="!col?.customCell" [pTooltip]="item[col['field']]">
-            {{ item[col["field"]] }}
-          </span>
-          <div *ngIf="col.customCell === 'multiLabel'">
-            <div *ngFor="let item of col.field">
-              <div *ngIf="item.custom === 'navigator'">
-                <a
-                  [routerLink]="col.action(rowData)"
-                  (click)="col.action(rowData)"
-                  style="font-size: 14px; color: #2053a6; cursor: pointer"
-                >
-                  {{ rowData[item.label] }}
-                </a>
-              </div>
-
-              <span style="color: #969696" *ngIf="item.custom === 'default'">
-                {{ rowData[item.label] }}
-              </span>
-              <span style="color: #969696" *ngIf="item.custom === 'icon'">
-                {{ rowData[item.label] }}
-              </span>
-              <span style="color: #414141" *ngIf="item.custom === 'firstLabel'">
-                {{ rowData[item.label] }}
-              </span>
-            </div>
-          </div>
-        </td>
-        <td #myTDdiv>
-          <!-- <i class="pi pi-pencil ml-3" style="font-size: 1rem"></i> -->
-          <div class="card flex justify-content-center">
-            <p-menu
-              [appendTo]="myTDdiv"
-              #menu
-              [model]="actions"
-              [popup]="true"
-            />
-            <p-button (click)="menu.toggle($event)" icon="pi pi-ellipsis-v" />
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
 </div>

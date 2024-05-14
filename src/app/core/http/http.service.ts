@@ -23,7 +23,7 @@ export class HttpService {
 
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.config = this.configService.readConfig();
-    this.baseUrl = this.config.prod;
+    this.baseUrl = this.config.api;
     this.country = this.config.country;
   }
 

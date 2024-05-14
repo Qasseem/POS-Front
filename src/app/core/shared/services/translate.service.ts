@@ -38,4 +38,7 @@ export class AppTranslateService {
       headTag.appendChild(newLink);
     }
   }
+  isEnglish() {
+    return true;
+  }
 }

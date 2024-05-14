@@ -1,0 +1,140 @@
+.custome-dropdown {
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.dropdown-item.tableAction {
+  cursor: pointer;
+  border-bottom: 1px solid #e6ecf5;
+
+  font-size: 14px;
+  padding: 8px 2px;
+  margin-left: 6px;
+  margin-right: 5px;
+  width: auto;
+  color: #414141;
+}
+.dropdown-item.tableAction i {
+  padding-right: 10px;
+  padding-left: 5px;
+}
+.list {
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+  background-color: #e0e5ee;
+}
+// .dropdown-menu:after {
+//   content: '';
+//   position: absolute;
+//   right: 142px;
+//   top: -21px;
+//   width: 13px;
+//   height: 0;
+//   border: solid transparent;
+//   border-width: 10px;
+//   border-bottom-color: #ffffff;
+//   z-index: 0;
+//   transform: rotate(0deg);
+// }
+.dropdown-menu {
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 4;
+  margin-left: 13%;
+  border-radius: 5px;
+  padding-bottom: 5px;
+  border: 0;
+  color: #414141;
+}
+
+.footer {
+  background-color: #f4f4f4;
+  border: 1px solid #c8c8c8;
+  padding: 0.8rem;
+}
+
+.filter-date .filter-with-clear {
+  position: relative;
+
+  i {
+    position: absolute;
+    top: 35%;
+    cursor: pointer;
+  }
+}
+
+::ng-deep.swal2-title {
+  width: 100%;
+}
+
+::ng-deep.swal2-actions {
+  justify-content: flex-end !important;
+
+  .btn {
+    width: 150px;
+  }
+}
+
+.alert-header-text {
+  font-size: 18px;
+  text-align: left;
+  text-transform: lowercase;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
+
+  &.lang-ar {
+    text-align: right;
+  }
+}
+
+.notes-text {
+  width: 100%;
+}
+
+.list {
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+  background-color: #e0e5ee;
+}
+
+.isDisabled {
+  pointer-events: none;
+}
+.actionButtons {
+  color: #2053a6;
+  font-size: 15px;
+  padding: 10px 9px;
+  border-radius: 5px !important;
+}
+.actionButtons:hover {
+  background-color: #dcdcdc;
+}
+.actionButtons:focus {
+  box-shadow: none;
+}
+
+.custom-cell {
+  min-height: 30px;
+  padding: 5px 10px 5px 20px;
+  font-size: 14px;
+}
+
+.tag {
+  color: #2053a6;
+  background: aliceblue;
+  padding: 5px;
+  margin-left: 5px;
+  border-radius: 7px;
+}
+.display {
+  display: inline;
+}
+.col-header {
+  color: #969696 !important;
+  font-size: 14px;
+  line-height: 7px;
+}
