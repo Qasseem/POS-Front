@@ -1,5 +1,5 @@
 export const APIURL = {
-  login: '/CustomerSecurity/LoginIC',
+  login: '/Security/Login',
   menuLinks: '/CustomerSecurity/menuIC',
   register: '/CustomerSecurity/RegisterCustomerUser',
   getAllCities: '/City/GetAllCities',

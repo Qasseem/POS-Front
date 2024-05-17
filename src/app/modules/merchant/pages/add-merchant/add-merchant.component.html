@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="grid">
-      <div class="col-6">
+      <div class="col-4">
         <div class="flex flex-column gap-2">
           <label for="nameAr">Arabic Name</label>
           <input
@@ -11,6 +11,92 @@
             formControlName="nameAr"
           />
 
+          <div
+            *ngIf="f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)"
+            class="invalid-feedback"
+          >
+            <div class="fs-10 color-red" *ngIf="f.nameAr.errors.required">
+              Arabic name field is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="nameAr">Arabic Name</label>
+          <input
+            [ngClass]="{ 'ng-invalid ng-dirty': f.nameAr?.errors?.required }"
+            type="text"
+            pInputText
+            formControlName="nameAr"
+          />
+
+          <div
+            *ngIf="f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)"
+            class="invalid-feedback"
+          >
+            <div class="fs-10 color-red" *ngIf="f.nameAr.errors.required">
+              Arabic name field is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="nameAr">Arabic Name</label>
+          <input
+            [ngClass]="{ 'ng-invalid ng-dirty': f.nameAr?.errors?.required }"
+            type="text"
+            pInputText
+            formControlName="nameAr"
+          />
+
+          <div
+            *ngIf="f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)"
+            class="invalid-feedback"
+          >
+            <div class="fs-10 color-red" *ngIf="f.nameAr.errors.required">
+              Arabic name field is required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="nameAr">Arabic Name</label>
+          <input
+            [ngClass]="{ 'ng-invalid ng-dirty': f.nameAr?.errors?.required }"
+            type="text"
+            pInputText
+            formControlName="nameAr"
+          />
+
+          <div
+            *ngIf="f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)"
+            class="invalid-feedback"
+          >
+            <div class="fs-10 color-red" *ngIf="f.nameAr.errors.required">
+              Arabic name field is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="nameAr">Arabic Name</label>
+
+          <p-dropdown
+            [options]="categories"
+            formControlName="merchantCategory"
+            optionLabel="name"
+            placeholder="Select a Category"
+          />
           <div
             *ngIf="f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)"
             class="invalid-feedback"

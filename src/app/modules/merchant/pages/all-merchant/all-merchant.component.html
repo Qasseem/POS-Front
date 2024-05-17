@@ -1,6 +1,13 @@
-<!-- <div class="m-3">
-  <app-table [url]="" [columns]="columns"> </app-table>
-</div> -->
+<div class="p-grid ml-2 m-2">
+  <div class="p-col" style="text-align: right">
+    <span class="mt-2" style="float: left; font-weight: bolder">Merchant</span>
+    <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
+      <span class="ml-1 mr-1 add">
+        <i class="pi pi-plus add-icon"></i>
+      </span>
+    </p-button>
+  </div>
+</div>
 <div>
   <app-table
     [showSearchBar]="true"

@@ -42,7 +42,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   @Input() searchOnly = false;
   @Input() StyleInput = '';
   @Input() styleContainer =
-    'border-radius: 0.2rem ;height: 50px;background-color: white;width: 651px';
+    'border-radius: 0.4rem ;height: 50px;background-color: white;width: 651px ;margin: 10px; border: 1px solid #C3C3C3;';
   @Input() additionalField = true;
   @Input() placeholderSearch = 'Search';
   @Input() styleObj = {

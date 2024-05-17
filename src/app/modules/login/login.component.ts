@@ -38,8 +38,6 @@ export class LoginComponent implements OnInit {
     let obj = {
       userName: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
-      isSavedPassword: true,
-      loginType: 1,
     };
     if (this.loginForm.valid) {
       this.spinner.show();

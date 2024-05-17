@@ -34,7 +34,10 @@
   </div>
 </div>
 
-<div class="add-header mt-3">
+<div
+  class="add-header"
+  style="background-color: white; border-radius: 10px 10px 0px 0px"
+>
   <div
     *ngIf="!showHeader && headerName"
     class="mr-3 ml-3"
@@ -44,7 +47,7 @@
       {{ "moduleNames." + headerName | translate }}
     </span>
   </div>
-  <div *ngIf="showSearchBar" style="margin-top: 12px" class="ml-3 mr-3">
+  <div *ngIf="showSearchBar">
     <app-search-bar
       [additionalField]="additionalField"
       [searchOnly]="searchOnly"
@@ -54,7 +57,7 @@
       [placeholderSearch]="placeholderSearch"
     ></app-search-bar>
   </div>
-  <div style="margin-bottom: 0" #top class="add-header">
+  <div *ngIf="false" style="margin-bottom: 0" #top class="add-header">
     <div style="margin-right: 0" class="btns-container">
       <button
         style="width: 126px"

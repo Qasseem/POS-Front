@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
   HTTPMethods,
@@ -117,7 +118,10 @@ export class AllMerchantComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+  navigateToAdd() {
+    this.router.navigate(['main/merchant/add']);
+  }
 }
