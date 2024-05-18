@@ -149,8 +149,6 @@ export class PNgDropdownComponent implements OnInit {
   };
   //load on scroll method
   onScrollToEnd() {
-    console.log('lllll');
-
     if (this.itemsSearchNo === this.itemsData.length) return;
     this.getPaginationOptions.pageNumber++;
     this.getAllData('onScrollToEnd');

@@ -31,8 +31,6 @@ export class AddMerchantComponent implements OnInit {
 
   GetAllMerchantCategories() {
     this.merchantService.GetAllMerchantCategories().subscribe((resp) => {
-      console.log(resp);
-
       if (resp.success) {
         this.categories = resp.data;
       }
@@ -46,7 +44,6 @@ export class AddMerchantComponent implements OnInit {
     let obj = this.form.value;
     delete obj.id;
     this.merchantService.Add(this.form.value).subscribe((resp) => {
-      console.log(resp);
       if (resp.success) {
         this.backToList();
       }

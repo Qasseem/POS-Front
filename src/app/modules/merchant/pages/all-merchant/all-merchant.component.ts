@@ -116,7 +116,7 @@ export class AllMerchantComponent implements OnInit {
     {
       type: SearchInputTypes.date,
       field: 'createDate',
-      isFixed: false,
+      isFixed: true,
     },
   ];
 

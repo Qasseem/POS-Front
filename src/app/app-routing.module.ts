@@ -8,7 +8,6 @@ import { AuthGuard } from './core/Guards/auth.guard';
 export class LoginGuard {
   constructor(private storage: StorageService, private router: Router) {}
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    console.log(this.storage.getToken());
     if (this.storage.getToken() !== null) {
       this.router.navigate(['/main']);
       return false;

@@ -25,8 +25,6 @@ export class LoadingInterceptor implements HttpInterceptor {
    * Show the Loading with lazy dismiss
    */
   async enableLoading() {
-    console.log('Show');
-
     await this.loading.show();
   }
 
@@ -39,8 +37,6 @@ export class LoadingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       finalize(() => {
         this.loading.hide();
-        console.log('Hide');
-
         setTimeout(() => this.loading.hide(), 5000);
       })
     );

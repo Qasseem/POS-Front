@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Hi', this.loginForm);
     let obj = {
       userName: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
@@ -53,7 +52,6 @@ export class LoginComponent implements OnInit {
     if (resp.success) {
       // this.storage.clearStorage();
       this.authService.items = [];
-      console.log('success');
       this.storage.setLoginData(resp);
       const url = '/home/dashboard';
       // this.permissions.syncRolesPermissions();
@@ -62,7 +60,6 @@ export class LoginComponent implements OnInit {
   }
   handleError(err) {
     this.spinner.hide();
-    console.log(err);
   }
 
   get email() {

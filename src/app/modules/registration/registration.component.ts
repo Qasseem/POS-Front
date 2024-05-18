@@ -31,7 +31,6 @@ export class RegistrationComponent implements OnInit {
     private appTranslateService: AppTranslateService
   ) {
     this.token = this.route.snapshot.params['token'] || null;
-    console.log(this.token);
     this.appTranslateService.changeLangage('en');
     this.storage.setItem('lang', 'en');
   }
@@ -75,8 +74,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Hi', this.registerForm);
-
     if (this.registerForm.valid) {
       this.spinner.show();
       let formData = {
@@ -108,7 +105,6 @@ export class RegistrationComponent implements OnInit {
   }
   handleError(err) {
     this.spinner.hide();
-    console.log(err);
   }
   get email() {
     return this.registerForm.get('email');

@@ -374,58 +374,7 @@
                   <div class="header mb-2">
                     <span>
                       {{ "propsNames." + ctrl.field | translate }}
-                      <div style="margin: 0px; height: 20px" class="btn-group">
-                        <label
-                          [ngClass]="
-                            !ctrl.isDateTo && !ctrl.isDateFrom
-                              ? 'bg-color text-light'
-                              : ''
-                          "
-                          (click)="
-                            filtersForm.get(ctrl.field).setValue(null);
-                            ctrl.isDateTo = false;
-                            ctrl.isDateFrom = false
-                          "
-                          class="btn sm-button border-color"
-                          tabindex="0"
-                          role="button"
-                          >Range
-                        </label>
-                        <label
-                          [ngClass]="
-                            ctrl.isDateFrom ? 'bg-color text-light' : ''
-                          "
-                          *ngIf="ctrl.pickerType !== 'timer'"
-                          class="mr-1 ml-1"
-                          (click)="
-                            filtersForm.get(ctrl.field).setValue(null);
-                            ctrl.isDateTo = false;
-                            ctrl.isDateFrom = true
-                          "
-                          class="btn sm-button border-color"
-                          tabindex="0"
-                          role="button"
-                          >From</label
-                        >
-                        <label
-                          [ngClass]="ctrl.isDateTo ? 'bg-color text-light' : ''"
-                          (click)="
-                            filtersForm.get(ctrl.field).setValue(null);
-                            ctrl.isDateTo = true;
-                            ctrl.isDateFrom = false
-                          "
-                          class="btn sm-button border-color"
-                          tabindex="0"
-                          role="button"
-                          *ngIf="ctrl.pickerType !== 'timer'"
-                          >To</label
-                        >
-                        <span
-                          *ngIf="ctrl.pickerType == 'timer'"
-                          class="RangeOnly"
-                          >'Range Only'</span
-                        >
-                      </div>
+
                       <span
                         *ngIf="!ctrl.isFixed"
                         style="color: #c3c3c3; font-size: smaller"
@@ -436,7 +385,14 @@
                       </span>
                     </span>
                   </div>
-                  <input
+
+                  <p-calendar
+                    [formControlName]="ctrl.field"
+                    selectionMode="range"
+                    appendTo="body"
+                    [readonlyInput]="true"
+                  />
+                  <!-- <input
                     (dateTimeChange)="
                       getDateData($event.value, ctrl.field, ctrl.pickerType)
                     "
@@ -452,8 +408,8 @@
                         ? 'rangeFrom'
                         : 'range'
                     "
-                  />
-                  <div
+                  /> -->
+                  <!-- <div
                     style="color: #969696; font-size: 14px; padding-top: 25px"
                     class="icon-claender"
                     [ngClass]="{
@@ -483,14 +439,14 @@
                       ctrl.pickerType ? ctrl.pickerType : 'calendar'
                     "
                     #dt1
-                  ></owl-date-time>
+                  ></owl-date-time> -->
                 </div>
               </div>
             </div>
           </div>
         </p-scrollPanel>
         <div class="grid">
-          <div class="col-5"></div>
+          <div class="col-9"></div>
           <div class="col-3">
             <button
               pButton

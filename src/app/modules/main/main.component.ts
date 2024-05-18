@@ -67,15 +67,12 @@ export class MainComponent implements OnInit {
   }
 
   clickItem(event) {
-    console.log(event);
     // this.items.push(event.item);
   }
 
   ngOnInit() {}
 
-  setActiveItem(ss) {
-    console.log(ss);
-  }
+  setActiveItem(ss) {}
   navigate(item) {
     this.items.forEach((x) => (x.active = false));
     this.dashboardItems.forEach((x) => (x.active = false));

@@ -53,7 +53,6 @@ export class ForgotPasswordComponent implements OnInit {
         (resp) => {
           this.spinner.hide();
           if (resp.success) {
-            console.log(resp);
             this.toastService.showSuccess(
               this.translate.instant('Register.forgotPasswordMesssage')
             );
