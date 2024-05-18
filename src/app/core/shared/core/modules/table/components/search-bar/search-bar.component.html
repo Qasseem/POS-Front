@@ -32,10 +32,7 @@
       </span>
 
       <a style="cursor: pointer" (click)="op.toggle($event)">
-        <span
-          [attr.test_id]="route.url.split('/')[2] + '_Search_Fitlers_Button'"
-          style="color: #2053a6"
-        >
+        <span style="color: #2053a6">
           {{ "Filters" | translate }}
         </span>
         <img src="assets/iamges/icons/keyboard_arrow.svg" alt="drag" />
@@ -50,7 +47,6 @@
       <i class="pi pi-search"></i>
       <input
         [(ngModel)]="inputTextHistoryValue"
-        [attr.test_id]="route.url.split('/')[2] + '_Search_Bar'"
         (ngModelChange)="InputSearch$.next($event); inputText($event)"
         class="no-border"
         type="text"
@@ -72,7 +68,6 @@
       <i class="pi pi-search"></i>
       <input
         [(ngModel)]="inputTextHistoryValue"
-        [attr.test_id]="route.url.split('/')[2] + '_Search_Bar'"
         (ngModelChange)="InputSearch$.next($event); inputText($event)"
         class="no-border"
         [style]="StyleInput"
@@ -100,9 +95,9 @@
     >
       <div [hidden]="!isFilterForm">
         <p-scrollPanel [style]="{ width: '100%' }">
-          <div class="row">
+          <div class="grid">
             <div
-              class="col-md-4 mt-3 mb-0 pb-0"
+              class="col-4 mt-3 mb-0 pb-0"
               *ngFor="let ctrl of filterControls"
             >
               <!-- switch for the type-->
@@ -123,35 +118,26 @@
                             !language.isEnglish() ? 'float-left' : 'float-right'
                           "
                         >
-                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                          <i
-                            *ngIf="!ctrl.isPinned"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
-                          <i
-                            *ngIf="ctrl.isPinned"
-                            style="color: #31b743"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
                         </span>
                       </span>
                     </div>
 
                     <input
+                      type="text"
+                      (input)="getInputData($event.target.value, ctrl.field)"
+                      [formControlName]="ctrl.field"
+                      pInputText
+                      formControlName="text"
+                    />
+                    <!--
+                    <input
                       [mask]="ctrl?.mask"
-                      [attr.test_id]="
-                        ctrl.headerName
-                          ? ctrl.headerName
-                          : ctrl.field + '_Filter'
-                      "
                       (input)="getInputData($event.target.value, ctrl.field)"
                       [formControlName]="ctrl.field"
                       style="background-image: none"
                       [type]="ctrl.typeInput ? ctrl.typeInput : 'text'"
                       class="form-control"
-                    />
+                    /> -->
                   </div>
                   <!-- <app-input [formControlName]="ctrl.field"></app-input> -->
                 </div>
@@ -171,29 +157,12 @@
                             !language.isEnglish() ? 'float-left' : 'float-right'
                           "
                         >
-                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                          <i
-                            *ngIf="!ctrl.isPinned"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
-                          <i
-                            *ngIf="ctrl.isPinned"
-                            style="color: #31b743"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
                         </span>
                       </span>
                     </div>
 
                     <input
                       [mask]="ctrl?.mask"
-                      [attr.test_id]="
-                        ctrl.headerName
-                          ? ctrl.headerName
-                          : ctrl.field + '_Filter'
-                      "
                       (input)="getInputData($event.target.value, ctrl.field)"
                       [formControlName]="ctrl.field"
                       style="background-image: none"
@@ -216,23 +185,32 @@
                           !language.isEnglish() ? 'float-left' : 'float-right'
                         "
                       >
-                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                        <i
-                          *ngIf="!ctrl.isPinned"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
-                        <i
-                          *ngIf="ctrl.isPinned"
-                          style="color: #31b743"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
                       </span>
                     </span>
                   </div>
 
-                  <ic-ddl-client
+                  <p-dropdown
+                    *ngIf="!ctrl.isMultiple"
+                    [formControlName]="ctrl.field"
+                    [options]="ctrl.ddlData"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                    appendTo="body"
+                    (onChange)="getSelectedData($event, ctrl.field)"
+                    placeholder="Select"
+                  />
+
+                  <p-multiSelect
+                    *ngIf="ctrl.isMultiple"
+                    [formControlName]="ctrl.field"
+                    [options]="ctrl.ddlData"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                    appendTo="body"
+                    (onChange)="getSelectedData($event, ctrl.field)"
+                    placeholder="Select"
+                  />
+                  <!-- <ic-ddl-client
                     *ngIf="!ctrl.serverSide"
                     [id]="ctrl.propValueName ? ctrl.propValueName : 'id'"
                     [itemsData]="ctrl.data?.length ? ctrl.data : ctrl.ddlData"
@@ -248,7 +226,7 @@
                     [form]="filtersForm"
                     [isHideSelected]="false"
                   >
-                  </ic-ddl-client>
+                  </ic-ddl-client> -->
                 </div>
                 <div *ngSwitchCase="'CHOICE'">
                   <div class="header mb-2">
@@ -261,23 +239,19 @@
                           !language.isEnglish() ? 'float-left' : 'float-right'
                         "
                       >
-                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                        <i
-                          *ngIf="!ctrl.isPinned"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
-                        <i
-                          *ngIf="ctrl.isPinned"
-                          style="color: #31b743"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
                       </span>
                     </span>
                   </div>
 
-                  <ic-ddl-client
+                  <p-dropdown
+                    [controlName]="ctrl.field"
+                    [options]="ctrl.ddlData"
+                    optionLabel="nameEn"
+                    (onChange)="getSelectedData($event, ctrl.field)"
+                    placeholder="Select"
+                  />
+
+                  <!-- <ic-ddl-client
                     *ngIf="!ctrl.serverSide"
                     [itemsData]="ctrl.ddlData"
                     [dropdownPosition]="
@@ -292,7 +266,7 @@
                     [form]="filtersForm"
                     [isHideSelected]="false"
                   >
-                  </ic-ddl-client>
+                  </ic-ddl-client> -->
                   <ic-ddl
                     *ngIf="ctrl.serverSide"
                     [id]="ctrl.propValueName ? ctrl.propValueName : 'id'"
@@ -325,24 +299,12 @@
                             !language.isEnglish() ? 'float-left' : 'float-right'
                           "
                         >
-                          {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                          <i
-                            *ngIf="!ctrl.isPinned"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
-                          <i
-                            *ngIf="ctrl.isPinned"
-                            style="color: #31b743"
-                            (click)="pin(ctrl)"
-                            class="fas fa-thumbtack"
-                          ></i>
                         </span>
                       </span>
                     </div>
 
                     <div class="row m-0 p-0">
-                      <div class="col-md-6 m-0 p-0">
+                      <div class="col-6 m-0 p-0">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span
@@ -370,15 +332,10 @@
                             class="form-control no-radius"
                             aria-label="Username"
                             aria-describedby="basic-addon1"
-                            [attr.test_id]="
-                              ctrl.headerName
-                                ? ctrl.headerName
-                                : ctrl.field + 'From_Filter'
-                            "
                           />
                         </div>
                       </div>
-                      <div class="col-md-6 m-0 p-0">
+                      <div class="col-6 m-0 p-0">
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span
@@ -388,11 +345,6 @@
                             >
                           </div>
                           <input
-                            [attr.test_id]="
-                              ctrl.headerName
-                                ? ctrl.headerName
-                                : ctrl.field + 'To_Filter'
-                            "
                             (input)="
                               getInputRangeData(
                                 $event.target.value,
@@ -481,18 +433,6 @@
                           !language.isEnglish() ? 'float-left' : 'float-right'
                         "
                       >
-                        {{ ctrl.isPinned ? "Unpin" : "Pin" }}
-                        <i
-                          *ngIf="!ctrl.isPinned"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
-                        <i
-                          *ngIf="ctrl.isPinned"
-                          style="color: #31b743"
-                          (click)="pin(ctrl)"
-                          class="fas fa-thumbtack"
-                        ></i>
                       </span>
                     </span>
                   </div>
@@ -511,9 +451,6 @@
                         : ctrl.isDateFrom
                         ? 'rangeFrom'
                         : 'range'
-                    "
-                    [attr.test_id]="
-                      ctrl.headerName ? ctrl.headerName : ctrl.field + '_Filter'
                     "
                   />
                   <div
@@ -552,33 +489,10 @@
             </div>
           </div>
         </p-scrollPanel>
-        <div class="row">
-          <!-- <div class="col-md-4">
+        <div class="grid">
+          <div class="col-5"></div>
+          <div class="col-3">
             <button
-              [attr.test_id]="'Add_Field_Button'"
-              *ngIf="additionalField"
-              pButton
-              pRipple
-              type="button"
-              [label]="'Add field'"
-              class="p-button-text mr-2 ml-2"
-              (click)="addNewFilter()"
-            ></button>
-            <button
-              *ngIf="additionalField"
-              pButton
-              pRipple
-              type="button"
-              [label]="'Reset to default'"
-              style="color: #c3c3c3"
-              class="p-button-text mr-2 ml-2"
-              (click)="resetToDefaults()"
-            ></button>
-          </div> -->
-          <div class="col-md-5"></div>
-          <div class="col-md-3">
-            <button
-              [attr.test_id]="route.url.split('/')[2] + '_Reset_Filter_Button'"
               pButton
               pRipple
               type="button"
@@ -591,7 +505,6 @@
               class="mr-2 ml-2"
               [label]="'Apply'"
               (click)="search(filtersForm.value)"
-              [attr.test_id]="route.url.split('/')[2] + '_Apply_Filter_Button'"
             >
             </p-button>
           </div>
@@ -599,15 +512,14 @@
       </div>
       <div [hidden]="isFilterForm">
         <p-scrollPanel [style]="{ width: '100%' }">
-          <div class="row">
-            <div class="col-md-3" *ngFor="let ctrl of unPinnedControls">
+          <div class="grid">
+            <div class="col-3" *ngFor="let ctrl of unPinnedControls">
               <div class="p-field-checkbox m-2">
                 <p-checkbox
                   [inputId]="ctrl.field"
                   [(ngModel)]="ctrl.selectedToFilter"
                   binary="true"
                   [ngModelOptions]="{ standalone: true }"
-                  [attr.test_id]="ctrl.field + '_CheckBox'"
                 ></p-checkbox>
                 <label [for]="ctrl.field" class="ml-2 mr-2 mb-0" for="binary">{{
                   "propsNames." + ctrl.field | translate
@@ -618,8 +530,8 @@
         </p-scrollPanel>
 
         <div class="row line"></div>
-        <div class="row">
-          <div class="col-md-2">
+        <div class="grid">
+          <div class="col-2">
             <button
               pButton
               pRipple
@@ -630,8 +542,8 @@
               (click)="isFilterForm = !isFilterForm"
             ></button>
           </div>
-          <div class="col-md-8"></div>
-          <div class="col-md-2" style="padding-left: 45px">
+          <div class="col-8"></div>
+          <div class="col-2" style="padding-left: 45px">
             <button
               pButton
               pRipple
@@ -639,7 +551,6 @@
               [label]="'Confirm'"
               class="mr-2 ml-2"
               (click)="addNewFilterToForm()"
-              [attr.test_id]="'Confirm_Button'"
             ></button>
           </div>
         </div>

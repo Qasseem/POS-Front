@@ -6,6 +6,7 @@ import { ListComponent } from './components/list/list.component';
 import { PrimeNgInputsModule } from '../../../primeng/primeng-input-module';
 import { TableComponent } from './table.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { FormModule } from 'src/app/core/shared/form/form-module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     PrimeNgPanelModule,
     TranslateModule,
     PrimeNgInputsModule,
+    FormModule,
   ],
   declarations: [ListComponent, TableComponent, SearchBarComponent],
   exports: [ListComponent, TableComponent, SearchBarComponent],

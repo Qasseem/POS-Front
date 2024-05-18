@@ -162,5 +162,12 @@
     "": "",
     "": "",
     "": ""
+  },
+  "propsNames": {
+    "category": "Category",
+    "UserName": "User Name",
+    "MerchantNameAR": "Merchant Name[AR]",
+    "MerchantNameEN": "Merchant Name [EN]",
+    "": ""
   }
 }

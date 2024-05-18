@@ -23,7 +23,7 @@ export class AllMerchantComponent implements OnInit {
   navToServiceSetting(row: any): any {
     throw new Error('Method not implemented.');
   }
-  customerInfo(row: any): any {
+  goToDetails(row: any): any {
     const dolphinId = row.dolphinId || 0;
     const id = row.id;
     const URL = `/home/customers/info/${id}/${dolphinId}`;
@@ -31,41 +31,44 @@ export class AllMerchantComponent implements OnInit {
   }
   public columns: ColumnsInterface[] = [
     {
-      field: 'dolphinId',
-      header: 'table.dolphinId',
-      width: '130px',
+      field: 'reference',
+      header: 'Ref',
+      width: '100px',
+    },
+    {
+      field: 'id',
+      header: 'ID',
+      width: '100px',
     },
 
     {
       field: [
-        { label: 'nameEn', custom: 'navigator' },
-        { label: 'nameAr', custom: 'icon' },
+        { label: 'merchantNameEN', custom: 'navigator' },
+        { label: 'merchantNameAR', custom: 'default' },
       ],
-      header: 'table.customerName',
+      header: 'Name',
       customCell: 'multiLabel',
-      action: (row) => this.customerInfo(row),
-      width: '220px',
+      action: (row) => this.goToDetails(row),
+      width: '200px',
     },
     {
-      field: 'branchName',
-      header: 'table.branch',
+      field: 'userName',
+      header: 'User Name',
       width: '110px',
     },
     {
-      field: 'statusNameEn',
-      header: 'table.statusNameEn',
+      field: 'category',
+      header: 'Category',
       width: '110px',
     },
     {
-      field: 'salesManNameEn',
-      header: 'table.salesMan',
-      width: '110px',
-    },
-    {
-      field: 'tagsNamesEn',
-      header: 'customers.tags',
-      width: '90px',
-      customCell: 'tags',
+      field: [
+        { label: 'merchantNameEN', custom: 'default' },
+        { label: 'merchantNameAR', custom: 'default' },
+      ],
+      header: 'Created by',
+      customCell: 'multiLabel',
+      width: '200px',
     },
   ];
 
@@ -104,12 +107,11 @@ export class AllMerchantComponent implements OnInit {
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'Category',
+      field: 'category',
       isFixed: true,
       url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.postReqWithUrlHeader,
-      params: '0',
-      propValueName: 'code',
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
     },
     {
       type: SearchInputTypes.date,

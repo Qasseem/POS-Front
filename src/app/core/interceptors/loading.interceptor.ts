@@ -3,7 +3,7 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { finalize } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 /**
@@ -25,6 +25,8 @@ export class LoadingInterceptor implements HttpInterceptor {
    * Show the Loading with lazy dismiss
    */
   async enableLoading() {
+    console.log('Show');
+
     await this.loading.show();
   }
 
@@ -37,6 +39,8 @@ export class LoadingInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       finalize(() => {
         this.loading.hide();
+        console.log('Hide');
+
         setTimeout(() => this.loading.hide(), 5000);
       })
     );

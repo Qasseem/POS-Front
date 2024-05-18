@@ -83,8 +83,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   //this method is for task module history search
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.taskSearchHistoryObj.currentValue) {
-      console.log(changes?.taskSearchHistoryObj.currentValue);
+    if (changes?.taskSearchHistoryObj?.currentValue) {
+      console.log(changes?.taskSearchHistoryObj?.currentValue);
       if (changes?.taskSearchHistoryObj.currentValue?.toolTipData) {
         this.formValueDictionaryTooltip =
           changes?.taskSearchHistoryObj.currentValue?.toolTipData;
@@ -100,6 +100,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
+    console.log(this.filtersInput);
+
     //check if there is any history for the activated page
     if (this.tableCoreService.gridSearchHistory[this.route.url]) {
       //assign the search ker if exist in history obj
@@ -134,6 +136,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.filtersInput.find((x) => x.field == item.field).type ==
         SearchInputTypes.select
       ) {
+        console.log(resp.data);
+
         resp.data.forEach((item) => {
           item?.code ? (item.code = item.code.trim()) : '';
         });
@@ -141,11 +145,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.filtersInput.find((x) => x.field == item.field).ddlData =
           resp.data;
       } else {
-        resp.data.data.forEach((item) => {
+        console.log(resp);
+
+        resp.data.forEach((item) => {
           item?.code ? (item.code = item.code.trim()) : '';
         });
         this.filtersInput.find((x) => x.field == item.field).ddlData =
-          resp.data.data;
+          resp.data;
       }
       // this.filtersInput.find((x) => x.field == item.field).type ==
       // SearchInputTypes.select
@@ -157,6 +163,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   async createForms() {
+    console.log('createForms');
+
     if (this.filtersInput) {
       this.filterControls = this.filtersInput.filter((ctr) => {
         return ctr.isFixed || ctr.isPinned;
@@ -164,6 +172,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
       this.unPinnedControls = this.filtersInput.filter((ctr) => {
         return !ctr.isFixed;
       });
+      console.log(this.filterControls);
 
       for (const ctrl of this.filterControls) await this.createControls(ctrl);
 
@@ -213,6 +222,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
     this.emitFormValue.next(searchObjWithToolTipData);
     this.tableCoreService.pageOptions.isSearchFilter = true;
     this.lastFormValue = this.filtersForm.value;
+    console.log(this.lastFormValue);
+
     this.tableCoreService.searchNew$.next(searchObjWithToolTipData);
     this.mySearchDialog.hide();
     this.isSearchedBefore = true;
@@ -235,48 +246,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
   addNewFilter() {
     this.isFilterForm = false;
-  }
-  addNewFilterToForm() {
-    for (const ctrl of this.unPinnedControls) {
-      if (
-        ctrl.selectedToFilter &&
-        !this.filterControls.find((el) => el.field === ctrl.field)
-      ) {
-        this.createControls(ctrl);
-        this.filterControls.push(ctrl);
-        if (
-          (ctrl.url && ctrl.type == SearchInputTypes.choice) ||
-          (ctrl.url && ctrl.type == SearchInputTypes.select)
-        ) {
-          if (!ctrl.serverSide) {
-            this.getDDLData(ctrl);
-          }
-        }
-      }
-      if (!ctrl.selectedToFilter) {
-        this.filterControls = this.filterControls.filter(
-          (el) => el.field !== ctrl.field
-        );
-      }
-    }
-    this.filterControls = [...this.filterControls];
-
-    this.isFilterForm = true;
-  }
-  pin(ctrl) {
-    let requestBody = {
-      moduleId: this.moduleReference,
-      filterName: ctrl.field,
-    };
-    let pinStatus;
-    ctrl.isPinned
-      ? (pinStatus = this.tableCoreService.unPinFilter(requestBody))
-      : (pinStatus = this.tableCoreService.pinFilter(requestBody));
-
-    pinStatus.pipe(take(1)).subscribe((resp) => {});
-
-    this.filterControls.find((el) => el.field === ctrl.field).isPinned =
-      !this.filterControls.find((el) => el.field === ctrl.field).isPinned;
   }
 
   resetToDefaults() {
@@ -325,10 +294,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
 
   getSelectedData(event, ctrlName) {
+    console.log(event);
+    console.log(this.filtersForm.value);
+
     if (event) {
       let propValue = '';
-      if (Array.isArray(event)) {
-        event.map((item) => {
+      if (Array.isArray(event?.value)) {
+        event?.value.map((item) => {
           this.language.currentLanguage() === 'en'
             ? (propValue += item.nameEn + ', ')
             : (propValue += item.nameAr + +', ');
@@ -336,8 +308,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
         propValue = propValue.slice(0, -2);
       } else {
         this.language.currentLanguage() === 'en'
-          ? (propValue = event.nameEn)
-          : (propValue = event.nameAr);
+          ? (propValue = event?.value.nameEn)
+          : (propValue = event?.value.nameAr);
       }
       this.formValueDictionary[ctrlName] = propValue;
     }
@@ -381,6 +353,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   show(event) {
     if (!this.isDataLOadedOnce) {
       this.isDataLOadedOnce = true;
+      this.createForms();
       this.filtersInput.map((item) => {
         if (
           (item.isFixed && item.url && item.type == SearchInputTypes.choice) ||
