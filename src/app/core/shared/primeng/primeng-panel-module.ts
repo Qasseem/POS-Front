@@ -6,6 +6,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 @NgModule({
   imports: [
     PanelMenuModule,
@@ -15,6 +16,7 @@ import { MenuModule } from 'primeng/menu';
     TooltipModule,
     MenubarModule,
     MenuModule,
+    AvatarModule,
   ],
   providers: [],
   declarations: [],
@@ -26,6 +28,7 @@ import { MenuModule } from 'primeng/menu';
     TooltipModule,
     MenubarModule,
     MenuModule,
+    AvatarModule,
   ],
 })
 export class PrimeNgPanelModule {}

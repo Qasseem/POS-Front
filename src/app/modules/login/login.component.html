@@ -1,4 +1,101 @@
-<div class="background-image">
+<div class="grid" style="background-color: white; height: 100vh">
+  <div class="col-6" style="height: 100%">
+    <div class="grid m-4">
+      <img src="../../../assets/iamges/images/paymob.png" alt="" />
+    </div>
+    <div class="grid" style="padding-top: 100px">
+      <div class="login-center">
+        <div class="mt-2">
+          <span class="font-16 text-bold">
+            {{ "Login to your account" | translate }}
+          </span>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="p-field">
+            <label class="color-info" for="username">{{
+              "Register.email" | translate
+            }}</label>
+            <input
+              style="width: 100%"
+              id="username"
+              type="text"
+              formControlName="email"
+              pInputText
+            />
+            <div
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="p-error"
+            >
+              <div *ngIf="email.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="email.hasError('pattern')">
+                {{ "Validation.mailFormat" | translate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-field">
+            <label class="color-info" for="password">{{
+              "Register.password" | translate
+            }}</label>
+            <p-password
+              [toggleMask]="true"
+              [style]="{ width: '100%', 'margin-top': '10px' }"
+              [inputStyle]="{ width: '100%' }"
+              id="password"
+              formControlName="password"
+              [feedback]="false"
+            ></p-password>
+            <div
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+              class="p-error"
+            >
+              <div *ngIf="password.hasError('required')">
+                {{ "Validation.required" | translate }}
+              </div>
+              <div *ngIf="password.hasError('minlength')">
+                {{ "Validation.stringLenght6" | translate }}
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 mb-4">
+            <p-checkbox
+              formControlName="keepMe"
+              value="Keep me sign-in"
+              inputId="ny"
+            />
+            <label for="ny" class="ml-2 mr-2">Keep me sign-in</label>
+          </div>
+          <!-- <div style="margin-bottom: 150px">
+            <span (click)="goToForgotPage()" class="forget-password">{{
+              "Register.forgotPassword" | translate
+            }}</span>
+          </div> -->
+          <button
+            class="p-field save-btn mt-6"
+            type="submit"
+            pButton
+            size="small"
+            [label]="'Register.login' | translate"
+            [disabled]="!loginForm.valid"
+          ></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-6" style="height: 100%">
+    <div style="margin: 20px 30px 20px 0px; height: 100%; width: 100%">
+      <img
+        src="../../../assets/iamges/images/login.png"
+        style="width: 100%; border-radius: 15px"
+        alt=""
+      />
+    </div>
+  </div>
+</div>
+
+<!-- <div class="background-image">
   <div class="login-container">
     <div class="p-card">
       <div><img src="../../../assets/iamges/svg/logo.svg" alt="" /></div>
@@ -76,4 +173,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
