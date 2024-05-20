@@ -18,10 +18,12 @@ export class AllMerchantComponent implements OnInit {
   public url = APIURL;
 
   completeData(row: any): any {
-    throw new Error('Method not implemented.');
+    const URL = `/home/customers/info/${row?.id}`;
+    return URL;
   }
   navToServiceSetting(row: any): any {
-    throw new Error('Method not implemented.');
+    const URL = `/home/customers/info/${row?.id}`;
+    return URL;
   }
   goToDetails(row: any): any {
     const dolphinId = row.dolphinId || 0;
@@ -74,17 +76,17 @@ export class AllMerchantComponent implements OnInit {
 
   public actions: ActionsInterface[] = [
     {
-      name: 'customers.solutionsSettings',
+      name: 'edit',
       icon: 'fas fa-briefcase',
       permission: 'viewcustomerpayments',
       call: (row: any) => this.navToServiceSetting(row),
+      customPermission: (row: any) => row.id > 3,
     },
     {
-      name: 'customers.complete',
-      icon: 'fas fa-user-edit',
+      name: 'add',
+      icon: 'pi pi-fw pi-file',
       permission: 'completedata',
       call: (row: any) => this.completeData(row),
-      customPermission: (row: any) => row.statusId === 1 || row.statusId === 2,
     },
   ];
 

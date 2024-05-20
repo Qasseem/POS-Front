@@ -4,6 +4,7 @@ import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-mo
 import { TranslateModule } from '@ngx-translate/core';
 import { ListComponent } from './components/list/list.component';
 import { PrimeNgInputsModule } from '../../../primeng/primeng-input-module';
+import { PrimeNgButtonsModule } from '../../../primeng/primeng-button-module';
 import { TableComponent } from './table.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FormModule } from 'src/app/core/shared/form/form-module';
@@ -15,6 +16,7 @@ import { FormModule } from 'src/app/core/shared/form/form-module';
     TranslateModule,
     PrimeNgInputsModule,
     FormModule,
+    PrimeNgButtonsModule,
   ],
   declarations: [ListComponent, TableComponent, SearchBarComponent],
   exports: [ListComponent, TableComponent, SearchBarComponent],

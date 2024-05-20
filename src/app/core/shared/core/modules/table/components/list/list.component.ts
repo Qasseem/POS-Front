@@ -78,6 +78,11 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   activatedRoute: string;
   fullRoute: string[];
 
+  listActions = [];
+  rowData;
+  setRow(rowData) {
+    this.rowData = rowData;
+  }
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -92,7 +97,41 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   reset() {
     this.first = 0;
   }
+
+  callAction(name) {
+    let action = this.actions.find((x) => x.name == name);
+    if (action) {
+      action.call(this.rowData);
+    }
+  }
+  validateActionsForRow(rowData) {
+    this.listActions = [];
+    this.actions.forEach((element) => {
+      if (
+        element.customPermission == undefined ||
+        element.customPermission(rowData)
+      ) {
+        this.listActions.push({
+          label: element.name,
+          icon: element.icon,
+          command: () => {
+            this.callAction(element?.name);
+          },
+        });
+      }
+    });
+  }
   ngOnInit() {
+    this.listActions = [];
+    this.actions.forEach((element) => {
+      this.listActions.push({
+        label: element.name,
+        command: () => {
+          this.callAction(element?.name);
+        },
+      });
+    });
+
     this.fullRoute = this.router.url?.split('/');
     this.activatedRoute =
       '/' + this.fullRoute[1] + '/' + this.fullRoute[2] + '/details/';

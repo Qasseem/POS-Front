@@ -489,123 +489,22 @@
               </button>
             </div>
             <button
-              [attr.test_id]="router.url?.split('/')[2] + '_actionsBtn'"
-              hasChildren
-              id="button-container"
-              dropdownToggle
               type="button"
-              class="btn btn-sm actionButtons"
-              aria-controls="dropdown-container"
-            >
-              <img src="../../../../../assets/iamges/more.svg" />
-              <img src="../../../../../assets/iamges/moreDis.svg" />
-            </button>
-            <ul
-              id="dropdown-container"
-              *dropdownMenu
-              style="left: -125px"
-              class="dropdown-menu"
-              role="menu"
-              aria-labelledby="button-container"
-            >
-              <li *ngFor="let action of actions" role="menuitem">
-                <a
-                  [attr.test_id]="router.url?.split('/')[2] + '_' + 'edit'"
-                  *ngIf="
-                    action.isEdit &&
-                    (!action.customPermission
-                      ? !rowData.isBlock
-                      : action.customPermission(rowData)) &&
-                    !rowData.isBlock
-                  "
-                  class="dropdown-item tableAction"
-                  (click)="
-                    action.call
-                      ? action.call(rowData)
-                      : goToEditPage(rowData[id])
-                  "
-                  style="cursor: pointer; border-bottom: 1px solid #e6ecf5"
-                >
-                  <i [class]="action.icon || 'fas fa-pen'"></i>
-                  {{ "table.edit" | translate }}
-                </a>
-
-                <a
-                  [attr.test_id]="router.url?.split('/')[2] + '_' + 'delete'"
-                  *ngIf="
-                    action.isDelete &&
-                    (!action.customPermission
-                      ? true
-                      : action.customPermission(rowData))
-                  "
-                  class="dropdown-item tableAction"
-                  (click)="
-                    action.call
-                      ? action.call(rowData)
-                      : showDeletemodal(rowData)
-                  "
-                  style="cursor: pointer"
-                >
-                  <i [class]="action.icon || 'fas fa-trash'"></i>
-                  {{ "table.delete" | translate }}
-                </a>
-                <a
-                  [attr.test_id]="
-                    router.url.split('/')[2] +
-                    '_' +
-                    'block' +
-                    '_' +
-                    rowData.isBlock
-                  "
-                  *ngIf="
-                    action.isBlock &&
-                    (!action.customPermission
-                      ? true
-                      : action.customPermission(rowData))
-                  "
-                  class="dropdown-item tableAction"
-                  (click)="
-                    action.call ? action.call(rowData) : showBlockModal(rowData)
-                  "
-                  [appSecured]="
-                    action.permission || getBlockPermission(rowData)
-                  "
-                >
-                  <i
-                    *ngIf="rowData.isBlock"
-                    [class]="action.icon || 'fas fa-unlock-alt'"
-                  ></i>
-                  <i
-                    *ngIf="!rowData.isBlock"
-                    [class]="action.icon || 'fas fa-lock'"
-                  ></i>
-
-                  {{
-                    rowData.isBlock
-                      ? ("table.unBlock" | translate)
-                      : ("table.block" | translate)
-                  }}
-                </a>
-                <a
-                  [attr.test_id]="action.name"
-                  *ngIf="
-                    !action.isDelete &&
-                    !action.isBlock &&
-                    !action.isDetails &&
-                    !action.isEdit &&
-                    (!action.customPermission
-                      ? true
-                      : action.customPermission(rowData))
-                  "
-                  class="dropdown-item tableAction"
-                  (click)="action.call(rowData)"
-                  style="cursor: pointer"
-                >
-                  <i [class]="action.icon"></i>
-                  {{ action.name | translate }}
-                </a>
-              </li>
-            </ul>
+              pButton
+              pRipple
+              icon="pi pi-ellipsis-v"
+              (click)="
+                menu.toggle($event);
+                setRow(rowData);
+                validateActionsForRow(rowData)
+              "
+            ></button>
+            <p-menu
+              #menu
+              [popup]="true"
+              appendTo="body"
+              [model]="listActions"
+            ></p-menu>
           </div>
         </div>
       </td>
@@ -619,9 +518,9 @@
         ? state.totalRecords
         : state.rows * (state.page + 1)
     }}
-    {{ "common.of" | translate }}
+    {{ "of" | translate }}
     {{ state.totalRecords }}
-    {{ "common.total" | translate }}
+    {{ "total" | translate }}
   </ng-template>
 
   <ng-template pTemplate="emptymessage" let-columns>
