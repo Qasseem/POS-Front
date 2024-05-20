@@ -1,14 +1,32 @@
 <div>
-  <div class="grid">
-    <div class="col-4 p-0" style="border-radius: 15px">
+  <div class="grid font-14 ml-2 m-2 mb-3">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Merchant</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">Add Merchant</span>
+    </div>
+  </div>
+  <p-divider />
+
+  <div class="grid m-2 font-12">
+    <div class="col-4 p-0" style="border-radius: 10px">
       <div class="m-2 box-border">
-        <div
-          class="p-2"
-          style="height: 80px; background-color: #1c8ef9; border-radius: 15px"
-        >
-          sad
+        <div class="p-2 wave font-16" style="color: white">
+          <div class="ml-3 mt-2">Carfour</div>
+          <div class="ml-3 mt-1">كارفور</div>
+          <div class="ml-3 mt-2">
+            <span>
+              <i class="pi pi-building"></i>
+            </span>
+            Hyper
+          </div>
         </div>
-        <div style="height: 100px; margin-top: -55px">
+        <div style="height: 100px; margin-top: -57px">
           <div class="container">
             <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
               <path
@@ -18,14 +36,138 @@
             </svg>
           </div>
         </div>
-        <div>he</div>
-        <div>he</div>
-        <div>he</div>
-        <div>he</div>
-        <div>he</div>
-        <div>he</div>
+
+        <div class="grid m-2">
+          <div class="col-6 color-info">Reference</div>
+          <div class="col-6">#123</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Merchant ID</div>
+          <div class="col-6">#123</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">User name</div>
+          <div class="col-6">#123</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Created by</div>
+          <div class="col-6">#123</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Created at</div>
+          <div class="col-6">#123</div>
+        </div>
+        <p-divider />
+        <div class="pl-3 pt-3 font-13">Merchant performance</div>
+        <div class="mt-3"></div>
+
+        <div>
+          <span class="ml-3 color-info">Successful visit</span>
+          <div class="grid m-2 mt-0">
+            <div class="col-2">11:12%</div>
+            <div class="col-8">
+              <p-progressBar [value]="50">
+                <ng-template pTemplate="content" let-value> </ng-template>
+              </p-progressBar>
+            </div>
+            <div class="col-2">
+              <span class="float-right"> 11 </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="ml-3 color-info">Successful visit</span>
+          <div class="grid m-2 mt-0">
+            <div class="col-2">11:12%</div>
+            <div class="col-8">
+              <p-progressBar [value]="50">
+                <ng-template pTemplate="content" let-value> </ng-template>
+              </p-progressBar>
+            </div>
+            <div class="col-2">
+              <span class="float-right"> 11 </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="ml-3 color-info">Successful visit</span>
+          <div class="grid m-2 mt-0">
+            <div class="col-2">11:12%</div>
+            <div class="col-8">
+              <p-progressBar [value]="50">
+                <ng-template pTemplate="content" let-value> </ng-template>
+              </p-progressBar>
+            </div>
+            <div class="col-2">
+              <span class="float-right"> 11 </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="ml-3 color-info">Successful visit</span>
+          <div class="grid m-2 mt-0">
+            <div class="col-2">11:12%</div>
+            <div class="col-8">
+              <p-progressBar [value]="50">
+                <ng-template pTemplate="content" let-value> </ng-template>
+              </p-progressBar>
+            </div>
+            <div class="col-2">
+              <span class="float-right"> 11 </span>
+            </div>
+          </div>
+        </div>
+        <p-divider />
+        <div class="grid m-2">
+          <div class="col-2">
+            <p-avatar
+              icon="pi pi-arrow-right-arrow-left"
+              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
+              styleClass="mr-2"
+              size="large"
+            />
+          </div>
+          <div class="col-6">
+            <div>Active terminals</div>
+            <div class="font-18">{{ 5 }}</div>
+          </div>
+          <div class="col-4">
+            <span class="float-right mt-3" style="color: green">
+              2 This month
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="col-8"></div>
+    </div>
+
+    <!-- //////////////// -->
+
+    <div class="col-8">
+      <div class="p-grid ml-2 m-2">
+        <div class="p-col" style="text-align: right">
+          <span class="mt-2" style="float: left; font-weight: bolder"
+            >Merchant</span
+          >
+          <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
+            <span class="ml-1 mr-1 add">
+              <i class="pi pi-plus add-icon"></i>
+            </span>
+          </p-button>
+        </div>
+      </div>
+      <div>
+        <app-table
+          [showSearchBar]="true"
+          [url]="{
+            getAll: url.Merchant.GetGrid
+          }"
+          [columns]="columns"
+          [actions]="actions"
+          [options]="{}"
+          [filters]="filters"
+        >
+        </app-table>
+      </div>
     </div>
   </div>
 </div>

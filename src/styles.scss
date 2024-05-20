@@ -64,6 +64,9 @@ body {
 .font-12 {
   font-size: 12px;
 }
+.font-13 {
+  font-size: 13px;
+}
 
 .color-info {
   color: #94a3b8;
@@ -151,6 +154,6 @@ label {
 
 .box-border {
   background-color: white;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */
 }

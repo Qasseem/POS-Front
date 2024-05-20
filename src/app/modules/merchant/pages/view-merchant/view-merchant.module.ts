@@ -4,6 +4,9 @@ import { ViewMerchantComponent } from './view-merchant.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button-module';
 import { AppTableModule } from 'src/app/core/shared/core/modules/table/table-module';
+import { PrimeNgChartsModule } from 'src/app/core/shared/primeng/primeng-charts-module';
+import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
+
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +19,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     AppTableModule,
     PrimeNgButtonsModule,
+    PrimeNgChartsModule,
+    PrimeNgPanelModule,
   ],
   declarations: [ViewMerchantComponent],
 })

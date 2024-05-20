@@ -12,3 +12,25 @@ svg {
   vertical-align: middle;
   overflow: hidden;
 }
+
+.wave {
+  height: 75px;
+  background-color: #1c8ef9;
+  border-radius: 10px;
+  position: relative;
+  z-index: 4;
+}
+
+::ng-deep .p-divider {
+  width: 90%;
+  margin: auto;
+}
+
+::ng-deep .p-progressbar {
+  height: 15px;
+}
+
+.header-left {
+  float: left;
+  font-weight: bolder;
+}
