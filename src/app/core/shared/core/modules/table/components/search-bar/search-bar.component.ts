@@ -349,4 +349,5 @@ export class SearchBarComponent implements OnInit, OnChanges {
       delete this.tableCoreService.gridSearchHistory[this.route.url];
     }
   }
+  navigateToAdd() {}
 }

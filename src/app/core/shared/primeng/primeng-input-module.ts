@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   imports: [
@@ -21,6 +23,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     TranslateModule,
     ReactiveFormsModule,
     OverlayPanelModule,
+    InputIconModule,
+    IconFieldModule,
     FormsModule,
   ],
   providers: [],
@@ -32,6 +36,8 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     CheckboxModule,
     OverlayPanelModule,
+    InputIconModule,
+    IconFieldModule,
     CalendarModule,
     ReactiveFormsModule,
     FormsModule,

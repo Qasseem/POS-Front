@@ -47,7 +47,7 @@
       {{ "moduleNames." + headerName | translate }}
     </span>
   </div>
-  <div *ngIf="showSearchBar">
+  <div *ngIf="showSearchBar" style="width: 100%">
     <app-search-bar
       [additionalField]="additionalField"
       [searchOnly]="searchOnly"

@@ -1,4 +1,4 @@
-<div class="p-grid ml-2 m-2">
+<!-- <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
     <span class="mt-2" style="float: left; font-weight: bolder">Merchant</span>
     <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
@@ -7,7 +7,7 @@
       </span>
     </p-button>
   </div>
-</div>
+</div> -->
 <div>
   <app-table
     [showSearchBar]="true"
@@ -16,7 +16,7 @@
     }"
     [columns]="columns"
     [actions]="actions"
-    [options]="{}"
+    [options]="{ check: false }"
     [filters]="filters"
   >
   </app-table>
