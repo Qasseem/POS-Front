@@ -1,4 +1,4 @@
-<!-- <div class="p-grid ml-2 m-2">
+<div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
     <span class="mt-2" style="float: left; font-weight: bolder">Merchant</span>
     <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
@@ -7,8 +7,8 @@
       </span>
     </p-button>
   </div>
-</div> -->
-<div>
+</div>
+<div class="mt-3">
   <app-table
     [showSearchBar]="true"
     [url]="{
@@ -17,6 +17,7 @@
     }"
     [addButtonLabel]="'Add Merchant'"
     [columns]="columns"
+    [buttonsExistance]="tableBtns"
     [exportUrl]="url.Merchant.Export"
     [actions]="actions"
     [options]="{ check: false }"

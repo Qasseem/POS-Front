@@ -6,6 +6,7 @@ import {
   SearchInputTypes,
 } from 'src/app/core/shared/core/modules/table/models/enums';
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
+import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 
@@ -39,6 +40,14 @@ export class AllMerchantComponent implements OnInit {
     const URL = `/home/customers/info/${id}/${dolphinId}`;
     return URL;
   }
+
+  public tableBtns: TableButtonsExistanceInterface = {
+    showAllButtons: true,
+    showAdd: true,
+    showExport: true,
+    showFilter: true,
+    showImport: true,
+  };
   public columns: ColumnsInterface[] = [
     {
       field: 'reference',

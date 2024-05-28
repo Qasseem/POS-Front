@@ -23,7 +23,10 @@ import {
   ModulesReferencesEnum,
   SearchInputTypes,
 } from '../../models/enums';
-import { TableUrlInterface } from '../../models/table-url.interface';
+import {
+  TableButtonsExistanceInterface,
+  TableUrlInterface,
+} from '../../models/table-url.interface';
 
 @Component({
   selector: 'app-search-bar',
@@ -35,6 +38,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   apis: any;
   InputSearch$ = new Subject<string>();
   @Input() url: TableUrlInterface;
+  @Input() buttonsExistance: TableButtonsExistanceInterface;
   @Output() getListData = new EventEmitter();
   @Output() searchFilterTriggered = new EventEmitter();
   @Output() emitFormValue = new EventEmitter();
@@ -101,6 +105,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
+    console.log(this.buttonsExistance);
+
     //check if there is any history for the activated page
     if (this.tableCoreService.gridSearchHistory[this.router.url]) {
       //assign the search ker if exist in history obj

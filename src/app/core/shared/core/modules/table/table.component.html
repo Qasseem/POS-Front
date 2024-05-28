@@ -50,6 +50,7 @@
   <div *ngIf="showSearchBar" style="width: 100%">
     <app-search-bar
       [addButtonLabel]="addButtonLabel"
+      [buttonsExistance]="buttonsExistance"
       [additionalField]="additionalField"
       [searchOnly]="searchOnly"
       (searchFilterTriggered)="searchFilterTriggered($event)"

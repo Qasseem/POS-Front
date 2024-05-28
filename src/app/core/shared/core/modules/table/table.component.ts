@@ -15,7 +15,10 @@ import {
 } from './models/actions.interface';
 import { TableOptionsInterface } from './models/options.interface';
 import { ColumnsInterface } from './models/columns.interface';
-import { TableUrlInterface } from './models/table-url.interface';
+import {
+  TableButtonsExistanceInterface,
+  TableUrlInterface,
+} from './models/table-url.interface';
 import { APIURL } from 'src/app/services/api';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {
@@ -61,6 +64,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Output() CustomButtonClicked = new EventEmitter();
   @Input() viewCustomPermission: ViewCustomPermission;
   @Input() exportUrl: any;
+  @Input() buttonsExistance: TableButtonsExistanceInterface;
   first = 0;
 
   apis: any;

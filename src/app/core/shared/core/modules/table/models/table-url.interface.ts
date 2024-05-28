@@ -12,3 +12,11 @@ export interface TableUrlInterface {
   fillHistory?: string;
   updateByFile?: string;
 }
+
+export interface TableButtonsExistanceInterface {
+  showAdd?: boolean;
+  showExport?: boolean;
+  showImport?: boolean;
+  showFilter?: boolean;
+  showAllButtons: true;
+}

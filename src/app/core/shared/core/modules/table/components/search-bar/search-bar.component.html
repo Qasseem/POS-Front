@@ -1,9 +1,14 @@
-<div class="p-grid ml-2 m-2 mt-3">
+<div *ngIf="false" class="p-grid ml-2 m-2 mt-3">
   <div class="p-col" style="text-align: right">
     <span class="mt-3 ml-3" style="float: left; font-weight: bolder">{{
       "Name"
     }}</span>
-    <p-button (click)="navigateToAdd()" [label]="addButtonLabel" size="small">
+    <p-button
+      *ngIf="buttonsExistance?.showAdd"
+      (click)="navigateToAdd()"
+      [label]="addButtonLabel"
+      size="small"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
@@ -28,9 +33,10 @@
     </div>
   </div>
 
-  <div class="col-7 mt-2">
+  <div *ngIf="buttonsExistance?.showAllButtons" class="col-7 mt-3">
     <div style="width: 100%; margin-right: -70px" class="float-right">
       <p-button
+        *ngIf="buttonsExistance?.showExport"
         label="Export"
         class="float-right ml-3"
         icon="pi pi-download"
@@ -41,13 +47,18 @@
       />
       <p-button
         label="Import"
+        *ngIf="buttonsExistance?.showImport"
         class="float-right ml-3"
         icon="pi pi-upload"
         size="small"
         badgeClass="p-badge-contrast"
         outlined="true"
       />
-      <button (click)="op.toggle($event)" class="filter-btn float-right">
+      <button
+        *ngIf="buttonsExistance?.showFilter"
+        (click)="op.toggle($event)"
+        class="filter-btn float-right"
+      >
         <i class="pi pi-filter"></i>
         Filter
       </button>

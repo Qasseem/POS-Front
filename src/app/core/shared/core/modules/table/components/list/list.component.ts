@@ -476,4 +476,16 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   filterDate() {
     return true;
   }
+
+  goToDeatils(rowData) {
+    if (this.router.url?.endsWith('all')) {
+      return this.router.navigate(['../details', rowData?.id], {
+        relativeTo: this.route.parent,
+      });
+    } else {
+      return this.router.navigate(['details', rowData?.id], {
+        relativeTo: this.route.parent,
+      });
+    }
+  }
 }
