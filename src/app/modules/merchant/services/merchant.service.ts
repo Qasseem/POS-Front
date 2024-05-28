@@ -15,4 +15,7 @@ export class MerchantService {
   Add(data) {
     return this.http.postReq(APIURL.Merchant.Add, data);
   }
+  GetDetails(id) {
+    return this.http.getHeaderReq(APIURL.Merchant.GetOne, id);
+  }
 }

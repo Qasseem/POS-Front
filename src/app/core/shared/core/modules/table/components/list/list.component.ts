@@ -328,15 +328,11 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
 
   export(): void {
     if (this.url.export)
-      this.tableCore
-        .exportTable(this.url.export, this.filteredArray)
-        .subscribe();
+      this.tableCore.exportTable(this.url.export).subscribe();
   }
   exportDetails(): void {
     if (this.url.exportDetails)
-      this.tableCore
-        .exportTable(this.url.exportDetails, this.filteredArray)
-        .subscribe();
+      this.tableCore.exportTable(this.url.exportDetails).subscribe();
   }
   exportClientData() {
     const data = this.data.map((item) =>

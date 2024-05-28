@@ -12,10 +12,12 @@
   <app-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Merchant.GetGrid
+      getAll: url.Merchant.GetGrid,
+      export: url.Merchant.Export
     }"
     [addButtonLabel]="'Add Merchant'"
     [columns]="columns"
+    [exportUrl]="url.Merchant.Export"
     [actions]="actions"
     [options]="{ check: false }"
     [filters]="filters"

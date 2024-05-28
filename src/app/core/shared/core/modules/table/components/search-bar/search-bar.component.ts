@@ -23,6 +23,7 @@ import {
   ModulesReferencesEnum,
   SearchInputTypes,
 } from '../../models/enums';
+import { TableUrlInterface } from '../../models/table-url.interface';
 
 @Component({
   selector: 'app-search-bar',
@@ -33,6 +34,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   @ViewChild('op') mySearchDialog: any;
   apis: any;
   InputSearch$ = new Subject<string>();
+  @Input() url: TableUrlInterface;
   @Output() getListData = new EventEmitter();
   @Output() searchFilterTriggered = new EventEmitter();
   @Output() emitFormValue = new EventEmitter();
@@ -361,6 +363,11 @@ export class SearchBarComponent implements OnInit, OnChanges {
       return this.router.navigate(['add'], {
         relativeTo: this.route.parent,
       });
+    }
+  }
+  export() {
+    if (this.url.export) {
+      this.tableCoreService.exportTable(this.url.export).subscribe();
     }
   }
 }

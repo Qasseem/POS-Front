@@ -60,7 +60,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() noDataText = '';
   @Output() CustomButtonClicked = new EventEmitter();
   @Input() viewCustomPermission: ViewCustomPermission;
-
+  @Input() exportUrl: any;
   first = 0;
 
   apis: any;

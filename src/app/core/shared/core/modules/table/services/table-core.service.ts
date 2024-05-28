@@ -133,7 +133,7 @@ export class TableCoreService {
    * @returns {Observable<any>}
    * @memberof TableCoreService
    */
-  exportTable(url: string, selectedColumns: string[]): Observable<any> {
+  exportTable(url: string): Observable<any> {
     let options = this.getRequestObject();
     options = this.getSearchHistory(options);
     return this.http.postReq(url, options).pipe(

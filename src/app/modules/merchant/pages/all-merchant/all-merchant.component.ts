@@ -15,13 +15,21 @@ import { APIURL } from 'src/app/services/api';
   styleUrls: ['./all-merchant.component.css'],
 })
 export class AllMerchantComponent implements OnInit {
-  public url = APIURL;
+  addToFavorite(row: any): any {
+    const URL = `main/merchant/edit/${row?.id}`;
+    console.log(this.url);
 
-  completeData(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
+    this.router.navigate([this.url]);
     return URL;
   }
-  navToServiceSetting(row: any): any {
+  public url = APIURL;
+
+  editItem(row: any): any {
+    const URL = `main/merchant/edit/${row?.id}`;
+    console.log(URL);
+    this.router.navigate([URL]);
+  }
+  blockItem(row: any): any {
     const URL = `/home/customers/info/${row?.id}`;
     return URL;
   }
@@ -76,17 +84,23 @@ export class AllMerchantComponent implements OnInit {
 
   public actions: ActionsInterface[] = [
     {
-      name: 'edit',
-      icon: 'fas fa-briefcase',
+      name: 'Edit',
+      icon: 'pi pi-file-edit',
       permission: 'viewcustomerpayments',
-      call: (row: any) => this.navToServiceSetting(row),
+      call: (row: any) => this.editItem(row),
       customPermission: (row: any) => row.id > 3,
     },
     {
-      name: 'add',
-      icon: 'pi pi-fw pi-file',
+      name: 'Block',
+      icon: 'pi pi-ban',
       permission: 'completedata',
-      call: (row: any) => this.completeData(row),
+      call: (row: any) => this.blockItem(row),
+    },
+    {
+      name: 'Add to favorite ',
+      icon: 'pi pi-heart',
+      permission: 'completedata',
+      call: (row: any) => this.addToFavorite(row),
     },
   ];
 
