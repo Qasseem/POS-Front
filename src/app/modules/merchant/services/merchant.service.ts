@@ -18,4 +18,8 @@ export class MerchantService {
   GetDetails(id) {
     return this.http.getHeaderReq(APIURL.Merchant.GetOne, id);
   }
+
+  Favorite(data) {
+    return this.http.postReq(APIURL.Merchant.Favorite, data);
+  }
 }

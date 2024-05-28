@@ -9,6 +9,7 @@ import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/s
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
+import { MerchantService } from '../../services/merchant.service';
 
 @Component({
   selector: 'app-all-merchant',
@@ -17,6 +18,10 @@ import { APIURL } from 'src/app/services/api';
 })
 export class AllMerchantComponent implements OnInit {
   addToFavorite(row: any): any {
+    this.service.Favorite({ id: row?.id }).subscribe((resp) => {
+      if (resp.success) {
+      }
+    });
     const URL = `main/merchant/edit/${row?.id}`;
     console.log(this.url);
 
@@ -35,9 +40,8 @@ export class AllMerchantComponent implements OnInit {
     return URL;
   }
   goToDetails(row: any): any {
-    const dolphinId = row.dolphinId || 0;
     const id = row.id;
-    const URL = `/home/customers/info/${id}/${dolphinId}`;
+    const URL = `main/merchant/details/${row?.id}`;
     return URL;
   }
 
@@ -145,7 +149,7 @@ export class AllMerchantComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: MerchantService) {}
 
   ngOnInit() {}
   navigateToAdd() {

@@ -30,5 +30,6 @@ export const APIURL = {
     Export: '/Merchant/ExportLeadGrid',
     GetGrid: '/Merchant/GetMerchantGrid',
     GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
+    Favorite: '/Merchant/AddFavorite',
   },
 };
