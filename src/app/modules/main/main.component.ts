@@ -20,28 +20,38 @@ export class MainComponent implements OnInit {
       label: this.translateService.instant('Merchants'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/merchant',
+      routerLink: '/main/merchant/all',
       active: true,
     },
     {
       label: this.translateService.instant('Terminals'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/merchant',
+      routerLink: '/main/merchant/all',
       active: false,
     },
-  ];
-
-  dashboardItems = [
     {
       label: this.translateService.instant('Dashboard'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/merchant',
+      routerLink: '/main/merchant/all',
       active: false,
     },
   ];
+
+  listActions = [
+    {
+      label: 'Log-out',
+      icon: 'pi pi-sign-out',
+      command: () => {
+        this.logOut();
+      },
+    },
+  ];
+
   moduleHeader: string;
+  userType: any;
+  userName: any;
 
   constructor(
     private authService: AuthService,
@@ -70,12 +80,16 @@ export class MainComponent implements OnInit {
     // this.items.push(event.item);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userName = this.storage.getStringItem('userNameEn');
+    this.userType = this.storage.getStringItem('userType');
+    console.log(this.userName);
+  }
 
   setActiveItem(ss) {}
   navigate(item) {
     this.items.forEach((x) => (x.active = false));
-    this.dashboardItems.forEach((x) => (x.active = false));
+    // this.dashboardItems.forEach((x) => (x.active = false));
     item.active = true;
     this.router.navigate([item.routerLink]);
   }

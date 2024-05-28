@@ -45,6 +45,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() addDropdown;
   @Input() selectedData: any[];
   @Input() id = 'id';
+  @Input() addButtonLabel = 'Add';
   @Input() test_id;
   @Input() options: TableOptionsInterface;
   @Input() clientSide = false;
@@ -199,7 +200,7 @@ export class TableComponent implements OnInit, OnDestroy {
    */
   goToAddPage(): Promise<boolean> {
     return this.router.navigate([this.router.url + '/add']);
-    // return this.router.navigate(['../add'], { relativeTo: this.route.parent });
+    return this.router.navigate(['../add'], { relativeTo: this.route.parent });
   }
 
   /**

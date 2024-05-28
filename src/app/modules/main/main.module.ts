@@ -4,6 +4,7 @@ import { MainComponent } from './main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button-module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MainRoutingModule,
     PrimeNgPanelModule,
     TranslateModule,
+    PrimeNgButtonsModule,
   ],
   declarations: [MainComponent],
 })

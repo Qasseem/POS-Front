@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
 import { APIURL } from 'src/app/services/api';
@@ -41,6 +41,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   @Input() filtersInput: SearchInterface[] = [];
   @Input() searchOnly = false;
   @Input() StyleInput = '';
+  @Input() addButtonLabel = 'Add';
   @Input() styleContainer =
     'border-radius: 0.4rem ;height: 50px;background-color: white;width: 651px ;margin: 10px; border: 1px solid #C3C3C3;';
   @Input() additionalField = true;
@@ -71,10 +72,11 @@ export class SearchBarComponent implements OnInit, OnChanges {
   constructor(
     public language: AppTranslateService,
     private tableCoreService: TableCoreService,
-    private route: Router,
+    private router: Router,
+    private route: ActivatedRoute,
     private searchFilterService: SearchFilterService
   ) {
-    this.moduleReference = ModulesReferencesEnum[this.route.url.split('/')[2]];
+    this.moduleReference = ModulesReferencesEnum[this.router.url.split('/')[2]];
 
     // create a empty FormGroup
     this.filtersForm = new UntypedFormGroup({});
@@ -98,21 +100,21 @@ export class SearchBarComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
     //check if there is any history for the activated page
-    if (this.tableCoreService.gridSearchHistory[this.route.url]) {
+    if (this.tableCoreService.gridSearchHistory[this.router.url]) {
       //assign the search ker if exist in history obj
       this.inputTextHistoryValue =
-        this.tableCoreService.gridSearchHistory[this.route.url].searchKey;
+        this.tableCoreService.gridSearchHistory[this.router.url].searchKey;
       //check if there is any toolTip data in search history obj
       if (
-        this.tableCoreService.gridSearchHistory[this.route.url].search
+        this.tableCoreService.gridSearchHistory[this.router.url].search
           .toolTipData
       ) {
         //assign the tool tip data if exist in history obj
         this.formHistoryData = this.formValueDictionaryTooltip =
-          this.tableCoreService.gridSearchHistory[this.route.url].search;
+          this.tableCoreService.gridSearchHistory[this.router.url].search;
         this.formValueDictionaryTooltip =
           this.tableCoreService.gridSearchHistory[
-            this.route.url
+            this.router.url
           ].search.toolTipData;
         this.convertObjToArray();
       }
@@ -346,8 +348,19 @@ export class SearchBarComponent implements OnInit, OnChanges {
   inputText(event) {
     this.searchFilterTriggered.emit(true);
     if (event == null || event == '') {
-      delete this.tableCoreService.gridSearchHistory[this.route.url];
+      delete this.tableCoreService.gridSearchHistory[this.router.url];
     }
   }
-  navigateToAdd() {}
+  navigateToAdd() {
+    console.log(this.router.url);
+    if (this.router.url?.endsWith('all')) {
+      return this.router.navigate(['../add'], {
+        relativeTo: this.route.parent,
+      });
+    } else {
+      return this.router.navigate(['add'], {
+        relativeTo: this.route.parent,
+      });
+    }
+  }
 }

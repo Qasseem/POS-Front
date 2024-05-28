@@ -49,6 +49,7 @@
   </div>
   <div *ngIf="showSearchBar" style="width: 100%">
     <app-search-bar
+      [addButtonLabel]="addButtonLabel"
       [additionalField]="additionalField"
       [searchOnly]="searchOnly"
       (searchFilterTriggered)="searchFilterTriggered($event)"

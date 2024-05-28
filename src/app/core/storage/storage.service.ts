@@ -68,7 +68,8 @@ export class StorageService {
    * @memberof StorageService
    */
   clearStorage(): Observable<void> {
-    location.reload();
+    console.log('asdddddddddd');
+    // location.reload();
     return of(localStorage.clear());
   }
 
