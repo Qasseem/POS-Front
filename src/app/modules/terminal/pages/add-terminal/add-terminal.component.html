@@ -1,3 +1,204 @@
-<p>
-  add-terminal works!
-</p>
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Terminal</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">Add Terminal</span>
+      <p-button
+        class="mr-3"
+        label="Cancel"
+        [text]="true"
+        [raised]="true"
+        size="small"
+      />
+
+      <p-button
+        style="width: 100px !important"
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="Save"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid">
+        <div class="col-8 p-0">
+          <div class="formcontainer">
+            <div class="grid">
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="merchantId">Arabic Name</label>
+                  <p-dropdown
+                    [options]="categories"
+                    formControlName="merchantId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                    placeholder="Select a Category"
+                  />
+                  <div
+                    *ngIf="
+                      f.merchantId.errors &&
+                      (f.merchantId.dirty || f.merchantId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.merchantId.errors.required"
+                    >
+                      Merchant Id field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="terminalId">Merchant Name[EN]</label>
+                  <input
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': f.terminalId?.errors?.required
+                    }"
+                    type="text"
+                    pInputText
+                    formControlName="terminalId"
+                  />
+
+                  <div
+                    *ngIf="
+                      f.terminalId.errors &&
+                      (f.terminalId.dirty || f.terminalId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.terminalId.errors.required"
+                    >
+                      Terminal Id field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="phone">Merchant Name[EN]</label>
+                  <input
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': f.phone?.errors?.required
+                    }"
+                    type="text"
+                    pInputText
+                    formControlName="phone"
+                  />
+
+                  <div
+                    *ngIf="f.phone.errors && (f.phone.dirty || f.phone.touched)"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.phone.errors.required"
+                    >
+                      Phone field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid">
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="errandChannelId">Arabic Name</label>
+                  <p-dropdown
+                    [options]="categories"
+                    formControlName="errandChannelId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                    placeholder="Select a Category"
+                  />
+                  <div
+                    *ngIf="
+                      f.errandChannelId.errors &&
+                      (f.errandChannelId.dirty || f.errandChannelId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.errandChannelId.errors.required"
+                    >
+                      Errand Channel Id Id field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="posTypeId">Arabic Name</label>
+                  <p-dropdown
+                    [options]="categories"
+                    formControlName="posTypeId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                    placeholder="Select a Category"
+                  />
+                  <div
+                    *ngIf="
+                      f.posTypeId.errors &&
+                      (f.posTypeId.dirty || f.posTypeId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.posTypeId.errors.required"
+                    >
+                      POS Type field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 p-0">
+          <div class="formcontainer">
+            <div>
+              <span class="font-bold font-10"> Location </span>
+            </div>
+            <p-divider />
+            <div *ngIf="true">
+              <google-map
+                height="300px"
+                width="100%"
+                [options]="options"
+                (mapClick)="moveMap($event)"
+                (mapMousemove)="move($event)"
+                (mapClick)="addMarker($event)"
+              >
+                @for (position of markerPositions; track position) {
+                <map-marker [position]="position" [options]="markerOptions" />
+                }
+              </google-map>
+
+              <div>Latitude: {{ display?.lat }}</div>
+              <div>Longitude: {{ display?.lng }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

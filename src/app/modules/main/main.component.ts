@@ -27,7 +27,7 @@ export class MainComponent implements OnInit {
       label: this.translateService.instant('Terminals'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/merchant/all',
+      routerLink: '/main/terminal/all',
       active: false,
     },
     {

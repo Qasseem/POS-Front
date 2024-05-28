@@ -21,6 +21,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'terminal',
+        loadChildren: () =>
+          import('../terminal/terminal.module').then((m) => m.TerminalModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
