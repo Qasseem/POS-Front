@@ -488,4 +488,8 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       });
     }
   }
+
+  navigateToUrl(url, id) {
+    this.router.navigate([url, id]);
+  }
 }

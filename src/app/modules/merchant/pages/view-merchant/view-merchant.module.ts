@@ -6,6 +6,7 @@ import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button
 import { AppTableModule } from 'src/app/core/shared/core/modules/table/table-module';
 import { PrimeNgChartsModule } from 'src/app/core/shared/primeng/primeng-charts-module';
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
+import { FormModule } from 'src/app/core/shared/form/form-module';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     PrimeNgButtonsModule,
     PrimeNgChartsModule,
     PrimeNgPanelModule,
+    FormModule,
   ],
   declarations: [ViewMerchantComponent],
 })

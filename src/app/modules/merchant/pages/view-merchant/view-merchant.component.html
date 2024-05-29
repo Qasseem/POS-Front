@@ -17,8 +17,8 @@
     <div class="col-4 p-0" style="border-radius: 10px">
       <div class="m-2 box-border">
         <div class="p-2 wave font-16" style="color: white">
-          <div class="ml-3 mt-2">Carfour</div>
-          <div class="ml-3 mt-1">كارفور</div>
+          <div class="ml-3 mt-2">{{ details?.merchantNameEN }}</div>
+          <div class="ml-3 mt-1">{{ details?.merchantNameAR }}</div>
           <div class="ml-3 mt-2">
             <span>
               <i class="pi pi-building"></i>
@@ -39,23 +39,25 @@
 
         <div class="grid m-2">
           <div class="col-6 color-info">Reference</div>
-          <div class="col-6">#123</div>
+          <div class="col-6">{{ details?.reference }}</div>
         </div>
         <div class="grid m-2">
           <div class="col-6 color-info">Merchant ID</div>
-          <div class="col-6">#123</div>
+          <div class="col-6">{{ details?.id }}</div>
         </div>
-        <div class="grid m-2">
+        <!-- <div class="grid m-2">
           <div class="col-6 color-info">User name</div>
-          <div class="col-6">#123</div>
-        </div>
+          <div class="col-6">{{details?.createdBy}}</div>
+        </div> -->
         <div class="grid m-2">
           <div class="col-6 color-info">Created by</div>
-          <div class="col-6">#123</div>
+          <div class="col-6">{{ details?.createdBy }}</div>
         </div>
         <div class="grid m-2">
           <div class="col-6 color-info">Created at</div>
-          <div class="col-6">#123</div>
+          <div class="col-6">
+            {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+          </div>
         </div>
         <p-divider />
         <div class="pl-3 pt-3 font-13">Merchant performance</div>

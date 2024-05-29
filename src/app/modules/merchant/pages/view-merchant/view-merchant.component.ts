@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
   HTTPMethods,
@@ -8,6 +8,7 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
+import { MerchantService } from '../../services/merchant.service';
 
 @Component({
   selector: 'app-view-merchant',
@@ -15,7 +16,12 @@ import { APIURL } from 'src/app/services/api';
   styleUrls: ['./view-merchant.component.css'],
 })
 export class ViewMerchantComponent implements OnInit {
-  constructor(private router: Router) {}
+  details: any;
+  constructor(
+    private router: Router,
+    private merchantService: MerchantService,
+    private route: ActivatedRoute
+  ) {}
   public url = APIURL;
 
   completeData(row: any): any {
@@ -27,21 +33,19 @@ export class ViewMerchantComponent implements OnInit {
     return URL;
   }
   goToDetails(row: any): any {
-    const dolphinId = row.dolphinId || 0;
-    const id = row.id;
-    const URL = `/home/customers/info/${id}/${dolphinId}`;
+    const URL = `main/terminal/details/${row?.id}`;
+    console.log(URL);
     return URL;
+    this.router.navigate([URL]);
   }
   public columns: ColumnsInterface[] = [
     {
       field: 'reference',
       header: 'Ref',
-      width: '80px',
     },
     {
       field: 'id',
       header: 'ID',
-      width: '80px',
     },
 
     {
@@ -56,12 +60,10 @@ export class ViewMerchantComponent implements OnInit {
     {
       field: 'userName',
       header: 'User Name',
-      width: '80px',
     },
     {
       field: 'category',
       header: 'Category',
-      width: '80px',
     },
     {
       field: [
@@ -70,7 +72,6 @@ export class ViewMerchantComponent implements OnInit {
       ],
       header: 'Created by',
       customCell: 'multiLabel',
-      width: '150px',
     },
   ];
 
@@ -121,7 +122,24 @@ export class ViewMerchantComponent implements OnInit {
       isFixed: true,
     },
   ];
-  ngOnInit() {}
+  id;
+
+  ngOnInit() {
+    this.id = this.route.snapshot.params.id || null;
+    if (this.id) {
+      this.getItemDetails();
+    }
+  }
+
+  getItemDetails() {
+    this.merchantService.GetDetails(this.id).subscribe((resp) => {
+      if (resp.success) {
+        this.details = resp.data;
+        console.log(this.details);
+      }
+    });
+  }
+
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
   }

@@ -364,9 +364,8 @@
                     class="fas fa-user"
                   ></i>
                   <a
-                    [routerLink]="col.action(rowData)"
-                    (click)="col.action(rowData)"
-                    style="font-size: 14px; color: #2053a6; margin-left: 5px"
+                    (click)="navigateToUrl(col.link, rowData.id)"
+                    style="font-size: 14px; color: #2053a6; cursor: pointer"
                   >
                     {{ rowData[item.label] | strLimit : 30 }}
                   </a>

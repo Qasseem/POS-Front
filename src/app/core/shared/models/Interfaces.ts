@@ -14,6 +14,7 @@ export interface ColumnsInterface {
     cssClasses?: string;
   }[];
   customCell?: string;
+  link?: string;
   action?: (row?: any) => any;
   editable?: boolean;
   mapLink?: {

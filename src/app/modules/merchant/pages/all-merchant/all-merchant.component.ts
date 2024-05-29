@@ -22,11 +22,6 @@ export class AllMerchantComponent implements OnInit {
       if (resp.success) {
       }
     });
-    const URL = `main/merchant/edit/${row?.id}`;
-    console.log(this.url);
-
-    this.router.navigate([this.url]);
-    return URL;
   }
   public url = APIURL;
 
@@ -39,9 +34,11 @@ export class AllMerchantComponent implements OnInit {
     const URL = `/home/customers/info/${row?.id}`;
     return URL;
   }
+
   goToDetails(row: any): any {
-    const id = row.id;
     const URL = `main/merchant/details/${row?.id}`;
+    console.log(URL);
+
     return URL;
   }
 
@@ -71,7 +68,7 @@ export class AllMerchantComponent implements OnInit {
       ],
       header: 'Name',
       customCell: 'multiLabel',
-      action: (row) => this.goToDetails(row),
+      link: 'main/merchant/details/',
       width: '200px',
     },
     {
@@ -101,7 +98,7 @@ export class AllMerchantComponent implements OnInit {
       icon: 'pi pi-file-edit',
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
-      customPermission: (row: any) => row.id > 3,
+      // customPermission: (row: any) => row.id > 3,
     },
     {
       name: 'Block',
