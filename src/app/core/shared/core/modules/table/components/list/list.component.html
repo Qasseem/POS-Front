@@ -375,6 +375,18 @@
                 <span style="color: #969696" *ngIf="item.custom === 'default'">
                   {{ rowData[item.label] | strLimit : 30 }}
                 </span>
+
+                <span
+                  style="color: #969696"
+                  *ngIf="item.custom === 'defaultDate'"
+                >
+                  {{
+                    rowData[item.label]
+                      | dateFixer
+                      | date : "dd-MM-yyyy hh:mm a"
+                  }}
+                </span>
+
                 <span
                   style="margin-left: 22px; color: #969696"
                   *ngIf="item.custom === 'icon'"

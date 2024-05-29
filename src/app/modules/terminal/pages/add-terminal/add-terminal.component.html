@@ -37,7 +37,7 @@
                 <div class="flex flex-column gap-2">
                   <label for="merchantId">Merchant</label>
                   <p-dropdown
-                    [options]="citiesList"
+                    [options]="allMerchantList"
                     formControlName="merchantId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
@@ -62,12 +62,12 @@
               <div class="col-4">
                 <div class="flex flex-column gap-2">
                   <label for="terminalId">Terminal ID</label>
-                  <input
+                  <p-inputNumber
+                    [useGrouping]="false"
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.terminalId?.errors?.required
                     }"
                     type="text"
-                    pInputText
                     formControlName="terminalId"
                   />
 
@@ -84,24 +84,45 @@
                     >
                       Terminal ID field is required
                     </div>
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.terminalId.errors.pattern"
+                    >
+                      Terminal ID field length must be between(1,30)
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="phone"
+                  <label for="phoneNumber"
                     >Phone Number
                     <span class="color-info"> (Optional)</span>
                   </label>
-                  <input
+                  <p-inputNumber
+                    [useGrouping]="false"
                     [ngClass]="{
-                      'ng-invalid ng-dirty': f.phone?.errors?.required
+                      'ng-invalid ng-dirty': f.phoneNumber?.errors?.required
                     }"
                     type="text"
-                    pInputText
-                    formControlName="phone"
+                    formControlName="phoneNumber"
                   />
+
+                  <div
+                    *ngIf="
+                      f.phoneNumber.errors &&
+                      (f.phoneNumber.dirty || f.phoneNumber.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.phoneNumber.errors.pattern"
+                    >
+                      Phone Number field length must be between(10,14)
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,11 +210,20 @@
                 "
               >
                 <div class="col-6">
-                  <span class="mt-2">Long: {{ display?.lng }}</span>
+                  <span class="mt-2"
+                    >Long: {{ form.get("longitude").value }}</span
+                  >
                 </div>
                 <div class="col-6">
-                  <span class="mt-2">Lat: {{ display?.lat }}</span>
+                  <span class="mt-2"
+                    >Lat: {{ form.get("latitude").value }}</span
+                  >
                 </div>
+              </div>
+              <div *ngIf="!form.get('latitude').value">
+                <span style="color: red; font-size: 10px"
+                  >Please select location on map!</span
+                >
               </div>
             </div>
             <div class="grid mt-2">
@@ -201,6 +231,7 @@
                 <div class="flex flex-column gap-2">
                   <label for="regionId">Region</label>
                   <p-dropdown
+                    (onChange)="regionChanged($event)"
                     [options]="regionsList"
                     formControlName="regionId"
                     [optionValue]="'id'"
@@ -227,6 +258,7 @@
                   <label for="cityId">City</label>
                   <p-dropdown
                     [options]="citiesList"
+                    (onChange)="cityChanged($event)"
                     formControlName="cityId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
@@ -303,6 +335,20 @@
                     pInputText
                     formControlName="landMark"
                   />
+                  <div
+                    *ngIf="
+                      f.landMark.errors &&
+                      (f.landMark.dirty || f.landMark.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.landMark.errors.required"
+                    >
+                      Landmark field is required
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

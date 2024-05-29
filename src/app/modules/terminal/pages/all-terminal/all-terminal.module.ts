@@ -4,6 +4,7 @@ import { AllTerminalComponent } from './all-terminal.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgInputsModule } from 'src/app/core/shared/primeng/primeng-input-module';
+import { AppTableModule } from 'src/app/core/shared/core/modules/table/table-module';
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +17,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     PrimeNgInputsModule,
+    AppTableModule,
   ],
   declarations: [AllTerminalComponent],
 })

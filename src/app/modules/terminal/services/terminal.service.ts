@@ -8,8 +8,8 @@ import { APIURL } from 'src/app/services/api';
 export class TerminalService {
   constructor(private http: HttpService) {}
 
-  GetAllCities() {
-    return this.http.getReq(APIURL.Terminal.GetAllCities);
+  GetAllCities(parentId) {
+    return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
   }
 
   GetAllErrandChannels() {
@@ -23,9 +23,11 @@ export class TerminalService {
   GetAllRegions() {
     return this.http.getReq(APIURL.Terminal.GetAllRegions);
   }
-
-  GetAllZones() {
-    return this.http.getReq(APIURL.Terminal.GetAllZones);
+  GetAllMechantDropDown() {
+    return this.http.getReq(APIURL.Terminal.GetAllMechantDropDown);
+  }
+  GetAllZones(parentId) {
+    return this.http.getHeaderReq(APIURL.Terminal.GetAllZones, parentId);
   }
 
   Add(data) {

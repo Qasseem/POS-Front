@@ -46,5 +46,6 @@ export const APIURL = {
     GetAllZones: '/Terminal/GetAllZones',
     GetAllErrandChannels: '/Terminal/GetAllErrandChannels',
     GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
+    GetAllMechantDropDown: '/Terminal/GetAllMechantDropDown',
   },
 };

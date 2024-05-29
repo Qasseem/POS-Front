@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
-
+import { InputNumberModule } from 'primeng/inputnumber';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +26,7 @@ import { InputIconModule } from 'primeng/inputicon';
     InputIconModule,
     IconFieldModule,
     FormsModule,
+    InputNumberModule,
   ],
   providers: [],
   declarations: [PNgDropdownComponent],
@@ -41,6 +42,7 @@ import { InputIconModule } from 'primeng/inputicon';
     CalendarModule,
     ReactiveFormsModule,
     FormsModule,
+    InputNumberModule,
   ],
 })
 export class PrimeNgInputsModule {}

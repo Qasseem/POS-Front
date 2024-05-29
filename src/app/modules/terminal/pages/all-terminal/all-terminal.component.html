@@ -1,3 +1,27 @@
-<p>
-  all-terminal works!
-</p>
+<div class="p-grid ml-2 m-2">
+  <div class="p-col" style="text-align: right">
+    <span class="mt-2" style="float: left; font-weight: bolder">Terminal</span>
+    <p-button (click)="navigateToAdd()" label="Add Terminal" size="small">
+      <span class="ml-1 mr-1 add">
+        <i class="pi pi-plus add-icon"></i>
+      </span>
+    </p-button>
+  </div>
+</div>
+<div class="mt-3">
+  <app-table
+    [showSearchBar]="true"
+    [url]="{
+      getAll: url.Terminal.GetGrid,
+      export: url.Terminal.Export
+    }"
+    [addButtonLabel]="'Add Terminal'"
+    [columns]="columns"
+    [buttonsExistance]="tableBtns"
+    [exportUrl]="url.Terminal.Export"
+    [actions]="actions"
+    [options]="{ check: false }"
+    [filters]="filters"
+  >
+  </app-table>
+</div>

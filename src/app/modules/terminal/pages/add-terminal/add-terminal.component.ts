@@ -32,12 +32,15 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
   display: google.maps.LatLngLiteral;
   showMap: boolean;
   markerPositions: google.maps.LatLngLiteral[] = [];
+  allMerchantList = [];
   moveMap(event: google.maps.MapMouseEvent) {
     this.center = event.latLng.toJSON();
     console.log(this.center);
   }
   addMarker(event: google.maps.MapMouseEvent) {
     this.markerPositions = [event.latLng.toJSON()];
+    this.form.controls.longitude.setValue(this.markerPositions[0]?.lng);
+    this.form.controls.latitude.setValue(this.markerPositions[0]?.lat);
     console.log(this.markerPositions);
   }
   move(event: google.maps.MapMouseEvent) {
@@ -63,10 +66,17 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.service.GetAllCities().subscribe((resp) => {
+    this.service.GetAllCities(0).subscribe((resp) => {
       if (resp.success) {
         console.log(resp);
         this.citiesList = resp.data;
+      }
+    });
+
+    this.service.GetAllMechantDropDown().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.allMerchantList = resp.data;
       }
     });
 
@@ -84,7 +94,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       }
     });
 
-    this.service.GetAllZones().subscribe((resp) => {
+    this.service.GetAllZones(0).subscribe((resp) => {
       if (resp.success) {
         console.log(resp);
         this.zonesList = resp.data;
@@ -99,17 +109,32 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     }
     this.form = this.fb.group({
       merchantId: ['', Validators.required],
-      terminalId: ['', Validators.required],
-      phone: [''],
+      terminalId: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(30),
+          Validators.pattern(/^\d{5,30}$/),
+        ],
+      ],
+      phoneNumber: [
+        null,
+        [
+          Validators.minLength(10),
+          Validators.maxLength(14),
+          Validators.pattern(/^\d{10,14}$/),
+        ],
+      ],
       errandChannelId: [null, Validators.required],
       posTypeId: [null, Validators.required],
-      lat: [null, Validators.required],
-      lng: [null, Validators.required],
+      latitude: [null, Validators.required],
+      longitude: [null, Validators.required],
       regionId: [null, Validators.required],
       cityId: [null, Validators.required],
       zoneId: [null, Validators.required],
       address: [null, Validators.required],
-      landMark: [null],
+      landMark: [null, [Validators.required]],
       id: [null],
     });
   }
@@ -142,6 +167,26 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     });
   }
   backToList() {
-    this.router.navigate(['main/merchant/all']);
+    this.router.navigate(['main/terminal/all']);
+  }
+
+  print() {
+    console.log(this.form);
+  }
+
+  regionChanged(event) {
+    this.form.controls.cityId.setValue(null);
+    this.form.controls.zoneId.setValue(null);
+    if (event) {
+      this.citiesList = this.citiesList.filter(
+        (x) => x.parentId == event.value
+      );
+    }
+  }
+  cityChanged(event) {
+    this.form.controls.zoneId.setValue(null);
+    if (event) {
+      this.zonesList = this.zonesList.filter((x) => x.parentId == event.value);
+    }
   }
 }
