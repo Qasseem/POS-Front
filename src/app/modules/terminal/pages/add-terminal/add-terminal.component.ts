@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MerchantService } from 'src/app/modules/merchant/services/merchant.service';
-import { GoogleMap } from '@angular/google-maps';
+import { TerminalService } from '../../services/terminal.service';
 
 @Component({
   selector: 'app-add-terminal',
@@ -11,9 +10,14 @@ import { GoogleMap } from '@angular/google-maps';
 })
 export class AddTerminalComponent implements OnInit, AfterViewInit {
   form: FormGroup;
-  categories = [];
   id;
   details: any;
+
+  citiesList = [];
+  regionsList = [];
+  zonesList = [];
+  errandChannelsList = [];
+  posList = [];
 
   options: google.maps.MapOptions = {
     center: { lat: 30.06648609010278, lng: 31.242701933248 },
@@ -23,6 +27,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     lat: 30.06648609010278,
     lng: 31.242701933248,
   };
+
   zoom = 5;
   display: google.maps.LatLngLiteral;
   showMap: boolean;
@@ -41,12 +46,50 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
 
   constructor(
     private fb: FormBuilder,
-    private merchantService: MerchantService,
+    private service: TerminalService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.GetTerminalDropDownsData();
+  }
   ngAfterViewInit(): void {
     // this.showMap = true;
+  }
+  GetTerminalDropDownsData() {
+    this.service.GetAllRegions().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.regionsList = resp.data;
+      }
+    });
+
+    this.service.GetAllCities().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.citiesList = resp.data;
+      }
+    });
+
+    this.service.GetAllErrandChannels().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.errandChannelsList = resp.data;
+      }
+    });
+
+    this.service.GetAllPOSTypes().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.posList = resp.data;
+      }
+    });
+
+    this.service.GetAllZones().subscribe((resp) => {
+      if (resp.success) {
+        console.log(resp);
+        this.zonesList = resp.data;
+      }
+    });
   }
 
   ngOnInit() {
@@ -69,11 +112,9 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       landMark: [null],
       id: [null],
     });
-
-    this.GetAllMerchantCategories();
   }
   getItemDetails() {
-    this.merchantService.GetDetails(this.id).subscribe((resp) => {
+    this.service.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
         if (this.details) {
@@ -85,13 +126,6 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  GetAllMerchantCategories() {
-    this.merchantService.GetAllMerchantCategories().subscribe((resp) => {
-      if (resp.success) {
-        this.categories = resp.data;
-      }
-    });
-  }
   onSubmit() {}
   get f() {
     return this.form.controls;
@@ -101,7 +135,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     if (!this.id) {
       delete obj.id;
     }
-    this.merchantService.Add(this.form.value).subscribe((resp) => {
+    this.service.Add(this.form.value).subscribe((resp) => {
       if (resp.success) {
         this.backToList();
       }

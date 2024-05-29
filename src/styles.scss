@@ -67,7 +67,9 @@ body {
 .font-13 {
   font-size: 13px;
 }
-
+.fs-11 {
+  font-size: 11px;
+}
 .color-info {
   color: #94a3b8;
 }
@@ -146,7 +148,7 @@ label {
 
 .formcontainer {
   margin: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: white;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */

@@ -32,4 +32,19 @@ export const APIURL = {
     GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
     Favorite: '/Merchant/AddFavorite',
   },
+
+  Terminal: {
+    Add: '/Terminal/SaveTerminal',
+    GetOne: '/Terminal/GetTerminalById',
+    Export: '/Terminal/ExportLeadGrid',
+    GetGrid: '/Terminal/GetTerminalGrid',
+    Favorite: '/Terminal/AddFavorite',
+    GetFavoriteTerminalGrid: '/Terminal/GetFavoriteTerminalGrid',
+    ImportTerminals: '/Terminal/ImportTerminals',
+    GetAllRegions: '/Terminal/GetAllRegions',
+    GetAllCities: '/Terminal/GetAllCities',
+    GetAllZones: '/Terminal/GetAllZones',
+    GetAllErrandChannels: '/Terminal/GetAllErrandChannels',
+    GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
+  },
 };

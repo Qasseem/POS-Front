@@ -18,7 +18,6 @@
       />
 
       <p-button
-        style="width: 100px !important"
         (click)="submit()"
         [disabled]="!form?.valid"
         label="Save"
@@ -36,13 +35,12 @@
             <div class="grid">
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="merchantId">Arabic Name</label>
+                  <label for="merchantId">Merchant</label>
                   <p-dropdown
-                    [options]="categories"
+                    [options]="citiesList"
                     formControlName="merchantId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
-                    placeholder="Select a Category"
                   />
                   <div
                     *ngIf="
@@ -55,7 +53,7 @@
                       class="fs-10 color-red"
                       *ngIf="f.merchantId.errors.required"
                     >
-                      Merchant Id field is required
+                      Merchant field is required
                     </div>
                   </div>
                 </div>
@@ -63,7 +61,7 @@
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="terminalId">Merchant Name[EN]</label>
+                  <label for="terminalId">Terminal ID</label>
                   <input
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.terminalId?.errors?.required
@@ -84,7 +82,7 @@
                       class="fs-10 color-red"
                       *ngIf="f.terminalId.errors.required"
                     >
-                      Terminal Id field is required
+                      Terminal ID field is required
                     </div>
                   </div>
                 </div>
@@ -92,7 +90,10 @@
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="phone">Merchant Name[EN]</label>
+                  <label for="phone"
+                    >Phone Number
+                    <span class="color-info"> (Optional)</span>
+                  </label>
                   <input
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.phone?.errors?.required
@@ -101,18 +102,6 @@
                     pInputText
                     formControlName="phone"
                   />
-
-                  <div
-                    *ngIf="f.phone.errors && (f.phone.dirty || f.phone.touched)"
-                    class="invalid-feedback"
-                  >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.phone.errors.required"
-                    >
-                      Phone field is required
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -120,13 +109,12 @@
             <div class="grid">
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="errandChannelId">Arabic Name</label>
+                  <label for="errandChannelId">Errand Channel</label>
                   <p-dropdown
-                    [options]="categories"
+                    [options]="errandChannelsList"
                     formControlName="errandChannelId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
-                    placeholder="Select a Category"
                   />
                   <div
                     *ngIf="
@@ -139,20 +127,19 @@
                       class="fs-10 color-red"
                       *ngIf="f.errandChannelId.errors.required"
                     >
-                      Errand Channel Id Id field is required
+                      Errand Channel field is required
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="posTypeId">Arabic Name</label>
+                  <label for="posTypeId">POS Type</label>
                   <p-dropdown
-                    [options]="categories"
+                    [options]="posList"
                     formControlName="posTypeId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
-                    placeholder="Select a Category"
                   />
                   <div
                     *ngIf="
@@ -176,7 +163,7 @@
         <div class="col-4 p-0">
           <div class="formcontainer">
             <div>
-              <span class="font-bold font-10"> Location </span>
+              <span class="font-bold fs-11"> Location </span>
             </div>
             <p-divider />
             <div *ngIf="true">
@@ -192,11 +179,133 @@
                 <map-marker [position]="position" [options]="markerOptions" />
                 }
               </google-map>
-
-              <div>Latitude: {{ display?.lat }}</div>
-              <div>Longitude: {{ display?.lng }}</div>
+              <div
+                class="grid fs-11 pt-2 mt-3 font-bold"
+                style="
+                  height: 45px;
+                  background-color: #e6f2fe;
+                  color: #3399fa;
+                  border-radius: 10px;
+                "
+              >
+                <div class="col-6">
+                  <span class="mt-2">Long: {{ display?.lng }}</span>
+                </div>
+                <div class="col-6">
+                  <span class="mt-2">Lat: {{ display?.lat }}</span>
+                </div>
+              </div>
             </div>
-            <div>sad</div>
+            <div class="grid mt-2">
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label for="regionId">Region</label>
+                  <p-dropdown
+                    [options]="regionsList"
+                    formControlName="regionId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.regionId.errors &&
+                      (f.regionId.dirty || f.regionId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.regionId.errors.required"
+                    >
+                      Region field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label for="cityId">City</label>
+                  <p-dropdown
+                    [options]="citiesList"
+                    formControlName="cityId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.cityId.errors && (f.cityId.dirty || f.cityId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.cityId.errors.required"
+                    >
+                      City field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label for="zoneId">Zone</label>
+                  <p-dropdown
+                    [options]="zonesList"
+                    formControlName="zoneId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.zoneId.errors && (f.zoneId.dirty || f.zoneId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.zoneId.errors.required"
+                    >
+                      Zone field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col-12">
+                <div class="flex flex-column gap-2">
+                  <label for="address"
+                    >Address
+                    <span class="color-info"> (Optional)</span>
+                  </label>
+                  <input
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': f.address?.errors?.required
+                    }"
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="grid">
+              <div class="col-12">
+                <div class="flex flex-column gap-2">
+                  <label for="landMark">Land Mark</label>
+                  <input
+                    [ngClass]="{
+                      'ng-invalid ng-dirty': f.landMark?.errors?.required
+                    }"
+                    type="text"
+                    pInputText
+                    formControlName="landMark"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
