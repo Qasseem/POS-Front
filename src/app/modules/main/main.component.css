@@ -308,3 +308,27 @@
   background-color: #cce6fe;
   border-radius: 10px;
 }
+
+.child-container {
+  border-left: 2px solid #99ccfd;
+  padding: 0px;
+}
+
+.child-branch {
+  width: 11px;
+  height: 25px;
+  display: inline-block;
+  border-left: 1px solid #99ccfd;
+  border-bottom: 1px solid #99ccfd;
+  border-radius: 0px 0px 0px 6px;
+  margin-left: -2px;
+}
+
+.text-color {
+  color: #5b6671;
+  font-size: 11px;
+}
+.active-cild {
+  color: #003364 !important;
+  font-weight: bolder;
+}

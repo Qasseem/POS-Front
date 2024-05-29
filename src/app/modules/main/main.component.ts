@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class MainComponent implements OnInit {
   sidebarVisible = true;
+  panelOpenState = false;
   items = [
     {
       label: this.translateService.instant('Merchants'),
@@ -22,6 +23,15 @@ export class MainComponent implements OnInit {
       expanded: true,
       routerLink: '/main/merchant/all',
       active: true,
+      childs: [
+        {
+          label: this.translateService.instant('Dashboard'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/merchant/all',
+          active: false,
+        },
+      ],
     },
     {
       label: this.translateService.instant('Terminals'),
@@ -29,6 +39,22 @@ export class MainComponent implements OnInit {
       expanded: true,
       routerLink: '/main/terminal/all',
       active: false,
+      childs: [
+        {
+          label: this.translateService.instant('Terminals'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/terminal/all',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('Terminals'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/terminal/all',
+          active: false,
+        },
+      ],
     },
     {
       label: this.translateService.instant('Dashboard'),
@@ -36,6 +62,15 @@ export class MainComponent implements OnInit {
       expanded: true,
       routerLink: '/main/merchant/all',
       active: false,
+      childs: [
+        {
+          label: this.translateService.instant('Dashboard'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/merchant/all',
+          active: false,
+        },
+      ],
     },
   ];
 
@@ -87,12 +122,24 @@ export class MainComponent implements OnInit {
   }
 
   setActiveItem(ss) {}
-  navigate(item) {
-    this.items.forEach((x) => (x.active = false));
-    // this.dashboardItems.forEach((x) => (x.active = false));
+
+  navigate(item, child = null) {
+    if (child == null && !item.childs.length) {
+      this.navigateFromParent(item);
+    }
+    if (child != null) {
+      this.setAllPropsByNameInArray(this.items, 'active', false);
+      item.active = true;
+      child.active = true;
+      this.router.navigate([child.routerLink]);
+    }
+  }
+  navigateFromParent(item) {
+    this.setAllPropsByNameInArray(this.items, 'active', false);
     item.active = true;
     this.router.navigate([item.routerLink]);
   }
+
   logOut(): void {
     this.loading.show();
     this.storage
@@ -102,5 +149,16 @@ export class MainComponent implements OnInit {
         finalize(() => this.loading.hide())
       )
       .subscribe(() => this.router.navigate(['/login']));
+  }
+  setAllPropsByNameInArray(arr, propName, value) {
+    arr.forEach((obj) => {
+      for (const key in obj) {
+        if (key === propName) {
+          obj[key] = value;
+        } else if (typeof obj[key] === 'object') {
+          this.setAllPropsByNameInArray(obj[key], propName, value);
+        }
+      }
+    });
   }
 }

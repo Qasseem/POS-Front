@@ -5,6 +5,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button-module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button
     PrimeNgPanelModule,
     TranslateModule,
     PrimeNgButtonsModule,
+    MatExpansionModule,
   ],
   declarations: [MainComponent],
 })

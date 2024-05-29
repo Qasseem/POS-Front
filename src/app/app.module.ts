@@ -17,6 +17,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,6 +62,7 @@ const appInitializerFn = (configService: ConfigService) => {
       multi: true,
       deps: [ConfigService],
     },
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

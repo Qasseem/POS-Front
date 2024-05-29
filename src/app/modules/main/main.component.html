@@ -19,7 +19,7 @@
         </div>
         <hr style="border-top: 1px solid #99ccfd" />
 
-        <div
+        <!-- <div
           (click)="navigate(item)"
           style="cursor: pointer; border-radius: 10px 0px 0px 10px"
           *ngFor="let item of items"
@@ -36,6 +36,59 @@
             class="ml-3 mr-3 fc-main"
             >{{ item.label }}</span
           >
+        </div> -->
+        <!-- matMenue -->
+        <div class="mt-3 ml-3">
+          <mat-accordion>
+            <mat-expansion-panel
+              style="box-shadow: none; background-color: transparent"
+              class="mt-2"
+              *ngFor="let item of items"
+              (opened)="panelOpenState = true"
+              (closed)="panelOpenState = false"
+              (click)="navigate(item)"
+            >
+              <mat-expansion-panel-header
+                [ngStyle]="{
+                  'background-color': item.active ? '#99CCFD' : null,
+                  'border-radius': '10px 0px 0px 10px'
+                }"
+                style="height: 40px"
+              >
+                <mat-panel-title>
+                  <i
+                    class="mr-3"
+                    [class]="item.icon"
+                    style="font-size: 1rem"
+                    [ngClass]="item.active ? 'active-cild' : ''"
+                    [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
+                  ></i>
+                  <span
+                    [ngClass]="item.active ? 'active-cild' : ''"
+                    class="text-color"
+                  >
+                    {{ item?.label }}
+                  </span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="child-container">
+                <div *ngFor="let child of item?.childs" style="cursor: pointer">
+                  <div (click)="navigate(item, child)">
+                    <span class="child-branch"></span>
+                    <span class="ml-2">
+                      <p
+                        class="text-color"
+                        style="display: inline"
+                        [ngClass]="child.active ? 'active-cild' : ''"
+                      >
+                        {{ child?.label }}
+                      </p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </div>
       <div class="user-container p-3">
