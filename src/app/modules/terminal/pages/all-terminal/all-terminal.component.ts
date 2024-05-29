@@ -31,7 +31,7 @@ export class AllTerminalComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
+    const URL = `main/terminal/edit/${row?.id}`;
     console.log(URL);
     this.router.navigate([URL]);
   }
@@ -105,20 +105,17 @@ export class AllTerminalComponent implements OnInit {
     {
       name: 'Edit',
       icon: 'pi pi-file-edit',
-      permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
-      customPermission: (row: any) => row.id > 3,
+      // customPermission: (row: any) => row.id > 3,
     },
     {
       name: 'Block',
       icon: 'pi pi-ban',
-      permission: 'completedata',
       call: (row: any) => this.blockItem(row),
     },
     {
       name: 'Add to favorite ',
       icon: 'pi pi-heart',
-      permission: 'completedata',
       call: (row: any) => this.addToFavorite(row),
     },
   ];

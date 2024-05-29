@@ -143,6 +143,12 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       if (resp.success) {
         this.details = resp.data;
         if (this.details) {
+          this.regionChanged(resp.data?.regionId);
+          this.cityChanged(resp.data?.cityId);
+          this.markerPositions.push({
+            lat: resp.data.latitude,
+            lng: resp.data?.longitude,
+          });
           this.form.patchValue(this.details);
           this.form.updateValueAndValidity();
         }
