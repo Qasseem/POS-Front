@@ -49,4 +49,7 @@ export const APIURL = {
     GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
     GetAllMechantDropDown: '/Terminal/GetAllMechantDropDown',
   },
+  Users: {
+    GetAllUsersDropDown: '/User/GetAllUsersDropDown',
+  },
 };

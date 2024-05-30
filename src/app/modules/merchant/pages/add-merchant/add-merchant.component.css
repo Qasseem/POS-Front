@@ -10,3 +10,11 @@
   float: left;
   font-weight: bolder;
 }
+
+::ng-deep .p-button {
+  width: 100px;
+}
+
+::ng-deep .p-inputtext {
+  height: 40px;
+}

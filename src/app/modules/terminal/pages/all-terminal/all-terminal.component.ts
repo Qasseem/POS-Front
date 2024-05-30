@@ -22,11 +22,6 @@ export class AllTerminalComponent implements OnInit {
       if (resp.success) {
       }
     });
-    const URL = `main/merchant/edit/${row?.id}`;
-    console.log(this.url);
-
-    this.router.navigate([this.url]);
-    return URL;
   }
   public url = APIURL;
 
@@ -122,32 +117,88 @@ export class AllTerminalComponent implements OnInit {
 
   filters: SearchInterface[] = [
     {
-      type: SearchInputTypes.text,
-      field: 'MerchantNameEN',
+      type: SearchInputTypes.date,
+      field: 'createDate',
       isFixed: true,
     },
+
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'UserName',
+      field: 'terminalId',
       isFixed: true,
     },
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'category',
+      field: 'merchant',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
+      url: this.url.Terminal.GetAllMechantDropDown,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
+
+    {
+      isMultiple: true,
+      type: SearchInputTypes.choice,
+      field: 'users',
+      isFixed: true,
+      url: this.url.Users.GetAllUsersDropDown,
+      method: HTTPMethods.postReq,
+      propValueName: 'id',
+    },
+    {
+      type: SearchInputTypes.text,
+      field: 'phone',
+      isFixed: true,
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'posType',
+      isFixed: true,
+      url: this.url.Terminal.GetAllPOSTypes,
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {
-      type: SearchInputTypes.date,
-      field: 'createDate',
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'errandChannel',
+      isFixed: true,
+      url: this.url.Terminal.GetAllErrandChannels,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'city',
+      isFixed: true,
+      url: this.url.Terminal.GetAllCities,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+      header: '0',
+    },
+
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'zone',
+      isFixed: true,
+      url: this.url.Terminal.GetAllZones,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+      header: '0',
+    },
+
+    {
+      type: SearchInputTypes.text,
+      field: 'address',
+      isFixed: true,
+    },
+    {
+      type: SearchInputTypes.text,
+      field: 'landmark',
       isFixed: true,
     },
   ];

@@ -168,6 +168,27 @@
     "UserName": "User Name",
     "MerchantNameAR": "Merchant Name[AR]",
     "MerchantNameEN": "Merchant Name [EN]",
-    "createDate": "Create Date"
+    "createDate": "Create Date",
+    "landmark": "Landmark",
+    "address": "Address",
+    "errandChannel": "Errand Channel",
+    "city": "City",
+    "zone": "Zone",
+    "posType": "POS Type",
+    "phone": "Phone",
+    "users": "Users",
+    "merchant": "Merchant",
+    "terminalId": "Terminal ID",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": "",
+    "": ""
   }
 }

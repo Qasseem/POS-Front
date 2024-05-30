@@ -357,7 +357,7 @@
             </div>
 
             <div *ngIf="col.customCell === 'multiLabel'">
-              <div *ngFor="let item of col.field">
+              <div *ngFor="let item of col.field" class="mt-1">
                 <div *ngIf="item.custom === 'navigator'">
                   <i
                     style="font-size: 14px; color: #2053a6"
@@ -374,7 +374,9 @@
                 <span style="color: #969696" *ngIf="item.custom === 'default'">
                   {{ rowData[item.label] | strLimit : 30 }}
                 </span>
-
+                <span *ngIf="item.custom === 'normal'">
+                  {{ rowData[item.label] | strLimit : 30 }}
+                </span>
                 <span
                   style="color: #969696"
                   *ngIf="item.custom === 'defaultDate'"

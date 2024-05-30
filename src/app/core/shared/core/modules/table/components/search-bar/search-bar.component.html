@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="grid">
+<div class="grid" style="height: 73px">
   <div class="col-4 m-3">
     <div>
       <p-iconField iconPosition="right">
@@ -34,7 +34,7 @@
   </div>
 
   <div *ngIf="buttonsExistance?.showAllButtons" class="col-7 mt-3">
-    <div style="width: 100%; margin-right: -70px" class="float-right">
+    <div style="width: 100%" class="float-right">
       <p-button
         *ngIf="buttonsExistance?.showExport"
         label="Export"
@@ -59,6 +59,7 @@
         *ngIf="buttonsExistance?.showFilter"
         (click)="op.toggle($event)"
         class="filter-btn float-right"
+        style="height: 32px"
       >
         <i class="pi pi-filter"></i>
         Filter

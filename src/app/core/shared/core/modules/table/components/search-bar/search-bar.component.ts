@@ -134,10 +134,21 @@ export class SearchBarComponent implements OnInit, OnChanges {
     this.searchOnType();
   }
   getDDLData(item) {
-    let targetedApi =
-      item.method == HTTPMethods.getReq
-        ? this.searchFilterService.getData(item.url)
-        : this.searchFilterService.getDataWithPostCall(item.url);
+    let targetedApi;
+    if (
+      HTTPMethods.getReq &&
+      (item?.header || item?.header == '0' || item?.header == 0)
+    ) {
+      targetedApi = this.searchFilterService.getDataWithHeader(
+        item.url,
+        item?.header
+      );
+    } else {
+      targetedApi =
+        item.method == HTTPMethods.getReq
+          ? this.searchFilterService.getData(item.url)
+          : this.searchFilterService.getDataWithPostCall(item.url);
+    }
 
     targetedApi.pipe(take(1)).subscribe((resp) => {
       if (
@@ -151,11 +162,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.filtersInput.find((x) => x.field == item.field).ddlData =
           resp.data;
       } else {
-        resp.data.forEach((item) => {
+        console.log(item);
+
+        resp.data?.data.forEach((item) => {
           item?.code ? (item.code = item.code.trim()) : '';
         });
         this.filtersInput.find((x) => x.field == item.field).ddlData =
-          resp.data;
+          resp.data?.data;
       }
     });
   }
@@ -383,7 +396,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   showImportDialog() {
     this.visible = true;
   }
-  visible = true;
+  visible = false;
 
   filesSelectedEvent(event) {
     if (event.length) {

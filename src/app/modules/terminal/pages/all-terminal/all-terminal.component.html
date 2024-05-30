@@ -13,7 +13,8 @@
     [showSearchBar]="true"
     [url]="{
       getAll: url.Terminal.GetGrid,
-      export: url.Terminal.Export
+      export: url.Terminal.Export,
+      import: url.Terminal.ImportTerminals
     }"
     [addButtonLabel]="'Add Terminal'"
     [columns]="columns"
@@ -22,6 +23,8 @@
     [actions]="actions"
     [options]="{ check: false }"
     [filters]="filters"
+    [uploadHeader]="'Upload Bulk Terminal'"
+    [sampleName]="'ImportTerminalSample.xlsx'"
   >
   </app-table>
 </div>

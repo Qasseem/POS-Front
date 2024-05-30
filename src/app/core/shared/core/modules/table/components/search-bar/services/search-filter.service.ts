@@ -18,4 +18,8 @@ export class SearchFilterService {
   getData(url) {
     return this.http.getReq(url);
   }
+
+  getDataWithHeader(url, id) {
+    return this.http.getHeaderReq(url, id);
+  }
 }

@@ -83,8 +83,8 @@ export class AllMerchantComponent implements OnInit {
     },
     {
       field: [
-        { label: 'merchantNameEN', custom: 'default' },
-        { label: 'merchantNameAR', custom: 'default' },
+        { label: 'createdBy', custom: 'normal' },
+        { label: 'createdAt', custom: 'defaultDate' },
       ],
       header: 'Created by',
       customCell: 'multiLabel',
