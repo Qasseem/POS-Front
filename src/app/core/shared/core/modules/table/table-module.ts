@@ -8,6 +8,7 @@ import { PrimeNgButtonsModule } from '../../../primeng/primeng-button-module';
 import { TableComponent } from './table.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FormModule } from 'src/app/core/shared/form/form-module';
+import { FileUploadModule } from './components/file-upload/file-upload.module';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { FormModule } from 'src/app/core/shared/form/form-module';
     PrimeNgInputsModule,
     FormModule,
     PrimeNgButtonsModule,
+    FileUploadModule,
   ],
   declarations: [ListComponent, TableComponent, SearchBarComponent],
   exports: [ListComponent, TableComponent, SearchBarComponent],

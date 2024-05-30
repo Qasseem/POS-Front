@@ -65,6 +65,8 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() viewCustomPermission: ViewCustomPermission;
   @Input() exportUrl: any;
   @Input() buttonsExistance: TableButtonsExistanceInterface;
+  @Input() uploadHeader = 'Upload';
+  @Input() sampleName = '';
   first = 0;
 
   apis: any;

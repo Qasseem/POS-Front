@@ -48,6 +48,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   @Input() searchOnly = false;
   @Input() StyleInput = '';
   @Input() addButtonLabel = 'Add';
+  @Input() uploadHeader = 'Upload';
   @Input() styleContainer =
     'border-radius: 0.4rem ;height: 50px;background-color: white;width: 651px ;margin: 10px; border: 1px solid #C3C3C3;';
   @Input() additionalField = true;
@@ -58,6 +59,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
     'margin-top': '30px',
   };
   @Input() taskSearchHistoryObj = {};
+  @Input() sampleName = '';
   filtersForm: UntypedFormGroup;
   filterControls;
   unPinnedControls;
@@ -75,6 +77,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   //var to assign the search form value from history if exist
   formHistoryData: any;
   taskListFormData: any;
+  fileToUpload: any;
   constructor(
     public language: AppTranslateService,
     private tableCoreService: TableCoreService,
@@ -375,5 +378,29 @@ export class SearchBarComponent implements OnInit, OnChanges {
     if (this.url.export) {
       this.tableCoreService.exportTable(this.url.export).subscribe();
     }
+  }
+
+  showImportDialog() {
+    this.visible = true;
+  }
+  visible = true;
+
+  filesSelectedEvent(event) {
+    if (event.length) {
+      this.fileToUpload = event[0];
+    }
+  }
+  importFromFile() {
+    const formData = new FormData();
+    formData.append('file', this.fileToUpload);
+    this.tableCoreService
+      .import(this.url.import, formData)
+      .subscribe((resp) => {
+        if (resp.success) {
+          console.log(resp);
+          this.visible = false;
+          location.reload();
+        }
+      });
   }
 }

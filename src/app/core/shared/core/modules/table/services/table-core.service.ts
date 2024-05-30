@@ -181,4 +181,8 @@ export class TableCoreService {
       refId: 0,
     };
   }
+
+  import(url: string, data) {
+    return this.http.postReq(url, data);
+  }
 }

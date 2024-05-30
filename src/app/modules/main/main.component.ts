@@ -17,14 +17,14 @@ export class MainComponent implements OnInit {
   sidebarVisible = true;
   panelOpenState = false;
   items = [
-    {
-      label: this.translateService.instant('Dashboard'),
-      icon: 'pi pi-users',
-      expanded: true,
-      routerLink: '/main/merchant/all',
-      active: false,
-      childs: [],
-    },
+    // {
+    //   label: this.translateService.instant('Dashboard'),
+    //   icon: 'pi pi-users',
+    //   expanded: true,
+    //   routerLink: '/main/merchant/all',
+    //   active: false,
+    //   childs: [],
+    // },
     {
       label: this.translateService.instant('Merchants'),
       icon: 'pi pi-users',

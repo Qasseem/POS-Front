@@ -33,6 +33,8 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
   showMap: boolean;
   markerPositions: google.maps.LatLngLiteral[] = [];
   allMerchantList = [];
+  orignalZones = [];
+  orignalCities = [];
   moveMap(event: google.maps.MapMouseEvent) {
     this.center = event.latLng.toJSON();
     console.log(this.center);
@@ -70,6 +72,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       if (resp.success) {
         console.log(resp);
         this.citiesList = resp.data;
+        this.orignalCities = resp.data;
       }
     });
 
@@ -98,6 +101,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       if (resp.success) {
         console.log(resp);
         this.zonesList = resp.data;
+        this.orignalZones = resp.data;
       }
     });
   }
@@ -143,8 +147,10 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
       if (resp.success) {
         this.details = resp.data;
         if (this.details) {
-          this.regionChanged(resp.data?.regionId);
-          this.cityChanged(resp.data?.cityId);
+          // setTimeout(() => {
+          //   this.regionChanged(resp.data?.regionId);
+          //   this.cityChanged(resp.data?.cityId);
+          // }, 1000);
           this.markerPositions.push({
             lat: resp.data.latitude,
             lng: resp.data?.longitude,
@@ -183,6 +189,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
   regionChanged(event) {
     this.form.controls.cityId.setValue(null);
     this.form.controls.zoneId.setValue(null);
+    this.citiesList = this.orignalCities;
     if (event) {
       this.citiesList = this.citiesList.filter(
         (x) => x.parentId == event.value
@@ -191,6 +198,7 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
   }
   cityChanged(event) {
     this.form.controls.zoneId.setValue(null);
+    this.zonesList = this.orignalZones;
     if (event) {
       this.zonesList = this.zonesList.filter((x) => x.parentId == event.value);
     }

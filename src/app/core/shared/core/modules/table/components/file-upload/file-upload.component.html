@@ -1,0 +1,43 @@
+<div
+  class="centered-container"
+  (dragover)="onDragOver($event)"
+  (drop)="onDrop($event)"
+>
+  <div class="item-container">
+    <div>
+      <img
+        src="../../../../../../../../assets/iamges/upload-icon.PNG"
+        alt="Image 1"
+      />
+    </div>
+    <label class="font-bold font-16">Upload new file</label>
+    <div>
+      <span class="fc-main">Drag and drop file or</span>
+
+      <input
+        type="file"
+        id="file-upload"
+        style="display: none"
+        (change)="onFileSelected($event)"
+      />
+
+      <button href="#" class="upload-file-btn" (click)="chooseFile()">
+        Choose File
+      </button>
+    </div>
+    <div>
+      <span class="file-name" *ngIf="fileName">
+        <i class="pi pi-upload" style="font-size: 0.7rem"></i>
+        {{ fileName }}</span
+      >
+    </div>
+  </div>
+</div>
+
+<div class="mt-2" style="display: flex; justify-content: center">
+  <a
+    [href]="'../../../../../../../../assets/samples/' + sampleName"
+    target="_blank"
+    >DownLoad Sample File.</a
+  >
+</div>

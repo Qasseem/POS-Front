@@ -24,7 +24,10 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let headerWithToken;
-    if (request.url.endsWith('UploadFile')) {
+    if (
+      request.url.endsWith('UploadFile') ||
+      request.url.includes('ImportMerchants')
+    ) {
       this.token = this.token ? this.token : this.storage.getToken();
       headerWithToken = {
         Authorization: 'Bearer ' + this.token,

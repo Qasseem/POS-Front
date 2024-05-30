@@ -332,3 +332,15 @@
   color: #003364 !important;
   font-weight: bolder;
 }
+
+.icon-circle {
+  background-color: rgb(153, 204, 253);
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+.icon-circle-pos {
+  padding-left: 3px;
+  padding-top: 3px;
+}

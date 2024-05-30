@@ -31,6 +31,7 @@ export const APIURL = {
     GetGrid: '/Merchant/GetMerchantGrid',
     GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
     Favorite: '/Merchant/AddFavorite',
+    ImportMerchants: '/Merchant/ImportMerchants',
   },
 
   Terminal: {

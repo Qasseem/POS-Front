@@ -8,14 +8,12 @@
           style="justify-content: space-between; padding: 15px"
         >
           <img src="../../../assets/iamges/images/paymob2.png" alt="" />
-          <img
-            [ngStyle]="
-              storage.getLang() == 'ar' ? { transform: 'rotate(180deg)' } : {}
-            "
-            (click)="sidebarVisible = !sidebarVisible"
-            src="../../../assets/iamges/svg/Arrow.svg"
-            alt="menu icon"
-          />
+          <span class="mt-2 icon-circle">
+            <i
+              (click)="sidebarVisible = !sidebarVisible"
+              class="pi pi-angle-left icon-circle-pos"
+            ></i>
+          </span>
         </div>
         <hr style="border-top: 1px solid #99ccfd" />
 

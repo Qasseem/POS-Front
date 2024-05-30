@@ -7,6 +7,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
   imports: [
     PanelMenuModule,
@@ -17,6 +18,7 @@ import { AvatarModule } from 'primeng/avatar';
     MenubarModule,
     MenuModule,
     AvatarModule,
+    DialogModule,
   ],
   providers: [],
   declarations: [],
@@ -29,6 +31,7 @@ import { AvatarModule } from 'primeng/avatar';
     MenubarModule,
     MenuModule,
     AvatarModule,
+    DialogModule,
   ],
 })
 export class PrimeNgPanelModule {}

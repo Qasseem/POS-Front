@@ -51,6 +51,7 @@
         class="float-right ml-3"
         icon="pi pi-upload"
         size="small"
+        (click)="showImportDialog()"
         badgeClass="p-badge-contrast"
         outlined="true"
       />
@@ -519,3 +520,36 @@
   </ng-template>
 </p-overlayPanel>
 <div #actualTarget></div>
+
+<p-dialog
+  [header]="uploadHeader"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '40rem' }"
+>
+  <div style="margin-top: -20px">
+    <p-divider></p-divider>
+  </div>
+  <app-file-upload
+    [sampleName]="sampleName"
+    (filesSelectedEvent)="filesSelectedEvent($event)"
+  ></app-file-upload>
+  <p-divider></p-divider>
+
+  <div>
+    <p-button
+      [outlined]="true"
+      size="small"
+      class="float-left"
+      label="Cancel"
+      (click)="visible = false"
+    />
+    <p-button
+      [disabled]="!fileToUpload"
+      (click)="importFromFile()"
+      size="small"
+      class="float-right"
+      label="Save"
+    />
+  </div>
+</p-dialog>
