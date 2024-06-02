@@ -22,6 +22,10 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
   options: google.maps.MapOptions = {
     center: { lat: 30.06648609010278, lng: 31.242701933248 },
     zoom: 6,
+    mapTypeControl: false,
+    zoomControl: false,
+    fullscreenControl: false,
+    streetViewControl: false,
   };
   center: google.maps.LatLngLiteral = {
     lat: 30.06648609010278,
