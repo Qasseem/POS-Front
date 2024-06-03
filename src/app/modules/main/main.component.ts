@@ -64,6 +64,29 @@ export class MainComponent implements OnInit {
         },
       ],
     },
+    {
+      label: this.translateService.instant('Tickets'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/ticket/all',
+      active: false,
+      childs: [
+        {
+          label: this.translateService.instant('Tickets'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/ticket/all',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('Favorite Tickets'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/ticket/all',
+          active: false,
+        },
+      ],
+    },
   ];
 
   listActions = [

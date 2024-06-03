@@ -27,6 +27,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'ticket',
+        loadChildren: () =>
+          import('../ticket/ticket.module').then((m) => m.TicketModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',
