@@ -27,22 +27,13 @@ export class AddTerminalComponent implements OnInit, AfterViewInit {
     fullscreenControl: false,
     streetViewControl: false,
   };
-  center: google.maps.LatLngLiteral = {
-    lat: 30.06648609010278,
-    lng: 31.242701933248,
-  };
 
-  zoom = 5;
   display: google.maps.LatLngLiteral;
-  showMap: boolean;
   markerPositions: google.maps.LatLngLiteral[] = [];
   allMerchantList = [];
   orignalZones = [];
   orignalCities = [];
-  moveMap(event: google.maps.MapMouseEvent) {
-    this.center = event.latLng.toJSON();
-    console.log(this.center);
-  }
+
   addMarker(event: google.maps.MapMouseEvent) {
     this.markerPositions = [event.latLng.toJSON()];
     this.form.controls.longitude.setValue(this.markerPositions[0]?.lng);

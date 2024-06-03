@@ -187,12 +187,11 @@
               <span class="font-bold fs-11"> Location </span>
             </div>
             <p-divider />
-            <div *ngIf="true">
+            <div>
               <google-map
                 height="200px"
                 width="100%"
                 [options]="options"
-                (mapClick)="moveMap($event)"
                 (mapMousemove)="move($event)"
                 (mapClick)="addMarker($event)"
               >
