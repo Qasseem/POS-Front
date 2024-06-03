@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
 import { APIURL } from 'src/app/services/api';
@@ -6,7 +7,7 @@ import { APIURL } from 'src/app/services/api';
   providedIn: 'root',
 })
 export class TerminalService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, private httpPure: HttpClient) {}
 
   GetAllCities(parentId) {
     return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
@@ -39,5 +40,13 @@ export class TerminalService {
 
   Favorite(data) {
     return this.http.postReq(APIURL.Terminal.Favorite, data);
+  }
+  GetAddressFromLatLng(lat, lng) {
+    let url =
+      'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=json&location=' +
+      lng +
+      ',' +
+      lat;
+    return this.httpPure.get(url);
   }
 }

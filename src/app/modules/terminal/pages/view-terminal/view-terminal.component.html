@@ -1,3 +1,180 @@
-<div style="width: 500px">
-  <app-file-upload> </app-file-upload>
+<div>
+  <div class="grid font-14 ml-2 m-2 mb-3">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Terminal</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">{{ details?.reference }}</span>
+    </div>
+  </div>
+  <p-divider />
+
+  <div class="grid m-2 font-12">
+    <div class="col-4 p-0" style="border-radius: 10px">
+      <div class="m-2 box-border">
+        <div class="p-2 wave font-16" style="color: white">
+          <div class="ml-3 mt-2 mb-2">
+            <span style="color: #99ccfd">
+              {{ "Treminal ID : " }}
+            </span>
+            {{ details?.id }}
+          </div>
+          <p-divider />
+          <div class="ml-3 mt-2">{{ details?.merchantNameEN }}</div>
+          <div class="ml-3 mt-1">{{ details?.merchantNameAR }}</div>
+          <div class="ml-3 mt-2">
+            <span> Merchant ID: </span>
+            {{ details?.merchantId }}
+          </div>
+        </div>
+        <div style="height: 100px; margin-top: -57px">
+          <div class="container">
+            <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+              <path
+                d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
+                style="stroke: none; fill: #1c8ef9"
+              ></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="grid m-2">
+          <div class="col-6 color-info">Reference</div>
+          <div class="col-6">{{ details?.reference }}</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Phone Number</div>
+          <div class="col-6">{{ details?.phoneNumber }}</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">POS Type</div>
+          <div class="col-6">{{ details?.posType }}</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Errand Channel</div>
+          <div class="col-6">{{ details?.errandChannel }}</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Created by</div>
+          <div class="col-6">{{ details?.createdBy }}</div>
+        </div>
+        <div class="grid m-2">
+          <div class="col-6 color-info">Created at</div>
+          <div class="col-6">
+            {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+          </div>
+        </div>
+        <p-divider />
+        <div class="mt-3"></div>
+        <div class="grid">
+          <div class="col-2 ml-3">
+            <div class="icon-container">
+              <i
+                style="font-size: 1.5rem; color: #0080f9"
+                class="pi pi-map-marker"
+              ></i>
+            </div>
+          </div>
+          <div class="col-8">
+            <div class="fc-main" *ngIf="address?.City">{{ address?.City }}</div>
+            <div>
+              <span class="fc-main mr-1">Address:</span>
+              <span class="fw-500" *ngIf="address?.LongLabel">{{
+                address?.LongLabel
+              }}</span>
+            </div>
+            <div>
+              <span class="fc-main mr-2">Landmark</span>
+              <span class="fw-500">{{ details?.landMark }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="grid p-2">
+          <div class="col-12">
+            <div *ngIf="true">
+              <google-map height="200px" width="100%" [options]="options">
+                @for (position of markerPositions; track position) {
+                <map-marker [position]="position" [options]="markerOptions" />
+                }
+              </google-map>
+            </div>
+          </div>
+        </div>
+        <p-divider />
+        <div class="grid m-2">
+          <div class="col-2">
+            <p-avatar
+              icon="pi pi-ticket"
+              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
+              styleClass="mr-2"
+              size="large"
+            />
+          </div>
+          <div class="col-4">
+            <div>Active Tickets</div>
+            <div class="fs-24 mt-1">{{ 5 }}</div>
+          </div>
+          <div class="col-2">
+            <p-avatar
+              icon="pi pi-user"
+              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
+              styleClass="mr-2"
+              size="large"
+            />
+          </div>
+          <div class="col-4">
+            <div>Agents Visted</div>
+            <div class="fs-24 mt-1">{{ 5 }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- //////////////// -->
+
+    <!-- <div class="col-8">
+      <div>
+        <div class="p-grid ml-2 m-2">
+          <div class="p-col" style="text-align: right">
+            <span class="mt-2" style="float: left; font-weight: bolder"
+              >Terminal</span
+            >
+            <p-button
+              (click)="navigateToAdd()"
+              label="Add Terminal"
+              size="small"
+            >
+              <span class="ml-1 mr-1 add">
+                <i class="pi pi-plus add-icon"></i>
+              </span>
+            </p-button>
+          </div>
+        </div>
+        <div class="mt-3">
+          <app-table
+            [showSearchBar]="true"
+            [url]="{
+              getAll: url.Terminal.GetGrid,
+              export: url.Terminal.Export,
+              import: url.Terminal.ImportTerminals
+            }"
+            [addButtonLabel]="'Add Terminal'"
+            [columns]="columns"
+            [buttonsExistance]="tableBtns"
+            [exportUrl]="url.Terminal.Export"
+            [actions]="actions"
+            [options]="{ check: false }"
+            [filters]="filters"
+            [uploadHeader]="'Upload Bulk Terminal'"
+            [sampleName]="'ImportTerminalSample.xlsx'"
+          >
+          </app-table>
+        </div>
+      </div>
+    </div> -->
+  </div>
 </div>

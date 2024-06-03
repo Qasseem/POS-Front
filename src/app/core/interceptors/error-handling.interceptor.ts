@@ -39,6 +39,7 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
             if (
               event.url?.includes('assets/i18n') ||
               event.url?.includes('app-config.json') ||
+              request.url.includes('geocode.arcgis') ||
               event.url?.includes('Contract/Print') ||
               event.url?.includes('Contract/PrintMainTemplate')
             ) {

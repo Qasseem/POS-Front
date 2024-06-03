@@ -24,7 +24,10 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let headerWithToken;
-    if (
+    if (request.url.includes('geocode.arcgis')) {
+      console.log('from geo');
+      return next.handle(request);
+    } else if (
       request.url.endsWith('UploadFile') ||
       request.url.includes('ImportMerchants')
     ) {
