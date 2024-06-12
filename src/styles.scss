@@ -153,6 +153,9 @@ label {
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 
 .box-border {
   background-color: white;
@@ -176,4 +179,22 @@ body {
 }
 .fs-24 {
   font-size: 24px;
+}
+
+
+app-add-merchant {
+  p-divider {
+    .p-divider-solid.p-divider-horizontal:before {
+      border-top-style: none !important;
+    }
+  }
+  p-dropdown {
+    .p-dropdown {
+      height: 36px;
+    }
+  }
+}
+
+.pt-10 {
+  padding-top: 10px;
 }
