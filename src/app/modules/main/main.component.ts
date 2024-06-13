@@ -87,6 +87,66 @@ export class MainComponent implements OnInit {
         },
       ],
     },
+    {
+      label: this.translateService.instant('Locations'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/locations/all',
+      active: false,
+      // childs: [
+      //   {
+      //     label: this.translateService.instant('Tickets'),
+      //     icon: 'pi pi-users',
+      //     expanded: true,
+      //     routerLink: '/main/ticket/all',
+      //     active: false,
+      //   },
+      //   {
+      //     label: this.translateService.instant('Favorite Tickets'),
+      //     icon: 'pi pi-users',
+      //     expanded: true,
+      //     routerLink: '/main/ticket/all',
+      //     active: false,
+      //   },
+      // ],
+    },
+    {
+      label: this.translateService.instant('Admin Activities'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/admin-activities/all',
+      active: false,
+      childs: [
+        {
+          label: this.translateService.instant('Merchant Category Codes'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/all',
+          active: true,
+        },
+        {
+          label: this.translateService.instant('Errand Channels'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/all/errands-channels',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('POS Types'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/all/pos-types',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('Categories Errand Types'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/all/categories-errands-types',
+          active: false,
+        },
+      ],
+    },
   ];
 
   listActions = [

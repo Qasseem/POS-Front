@@ -52,4 +52,11 @@ export const APIURL = {
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',
   },
+
+  AdminActivities: {
+    AddMCC: '',
+    ErrandsChannel: '',
+    CategoriesErrandsTypes: '',
+    POSTypes: ''
+  }
 };

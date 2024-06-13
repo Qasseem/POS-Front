@@ -33,6 +33,18 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'locations',
+        loadChildren: () =>
+          import('../locations/locations.module').then((m) => m.LocationsModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'admin-activities',
+        loadChildren: () =>
+          import('../admin-activities/admin-activities.module').then((m) => m.AdminActivitiesModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
         redirectTo: 'home',
         pathMatch: 'full',

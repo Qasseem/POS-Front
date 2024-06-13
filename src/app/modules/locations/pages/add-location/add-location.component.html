@@ -1,0 +1,167 @@
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Merchant</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">Add Merchant</span>
+      <p-button
+        class="mr-3"
+        label="Cancel"
+        [text]="true"
+        [raised]="true"
+        size="small"
+      />
+
+      <p-button
+        style="width: 100px !important"
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="Save"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <div class="formcontainer">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="grid">
+        <div *ngIf="false" class="col-4">
+          <div class="flex flex-column gap-2">
+            <label for="id">ID</label>
+            <input
+              [ngClass]="{ 'ng-invalid ng-dirty': f.id?.errors?.required }"
+              type="text"
+              pInputText
+              formControlName="id"
+            />
+
+            <div
+              *ngIf="f.id.errors && (f.id.dirty || f.id.touched)"
+              class="invalid-feedback"
+            >
+              <div class="fs-10 color-red" *ngIf="f.id.errors.required">
+                ID field is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label for="merchantNameEN">Merchant Name[EN]</label>
+            <input
+              [ngClass]="{
+                'ng-invalid ng-dirty': f.merchantNameEN?.errors?.required
+              }"
+              type="text"
+              pInputText
+              formControlName="merchantNameEN"
+            />
+
+            <div
+              *ngIf="
+                f.merchantNameEN.errors &&
+                (f.merchantNameEN.dirty || f.merchantNameEN.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div
+                class="fs-10 color-red"
+                *ngIf="f.merchantNameEN.errors.required"
+              >
+                Merchant Name[EN] field is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label for="merchantNameAR">Merchant Name[AR]</label>
+            <input
+              [ngClass]="{
+                'ng-invalid ng-dirty': f.merchantNameAR?.errors?.required
+              }"
+              type="text"
+              pInputText
+              formControlName="merchantNameAR"
+            />
+
+            <div
+              *ngIf="
+                f.merchantNameAR.errors &&
+                (f.merchantNameAR.dirty || f.merchantNameAR.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div
+                class="fs-10 color-red"
+                *ngIf="f.merchantNameAR.errors.required"
+              >
+                Merchant Name[AR] field is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label for="userName">User Name</label>
+            <input
+              [ngClass]="{
+                'ng-invalid ng-dirty': f.userName?.errors?.required
+              }"
+              type="text"
+              pInputText
+              formControlName="userName"
+            />
+
+            <div
+              *ngIf="
+                f.userName.errors && (f.userName.dirty || f.userName.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div class="fs-10 color-red" *ngIf="f.userName.errors.required">
+                User name field is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label for="categoryId">Arabic Name</label>
+
+            <p-dropdown
+              [options]="categories"
+              formControlName="categoryId"
+              [optionValue]="'id'"
+              optionLabel="nameEn"
+              placeholder="Select a Category"
+            />
+            <div
+              *ngIf="
+                f.categoryId.errors &&
+                (f.categoryId.dirty || f.categoryId.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div class="fs-10 color-red" *ngIf="f.categoryId.errors.required">
+                Category field is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
