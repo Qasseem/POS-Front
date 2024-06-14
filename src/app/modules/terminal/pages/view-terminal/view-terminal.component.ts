@@ -5,9 +5,9 @@ import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
 
 @Component({
-  selector: 'app-view-terminal',
+  selector: 'oc-view-terminal',
   templateUrl: './view-terminal.component.html',
-  styleUrls: ['./view-terminal.component.css'],
+  styleUrls: ['./view-terminal.component.scss'],
 })
 export class ViewTerminalComponent implements OnInit {
   details: any;

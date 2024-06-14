@@ -1,55 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
+import { MerchanRoutingtModule } from './merchant-routing.module';
 import { MerchantComponent } from './merchant.component';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: MerchantComponent,
-    children: [
-      {
-        path: 'add',
-        loadChildren: () =>
-          import('./pages/add-merchant/add-merchant.module').then(
-            (m) => m.AddMerchantModule
-          ),
-      },
-      {
-        path: 'all',
-        loadChildren: () =>
-          import('./pages/all-merchant/all-merchant.module').then(
-            (m) => m.AllMerchantModule
-          ),
-      },
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/all-merchant/all-merchant.module').then(
-            (m) => m.AllMerchantModule
-          ),
-      },
-      {
-        path: 'edit/:id',
-        loadChildren: () =>
-          import('./pages/add-merchant/add-merchant.module').then(
-            (m) => m.AddMerchantModule
-          ),
-      },
-      {
-        path: 'details/:id',
-        loadChildren: () =>
-          import('./pages/view-merchant/view-merchant.module').then(
-            (m) => m.ViewMerchantModule
-          ),
-      },
-      { path: '', redirectTo: 'all', pathMatch: 'full' },
-    ],
-  },
-];
+import { MerchantFormComponent } from './pages/merchant-form/merchant-form.component';
+import { MerchantListComponent } from './pages/merchant-list/merchant-list.component';
+import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)],
-  declarations: [MerchantComponent],
+  declarations: [
+    MerchantComponent,
+    MerchantFormComponent,
+    MerchantListComponent,
+    ViewMerchantComponent,
+  ],
+  imports: [CommonModule, MerchanRoutingtModule, SharedModule],
+  exports: [],
+  providers: [],
 })
 export class MerchantModule {}

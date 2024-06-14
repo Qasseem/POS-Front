@@ -38,7 +38,7 @@ import { AppTranslateService } from 'src/app/core/shared/services/translate.serv
 import { TableCoreService } from '../../services/table-core.service';
 
 @Component({
-  selector: 'app-list',
+  selector: 'oc-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })

@@ -1,54 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { TerminalComponent } from './terminal.component';
-import { RouterModule, Routes } from '@angular/router';
+import { TerminalRoutingModule } from './terminal-routing.module';
+import { TerminalListComponent } from './pages/terminal-list/terminal-list.component';
+import { ViewTerminalComponent } from './pages/view-terminal/view-terminal.component';
+import { SharedModule } from '../shared/shared.module';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: TerminalComponent,
-    children: [
-      {
-        path: 'add',
-        loadChildren: () =>
-          import('./pages/add-terminal/add-terminal.module').then(
-            (m) => m.AddTerminalModule
-          ),
-      },
-      {
-        path: 'all',
-        loadChildren: () =>
-          import('./pages/all-terminal/all-terminal.module').then(
-            (m) => m.AllTerminalModule
-          ),
-      },
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/all-terminal/all-terminal.module').then(
-            (m) => m.AllTerminalModule
-          ),
-      },
-      {
-        path: 'edit/:id',
-        loadChildren: () =>
-          import('./pages/add-terminal/add-terminal.module').then(
-            (m) => m.AddTerminalModule
-          ),
-      },
-      {
-        path: 'details/:id',
-        loadChildren: () =>
-          import('./pages/view-terminal/view-terminal.module').then(
-            (m) => m.ViewTerminalModule
-          ),
-      },
-      { path: '', redirectTo: 'all', pathMatch: 'full' },
-    ],
-  },
-];
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes)],
-  declarations: [TerminalComponent],
+  imports: [CommonModule, TerminalRoutingModule, SharedModule],
+  declarations: [TerminalComponent, TerminalListComponent, ViewTerminalComponent],
 })
-export class TerminalModule {}
+export class TerminalModule { }

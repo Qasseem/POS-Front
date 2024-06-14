@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpResponse,
   HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, take, tap } from 'rxjs/operators';
-import { ToastService } from '../toaster/toaster.service';
-import { StorageService } from '../storage/storage.service';
-import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
+import { ToastService } from '../services/toaster.service';
 
 @Injectable({
   providedIn: 'root',

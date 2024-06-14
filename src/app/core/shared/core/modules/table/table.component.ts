@@ -34,7 +34,7 @@ import { ListComponent } from './components/list/list.component';
 import { AppTranslateService } from '../../../services/translate.service';
 
 @Component({
-  selector: 'app-table',
+  selector: 'oc-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.sass'],
 })

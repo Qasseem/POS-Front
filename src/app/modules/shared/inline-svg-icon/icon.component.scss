@@ -1,0 +1,35 @@
+@import '../../../style-guide/';
+
+:host ::ng-deep {
+  // svg {
+  //   width: 100%;
+  // }
+
+  i {
+    width: 1rem;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      height: auto;
+      width: 100%;
+      g {
+        // path {
+        //   fill: COLOR(background);
+        // }
+        // ellipse {
+        //   fill: COLOR(background);
+        // }
+      }
+    }
+
+    // &.active {
+    //   path[fill],
+    //   path[stroke] {
+    //     fill: COLOR(black);
+    //   }
+    // }
+  }
+}

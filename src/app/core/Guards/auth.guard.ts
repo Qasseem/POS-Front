@@ -1,35 +1,28 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivateFn,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
-import { StorageService } from '../storage/storage.service';
+import { Injectable } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
-class PermissionsService {
-  constructor(private router: Router, private storage: StorageService) {}
-
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
-    if (this.storage.getToken() === null) {
+export class AuthGuard {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
+  canActivate():
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    if (this.authService.isAuthenticated()) {
       return true;
-      this.router.navigate(['/login']);
-      return false;
     } else {
-      return true;
+      this.router.navigateByUrl('/auth/login');
+      return false;
     }
   }
 }
-
-export const AuthGuard: CanActivateFn = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): boolean => {
-  return inject(PermissionsService).canActivate(next, state);
-};

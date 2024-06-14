@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-admin-activities',
-  templateUrl: './admin-activities.component.html',
-  styleUrls: ['./admin-activities.component.css']
+  selector: 'oc-admin-activities',
+  template: `<router-outlet></router-outlet>`,
+  styleUrls: ['./admin-activities.component.scss']
 })
 export class AdminActivitiesComponent implements OnInit {
 
