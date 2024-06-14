@@ -39,6 +39,13 @@ export class MainComponent implements OnInit {
           routerLink: '/main/merchant/all',
           active: false,
         },
+        {
+          label: this.translateService.instant('Favorite Mechants'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/merchant/Favorite',
+          active: false,
+        },
       ],
     },
     {
