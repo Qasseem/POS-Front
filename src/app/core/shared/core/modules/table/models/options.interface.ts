@@ -15,4 +15,5 @@ export interface TableOptionsInterface {
   customButton?: {};
   editable?: boolean;
   historyDetails?: boolean;
+  viewDetails?:boolean ;
 }

@@ -13,9 +13,9 @@ import { TerminalService } from 'src/app/modules/terminal/services/terminal.serv
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 
 @Component({
-  selector: 'app-view-merchant',
+  selector: 'oc-view-merchant',
   templateUrl: './view-merchant.component.html',
-  styleUrls: ['./view-merchant.component.css'],
+  styleUrls: ['./view-merchant.component.scss'],
 })
 export class ViewMerchantComponent implements OnInit {
   details: any;

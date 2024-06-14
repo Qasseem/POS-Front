@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { StorageService } from '../storage/storage.service';
+import { StorageService } from '../services/storage.service';
 @Injectable({
   providedIn: 'root',
 })

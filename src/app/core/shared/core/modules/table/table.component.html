@@ -48,7 +48,7 @@
     </span>
   </div>
   <div *ngIf="showSearchBar" style="width: 100%">
-    <app-search-bar
+    <oc-search-bar
       [addButtonLabel]="addButtonLabel"
       [buttonsExistance]="buttonsExistance"
       [additionalField]="additionalField"
@@ -60,7 +60,7 @@
       [placeholderSearch]="placeholderSearch"
       [uploadHeader]="uploadHeader"
       [sampleName]="sampleName"
-    ></app-search-bar>
+    ></oc-search-bar>
   </div>
   <div *ngIf="false" style="margin-bottom: 0" #top class="add-header">
     <div style="margin-right: 0" class="btns-container">
@@ -103,7 +103,7 @@
     </div>
   </form>
   <div *ngIf="toggle" class="table-wrap">
-    <app-list
+    <oc-list
       [clientSide]="clientSide"
       [url]="url"
       [columnsI]="columns"
@@ -114,7 +114,7 @@
       [options]="options"
       [noDataText]="noDataText"
       (selected)="getSelected($event)"
-    ></app-list>
+    ></oc-list>
     <!-- TODO: removed due to check unCheck issue [IC-1477] -->
     <!-- [selectedData]="selectedData" -->
   </div>

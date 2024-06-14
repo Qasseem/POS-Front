@@ -23,4 +23,4 @@ import { FileUploadModule } from './components/file-upload/file-upload.module';
   declarations: [ListComponent, TableComponent, SearchBarComponent],
   exports: [ListComponent, TableComponent, SearchBarComponent],
 })
-export class AppTableModule {}
+export class PrimeTableModule {}

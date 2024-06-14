@@ -17,7 +17,7 @@ import {
 import { PNgDropdownService } from './p-ng-dropdown.service';
 
 @Component({
-  selector: 'app-p-ng-dropdown',
+  selector: 'oc-p-ng-dropdown',
   templateUrl: './p-ng-dropdown.component.html',
   styleUrls: ['./p-ng-dropdown.component.css'],
 })

@@ -18,6 +18,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AuthGuard } from './core/guards/auth.guard';
+import { LoginGuard } from './core/guards/login.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,7 +50,9 @@ const appInitializerFn = (configService: ConfigService) => {
     NgHttpLoaderModule.forRoot(),
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    // { provide: LocationStrategy, useClass: HashLocationStrategy },
+    AuthGuard,
+    LoginGuard,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,

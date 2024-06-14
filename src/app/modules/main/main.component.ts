@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { APIResponseInterface } from 'src/app/core/shared/interfaces/common-inferfaces';
-
 import { Router } from '@angular/router';
-import { StorageService } from 'src/app/core/storage/storage.service';
-import { AppTranslateService } from 'src/app/core/shared/services/translate.service';
-import { finalize, take, window } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize, take } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { StorageService } from 'src/app/core/services/storage.service';
+import { AppTranslateService } from 'src/app/core/shared/services/translate.service';
+
 @Component({
-  selector: 'app-main',
+  selector: 'oc-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css'],
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
   sidebarVisible = true;
@@ -29,21 +28,21 @@ export class MainComponent implements OnInit {
       label: this.translateService.instant('Merchants'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/merchant/all',
+      routerLink: '/main/merchant/list',
       active: true,
       childs: [
         {
           label: this.translateService.instant('Mechants'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/merchant/all',
+          routerLink: '/main/merchant/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Mechants'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/merchant/Favorite',
+          routerLink: '/main/merchant/favorites',
           active: false,
         },
       ],
@@ -52,21 +51,21 @@ export class MainComponent implements OnInit {
       label: this.translateService.instant('Terminals'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/terminal/all',
+      routerLink: '/main/terminal/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Terminals'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/terminal/all',
+          routerLink: '/main/terminal/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Terminals'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/terminal/all',
+          routerLink: '/main/terminal/list',
           active: false,
         },
       ],
@@ -75,21 +74,81 @@ export class MainComponent implements OnInit {
       label: this.translateService.instant('Tickets'),
       icon: 'pi pi-users',
       expanded: true,
-      routerLink: '/main/ticket/all',
+      routerLink: '/main/ticket/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Tickets'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/ticket/all',
+          routerLink: '/main/ticket/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Tickets'),
           icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/ticket/all',
+          routerLink: '/main/ticket/list',
+          active: false,
+        },
+      ],
+    },
+    {
+      label: this.translateService.instant('Locations'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/locations/list',
+      active: false,
+      // childs: [
+      //   {
+      //     label: this.translateService.instant('Tickets'),
+      //     icon: 'pi pi-users',
+      //     expanded: true,
+      //     routerLink: '/main/ticket/list',
+      //     active: false,
+      //   },
+      //   {
+      //     label: this.translateService.instant('Favorite Tickets'),
+      //     icon: 'pi pi-users',
+      //     expanded: true,
+      //     routerLink: '/main/ticket/list',
+      //     active: false,
+      //   },
+      // ],
+    },
+    {
+      label: this.translateService.instant('Admin Activities'),
+      icon: 'pi pi-users',
+      expanded: true,
+      routerLink: '/main/admin-activities/list',
+      active: false,
+      childs: [
+        {
+          label: this.translateService.instant('Merchant Category Codes'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/list/merchant-category-codes',
+          active: true,
+        },
+        {
+          label: this.translateService.instant('Errand Channels'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/list/errands-channels',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('POS Types'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/list/pos-types',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('Categories Errand Types'),
+          icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/admin-activities/list/categories-errands-types',
           active: false,
         },
       ],
@@ -146,7 +205,7 @@ export class MainComponent implements OnInit {
   setActiveItem(ss) {}
 
   navigate(item, child = null) {
-    if (child == null && !item.childs.length) {
+    if (child == null && !item.childs?.length) {
       this.navigateFromParent(item);
     }
     if (child != null) {
@@ -170,7 +229,7 @@ export class MainComponent implements OnInit {
         take(1),
         finalize(() => this.loading.hide())
       )
-      .subscribe(() => this.router.navigate(['/login']));
+      .subscribe(() => this.router.navigate(['/auth/login']));
   }
   setAllPropsByNameInArray(arr, propName, value) {
     arr.forEach((obj) => {

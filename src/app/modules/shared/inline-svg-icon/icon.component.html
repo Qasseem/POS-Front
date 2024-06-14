@@ -1,0 +1,34 @@
+<ng-container [style.display]="'inline-block'">
+  <ng-container [ngSwitch]="ext">
+    <i
+      *ngSwitchCase="'svg'"
+      [class]="$any(icon)"
+      [ngClass]="['icon', 'active']"
+      [style.width]="width"
+      [style.height]="height"
+      [style.transform]="
+        icon === 'close-sidebar' ? 'scale(1.3)' : 'scale(' + scale + ')'
+      "
+      [inlineSVG]="'/assets/' + type + 's/' + icon + '.svg'"
+      [class]="btnClass"
+      [style.transform-origin]="transformOrigin"
+    ></i>
+    <img
+      *ngSwitchCase="'png'"
+      [ngClass]="icon"
+      [style.width]="width"
+      [style.height]="height"
+      [style.transform]="'scale(' + scale + ')'"
+      [src]="'/assets/' + type + 's/' + icon + '.png'"
+    />
+
+    <nb-icon
+      *ngSwitchCase="'nb-icon'"
+      nbPrefix
+      class="btn-icon"
+      [pack]="$any(icon)?.pack"
+      [icon]="$any(icon)?.icon"
+    >
+    </nb-icon>
+  </ng-container>
+</ng-container>

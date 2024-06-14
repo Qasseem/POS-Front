@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
 import { NgModule } from '@angular/core';
-import { AuthGuard } from 'src/app/core/Guards/auth.guard';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -33,8 +33,20 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'locations',
+        loadChildren: () =>
+          import('../locations/locations.module').then((m) => m.LocationsModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'admin-activities',
+        loadChildren: () =>
+          import('../admin-activities/admin-activities.module').then((m) => m.AdminActivitiesModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'merchant',
         pathMatch: 'full',
       },
     ],

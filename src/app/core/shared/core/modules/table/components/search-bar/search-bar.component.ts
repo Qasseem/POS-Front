@@ -29,7 +29,7 @@ import {
 } from '../../models/table-url.interface';
 
 @Component({
-  selector: 'app-search-bar',
+  selector: 'oc-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.sass'],
 })

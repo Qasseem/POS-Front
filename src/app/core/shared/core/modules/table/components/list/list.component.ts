@@ -38,7 +38,7 @@ import { AppTranslateService } from 'src/app/core/shared/services/translate.serv
 import { TableCoreService } from '../../services/table-core.service';
 
 @Component({
-  selector: 'app-list',
+  selector: 'oc-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -168,6 +168,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       columnSearch: true,
       editable: false,
       historyDetails: false,
+      viewDetails: true,
       export: true,
       ...this.options,
     };

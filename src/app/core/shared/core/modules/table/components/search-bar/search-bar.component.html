@@ -145,7 +145,7 @@
                       class="form-control"
                     /> -->
                   </div>
-                  <!-- <app-input [formControlName]="ctrl.field"></app-input> -->
+                  <!-- <oc-input [formControlName]="ctrl.field"></oc-input> -->
                 </div>
                 <div *ngSwitchCase="'NUMBER'">
                   <div>
@@ -177,7 +177,7 @@
                       numbersOnly
                     />
                   </div>
-                  <!-- <app-input [formControlName]="ctrl.field"></app-input> -->
+                  <!-- <oc-input [formControlName]="ctrl.field"></oc-input> -->
                 </div>
 
                 <div *ngSwitchCase="'SELECT'">
@@ -531,10 +531,10 @@
   <div style="margin-top: -20px">
     <p-divider></p-divider>
   </div>
-  <app-file-upload
+  <oc-file-upload
     [sampleName]="sampleName"
     (filesSelectedEvent)="filesSelectedEvent($event)"
-  ></app-file-upload>
+  ></oc-file-upload>
   <p-divider></p-divider>
 
   <div>
