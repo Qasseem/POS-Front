@@ -229,7 +229,7 @@ export class MainComponent implements OnInit {
         take(1),
         finalize(() => this.loading.hide())
       )
-      .subscribe(() => this.router.navigate(['/login']));
+      .subscribe(() => this.router.navigate(['/auth/login']));
   }
   setAllPropsByNameInArray(arr, propName, value) {
     arr.forEach((obj) => {
