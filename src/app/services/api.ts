@@ -32,6 +32,9 @@ export const APIURL = {
     GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
     Favorite: '/Merchant/AddFavorite',
     ImportMerchants: '/Merchant/ImportMerchants',
+    GetAllRegions: '/Merchant/GetAllRegions',
+    GetAllCities: '/Merchant/GetAllCities',
+    GetAllZones: '/Merchant/GetAllZones',
   },
 
   Terminal: {

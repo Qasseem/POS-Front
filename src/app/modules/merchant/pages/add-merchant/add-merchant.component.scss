@@ -1,0 +1,77 @@
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep .p-button {
+  width: 100px;
+  border: 1px solid rgb(204, 230, 254);
+  .p-button-label {
+    font-weight: 400;
+  }
+}
+
+.header-left {
+  float: left;
+  font-weight: 500;
+}
+.header-divider {
+  // width: 1px;
+  margin: 12px 12px 12px 20px;
+  border-color: rgba(237, 239, 241, 0.2);
+}
+
+::ng-deep .p-inputtext {
+  height: 40px;
+}
+
+.merchants-form {
+  margin: 10px;
+  padding: 20px;
+  .inputs-div,
+  .location-form {
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    label {
+      color: #798693;
+      font-size: 12px;
+    }
+  }
+
+  .location-form {
+    margin-left: 24px;
+    width: 350px;
+    .location-text {
+      border-bottom: 1px solid rgba(237, 239, 241, 1);
+      margin-bottom: 12px;
+      p {
+        margin-top: 0px;
+      }
+    }
+    .location-container {
+      padding-top: 0px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border-radius: 10px;
+      background-color: #e6f2fe; /* Light blue background */
+      border: 1px solid rgba(230, 242, 254, 1); /* Blue border */
+      height: 45px;
+      .coordinate {
+        padding: 5px 0px 5px 10px;
+        color: #3399fa; /* Blue text color */
+        font-weight: bold;
+      }
+      .divider {
+        width: 1px;
+        height: 30px; /* Adjust height as needed */
+        background-color: #1e90ff; /* Blue color for the divider */
+
+      }
+    }
+  }
+  .p-20 {
+    padding: 20px;
+  }
+}
+

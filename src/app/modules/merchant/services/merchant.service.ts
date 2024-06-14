@@ -8,6 +8,18 @@ import { APIURL } from 'src/app/services/api';
 export class MerchantService {
   constructor(private http: HttpService) {}
 
+  GetAllCities(parentId) {
+    return this.http.getHeaderReq(APIURL.Merchant.GetAllCities, parentId);
+  }
+
+  GetAllRegions() {
+    return this.http.getReq(APIURL.Merchant.GetAllRegions);
+  }
+
+  GetAllZones(parentId) {
+    return this.http.getHeaderReq(APIURL.Merchant.GetAllZones, parentId);
+  }
+
   GetAllMerchantCategories() {
     return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
   }
