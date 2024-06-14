@@ -31,6 +31,7 @@ export const APIURL = {
     GetGrid: '/Merchant/GetMerchantGrid',
     GetAllMerchantCategories: '/Merchant/GetAllMerchantCategories',
     Favorite: '/Merchant/AddFavorite',
+    GetFavoriteMerchantGrid: '/Merchant/GetFavoriteMerchantGrid',
     ImportMerchants: '/Merchant/ImportMerchants',
   },
 
@@ -54,9 +55,16 @@ export const APIURL = {
   },
 
   AdminActivities: {
-    AddMCC: '',
-    ErrandsChannel: '',
-    CategoriesErrandsTypes: '',
-    POSTypes: ''
+    AddMCC: '/AdminActivities/SaveMerchantCategory',
+    getMCC: '/AdminActivities/GetMerchantCategoryGrid',
+    getErrandsChannel: '/AdminActivities/GetErrandChannelGrid',
+    AddErrandsChannel: '/AdminActivities/SaveErrandChannel',
+    getPOSType: '/AdminActivities/GetPOSTypeGrid',
+    addPOSType: '/AdminActivities/SavePOSType',
+  },
+
+  ErrandsType: {
+    getErrandsType: '/ErrandType/GetErrandTypeGrid',
+    addErrandType: '/ErrandType/SaveErrandType'
   }
 };

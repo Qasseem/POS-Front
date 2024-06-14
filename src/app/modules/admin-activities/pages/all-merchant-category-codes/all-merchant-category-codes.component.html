@@ -12,19 +12,19 @@
   <app-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Merchant.GetGrid,
+      getAll: url.AdminActivities.getMCC,
       export: url.Merchant.Export,
       import: url.Merchant.ImportMerchants
     }"
-    [addButtonLabel]="'Add Merchant'"
+    [addButtonLabel]="'Add MCC'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Merchant.Export"
     [actions]="actions"
     [options]="{ check: false }"
     [filters]="filters"
-    [uploadHeader]="'Upload Bulk Merchant'"
-    [sampleName]="'ImportMerchantSample.xlsx'"
+    [uploadHeader]="'Upload Bulk Merchant Category Codes'"
+    [sampleName]="'ImportMCCSample.xlsx'"
   >
   </app-table>
 </div>

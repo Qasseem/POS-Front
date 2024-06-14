@@ -168,6 +168,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       columnSearch: true,
       editable: false,
       historyDetails: false,
+      viewDetails: true,
       export: true,
       ...this.options,
     };

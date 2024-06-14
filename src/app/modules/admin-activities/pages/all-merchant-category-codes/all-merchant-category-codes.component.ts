@@ -10,6 +10,7 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { TableOptionsInterface } from 'src/app/core/shared/core/modules/table/models/options.interface';
 
 @Component({
   selector: 'app-all-merchant-category-codes',
@@ -30,16 +31,9 @@ export class AllMerchantCategoryCodesComponent implements OnInit {
     console.log(URL);
     this.router.navigate([URL]);
   }
-  blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
-  }
 
-  goToDetails(row: any): any {
-    const URL = `main/merchant/details/${row?.id}`;
-    console.log(URL);
-
-    return URL;
+  public tableOptions: TableOptionsInterface = {
+    viewDetails : false
   }
 
   public tableBtns: TableButtonsExistanceInterface = {
@@ -51,35 +45,20 @@ export class AllMerchantCategoryCodesComponent implements OnInit {
   };
   public columns: ColumnsInterface[] = [
     {
-      field: 'reference',
-      header: 'Ref',
-      width: '100px',
-    },
-    {
       field: 'id',
       header: 'ID',
-      width: '100px',
-    },
-
-    {
-      field: [
-        { label: 'merchantNameEN', custom: 'navigator' },
-        { label: 'merchantNameAR', custom: 'default' },
-      ],
-      header: 'Name',
-      customCell: 'multiLabel',
-      link: 'main/merchant/details/',
-      width: '200px',
     },
     {
-      field: 'userName',
-      header: 'User Name',
-      width: '110px',
+      field:  'nameEn',
+      header: 'MCC Name En',
     },
     {
-      field: 'category',
-      header: 'Category',
-      width: '110px',
+      field:'nameAr',
+      header: 'MCC Name Ar',
+    },
+    {
+      field: 'status',
+      header: 'Status',
     },
     {
       field: [
@@ -99,45 +78,29 @@ export class AllMerchantCategoryCodesComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      permission: 'completedata',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Add to favorite ',
-      icon: 'pi pi-heart',
-      permission: 'completedata',
-      call: (row: any) => this.addToFavorite(row),
-    },
+    }
   ];
 
   filters: SearchInterface[] = [
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameEN',
+      field: 'id',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
+      field: 'nameAr',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'UserName',
+      field: 'nameEn',
       isFixed: true,
     },
     {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'category',
+      type: SearchInputTypes.text,
+      field: 'status  ',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
     },
     {
       type: SearchInputTypes.date,
@@ -146,9 +109,9 @@ export class AllMerchantCategoryCodesComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) {}
+  constructor(private router: Router, private service: AdminActivitiesService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
   }

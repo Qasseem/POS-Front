@@ -12,13 +12,13 @@ export class AdminActivitiesService {
     return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
   }
   GetAllErrandsChannel() {
-    return this.http.getReq(APIURL.AdminActivities.ErrandsChannel)
+    return this.http.getReq(APIURL.AdminActivities.getErrandsChannel)
   }
   GetAllCategoriesErrandsTypes() {
-    return this.http.getReq(APIURL.AdminActivities.CategoriesErrandsTypes)
+    return this.http.getReq(APIURL.ErrandsType.getErrandsType)
   }
   GetAllPOSTypes() {
-    return this.http.getReq(APIURL.AdminActivities.POSTypes)
+    return this.http.getReq(APIURL.AdminActivities.getPOSType)
   }
   // Add(data) {
   //   return this.http.postReq(APIURL.Merchant.Add, data);
