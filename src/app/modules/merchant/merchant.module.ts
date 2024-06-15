@@ -6,6 +6,7 @@ import { MerchantComponent } from './merchant.component';
 import { MerchantFormComponent } from './pages/merchant-form/merchant-form.component';
 import { MerchantListComponent } from './pages/merchant-list/merchant-list.component';
 import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.component';
+import { MerchantFavoriteListComponent } from './pages/merchant-favorite-list/merchant-favorite-list.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.compo
     MerchantFormComponent,
     MerchantListComponent,
     ViewMerchantComponent,
+    MerchantFavoriteListComponent
   ],
   imports: [CommonModule, MerchanRoutingtModule, SharedModule],
   exports: [],

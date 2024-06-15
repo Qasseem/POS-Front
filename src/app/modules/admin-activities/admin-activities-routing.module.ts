@@ -6,6 +6,7 @@ import { CategoriesErrandsTypesListComponent } from './pages/categories-errands-
 import { ErrandsChannelsListComponent } from './pages/errands-channels-list/errands-channels-list.component';
 import { MerchantCategoryCodesListComponent } from './pages/merchant-category-codes-list/merchant-category-codes-list.component';
 import { POSTypesListComponent } from './pages/pos-types-list/pos-types-list.component';
+import { MerchantCategoryCodesFormComponent } from './pages/merchant-category-codes-form/merchant-category-codes-form.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,13 @@ const routes: Routes = [
       {
         path: 'list/merchant-category-codes',
         component: MerchantCategoryCodesListComponent,
+      },
+      {
+        path: 'add',
+        component: MerchantCategoryCodesFormComponent,
+        data: {
+          type: 'add'
+        }
       },
       {
         path: 'list/errands-channels',
@@ -59,4 +67,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminActivitiesRoutingModule {}
+export class AdminActivitiesRoutingModule { }

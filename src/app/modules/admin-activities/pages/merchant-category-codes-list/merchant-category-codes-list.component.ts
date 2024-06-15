@@ -17,23 +17,13 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./merchant-category-codes-list.component.scss'],
 })
 export class MerchantCategoryCodesListComponent implements OnInit {
-  addToFavorite(row: any): any {
-    // this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-    //   if (resp.success) {
-    //   }
-    // });
-  }
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
+    const URL = `main/list/merchant-category-codes/edit/${row?.id}`;
     console.log(URL);
     this.router.navigate([URL]);
   }
-
-  public tableOptions: TableOptionsInterface = {
-    viewDetails: false,
-  };
 
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
@@ -98,7 +88,7 @@ export class MerchantCategoryCodesListComponent implements OnInit {
     },
     {
       type: SearchInputTypes.text,
-      field: 'status  ',
+      field: 'status',
       isFixed: true,
     },
     {
@@ -115,6 +105,6 @@ export class MerchantCategoryCodesListComponent implements OnInit {
 
   ngOnInit() {}
   navigateToAdd() {
-    this.router.navigate(['main/merchant/add']);
+    this.router.navigate(['main/admin-activities/add']);
   }
 }

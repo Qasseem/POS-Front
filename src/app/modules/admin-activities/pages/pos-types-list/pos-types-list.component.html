@@ -1,7 +1,7 @@
 <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
-    <span class="mt-2" style="float: left; font-weight: bolder">Merchant</span>
-    <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
+    <span class="mt-2" style="float: left; font-weight: bolder">POS Types</span>
+    <p-button (click)="navigateToAdd()" label="Add POS Type" size="small">
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
@@ -12,19 +12,19 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Merchant.GetGrid,
-      export: url.Merchant.Export,
+      getAll: url.AdminActivities.getPOSType,
+      export: url.AdminActivities.exportPOSType,
       import: url.Merchant.ImportMerchants
     }"
-    [addButtonLabel]="'Add Merchant'"
+    [addButtonLabel]="'Add POS Type'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Merchant.Export"
+    [exportUrl]="url.AdminActivities.exportPOSType"
     [actions]="actions"
-    [options]="{ check: false }"
+    [options]="{ check: false , viewDetails : false}"
     [filters]="filters"
-    [uploadHeader]="'Upload Bulk Merchant'"
-    [sampleName]="'ImportMerchantSample.xlsx'"
+    [uploadHeader]="'Upload Bulk POS Type'"
+    [sampleName]="'ImportPOSTypeSample.xlsx'"
   >
   </oc-table>
 </div>

@@ -50,7 +50,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       merchantNameEN: [
         '',
-        [Validators.required, Validators.pattern('^[a-zA-Zs]*$')],
+        [Validators.required],
       ],
       merchantNameAR: [
         '',

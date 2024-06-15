@@ -9,20 +9,15 @@ import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/s
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { MerchantService } from '../../services/merchant.service';
 
 @Component({
-  selector: 'oc-categories-errands-types-list',
-  templateUrl: './categories-errands-types-list.component.html',
-  styleUrls: ['./categories-errands-types-list.component.scss'],
+  selector: 'oc-merchant-favorite-list',
+  templateUrl: './merchant-favorite-list.component.html',
+  styleUrls: ['./merchant-favorite-list.component.scss'],
 })
-export class CategoriesErrandsTypesListComponent implements OnInit {
+export class MerchantFavoriteListComponent implements OnInit {
   public url = APIURL;
-
-  editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
-    this.router.navigate([URL]);
-  }
 
 
   public tableBtns: TableButtonsExistanceInterface = {
@@ -34,29 +29,35 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
   };
   public columns: ColumnsInterface[] = [
     {
+      field: 'reference',
+      header: 'Ref',
+      width: '100px',
+    },
+    {
       field: 'id',
       header: 'ID',
       width: '100px',
     },
+
     {
-      field: 'categoryName',
+      field: [
+        { label: 'merchantNameEN', custom: 'navigator' },
+        { label: 'merchantNameAR', custom: 'default' },
+      ],
+      header: 'Name',
+      customCell: 'multiLabel',
+      link: 'main/merchant/details/',
+      width: '200px',
+    },
+    {
+      field: 'userName',
+      header: 'User Name',
+      width: '110px',
+    },
+    {
+      field: 'category',
       header: 'Category',
-    },
-    {
-      field: 'nameEn',
-      header: 'Type Name Ar',
-    },
-    {
-      field: 'nameAr',
-      header: 'Type Name Ar',
-    },
-    {
-      field: 'requireQuantity',
-      header: 'Require Qty?',
-    },
-    {
-      field: 'status',
-      header: 'Status',
+      width: '110px',
     },
     {
       field: [
@@ -76,7 +77,19 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    }
+    },
+    {
+      name: 'Block',
+      icon: 'pi pi-ban',
+      permission: 'completedata',
+      call: (row: any) => this.blockItem(row),
+    },
+    {
+      name: 'Add to favorite ',
+      icon: 'pi pi-heart',
+      permission: 'completedata',
+      call: (row: any) => this.addToFavorite(row),
+    },
   ];
 
   filters: SearchInterface[] = [
@@ -111,11 +124,35 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) {}
+  constructor(private router: Router, private service: MerchantService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
   }
+  addToFavorite(row: any): any {
+    this.service.Favorite({ id: row?.id }).subscribe((resp) => {
+      if (resp.success) {
+      }
+    });
+  }
+  editItem(row: any): any {
+    const URL = `main/merchant/edit/${row?.id}`;
+    console.log(URL);
+    this.router.navigate([URL]);
+  }
+
+  blockItem(row: any): any {
+    const URL = `/home/customers/info/${row?.id}`;
+    return URL;
+  }
+
+  goToDetails(row: any): any {
+    const URL = `main/merchant/details/${row?.id}`;
+    console.log(URL);
+
+    return URL;
+  }
+
 }

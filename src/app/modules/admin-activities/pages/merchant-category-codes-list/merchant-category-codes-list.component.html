@@ -13,15 +13,15 @@
     [showSearchBar]="true"
     [url]="{
       getAll: url.AdminActivities.getMCC,
-      export: url.Merchant.Export,
+      export: url.AdminActivities.exportMCC,
       import: url.Merchant.ImportMerchants
     }"
     [addButtonLabel]="'Add MCC'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Merchant.Export"
+    [exportUrl]="url.AdminActivities.exportMCC"
     [actions]="actions"
-    [options]="{ check: false }"
+    [options]="{ check: false , viewDetails : false}"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Merchant Category Codes'"
     [sampleName]="'ImportMCCSample.xlsx'"

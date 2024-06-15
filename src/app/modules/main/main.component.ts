@@ -26,20 +26,20 @@ export class MainComponent implements OnInit {
     // },
     {
       label: this.translateService.instant('Merchants'),
-      icon: 'pi pi-users',
+      icon: 'Users',
       expanded: true,
       routerLink: '/main/merchant/list',
       active: true,
       childs: [
         {
-          label: this.translateService.instant('Mechants'),
-          icon: 'pi pi-users',
+          label: this.translateService.instant('Merchants'),
+          icon: 'Users',
           expanded: true,
           routerLink: '/main/merchant/list',
           active: false,
         },
         {
-          label: this.translateService.instant('Favorite Mechants'),
+          label: this.translateService.instant('Favorite Merchants'),
           icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/merchant/favorites',

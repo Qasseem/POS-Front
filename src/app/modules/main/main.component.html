@@ -54,13 +54,15 @@
                 style="height: 40px"
               >
                 <mat-panel-title>
-                  <i
-                    class="mr-3"
+                  <oc-icon
+                    [icon]="item.icon"
+                    [width]="'130px'"
                     [class]="item.icon"
-                    style="font-size: 1rem"
+                    [scale]="1"
                     [ngClass]="item.active ? 'active-cild' : ''"
                     [ngStyle]="{ color: item.active ? '#2053a6' : '#5b6671' }"
-                  ></i>
+                  >
+                  </oc-icon>
                   <span
                     [ngClass]="item.active ? 'active-cild' : ''"
                     class="text-color"
