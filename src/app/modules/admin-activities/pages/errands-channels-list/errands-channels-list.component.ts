@@ -51,35 +51,20 @@ export class ErrandsChannelsListComponent implements OnInit {
   };
   public columns: ColumnsInterface[] = [
     {
-      field: 'reference',
-      header: 'Ref',
-      width: '100px',
-    },
-    {
       field: 'id',
       header: 'ID',
       width: '100px',
     },
 
     {
-      field: [
-        { label: 'merchantNameEN', custom: 'navigator' },
-        { label: 'merchantNameAR', custom: 'default' },
-      ],
-      header: 'Name',
-      customCell: 'multiLabel',
-      link: 'main/merchant/details/',
+      field: 'nameEn',
+      header: 'Channel Name EN',
       width: '200px',
     },
     {
-      field: 'userName',
-      header: 'User Name',
-      width: '110px',
-    },
-    {
-      field: 'category',
-      header: 'Category',
-      width: '110px',
+      field: 'nameAr',
+      header: 'Channel Name Ar',
+      width: '200px',
     },
     {
       field: [
@@ -100,24 +85,12 @@ export class ErrandsChannelsListComponent implements OnInit {
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
     },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      permission: 'completedata',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Add to favorite ',
-      icon: 'pi pi-heart',
-      permission: 'completedata',
-      call: (row: any) => this.addToFavorite(row),
-    },
   ];
 
   filters: SearchInterface[] = [
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameEN',
+      field: 'nameEn',
       isFixed: true,
     },
     {

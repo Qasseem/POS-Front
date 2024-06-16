@@ -7,6 +7,7 @@ import { CategoriesErrandsTypesListComponent } from './pages/categories-errands-
 import { ErrandsChannelsListComponent } from './pages/errands-channels-list/errands-channels-list.component';
 import { MerchantCategoryCodesListComponent } from './pages/merchant-category-codes-list/merchant-category-codes-list.component';
 import { POSTypesListComponent } from './pages/pos-types-list/pos-types-list.component';
+import { MerchantCategoryCodesFormComponent } from './pages/merchant-category-codes-form/merchant-category-codes-form.component';
 
 @NgModule({
   imports: [CommonModule, AdminActivitiesRoutingModule, SharedModule],
@@ -16,6 +17,7 @@ import { POSTypesListComponent } from './pages/pos-types-list/pos-types-list.com
     ErrandsChannelsListComponent,
     MerchantCategoryCodesListComponent,
     POSTypesListComponent,
+    MerchantCategoryCodesFormComponent
   ],
 })
 export class AdminActivitiesModule {}

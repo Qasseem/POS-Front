@@ -5,6 +5,7 @@ import { MerchantComponent } from './merchant.component';
 import { MerchantListComponent } from './pages/merchant-list/merchant-list.component';
 import { MerchantFormComponent } from './pages/merchant-form/merchant-form.component';
 import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.component';
+import { MerchantFavoriteListComponent } from './pages/merchant-favorite-list/merchant-favorite-list.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: MerchantComponent,
+        component: MerchantFormComponent,
         data: {
           type: 'add'
         }
@@ -26,7 +27,7 @@ const routes: Routes = [
       },
       {
         path: 'favorites',
-        component: MerchantListComponent
+        component: MerchantFavoriteListComponent
 
       },
       {

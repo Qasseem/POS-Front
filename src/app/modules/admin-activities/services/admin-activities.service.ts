@@ -20,12 +20,9 @@ export class AdminActivitiesService {
   GetAllPOSTypes() {
     return this.http.getReq(APIURL.AdminActivities.getPOSType)
   }
-  // Add(data) {
-  //   return this.http.postReq(APIURL.Merchant.Add, data);
-  // }
-  // GetDetails(id) {
-  //   return this.http.getHeaderReq(APIURL.Merchant.GetOne, id);
-  // }
+  AddMCC(data) {
+    return this.http.postReq(APIURL.AdminActivities.AddMCC, data);
+  }
 
   // Favorite(data) {
   //   return this.http.postReq(APIURL.Merchant.Favorite, data);

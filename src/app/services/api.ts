@@ -60,14 +60,18 @@ export const APIURL = {
   AdminActivities: {
     AddMCC: '/AdminActivities/SaveMerchantCategory',
     getMCC: '/AdminActivities/GetMerchantCategoryGrid',
+    exportMCC: '/AdminActivities/ExportMerchantCategory',
     getErrandsChannel: '/AdminActivities/GetErrandChannelGrid',
     AddErrandsChannel: '/AdminActivities/SaveErrandChannel',
+    exportErrandsChannel: '/AdminActivities/ExportErrandChannel',
     getPOSType: '/AdminActivities/GetPOSTypeGrid',
     addPOSType: '/AdminActivities/SavePOSType',
+    exportPOSType: '/AdminActivities/ExportPOSType'
   },
 
   ErrandsType: {
     getErrandsType: '/ErrandType/GetErrandTypeGrid',
-    addErrandType: '/ErrandType/SaveErrandType'
+    addErrandType: '/ErrandType/SaveErrandType',
+    exportErrandType: '/ErrandType/ExportErrandType'
   }
 };

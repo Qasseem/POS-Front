@@ -17,12 +17,6 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./pos-types-list.component.scss'],
 })
 export class POSTypesListComponent implements OnInit {
-  addToFavorite(row: any): any {
-    // this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-    //   if (resp.success) {
-    //   }
-    // });
-  }
   public url = APIURL;
 
   editItem(row: any): any {
@@ -51,35 +45,21 @@ export class POSTypesListComponent implements OnInit {
   };
   public columns: ColumnsInterface[] = [
     {
-      field: 'reference',
-      header: 'Ref',
-      width: '100px',
-    },
-    {
       field: 'id',
       header: 'ID',
       width: '100px',
     },
-
     {
-      field: [
-        { label: 'merchantNameEN', custom: 'navigator' },
-        { label: 'merchantNameAR', custom: 'default' },
-      ],
-      header: 'Name',
-      customCell: 'multiLabel',
-      link: 'main/merchant/details/',
-      width: '200px',
+      field: 'nameEn',
+      header: 'MCC Name En',
     },
     {
-      field: 'userName',
-      header: 'User Name',
-      width: '110px',
+      field: 'nameAr',
+      header: 'MCC Name Ar',
     },
     {
-      field: 'category',
-      header: 'Category',
-      width: '110px',
+      field: 'status',
+      header: 'Status',
     },
     {
       field: [
@@ -99,45 +79,24 @@ export class POSTypesListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      permission: 'completedata',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Add to favorite ',
-      icon: 'pi pi-heart',
-      permission: 'completedata',
-      call: (row: any) => this.addToFavorite(row),
-    },
+    }
   ];
 
   filters: SearchInterface[] = [
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameEN',
+      field: 'nameEn',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
+      field: 'nameAr',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'UserName',
+      field: 'status',
       isFixed: true,
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'category',
-      isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
     },
     {
       type: SearchInputTypes.date,
@@ -146,9 +105,9 @@ export class POSTypesListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) {}
+  constructor(private router: Router, private service: AdminActivitiesService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
   }
