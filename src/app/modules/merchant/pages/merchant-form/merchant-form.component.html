@@ -105,7 +105,7 @@
                   [ngClass]="{
                     'ng-invalid ng-dirty':
                       f.merchantNameAR?.errors?.required ||
-                      f.merchantNameAR.errors.pattern
+                      f.merchantNameAR.errors?.pattern
                   }"
                   type="text"
                   pInputText
@@ -121,10 +121,10 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.merchantNameAR.errors.required">
-                      Merchant Name [EN] field is required
+                      Merchant Name [AR] field is required
                     </span>
                     <span *ngIf="f.merchantNameAR.errors.pattern">
-                      Only English letters are allowed.
+                      Only Arabic letters are allowed.
                     </span>
                   </div>
                 </div>

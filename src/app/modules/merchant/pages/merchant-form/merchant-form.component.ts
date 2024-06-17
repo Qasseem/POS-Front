@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MerchantService } from '../../services/merchant.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { combineLatest, takeWhile } from 'rxjs';
+import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
+import { MerchantService } from '../../services/merchant.service';
+
 @Component({
   selector: 'oc-merchant-form',
   templateUrl: './merchant-form.component.html',
@@ -23,6 +25,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private merchantService: MerchantService,
+    private terminalService: TerminalService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -30,11 +33,17 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
+    const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
+
     this.form = this.fb.group({
-      merchantNameEN: ['', [Validators.required]],
+      merchantNameEN: [
+        '',
+        [Validators.required, Validators.pattern(englishLetterPattern)],
+      ],
       merchantNameAR: [
         '',
-        [Validators.required, Validators.pattern('/^[\u0600-\u06FFs]*$/')],
+        [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
       userName: ['', Validators.required],
       categoryId: [null, Validators.required],
@@ -45,7 +54,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       cityId: [null, Validators.required],
       zoneId: [null, Validators.required],
       address: [null, Validators.required],
-      landMark: [null, [Validators.required]],
+      landMark: [null],
     });
     if (this.formType == 'edit') {
       this.id = this.route.snapshot.params.id || null;
@@ -56,6 +65,20 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
 
     this.getAllMerchantCategories();
     this.GetMerchantDropdownValues();
+    combineLatest([
+      this.form.get('latitude').valueChanges,
+      this.form.get('longitude').valueChanges,
+    ]).subscribe({
+      next: ([lat, lng]) => {
+        if (lat && lng) {
+          this.terminalService.GetAddressFromLatLng(lat, lng).subscribe({
+            next: (res: any) => {
+              this.form.get('address').patchValue(res.address.LongLabel);
+            },
+          });
+        }
+      },
+    });
   }
   getItemDetails() {
     this.merchantService
@@ -107,42 +130,58 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate(['main/merchant/all']);
+    this.router.navigate(['main/merchant/list']);
   }
 
   GetMerchantDropdownValues() {
-    this.merchantService
+    const regionControl = this.form.get('regionId');
+
+    this.terminalService
       .GetAllRegions()
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
           if (resp.success) {
             this.regionsList = resp.data;
+            regionControl.setValue(resp.data[0].id);
           }
         },
       });
-
-    this.merchantService
-      .GetAllCities(0)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            this.citiesList = resp.data;
-            this.orignalCities = resp.data;
-          }
-        },
-      });
-
-    this.merchantService
-      .GetAllZones(0)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.zonesList = resp.data;
-          this.orignalZones = resp.data;
+    const cityControl = this.form.get('cityId');
+    regionControl.valueChanges.subscribe({
+      next: (regionId) => {
+        if (regionId) {
+          this.terminalService
+            .GetAllCities(regionId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe({
+              next: (resp) => {
+                if (resp.success) {
+                  this.citiesList = resp.data;
+                  this.orignalCities = resp.data;
+                  cityControl.setValue(resp.data[0].id);
+                }
+              },
+            });
         }
-      });
+      },
+    });
+    cityControl.valueChanges.subscribe({
+      next: (cityId) => {
+        if (cityId) {
+          this.terminalService
+            .GetAllZones(cityId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((resp) => {
+              if (resp.success) {
+                this.zonesList = resp.data;
+                this.orignalZones = resp.data;
+                this.form.get('zoneId').setValue(resp.data[0].id);
+              }
+            });
+        }
+      },
+    });
   }
 
   cityChanged(event) {
