@@ -9,7 +9,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: 'home',
+        path: 'dashboard',
         loadChildren: () =>
           import('../home/home.module').then((m) => m.HomeModule),
         canActivate: [AuthGuard],

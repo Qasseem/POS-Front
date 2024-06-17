@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MerchantService } from 'src/app/modules/merchant/services/merchant.service';
 import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
 
@@ -14,7 +13,6 @@ export class ViewTerminalComponent implements OnInit {
   address: any;
   constructor(
     private router: Router,
-    private merchantService: MerchantService,
     private terminalService: TerminalService,
     private route: ActivatedRoute
   ) {}

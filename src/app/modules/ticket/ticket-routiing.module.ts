@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TicketFormComponent } from './pages/ticket-form/ticket-form.component';
 import { ViewTicketComponent } from './pages/view-ticket/view-ticket.component';
 import { TicketsListComponent } from './pages/tickets-list/tickets-list.component';
+import { TicketFavoriteListComponent } from './pages/ticket-favorite-list/ticket-favorite-list.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,11 @@ const routes: Routes = [
       {
         path: 'list',
         component: TicketsListComponent
+
+      },
+      {
+        path: 'favorites',
+        component: TicketFavoriteListComponent
 
       },
       {
