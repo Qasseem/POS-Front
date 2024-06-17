@@ -1,7 +1,23 @@
 ::ng-deep .p-panelmenu {
   width: 100% !important;
 }
-
+:host ::ng-deep .displayFlex {
+  oc-icon {
+    i {
+      margin-top: 8px;
+    }
+  }
+}
+:host ::ng-deep {
+  .mat-expansion-panel-header-title {
+    oc-icon {
+      margin-right: 8px;
+    }
+  }
+}
+.grid .sidebar {
+  width: 284px;
+}
 .avatar {
   width: 40px;
   height: 40px;
@@ -40,7 +56,7 @@
   border: none !important;
 }
 ::ng-deep .p-menuitem-text {
-  color: #2053a6;
+  // color: #2053a6;
 }
 ::ng-deep .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
   border: none !important;
@@ -83,9 +99,31 @@
   font-weight: 300;
   padding-left: 25px;
 }
+:host ::ng-deep .menu-only-item {
+  color: black;
+  font-weight: 300;
+  display: flex;
+  cursor: pointer;
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding-left: 12px;
+  }
+}
 ::ng-deep .p-menuitem-link-active {
-  color: #2053a6 !important;
-  font-weight: 500 !important;
+  span {
+    color: #2053a6 !important;
+    font-weight: 500 !important;
+  }
+}
+::ng-deep .p-menuitem-link {
+  span {
+    color: #000 !important;
+    font-weight: 500 !important;
+  }
 }
 ::ng-deep
   .p-panelmenu
@@ -249,13 +287,13 @@
   width: 5%;
 }
 .containerSideMenuClosed {
-  position: fixed;
-  width: 5%;
-  background-color: white;
+  // position: fixed;
+  width: 60px;
   padding: 30px 15px;
-  height: 100%;
+  height: 20px;
   text-align: center;
-  z-index: 9999;
+  // z-index: 9999;
+  background-color: aliceblue;
 }
 .labelSideMenu {
   margin: 5px 5px 5px 9px;
@@ -295,11 +333,15 @@
   display: flex;
   flex-direction: column;
 }
+.outlet {
+  box-shadow: 0px 4px 12px 0px #0080f933;
+}
 
 .user-container {
   position: absolute;
   bottom: 0;
   width: inherit;
+  top: 75%;
 }
 
 .user {
@@ -326,11 +368,90 @@
 
 .text-color {
   color: #5b6671;
-  font-size: 11px;
+  font-size: 14px;
 }
-.active-cild {
+:host ::ng-deep .active-title-cild {
   color: #003364 !important;
-  font-weight: bolder;
+  font-weight: 600;
+  font-family: "public-sans";
+}
+:host ::ng-deep .active-cild {
+  color: #003364 !important;
+  font-weight: 500;
+  font-family: "public-sans";
+  &.users {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+  &.terminals {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+  &.tickets {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+  &.users-management {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+  &.locations {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+  &.admin-activities {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
+}
+:host ::ng-deep .avatar {
+  top: 20px;
+  left: 80px;
+}
+:host .menu-items {
+  padding-top: 22px;
+  .menu-item {
+    .menu-item-child-container {
+      p-menu {
+        ::ng-deep {
+          .childMenu {
+            top: 30px;
+            left: 80px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .icon-circle {

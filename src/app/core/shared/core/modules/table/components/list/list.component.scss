@@ -13,6 +13,7 @@
   margin-right: 5px;
   width: auto;
   color: #414141;
+  font-family: "public-sans";
 }
 .dropdown-item.tableAction i {
   padding-right: 10px;
@@ -76,6 +77,9 @@
     width: 150px;
   }
 }
+:host p-table ::ng-deep .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+  font-family: "public-sans";
+}
 
 .alert-header-text {
   font-size: 18px;
@@ -137,6 +141,7 @@
   color: #969696 !important;
   font-size: 14px;
   line-height: 7px;
+  font-family: "public-sans";
 }
 
 ::ng-deep .p-splitbutton {

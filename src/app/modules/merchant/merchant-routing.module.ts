@@ -48,7 +48,7 @@ const routes: Routes = [
         component: ViewMerchantComponent
 
       },
-      { path: '', redirectTo: '/merchant/list', pathMatch: 'full' },
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
 ];

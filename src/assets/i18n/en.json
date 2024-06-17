@@ -8,6 +8,9 @@
     "save": "Save",
     "submit": "Submit"
   },
+  "table":{
+    "noDataToDisplay":"No data to display"
+  },
   "validations": {
     "mustMatch": "Passwords must match",
     "required": "Required",

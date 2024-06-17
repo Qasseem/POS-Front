@@ -4,6 +4,7 @@ import { TerminalComponent } from './terminal.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ViewTerminalComponent } from './pages/view-terminal/view-terminal.component';
 import { TerminalListComponent } from './pages/terminal-list/terminal-list.component';
+import { TerminalFavoriteListComponent } from './pages/terminal-favorite-list/terminal-favorite-list.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,11 @@ const routes: Routes = [
       {
         path: 'list',
         component: TerminalListComponent
+
+      },
+      {
+        path: 'favorites',
+        component: TerminalFavoriteListComponent
 
       },
       {

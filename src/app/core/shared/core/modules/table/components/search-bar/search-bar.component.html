@@ -16,8 +16,15 @@
   </div>
 </div>
 
-<div class="grid" style="height: 73px">
-  <div class="col-4 m-3">
+<div
+  style="
+    height: 73px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  "
+>
+  <div class="m-3">
     <div>
       <p-iconField iconPosition="right">
         <p-inputIcon styleClass="pi pi-search" />
@@ -33,7 +40,7 @@
     </div>
   </div>
 
-  <div *ngIf="buttonsExistance?.showAllButtons" class="col-7 mt-3">
+  <div *ngIf="buttonsExistance?.showAllButtons" class="mt-3">
     <div style="width: 100%" class="float-right">
       <p-button
         *ngIf="buttonsExistance?.showExport"

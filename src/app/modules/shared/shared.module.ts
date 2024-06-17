@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -21,11 +21,13 @@ import { PrimeNgInputsModule } from 'src/app/core/shared/primeng/primeng-input-m
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
 import { IconModule } from './inline-svg-icon/icon.module';
 
+
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
   ReactiveFormsModule,
   RouterModule,
+  MatExpansionModule
 //   HttpClient
 ];
 const PRIME_NG_MODULES = [

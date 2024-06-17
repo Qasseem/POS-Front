@@ -12,7 +12,7 @@ export class IconComponent {
   /** type of icon, can be `'image' | 'picto' | 'flag'` */
   @Input() type: 'icon' | 'picto' | 'flag' = 'icon';
   /** extension of icon, can be `'svg' | 'png'` */
-  @Input() ext?: 'svg' | 'png';
+  @Input() ext?: 'svg' | 'png' = 'svg';
   /** svg file name */
   @Input() icon: string;
   /** sets the active state. Active icon has an accent color */
