@@ -9,15 +9,15 @@ export class MerchantService {
   constructor(private http: HttpService) {}
 
   GetAllCities(parentId) {
-    return this.http.getHeaderReq(APIURL.Merchant.GetAllCities, parentId);
+    return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
   }
 
   GetAllRegions() {
-    return this.http.getReq(APIURL.Merchant.GetAllRegions);
+    return this.http.getReq(APIURL.Terminal.GetAllRegions);
   }
 
   GetAllZones(parentId) {
-    return this.http.getHeaderReq(APIURL.Merchant.GetAllZones, parentId);
+    return this.http.getHeaderReq(APIURL.Terminal.GetAllZones, parentId);
   }
 
   GetAllMerchantCategories() {

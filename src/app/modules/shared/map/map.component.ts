@@ -98,7 +98,7 @@ export class LeafletMapComponent
   }
 
   onMapClick(event: any) {
-    if (this.mode === 'add' || this.mode === 'edit') {
+    if (this.mode != 'view') {
       const latlng = event.latlng;
       this.setMarker(latlng);
       this.updateFormControls(latlng);
@@ -151,7 +151,7 @@ export class LeafletMapComponent
       const customIcon: Icon = icon(customIconOptions);
       const markerOptions = {
         icon: customIcon,
-        draggable: this.mode !== 'add' && this.mode !== 'edit',
+        draggable: this.mode == 'view' ? false : true,
       };
       this.marker = marker(latlng, markerOptions).addTo(this.map);
       this.layers.push(this.marker); // Add marker to layers array
@@ -170,8 +170,9 @@ export class LeafletMapComponent
   }
 
   updateFormControls(latlng: LatLng) {
-    this.form.get('latitude')?.setValue(latlng.lat), { emitEvent: false };
-    this.form.get('longitude')?.setValue(latlng.lng, { emitEvent: false });
+    this.form.get('latitude')?.setValue(latlng.lat);
+    this.form.get('longitude')?.setValue(latlng.lng);
+    // console.log(this.form);
   }
 
   private fitMapToBounds() {
