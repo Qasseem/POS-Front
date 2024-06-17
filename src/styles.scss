@@ -5,12 +5,12 @@
   src: url("./assets/fonts/inter/Inter-Regular.ttf");
 }
 @font-face {
-  font-family: 'public-sans';
-  src: url("./assets/fonts/public-sans/PublicSans-Medium.ttf")
+  font-family: "public-sans";
+  src: url("./assets/fonts/public-sans/PublicSans-Medium.ttf");
 }
 body {
-  background-color: #f9f9f9;
-  font-family: inter;
+  background: aliceblue;
+  font-family: "public-sans" !important;
 }
 .container-card {
   background-color: white;
@@ -185,7 +185,6 @@ body {
 .fs-24 {
   font-size: 24px;
 }
-
 
 app-merchant-form {
   p-divider {
