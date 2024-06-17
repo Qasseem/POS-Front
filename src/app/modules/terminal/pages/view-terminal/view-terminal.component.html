@@ -95,48 +95,43 @@
         </div>
         <div class="grid p-2">
           <div class="col-12">
-            <div *ngIf="true">
-              <google-map height="200px" width="100%" [options]="options">
-                @for (position of markerPositions; track position) {
-                <map-marker [position]="position" [options]="markerOptions" />
-                }
-              </google-map>
+            <div class="map-container">
+              <oc-map [mode]="formType" [coordinates]="coordinates"></oc-map>
+            </div>
+          </div>
+          <p-divider />
+          <div class="grid m-2">
+            <div class="col-2">
+              <p-avatar
+                icon="pi pi-ticket"
+                [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
+                styleClass="mr-2"
+                size="large"
+              />
+            </div>
+            <div class="col-4">
+              <div>Active Tickets</div>
+              <div class="fs-24 mt-1">{{ 5 }}</div>
+            </div>
+            <div class="col-2">
+              <p-avatar
+                icon="pi pi-user"
+                [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
+                styleClass="mr-2"
+                size="large"
+              />
+            </div>
+            <div class="col-4">
+              <div>Agents Visted</div>
+              <div class="fs-24 mt-1">{{ 5 }}</div>
             </div>
           </div>
         </div>
-        <p-divider />
-        <div class="grid m-2">
-          <div class="col-2">
-            <p-avatar
-              icon="pi pi-ticket"
-              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
-              styleClass="mr-2"
-              size="large"
-            />
-          </div>
-          <div class="col-4">
-            <div>Active Tickets</div>
-            <div class="fs-24 mt-1">{{ 5 }}</div>
-          </div>
-          <div class="col-2">
-            <p-avatar
-              icon="pi pi-user"
-              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
-              styleClass="mr-2"
-              size="large"
-            />
-          </div>
-          <div class="col-4">
-            <div>Agents Visted</div>
-            <div class="fs-24 mt-1">{{ 5 }}</div>
-          </div>
-        </div>
       </div>
-    </div>
 
-    <!-- //////////////// -->
+      <!-- //////////////// -->
 
-    <!-- <div class="col-8">
+      <!-- <div class="col-8">
       <div>
         <div class="p-grid ml-2 m-2">
           <div class="p-col" style="text-align: right">
@@ -176,5 +171,6 @@
         </div>
       </div>
     </div> -->
+    </div>
   </div>
 </div>

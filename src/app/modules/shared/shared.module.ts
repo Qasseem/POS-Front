@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,15 +19,16 @@ import { PrimeNgContainersModule } from 'src/app/core/shared/primeng/primeng-con
 import { PrimeNgInputsModule } from 'src/app/core/shared/primeng/primeng-input-module';
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
 import { IconModule } from './inline-svg-icon/icon.module';
-
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMapComponent } from './map/map.component';
 
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
   ReactiveFormsModule,
   RouterModule,
-  MatExpansionModule
-//   HttpClient
+  MatExpansionModule,
+  //   HttpClient
 ];
 const PRIME_NG_MODULES = [
   InputTextModule,
@@ -36,7 +36,7 @@ const PRIME_NG_MODULES = [
   TabViewModule,
   MenuModule,
   ButtonModule,
-  PasswordModule
+  PasswordModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,
@@ -45,26 +45,28 @@ const CUSTOM_MODULES = [
   PrimeNgChartsModule,
   PrimeNgInputsModule,
   PrimeTableModule,
-  IconModule
+  IconModule,
 ];
 
-const CORE_MODULES = [TranslateModule,GoogleMapsModule];
-const CUSTOM_DIRECTIVES = [PreventKeyseDirective]
+const CORE_MODULES = [TranslateModule];
+const CUSTOM_DIRECTIVES = [PreventKeyseDirective];
 
 @NgModule({
-  declarations: [...CUSTOM_DIRECTIVES],
+  declarations: [...CUSTOM_DIRECTIVES, LeafletMapComponent],
   imports: [
     ...ANGULAR_MODULES,
     ...PRIME_NG_MODULES,
     ...CUSTOM_MODULES,
     ...CORE_MODULES,
+    LeafletModule,
   ],
   exports: [
     ...ANGULAR_MODULES,
     ...PRIME_NG_MODULES,
     ...CUSTOM_MODULES,
     ...CORE_MODULES,
-    ...CUSTOM_DIRECTIVES
+    ...CUSTOM_DIRECTIVES,
+    LeafletMapComponent,
   ],
   providers: [],
 })

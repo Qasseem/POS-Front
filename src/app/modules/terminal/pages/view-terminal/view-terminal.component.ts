@@ -11,26 +11,19 @@ import { TerminalService } from '../../services/terminal.service';
 export class ViewTerminalComponent implements OnInit {
   details: any;
   address: any;
+  public url = APIURL;
+  formType = 'view';
+  coordinates = { lat: null, lng: null };
+
+  markerPositions = [];
   constructor(
     private router: Router,
     private terminalService: TerminalService,
     private route: ActivatedRoute
-  ) {}
-  public url = APIURL;
-  options: google.maps.MapOptions = {
-    center: { lat: 30.06648609010278, lng: 31.242701933248 },
-    zoom: 6,
-    mapTypeControl: false,
-    zoomControl: false,
-    fullscreenControl: false,
-    streetViewControl: false,
-  };
-  center: google.maps.LatLngLiteral = {
-    lat: 30.06648609010278,
-    lng: 31.242701933248,
-  };
+  ) {
+    this.formType = this.route.snapshot.data.type;
+  }
 
-  markerPositions: google.maps.LatLngLiteral[] = [];
   navigateToAdd() {
     this.router.navigate(['main/terminal/add']);
   }
@@ -48,18 +41,15 @@ export class ViewTerminalComponent implements OnInit {
     this.terminalService.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
-        console.log(this.details);
         this.handleAddress(resp);
       }
     });
   }
   handleAddress(resp: any) {
-    this.markerPositions.push({
+    this.coordinates = {
       lat: resp.data.latitude,
-      lng: resp.data?.longitude,
-    });
-    this.options.center.lat = resp.data.latitude;
-    this.options.center.lng = resp.data.longitude;
+      lng: resp.data.longitude,
+    };
     this.terminalService
       .GetAddressFromLatLng(resp.data.latitude, resp.data.longitude)
       .subscribe((resp: any) => {

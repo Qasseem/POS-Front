@@ -23,8 +23,7 @@ export class MerchantService {
   GetAllMerchantCategories() {
     return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
   }
-
-  Add(data) {
+  Save(data) {
     return this.http.postReq(APIURL.Merchant.Add, data);
   }
   GetDetails(id) {

@@ -19,7 +19,7 @@
             [width]="'92.5px'"
             [height]="'31px'"
           ></oc-icon>
-          <span class="mt-2 icon-circle">
+          <span class="mt-2 icon-circle" style="cursor: pointer">
             <i
               (click)="sidebarVisible = !sidebarVisible"
               class="pi pi-angle-left icon-circle-pos"
@@ -124,7 +124,7 @@
                       <span
                         [ngClass]="item.active ? 'active-cild' : ''"
                         class="text-color"
-                        style="font-family: 'public-sans';"
+                        style="font-family: 'public-sans'"
                       >
                         {{ item?.label }}
                       </span>
@@ -188,6 +188,7 @@
               ? { 'margin-right': '2px' }
               : { 'margin-left': '2px' }
           "
+          style="cursor: pointer"
         >
           <img
             [ngStyle]="

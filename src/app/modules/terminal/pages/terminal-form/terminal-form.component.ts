@@ -21,22 +21,10 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   errandChannelsList = [];
   posList = [];
 
-  options: google.maps.MapOptions = {
-    center: { lat: 30.06648609010278, lng: 31.242701933248 },
-    zoom: 6,
-    mapTypeControl: false,
-    zoomControl: false,
-    fullscreenControl: false,
-    streetViewControl: false,
-  };
-
-  display: google.maps.LatLngLiteral;
-  markerPositions: google.maps.LatLngLiteral[] = [];
   allMerchantList = [];
   orignalZones = [];
   orignalCities = [];
   formType = 'add';
-
 
   constructor(
     private fb: FormBuilder,
@@ -87,104 +75,103 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-
   ngAfterViewInit(): void {
     // this.showMap = true;
   }
 
-  addMarker(event: google.maps.MapMouseEvent) {
-    this.markerPositions = [event.latLng.toJSON()];
-    this.form.controls.longitude.setValue(this.markerPositions[0]?.lng);
-    this.form.controls.latitude.setValue(this.markerPositions[0]?.lat);
-    console.log(this.markerPositions);
-  }
-  move(event: google.maps.MapMouseEvent) {
-    this.display = event.latLng.toJSON();
-  }
-
   getTerminalDropDownsData() {
-    this.service.GetAllRegions().pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.regionsList = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllRegions()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.regionsList = resp.data;
+          }
+        },
+      });
 
-    this.service.GetAllCities(0).pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.citiesList = resp.data;
-          this.orignalCities = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllCities(0)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.citiesList = resp.data;
+            this.orignalCities = resp.data;
+          }
+        },
+      });
 
-    this.service.GetAllMechantDropDown().pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.allMerchantList = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllMechantDropDown()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.allMerchantList = resp.data;
+          }
+        },
+      });
 
-    this.service.GetAllErrandChannels().pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.errandChannelsList = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllErrandChannels()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.errandChannelsList = resp.data;
+          }
+        },
+      });
 
-    this.service.GetAllPOSTypes().pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.posList = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllPOSTypes()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.posList = resp.data;
+          }
+        },
+      });
 
-    this.service.GetAllZones(0).pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          console.log(resp);
-          this.zonesList = resp.data;
-          this.orignalZones = resp.data;
-        }
-      }
-    });
+    this.service
+      .GetAllZones(0)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.zonesList = resp.data;
+            this.orignalZones = resp.data;
+          }
+        },
+      });
   }
-
 
   getItemDetails() {
-    this.service.GetDetails(this.id).pipe(takeWhile(() => this.alive)).subscribe({
-      next: (resp) => {
-        if (resp.success) {
-          this.details = resp.data;
-          if (this.details) {
-            // setTimeout(() => {
-            //   this.regionChanged(resp.data?.regionId);
-            //   this.cityChanged(resp.data?.cityId);
-            // }, 1000);
-            this.markerPositions.push({
-              lat: resp.data.latitude,
-              lng: resp.data?.longitude,
-            });
-            this.form.patchValue(this.details);
-            this.form.updateValueAndValidity();
+    this.service
+      .GetDetails(this.id)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.details = resp.data;
+            if (this.details) {
+              // setTimeout(() => {
+              //   this.regionChanged(resp.data?.regionId);
+              //   this.cityChanged(resp.data?.cityId);
+              // }, 1000);
+
+              this.form.patchValue(this.details);
+              this.form.updateValueAndValidity();
+            }
           }
-          console.log(this.details);
-        }
-      }
-    });
+        },
+      });
   }
 
-  onSubmit() { }
+  onSubmit() {}
   get f() {
     return this.form.controls;
   }
@@ -193,19 +180,20 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
-    this.service.Add(this.form.value).pipe(takeWhile(() => this.alive)).subscribe((resp) => {
-      if (resp.success) {
-        this.backToList();
-      }
-    });
+    this.service
+      .Add(this.form.value)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.backToList();
+        }
+      });
   }
   backToList() {
     this.router.navigate(['main/terminal/all']);
   }
 
-  print() {
-    console.log(this.form);
-  }
+  print() {}
 
   regionChanged(event) {
     this.form.controls.cityId.setValue(null);

@@ -1,0 +1,13 @@
+.leaflet-map-container {
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+::ng-deep .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+::ng-deep .leaflet-control-attribution {
+  display: none;
+}
