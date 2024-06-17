@@ -329,7 +329,9 @@
 }
 
 .container {
-  height: 100vh; /* Set container height to full viewport height */
+  height: calc(
+    100vh - 1.7vh
+  ); /* Set container height to full viewport height */
   display: flex;
   flex-direction: column;
 }
