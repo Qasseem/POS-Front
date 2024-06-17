@@ -9,7 +9,7 @@ import { takeWhile } from 'rxjs';
   styleUrls: ['./merchant-form.component.scss'],
 })
 export class MerchantFormComponent implements OnInit, OnDestroy {
-  alive: boolean = false;
+  alive: boolean = true;
   form: FormGroup;
   categories = [];
   citiesList = [];
@@ -19,17 +19,6 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   details: any;
   orignalZones = [];
   orignalCities = [];
-  options: google.maps.MapOptions = {
-    center: { lat: 30.06648609010278, lng: 31.242701933248 },
-    zoom: 6,
-    mapTypeControl: false,
-    zoomControl: false,
-    fullscreenControl: false,
-    streetViewControl: false,
-  };
-
-  display: google.maps.LatLngLiteral;
-  markerPositions: google.maps.LatLngLiteral[] = [];
   formType = 'add';
   constructor(
     private fb: FormBuilder,
@@ -41,17 +30,8 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.formType == 'edit') {
-      this.id = this.route.snapshot.params.id || null;
-      if (this.id) {
-        this.getItemDetails();
-      }
-    }
     this.form = this.fb.group({
-      merchantNameEN: [
-        '',
-        [Validators.required],
-      ],
+      merchantNameEN: ['', [Validators.required]],
       merchantNameAR: [
         '',
         [Validators.required, Validators.pattern('/^[\u0600-\u06FFs]*$/')],
@@ -67,21 +47,30 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       address: [null, Validators.required],
       landMark: [null, [Validators.required]],
     });
+    if (this.formType == 'edit') {
+      this.id = this.route.snapshot.params.id || null;
+      if (this.id) {
+        this.getItemDetails();
+      }
+    }
 
     this.getAllMerchantCategories();
+    this.GetMerchantDropdownValues();
   }
   getItemDetails() {
     this.merchantService
       .GetDetails(this.id)
       .pipe(takeWhile(() => this.alive))
-      .subscribe((resp) => {
-        if (resp.success) {
-          this.details = resp.data;
-          if (this.details) {
-            this.form.patchValue(this.details);
-            this.form.updateValueAndValidity();
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.details = resp.data;
+            if (this.details) {
+              this.form.patchValue(this.details);
+              this.form.updateValueAndValidity();
+            }
           }
-        }
+        },
       });
   }
 
@@ -107,7 +96,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       delete obj.id;
     }
     this.merchantService
-      .Add(this.form.value)
+      .Save(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
@@ -121,15 +110,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
     this.router.navigate(['main/merchant/all']);
   }
 
-  addMarker(event: google.maps.MapMouseEvent) {
-    this.markerPositions = [event.latLng.toJSON()];
-    this.form.controls.longitude.setValue(this.markerPositions[0]?.lng);
-    this.form.controls.latitude.setValue(this.markerPositions[0]?.lat);
-  }
-  move(event: google.maps.MapMouseEvent) {
-    this.display = event.latLng.toJSON();
-  }
-  GetTerminalDropDownsData() {
+  GetMerchantDropdownValues() {
     this.merchantService
       .GetAllRegions()
       .pipe(takeWhile(() => this.alive))

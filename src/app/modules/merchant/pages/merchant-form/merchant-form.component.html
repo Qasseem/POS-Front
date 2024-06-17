@@ -20,7 +20,6 @@
       />
 
       <p-button
-        style="width: 100px !important"
         (click)="submit()"
         [disabled]="!form?.valid"
         label="{{ formType == 'add' ? 'Add' : 'Save' }}"
@@ -71,7 +70,7 @@
                   [ngClass]="{
                     'ng-invalid ng-dirty':
                       f.merchantNameEN?.errors?.required ||
-                      f.merchantNameEN.errors.pattern
+                      f.merchantNameEN?.errors?.pattern
                   }"
                   type="text"
                   pInputText
@@ -199,27 +198,20 @@
               <p class="font-bold fs-11">Location</p>
             </div>
             <div>
-              <google-map
-                height="200px"
-                width="100%"
-                [options]="options"
-                (mapMousemove)="move($event)"
-                (mapClick)="addMarker($event)"
-              >
-                @for (position of markerPositions; track position) {
-                <map-marker [position]="position" [options]="markerOptions" />
-                }
-              </google-map>
+              <div class="map-container">
+                <oc-map [mode]="formType"></oc-map>
+              </div>
+
               <div class="location-container fs-11 mt-3">
                 <div class="col-6 coordinate">
                   <span class="mt-2"
-                    >Long: {{ form.get("longitude").value }}</span
+                    >Long: {{ form.get("longitude").value?.toFixed(6) }}</span
                   >
                 </div>
                 <p-divider class="divider" />
                 <div class="col-6 coordinate">
                   <span class="mt-2"
-                    >Lat: {{ form.get("latitude").value }}</span
+                    >Lat: {{ form.get("latitude").value?.toFixed(6) }}</span
                   >
                 </div>
               </div>

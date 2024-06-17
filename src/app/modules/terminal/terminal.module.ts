@@ -5,9 +5,15 @@ import { TerminalRoutingModule } from './terminal-routing.module';
 import { TerminalListComponent } from './pages/terminal-list/terminal-list.component';
 import { ViewTerminalComponent } from './pages/view-terminal/view-terminal.component';
 import { SharedModule } from '../shared/shared.module';
+import { TerminalFavoriteListComponent } from './pages/terminal-favorite-list/terminal-favorite-list.component';
 
 @NgModule({
   imports: [CommonModule, TerminalRoutingModule, SharedModule],
-  declarations: [TerminalComponent, TerminalListComponent, ViewTerminalComponent],
+  declarations: [
+    TerminalComponent,
+    TerminalListComponent,
+    ViewTerminalComponent,
+    TerminalFavoriteListComponent,
+  ],
 })
-export class TerminalModule { }
+export class TerminalModule {}
