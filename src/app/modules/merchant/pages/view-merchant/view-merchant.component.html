@@ -13,138 +13,270 @@
   </div>
   <p-divider />
 
-  <div class="grid m-2 font-12">
-    <div class="col-4 p-0" style="border-radius: 10px">
-      <div class="m-2 box-border">
-        <div class="p-2 wave font-16" style="color: white">
-          <div class="ml-3 mt-2">{{ details?.merchantNameEN }}</div>
-          <div class="ml-3 mt-1">{{ details?.merchantNameAR }}</div>
-          <div class="ml-3 mt-2">
-            <span>
-              <i class="pi pi-building"></i>
-            </span>
+  <div class="view-container">
+    <div class="view-container--card">
+      <div class="view-container--card--header-container">
+        <div class="view-container--card--header-container--header">
+          <div class="view-container--card--header-container--header--text">
+            {{ details?.merchantNameEN }}
+          </div>
+          <div class="view-container--card--header-container--header--text">
+            {{ details?.merchantNameAR }}
+          </div>
+          <div
+            class="view-container--card--header-container--header--text icon"
+          >
+            <oc-icon
+              [icon]="'buildings'"
+              [width]="'20px'"
+              [height]="'20px'"
+            ></oc-icon>
             Hyper
           </div>
         </div>
-        <div style="height: 100px; margin-top: -57px">
-          <div class="container">
-            <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-              <path
-                d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
-                style="stroke: none; fill: #1c8ef9"
-              ></path>
-            </svg>
-          </div>
+      </div>
+      <div class="view-container--card--details">
+        <div class="view-container--card--details--item">
+          <div class="color-info">Reference</div>
+          <div class="">{{ details?.reference }}</div>
+        </div>
+        <div class="view-container--card--details--item">
+          <div class="color-info">Merchant ID</div>
+          <div class="">{{ details?.id }}</div>
         </div>
 
-        <div class="grid m-2">
-          <div class="col-6 color-info">Reference</div>
-          <div class="col-6">{{ details?.reference }}</div>
+        <div class="view-container--card--details--item">
+          <div class="color-info">Created by</div>
+          <div class="">{{ details?.createdBy }}</div>
         </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Merchant ID</div>
-          <div class="col-6">{{ details?.id }}</div>
-        </div>
-        <!-- <div class="grid m-2">
-          <div class="col-6 color-info">User name</div>
-          <div class="col-6">{{details?.createdBy}}</div>
-        </div> -->
-        <div class="grid m-2">
-          <div class="col-6 color-info">Created by</div>
-          <div class="col-6">{{ details?.createdBy }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Created at</div>
-          <div class="col-6">
+        <div class="view-container--card--details--item">
+          <div class="color-info">Created at</div>
+          <div class="">
             {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
           </div>
         </div>
-        <p-divider />
-        <div class="pl-3 pt-3 font-13">Merchant performance</div>
-        <div class="mt-3"></div>
-
-        <div>
-          <span class="ml-3 color-info">Successful visit</span>
-          <div class="grid m-2 mt-0">
-            <div class="col-2">11:12%</div>
-            <div class="col-8">
-              <p-progressBar [value]="50">
-                <ng-template pTemplate="content" let-value> </ng-template>
-              </p-progressBar>
-            </div>
-            <div class="col-2">
-              <span class="float-right"> 11 </span>
-            </div>
+      </div>
+      <p-divider />
+      <div class="view-container--card--location-details-container">
+        <div
+          class="view-container--card--location-details-container--icon-container"
+        >
+          <div
+            class="view-container--card--location-details-container--icon-container--icon"
+          >
+            <oc-icon
+              [icon]="'map-pin'"
+              [width]="'20px'"
+              [height]="'20px'"
+            ></oc-icon>
           </div>
         </div>
-        <div>
-          <span class="ml-3 color-info">Successful visit</span>
-          <div class="grid m-2 mt-0">
-            <div class="col-2">11:12%</div>
-            <div class="col-8">
-              <p-progressBar [value]="50">
-                <ng-template pTemplate="content" let-value> </ng-template>
-              </p-progressBar>
+        <div class="view-container--card--location-details-container--details">
+          <div
+            class="view-container--card--location-details-container--details"
+          >
+            <span
+              class="view-container--card--location-details-container--details--text"
+              >Ismailia - Ismailia - Canal</span
+            >
+            <div
+              class="view-container--card--location-details-container--details--item"
+            >
+              <label
+                class="view-container--card--location-details-container--details--item--label"
+                for="address"
+                >Address:</label
+              >
+              <span
+                class="view-container--card--location-details-container--details--item--text"
+                >23 Orabi Square, Ismailia</span
+              >
             </div>
-            <div class="col-2">
-              <span class="float-right"> 11 </span>
+            <div
+              class="view-container--card--location-details-container--details--item"
+            >
+              <label
+                class="view-container--card--location-details-container--details--item--label"
+                for="landmark"
+                >Landmark:</label
+              >
+              <span
+                class="view-container--card--location-details-container--details--item--text"
+                >text</span
+              >
             </div>
-          </div>
-        </div>
-        <div>
-          <span class="ml-3 color-info">Successful visit</span>
-          <div class="grid m-2 mt-0">
-            <div class="col-2">11:12%</div>
-            <div class="col-8">
-              <p-progressBar [value]="50">
-                <ng-template pTemplate="content" let-value> </ng-template>
-              </p-progressBar>
-            </div>
-            <div class="col-2">
-              <span class="float-right"> 11 </span>
-            </div>
-          </div>
-        </div>
-        <div>
-          <span class="ml-3 color-info">Successful visit</span>
-          <div class="grid m-2 mt-0">
-            <div class="col-2">11:12%</div>
-            <div class="col-8">
-              <p-progressBar [value]="50">
-                <ng-template pTemplate="content" let-value> </ng-template>
-              </p-progressBar>
-            </div>
-            <div class="col-2">
-              <span class="float-right"> 11 </span>
-            </div>
-          </div>
-        </div>
-        <p-divider />
-        <div class="grid m-2">
-          <div class="col-2">
-            <p-avatar
-              icon="pi pi-arrow-right-arrow-left"
-              [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
-              styleClass="mr-2"
-              size="large"
-            />
-          </div>
-          <div class="col-6">
-            <div>Active terminals</div>
-            <div class="font-18">{{ 5 }}</div>
-          </div>
-          <div class="col-4">
-            <span class="float-right mt-3" style="color: green">
-              2 This month
-            </span>
           </div>
         </div>
       </div>
+      <div class="view-container--card--map-container">
+        <oc-map [mode]="formType" [coordinates]="coordinates"></oc-map>
+      </div>
+      <p-divider />
+      <div class="view-container--card--performance-container">
+        <label
+          for="perfomance"
+          class="view-container--card--performance-container--title"
+          >Merchant performance</label
+        >
+        <div class="view-container--card--performance-container--item">
+          <div
+            class="view-container--card--performance-container--item--progress"
+          >
+            <div
+              class="view-container--card--performance-container--item--progress--title"
+            >
+              Successful visit
+            </div>
+            <div
+              class="view-container--card--performance-container--item--progress--details"
+            >
+              <span
+                class="view-container--card--performance-container--item--progress--details--percentage"
+                >42:31%</span
+              >
+              <div
+                class="view-container--card--performance-container--item--progress--details--bar"
+              >
+                <p-progressBar [value]="42.31">
+                  <ng-template pTemplate="content" let-value> </ng-template>
+                </p-progressBar>
+              </div>
+              <span
+                class="view-container--card--performance-container--item--progress--details--count"
+                >11</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="view-container--card--performance-container--item">
+          <div
+            class="view-container--card--performance-container--item--progress"
+          >
+            <div
+              class="view-container--card--performance-container--item--progress--title"
+            >
+              Successful Deployments
+            </div>
+            <div
+              class="view-container--card--performance-container--item--progress--details"
+            >
+              <span
+                class="view-container--card--performance-container--item--progress--details--percentage"
+                >81:25%</span
+              >
+              <div
+                class="view-container--card--performance-container--item--progress--details--bar"
+              >
+                <p-progressBar [value]="81.25">
+                  <ng-template pTemplate="content" let-value> </ng-template>
+                </p-progressBar>
+              </div>
+              <span
+                class="view-container--card--performance-container--item--progress--details--count"
+                >26</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="view-container--card--performance-container--item">
+          <div
+            class="view-container--card--performance-container--item--progress"
+          >
+            <div
+              class="view-container--card--performance-container--item--progress--title"
+            >
+              Successful Cancellation
+            </div>
+            <div
+              class="view-container--card--performance-container--item--progress--details"
+            >
+              <span
+                class="view-container--card--performance-container--item--progress--details--percentage"
+                >0%</span
+              >
+              <div
+                class="view-container--card--performance-container--item--progress--details--bar"
+              >
+                <p-progressBar [value]="0">
+                  <ng-template pTemplate="content" let-value> </ng-template>
+                </p-progressBar>
+              </div>
+              <span
+                class="view-container--card--performance-container--item--progress--details--count"
+                >0</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="view-container--card--performance-container--item">
+          <div
+            class="view-container--card--performance-container--item--progress"
+          >
+            <div
+              class="view-container--card--performance-container--item--progress--title"
+            >
+              Successful Sales
+            </div>
+            <div
+              class="view-container--card--performance-container--item--progress--details"
+            >
+              <span
+                class="view-container--card--performance-container--item--progress--details--percentage"
+                >0%</span
+              >
+              <div
+                class="view-container--card--performance-container--item--progress--details--bar"
+              >
+                <p-progressBar [value]="0">
+                  <ng-template pTemplate="content" let-value> </ng-template>
+                </p-progressBar>
+              </div>
+              <span
+                class="view-container--card--performance-container--item--progress--details--count"
+                >0</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-divider />
+      <div class="view-container--card--chart-container">
+        <div class="view-container--card--chart-container--container">
+          <div class="view-container--card--chart-container--container--icon">
+            <oc-icon
+              [icon]="'user-rectangle'"
+              [width]="'20px'"
+              [height]="'20px'"
+            ></oc-icon>
+          </div>
+          <div
+            class="view-container--card--chart-container--container--details"
+          >
+            <div
+              class="view-container--card--chart-container--container--details--title"
+            >
+              Active terminals
+            </div>
+            <div
+              class="view-container--card--chart-container--container--details--count"
+            >
+              5
+            </div>
+          </div>
+        </div>
+        <div class="view-container--card--chart-container--duration">
+          <!-- <span class="float-right mt-3" style="color: green"> -->
+          2 This month
+          <!-- </span> -->
+        </div>
+      </div>
+      <div class="view-container--card--image"></div>
     </div>
 
     <!-- //////////////// -->
 
-    <div class="col-8">
+    <div class="view-container--list">
       <div>
         <div class="p-grid ml-2 m-2">
           <div class="p-col" style="text-align: right">

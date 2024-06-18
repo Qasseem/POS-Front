@@ -19,6 +19,8 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 })
 export class ViewMerchantComponent implements OnInit {
   details: any;
+  formType = 'view';
+  coordinates = { lat: null, lng: null };
   constructor(
     private router: Router,
     private merchantService: MerchantService,
@@ -36,7 +38,6 @@ export class ViewMerchantComponent implements OnInit {
 
   editItem(row: any): any {
     const URL = `main/terminal/edit/${row?.id}`;
-    console.log(URL);
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
@@ -209,7 +210,6 @@ export class ViewMerchantComponent implements OnInit {
     this.merchantService.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
-        console.log(this.details);
       }
     });
   }

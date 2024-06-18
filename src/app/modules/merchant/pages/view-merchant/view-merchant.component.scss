@@ -12,13 +12,224 @@ svg {
   vertical-align: middle;
   overflow: hidden;
 }
+.view-container {
+  display: flex;
+  font-size: 12px;
+  margin: 0.5rem;
+  gap: 1rem;
+  &--card {
+    width: 30%;
+    padding: 0;
+    @extend .box-border;
+    margin-top: -5px;
+    &--header-container {
+      @extend .wave;
+      &--header {
+        font-size: 16px;
+        padding: 1rem 0 0 1rem;
+        color: #fff;
+        &--text {
+          padding-top: 0.5rem;
+          padding-left: 0.5rem;
+          &.icon {
+            display: flex;
+            gap: 4px;
+          }
+        }
+      }
+    }
+    &--details {
+      padding: 0.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-bottom: 0.5rem;
+      &--item {
+        display: flex;
+        justify-content: space-between;
+        div {
+          &:first-child {
+            width: 20%;
+          }
+          &:last-child {
+            width: 60%;
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
+    &--location-details-container {
+      // &--details {
+      padding-left: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      padding-top: 1rem;
+      &--icon-container {
+        &--icon {
+          width: 40px;
+          height: 40px;
+          background: #cce6fe;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        }
+      }
+      &--details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        &--text {
+          color: #21252994;
+          font-size: 14px;
+          font-weight: 400;
+          font-family: "public-sans";
+        }
+        &--item {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+          &--label {
+            width: 20%;
+            color: #798693;
+            font-size: 12px;
+            font-weight: 400;
+            font-family: "public-sans";
+          }
+          &--text {
+            width: 80%;
+            color: #212529;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: "public-sans";
+            // padding-left: 1rem;
+          }
+        }
+        // }
+      }
+    }
+    &--map-container {
+      padding: 0.5rem 1.5rem;
+      ::ng-deep {
+        .leaflet-map-container {
+          height: 167px;
+        }
+        .leaflet-container {
+          border-radius: 5px;
+          height: 167px;
+        }
+      }
+    }
+    &--performance-container {
+      padding-left: 1.5rem;
+      padding-bottom: 1rem;
+      &--title {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        font-family: "public-sans";
+        color: #212529;
+        padding-bottom: 1.25rem;
+      }
+      &--item {
+        padding-top: 1rem;
+        &--progress {
+          &--title {
+            font-size: 12px;
+            line-height: 16px;
+            font-weight: 400;
+            font-family: "public-sans";
+            color: #798693;
+            padding-bottom: 8px;
+          }
+          &--details {
+            display: flex;
+            gap: 6px;
+            &--percentage {
+              width: 10%;
+            }
+            &--bar {
+              width: 80%;
+            }
+            &--count {
+              width: 10%;
+            }
+          }
+        }
+      }
+    }
+    &--chart-container {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      &--container {
+        width: 70%;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        &--icon {
+          width: 40px;
+          height: 40px;
+          background-color: #cce6fe;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 5px;
+        }
+        &--details {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          &--title {
+            color: #21252980;
+            font-size: 14px;
+            font-weight: 400;
+            font-family: "public-sans";
+          }
+          &--count {
+            font-size: 24px;
+            font-weight: 600;
+            font-family: "public-sans";
+            color: #212529;
+          }
+        }
+      }
+      &--duration {
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #00875a;
+        font-size: 12px;
+        font-family: "public-sans";
+        font-weight: 400;
+        align-items: center;
+      }
+    }
+    &--image {
+      background: url("../../../../../assets/icons/chart-image.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      height: 123px;
+      margin-top: -16px;
+    }
+  }
+  &--list {
+    width: 70%;
+  }
+}
 
 .wave {
-  height: 75px;
-  background-color: #1c8ef9;
+  background: url("../../../../../assets/icons/view-card-header-sm.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 150px;
+  margin-top: -4px;
+}
+.box-border {
+  background-color: white;
   border-radius: 10px;
-  position: relative;
-  z-index: 4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */
 }
 
 ::ng-deep .p-divider {
