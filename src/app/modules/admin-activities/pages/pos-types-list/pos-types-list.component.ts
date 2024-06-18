@@ -20,20 +20,8 @@ export class POSTypesListComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
-    console.log(URL);
+    const URL = `main/admin-activities/pos-types/edit/${row?.id}`;
     this.router.navigate([URL]);
-  }
-  blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
-  }
-
-  goToDetails(row: any): any {
-    const URL = `main/merchant/details/${row?.id}`;
-    console.log(URL);
-
-    return URL;
   }
 
   public tableBtns: TableButtonsExistanceInterface = {
@@ -51,11 +39,11 @@ export class POSTypesListComponent implements OnInit {
     },
     {
       field: 'nameEn',
-      header: 'MCC Name En',
+      header: 'POS Type EN',
     },
     {
       field: 'nameAr',
-      header: 'MCC Name Ar',
+      header: 'POS Type Ar',
     },
     {
       field: 'status',
@@ -79,7 +67,7 @@ export class POSTypesListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    }
+    },
   ];
 
   filters: SearchInterface[] = [
@@ -105,10 +93,13 @@ export class POSTypesListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) { }
+  constructor(
+    private router: Router,
+    private service: AdminActivitiesService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   navigateToAdd() {
-    this.router.navigate(['main/merchant/add']);
+    this.router.navigate(['main/admin-activities/pos-types/add']);
   }
 }

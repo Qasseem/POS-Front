@@ -65,13 +65,13 @@ export const APIURL = {
     AddErrandsChannel: '/AdminActivities/SaveErrandChannel',
     exportErrandsChannel: '/AdminActivities/ExportErrandChannel',
     getPOSType: '/AdminActivities/GetPOSTypeGrid',
-    addPOSType: '/AdminActivities/SavePOSType',
-    exportPOSType: '/AdminActivities/ExportPOSType'
+    AddPOSType: '/AdminActivities/SavePOSType',
+    exportPOSType: '/AdminActivities/ExportPOSType',
   },
 
   ErrandsType: {
     getErrandsType: '/ErrandType/GetErrandTypeGrid',
     addErrandType: '/ErrandType/SaveErrandType',
-    exportErrandType: '/ErrandType/ExportErrandType'
-  }
+    exportErrandType: '/ErrandType/ExportErrandType',
+  },
 };

@@ -24,9 +24,10 @@
   height: 40px;
 }
 
-.merchants-form {
+.categories-errands-type-form {
   margin: 10px;
   padding: 20px;
+  padding-right: 10px;
   .inputs-div {
     border-radius: 8px;
     background-color: white;
@@ -35,7 +36,8 @@
       color: #798693;
       font-size: 12px;
     }
-    .isDeleted {
+    .isDeleted,
+    .isActive {
       padding-left: 12px;
       color: rgba(76, 85, 95, 1);
       font-weight: 400;

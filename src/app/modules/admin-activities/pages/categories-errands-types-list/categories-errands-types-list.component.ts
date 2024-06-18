@@ -20,10 +20,9 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
+    const URL = `main/admin-activities/categories-errands-types/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
-
 
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
@@ -44,7 +43,7 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     },
     {
       field: 'nameEn',
-      header: 'Type Name Ar',
+      header: 'Type Name En',
     },
     {
       field: 'nameAr',
@@ -76,7 +75,7 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    }
+    },
   ];
 
   filters: SearchInterface[] = [
@@ -111,11 +110,15 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) {}
+  constructor(
+    private router: Router,
+    private service: AdminActivitiesService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   navigateToAdd() {
-    this.router.navigate(['main/merchant/add']);
+    this.router.navigate([
+      'main/admin-activities/categories-errands-types/add',
+    ]);
   }
 }

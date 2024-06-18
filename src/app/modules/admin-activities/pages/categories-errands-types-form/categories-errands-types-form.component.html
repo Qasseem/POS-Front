@@ -5,11 +5,11 @@
         (click)="backToList()"
         class="mt-2 ml-3 header-left"
         style="color: #0080f9; cursor: pointer"
-        >Merchant Category Codes</span
+        >Categories Errand Types</span
       >
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left"
-        >{{ formType == "add" ? "Add" : "Edit" }} MCC</span
+        >{{ formType == "add" ? "Add" : "Edit" }} Category</span
       >
       <p-button
         class="mr-3 cancel-button"
@@ -32,15 +32,44 @@
 
   <hr class="header-divider" />
 
-  <div class="merchants-form">
+  <div class="categories-errands-type-form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="grid d-flex inputs-div">
         <div class="col-12 p-0">
           <div class="p-20 flex flex-wrap">
-            <div class="col-6">
+            <div class="col-3">
+              <div class="flex flex-column gap-2">
+                <label for="categoryId"
+                  >Category<span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.categoryId?.errors?.required
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="categoryId"
+                />
+
+                <div
+                  *ngIf="
+                    f.categoryId.errors &&
+                    (f.categoryId.dirty || f.categoryId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.categoryId.errors.required">
+                      Category field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
               <div class="flex flex-column gap-2">
                 <label for="nameEn"
-                  >MCC Name [EN]<span class="p-error"> * </span>
+                  >POS Type [EN]<span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
@@ -60,7 +89,7 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.nameEn.errors.required">
-                      MCC Name [EN] field is required
+                      POS Type [EN] field is required
                     </span>
                     <span *ngIf="f.nameEn.errors.pattern">
                       Only English letters are allowed.
@@ -70,10 +99,10 @@
               </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-3">
               <div class="flex flex-column gap-2">
                 <label for="nameAr"
-                  >MCC Name [AR] <span class="p-error"> * </span>
+                  >POS Type [AR] <span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
@@ -93,7 +122,7 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.nameAr.errors.required">
-                      MCC Name [AR] field is required
+                      POS Type [AR] field is required
                     </span>
                     <span *ngIf="f.nameAr.errors.pattern">
                       Only Arabic letters are allowed.
@@ -102,10 +131,43 @@
                 </div>
               </div>
             </div>
+            <div class="col-3">
+              <div class="flex flex-column gap-2">
+                <label for="serviceLevel"
+                  >Service Level (In days) <span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.serviceLevel?.errors?.required
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="serviceLevel"
+                />
+
+                <div
+                  *ngIf="
+                    f.serviceLevel.errors &&
+                    (f.serviceLevel.dirty || f.serviceLevel.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.serviceLevel.errors.required">
+                      Service Level (In days) field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-12 p-lr pb-16">
-          <div class="col-6 displayFlex align-item-center">
+          <div class="col-12 displayFlex align-item-center">
+            <p-checkbox formControlName="isActive" binary="true"></p-checkbox>
+            <label class="isActive" for="isActive">Require Qty</label>
+          </div>
+          <div class="col-12 displayFlex align-item-center">
             <p-checkbox formControlName="isDeleted" binary="true"></p-checkbox>
             <label class="isDeleted" for="isDeleted">Mark as active</label>
           </div>

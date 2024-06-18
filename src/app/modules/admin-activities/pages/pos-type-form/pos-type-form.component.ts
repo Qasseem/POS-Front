@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { AdminActivitiesService } from '../../services/admin-activities.service';
 @Component({
-  selector: 'oc-merchant-category-codes-form',
-  templateUrl: './merchant-category-codes-form.component.html',
-  styleUrls: ['./merchant-category-codes-form.component.scss'],
+  selector: 'oc-pos-type-form',
+  templateUrl: './pos-type-form.component.html',
+  styleUrls: ['./pos-type-form.component.scss'],
 })
-export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
+export class POSTypeFormComponent implements OnInit, OnDestroy {
   alive: boolean = false;
   form: FormGroup;
   categories = [];
@@ -43,8 +43,6 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
       ],
       isDeleted: [''],
     });
-
-    // this.getAllMerchantCategories();
   }
   getItemDetails() {
     this.adminActivitiesServices;
@@ -71,7 +69,7 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
       delete obj.id;
     }
     this.adminActivitiesServices
-      .AddMCC(this.form.value)
+      .AddPOSType(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
@@ -82,9 +80,7 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate([
-      'main/admin-activities/list/merchant-category-codes',
-    ]);
+    this.router.navigate(['main/admin-activities/list/pos-types']);
   }
 
   ngOnDestroy() {
