@@ -43,8 +43,6 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
       ],
       isDeleted: [''],
     });
-
-    // this.getAllMerchantCategories();
   }
   getItemDetails() {
     this.adminActivitiesServices;
@@ -71,7 +69,7 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
       delete obj.id;
     }
     this.adminActivitiesServices
-      .AddMCC(this.form.value)
+      .AddPOSType(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {

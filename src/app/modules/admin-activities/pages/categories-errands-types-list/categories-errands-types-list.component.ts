@@ -43,7 +43,7 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     },
     {
       field: 'nameEn',
-      header: 'Type Name Ar',
+      header: 'Type Name En',
     },
     {
       field: 'nameAr',

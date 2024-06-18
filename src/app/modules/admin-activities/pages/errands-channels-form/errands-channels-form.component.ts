@@ -71,7 +71,7 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
       delete obj.id;
     }
     this.adminActivitiesServices
-      .AddMCC(this.form.value)
+      .AddErrandsChannel(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {

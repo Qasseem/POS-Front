@@ -39,11 +39,11 @@ export class POSTypesListComponent implements OnInit {
     },
     {
       field: 'nameEn',
-      header: 'MCC Name En',
+      header: 'POS Type EN',
     },
     {
       field: 'nameAr',
-      header: 'MCC Name Ar',
+      header: 'POS Type Ar',
     },
     {
       field: 'status',

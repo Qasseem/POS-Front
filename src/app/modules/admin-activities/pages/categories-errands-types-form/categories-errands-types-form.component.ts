@@ -71,7 +71,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       delete obj.id;
     }
     this.adminActivitiesServices
-      .AddMCC(this.form.value)
+      .AddErrandsType(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {

@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
     },
     {
       label: this.translateService.instant('Merchants'),
-      icon: 'users',
+      icon: 'Users',
       expanded: true,
       routerLink: '/main/merchant/list',
       active: false,
@@ -106,13 +106,13 @@ export class MainComponent implements OnInit {
           routerLink: '/main/ticket/list',
           active: false,
         },
-      //   {
-      //     label: this.translateService.instant('Favorite Tickets'),
-      //     icon: 'pi pi-users',
-      //     expanded: true,
-      //     routerLink: '/main/ticket/list',
-      //     active: false,
-      //   },
+        //   {
+        //     label: this.translateService.instant('Favorite Tickets'),
+        //     icon: 'pi pi-users',
+        //     expanded: true,
+        //     routerLink: '/main/ticket/list',
+        //     active: false,
+        //   },
       ],
     },
     {
@@ -138,7 +138,7 @@ export class MainComponent implements OnInit {
         },
       ],
     },
-   
+
     {
       label: this.translateService.instant('Admin Activities'),
       icon: 'admin-activities',
@@ -211,27 +211,27 @@ export class MainComponent implements OnInit {
           const url = route.url.split('/');
           let parentUrl = '';
           if (url[2] && url[2].includes('list')) {
-             parentUrl = '/' + url[1] + '/' + url[2] + '/' + url[3];
-          }else {
+            parentUrl = '/' + url[1] + '/' + url[2] + '/' + url[3];
+          } else {
             parentUrl = '/' + url[1] + '/' + url[2];
           }
-          console.log(parentUrl);
-          const parentItemIndex = this.items.findIndex(
-            (x) => x.routerLink.includes(parentUrl)
+          // console.log(parentUrl);
+          const parentItemIndex = this.items.findIndex((x) =>
+            x.routerLink.includes(parentUrl)
           );
           if (parentItemIndex > -1) {
             this.items[parentItemIndex].active = true;
-            const childItemIndex = this.items[parentItemIndex]?.childs?.findIndex(
-              (y) => y.routerLink == route.url
-            );
+            const childItemIndex = this.items[
+              parentItemIndex
+            ]?.childs?.findIndex((y) => y.routerLink == route.url);
             if (childItemIndex > -1) {
-              this.items[parentItemIndex]?.childs?.forEach((x)=>{
-                if(x.routerLink == route.url){
-                  x.active = true
-                }else {
+              this.items[parentItemIndex]?.childs?.forEach((x) => {
+                if (x.routerLink == route.url) {
+                  x.active = true;
+                } else {
                   x.active = false;
                 }
-              })
+              });
             }
           }
         }
@@ -254,7 +254,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userName = this.storage.getStringItem('userNameEn');
     this.userType = this.storage.getStringItem('userType');
-    console.log(this.userName);
+    // console.log(this.userName);
   }
 
   setActiveItem(ss) {}

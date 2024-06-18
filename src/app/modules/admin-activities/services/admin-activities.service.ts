@@ -12,16 +12,25 @@ export class AdminActivitiesService {
     return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
   }
   GetAllErrandsChannel() {
-    return this.http.getReq(APIURL.AdminActivities.getErrandsChannel)
+    return this.http.getReq(APIURL.AdminActivities.getErrandsChannel);
   }
   GetAllCategoriesErrandsTypes() {
-    return this.http.getReq(APIURL.ErrandsType.getErrandsType)
+    return this.http.getReq(APIURL.ErrandsType.getErrandsType);
   }
   GetAllPOSTypes() {
-    return this.http.getReq(APIURL.AdminActivities.getPOSType)
+    return this.http.getReq(APIURL.AdminActivities.getPOSType);
   }
   AddMCC(data) {
     return this.http.postReq(APIURL.AdminActivities.AddMCC, data);
+  }
+  AddErrandsChannel(data) {
+    return this.http.postReq(APIURL.AdminActivities.AddErrandsChannel, data);
+  }
+  AddPOSType(data) {
+    return this.http.postReq(APIURL.AdminActivities.AddPOSType, data);
+  }
+  AddErrandsType(data) {
+    return this.http.postReq(APIURL.ErrandsType.addErrandType, data);
   }
 
   // Favorite(data) {
