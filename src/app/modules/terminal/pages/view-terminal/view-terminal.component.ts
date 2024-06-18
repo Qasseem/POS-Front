@@ -58,6 +58,6 @@ export class ViewTerminalComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate(['main/terminal/all']);
+    this.router.navigate(['main/terminal/list']);
   }
 }
