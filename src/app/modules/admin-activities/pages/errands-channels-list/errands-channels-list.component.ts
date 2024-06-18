@@ -17,29 +17,11 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./errands-channels-list.component.scss'],
 })
 export class ErrandsChannelsListComponent implements OnInit {
-  addToFavorite(row: any): any {
-    // this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-    //   if (resp.success) {
-    //   }
-    // });
-  }
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/merchant/edit/${row?.id}`;
-    console.log(URL);
+    const URL = `main/admin-activities/errands-channels/edit/${row?.id}`;
     this.router.navigate([URL]);
-  }
-  blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
-  }
-
-  goToDetails(row: any): any {
-    const URL = `main/merchant/details/${row?.id}`;
-    console.log(URL);
-
-    return URL;
   }
 
   public tableBtns: TableButtonsExistanceInterface = {
@@ -119,10 +101,13 @@ export class ErrandsChannelsListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: AdminActivitiesService) {}
+  constructor(
+    private router: Router,
+    private service: AdminActivitiesService
+  ) {}
 
   ngOnInit() {}
   navigateToAdd() {
-    this.router.navigate(['main/merchant/add']);
+    this.router.navigate(['main/admin-activities/errands-channels/add']);
   }
 }

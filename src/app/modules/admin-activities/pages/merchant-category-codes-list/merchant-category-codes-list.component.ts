@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
-import {
-  SearchInputTypes
-} from 'src/app/core/shared/core/modules/table/models/enums';
+import { SearchInputTypes } from 'src/app/core/shared/core/modules/table/models/enums';
 import { TableOptionsInterface } from 'src/app/core/shared/core/modules/table/models/options.interface';
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
@@ -20,8 +18,7 @@ export class MerchantCategoryCodesListComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/list/merchant-category-codes/edit/${row?.id}`;
-    console.log(URL);
+    const URL = `main/admin-activities/list/merchant-category-codes/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
 
@@ -105,6 +102,8 @@ export class MerchantCategoryCodesListComponent implements OnInit {
 
   ngOnInit() {}
   navigateToAdd() {
-    this.router.navigate(['main/admin-activities/add']);
+    this.router.navigate([
+      'main/admin-activities/list/merchant-category-codes/add',
+    ]);
   }
 }

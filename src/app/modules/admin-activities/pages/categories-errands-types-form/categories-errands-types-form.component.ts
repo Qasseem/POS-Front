@@ -4,14 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
 import { AdminActivitiesService } from '../../services/admin-activities.service';
 @Component({
-  selector: 'oc-merchant-category-codes-form',
-  templateUrl: './merchant-category-codes-form.component.html',
-  styleUrls: ['./merchant-category-codes-form.component.scss'],
+  selector: 'oc-categories-errands-types-form',
+  templateUrl: './categories-errands-types-form.component.html',
+  styleUrls: ['./categories-errands-types-form.component.scss'],
 })
-export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
+export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
   alive: boolean = false;
   form: FormGroup;
-  categories = [];
   id;
   formType = 'add';
   constructor(
@@ -33,6 +32,7 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
       }
     }
     this.form = this.fb.group({
+      categoryId: ['', Validators.required],
       nameEn: [
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
@@ -41,10 +41,10 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
+      serviceLevel: ['', Validators.required],
+      isActive: [''],
       isDeleted: [''],
     });
-
-    // this.getAllMerchantCategories();
   }
   getItemDetails() {
     this.adminActivitiesServices;
@@ -82,9 +82,7 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate([
-      'main/admin-activities/list/merchant-category-codes',
-    ]);
+    this.router.navigate(['main/list/categories-errands-types']);
   }
 
   ngOnDestroy() {

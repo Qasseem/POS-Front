@@ -5,11 +5,11 @@
         (click)="backToList()"
         class="mt-2 ml-3 header-left"
         style="color: #0080f9; cursor: pointer"
-        >Merchant Category Codes</span
+        >Errand Channels</span
       >
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left"
-        >{{ formType == "add" ? "Add" : "Edit" }} MCC</span
+        >{{ formType == "add" ? "Add" : "Edit" }} Errand Channel</span
       >
       <p-button
         class="mr-3 cancel-button"
@@ -40,7 +40,7 @@
             <div class="col-6">
               <div class="flex flex-column gap-2">
                 <label for="nameEn"
-                  >MCC Name [EN]<span class="p-error"> * </span>
+                  >Channel Name [EN]<span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
@@ -60,7 +60,7 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.nameEn.errors.required">
-                      MCC Name [EN] field is required
+                      Channel Name [EN] field is required
                     </span>
                     <span *ngIf="f.nameEn.errors.pattern">
                       Only English letters are allowed.
@@ -73,7 +73,7 @@
             <div class="col-6">
               <div class="flex flex-column gap-2">
                 <label for="nameAr"
-                  >MCC Name [AR] <span class="p-error"> * </span>
+                  >Channel Name [AR] <span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
@@ -93,7 +93,7 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.nameAr.errors.required">
-                      MCC Name [AR] field is required
+                      Channel Name [AR] field is required
                     </span>
                     <span *ngIf="f.nameAr.errors.pattern">
                       Only Arabic letters are allowed.
