@@ -74,4 +74,26 @@ export const APIURL = {
     addErrandType: '/ErrandType/SaveErrandType',
     exportErrandType: '/ErrandType/ExportErrandType',
   },
+
+  Region: {
+    Add: '/Region/Add',
+    Updata: 'Region/Update',
+    GetOne: '/Region/GetById',
+    Export: '/Region/ExportGrid',
+    GetGrid: '/Region/GetGrid',
+  },
+  City: {
+    Add: '/City/Add',
+    Updata: 'City/Update',
+    GetOne: '/City/GetById',
+    Export: '/City/ExportGrid',
+    GetGrid: '/City/GetGrid',
+  },
+  Zone: {
+    Add: '/Zone/Add',
+    Updata: 'Zone/Update',
+    GetOne: '/Zone/GetById',
+    Export: '/Zone/ExportGrid',
+    GetGrid: '/Zone/GetGrid',
+  },
 };

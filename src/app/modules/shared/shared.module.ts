@@ -21,6 +21,7 @@ import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-mo
 import { IconModule } from './inline-svg-icon/icon.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMapComponent } from './map/map.component';
+import { ViewCardComponent } from './view-card/view-card.component';
 
 const ANGULAR_MODULES = [
   CommonModule,
@@ -52,7 +53,7 @@ const CORE_MODULES = [TranslateModule];
 const CUSTOM_DIRECTIVES = [PreventKeyseDirective];
 
 @NgModule({
-  declarations: [...CUSTOM_DIRECTIVES, LeafletMapComponent],
+  declarations: [...CUSTOM_DIRECTIVES, LeafletMapComponent, ViewCardComponent],
   imports: [
     ...ANGULAR_MODULES,
     ...PRIME_NG_MODULES,
@@ -67,6 +68,7 @@ const CUSTOM_DIRECTIVES = [PreventKeyseDirective];
     ...CORE_MODULES,
     ...CUSTOM_DIRECTIVES,
     LeafletMapComponent,
+    ViewCardComponent,
   ],
   providers: [],
 })
