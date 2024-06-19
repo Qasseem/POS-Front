@@ -14,32 +14,29 @@ import { AppTranslateService } from 'src/app/core/shared/services/translate.serv
 })
 export class MainComponent implements OnInit {
   sidebarVisible = true;
-  panelOpenState = false;
   items = [
     {
       label: this.translateService.instant('Dashboard'),
       icon: 'dashboard',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/dashboard',
       active: false,
     },
     {
       label: this.translateService.instant('Merchants'),
       icon: 'users',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/merchant/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Merchants'),
-          // icon: 'users',
           expanded: true,
           routerLink: '/main/merchant/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Merchants'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/merchant/favorites',
           active: false,
@@ -49,20 +46,18 @@ export class MainComponent implements OnInit {
     {
       label: this.translateService.instant('Terminals'),
       icon: 'terminals',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/terminal/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Terminals'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/terminal/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Terminals'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/terminal/favorites',
           active: false,
@@ -72,20 +67,18 @@ export class MainComponent implements OnInit {
     {
       label: this.translateService.instant('Tickets'),
       icon: 'tickets',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/ticket/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Tickets'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/ticket/list',
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Tickets'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/ticket/favorites',
           active: false,
@@ -95,50 +88,45 @@ export class MainComponent implements OnInit {
     {
       label: this.translateService.instant('User Management'),
       icon: 'users-management',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/user-management/list',
       active: false,
       childs: [
         {
-          label: this.translateService.instant('Tickets'),
-          // icon: 'pi pi-users',
+          label: this.translateService.instant('Users'),
           expanded: true,
-          routerLink: '/main/ticket/list',
+          routerLink: '/main/user-management/user/list',
           active: false,
         },
-        //   {
-        //     label: this.translateService.instant('Favorite Tickets'),
-        //     icon: 'pi pi-users',
-        //     expanded: true,
-        //     routerLink: '/main/ticket/list',
-        //     active: false,
-        //   },
+        {
+          label: this.translateService.instant('Roles & Permissions'),
+          expanded: true,
+          routerLink: '/main/user-management/role/list',
+          active: false,
+        },
       ],
     },
     {
       label: this.translateService.instant('Locations'),
       icon: 'locations',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/locations/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Region'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/locations/region/list',
           active: false,
         },
         {
           label: this.translateService.instant('City'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/locations/city/list',
           active: false,
         },
         {
           label: this.translateService.instant('Zone'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/locations/zone/list',
           active: false,
@@ -149,34 +137,30 @@ export class MainComponent implements OnInit {
     {
       label: this.translateService.instant('Admin Activities'),
       icon: 'admin-activities',
-      expanded: true,
+      expanded: false,
       routerLink: '/main/admin-activities/list',
       active: false,
       childs: [
         {
           label: this.translateService.instant('Merchant Category Codes'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/admin-activities/list/merchant-category-codes',
           active: false,
         },
         {
           label: this.translateService.instant('Errand Channels'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/admin-activities/list/errands-channels',
           active: false,
         },
         {
           label: this.translateService.instant('POS Types'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/admin-activities/list/pos-types',
           active: false,
         },
         {
           label: this.translateService.instant('Categories Errand Types'),
-          // icon: 'pi pi-users',
           expanded: true,
           routerLink: '/main/admin-activities/list/categories-errands-types',
           active: false,
@@ -207,9 +191,6 @@ export class MainComponent implements OnInit {
     private appTranslateService: AppTranslateService,
     private loading: NgxSpinnerService
   ) {
-    if (this.authService.items.length == 0) {
-      // this.getUserMenu();
-    }
     this.translateService.setDefaultLang(this.storage.getLang());
     this.translateService.use(this.storage.getLang());
     this.router.events.subscribe({
@@ -222,12 +203,13 @@ export class MainComponent implements OnInit {
           } else {
             parentUrl = '/' + url[1] + '/' + url[2];
           }
-          // console.log(parentUrl);
           const parentItemIndex = this.items.findIndex((x) =>
             x.routerLink.includes(parentUrl)
           );
           if (parentItemIndex > -1) {
             this.items[parentItemIndex].active = true;
+            this.items[parentItemIndex].expanded =
+              !this.items[parentItemIndex].expanded;
             const childItemIndex = this.items[
               parentItemIndex
             ]?.childs?.findIndex((y) => y.routerLink == route.url);
@@ -261,7 +243,13 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userName = this.storage.getStringItem('userNameEn');
     this.userType = this.storage.getStringItem('userType');
-    // console.log(this.userName);
+  }
+  panelExpanded(event, currentIndex) {
+    this.items.forEach((item, index) => {
+      if (currentIndex != index) {
+        item.expanded = false;
+      }
+    });
   }
 
   setActiveItem(ss) {}

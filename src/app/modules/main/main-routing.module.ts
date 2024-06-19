@@ -33,15 +33,27 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'user-management',
+        loadChildren: () =>
+          import('../user-management/user-management.module').then(
+            (m) => m.UserManagementModule
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'locations',
         loadChildren: () =>
-          import('../locations/locations.module').then((m) => m.LocationsModule),
+          import('../locations/locations.module').then(
+            (m) => m.LocationsModule
+          ),
         canActivate: [AuthGuard],
       },
       {
         path: 'admin-activities',
         loadChildren: () =>
-          import('../admin-activities/admin-activities.module').then((m) => m.AdminActivitiesModule),
+          import('../admin-activities/admin-activities.module').then(
+            (m) => m.AdminActivitiesModule
+          ),
         canActivate: [AuthGuard],
       },
       {
