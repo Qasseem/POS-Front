@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ViewTerminalComponent } from './pages/view-terminal/view-terminal.component';
 import { TerminalListComponent } from './pages/terminal-list/terminal-list.component';
 import { TerminalFavoriteListComponent } from './pages/terminal-favorite-list/terminal-favorite-list.component';
+import { TerminalFormComponent } from './pages/terminal-form/terminal-form.component';
 
 const routes: Routes = [
   {
@@ -13,38 +14,33 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: TerminalComponent,
+        component: TerminalFormComponent,
         data: {
-          type: 'add'
-        }
+          type: 'add',
+        },
       },
       {
         path: 'list',
-        component: TerminalListComponent
-
+        component: TerminalListComponent,
       },
       {
         path: 'favorites',
-        component: TerminalFavoriteListComponent
-
+        component: TerminalFavoriteListComponent,
       },
       {
         path: '',
-        component: TerminalListComponent
-
+        component: TerminalListComponent,
       },
       {
         path: 'edit/:id',
-        component: TerminalComponent,
+        component: TerminalFormComponent,
         data: {
-          type: 'edit'
-        }
-
+          type: 'edit',
+        },
       },
       {
         path: 'details/:id',
-        component: ViewTerminalComponent
-
+        component: ViewTerminalComponent,
       },
       { path: '', redirectTo: '/list', pathMatch: 'full' },
     ],
@@ -52,6 +48,6 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TerminalRoutingModule { }
+export class TerminalRoutingModule {}
