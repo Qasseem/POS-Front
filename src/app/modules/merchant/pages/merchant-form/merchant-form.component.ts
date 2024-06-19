@@ -30,9 +30,6 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.formType = this.route.snapshot.data.type;
-  }
-
-  ngOnInit() {
     const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
     const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
 
@@ -56,6 +53,9 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       address: [null, Validators.required],
       landMark: [null],
     });
+  }
+
+  ngOnInit() {
     if (this.formType == 'edit') {
       this.id = this.route.snapshot.params.id || null;
       if (this.id) {
@@ -201,6 +201,9 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
         (x) => x.parentId == event.value
       );
     }
+  }
+  formatLngLat(string) {
+    return string !== null ? parseInt(string).toFixed(6).toString() : '-';
   }
   ngOnDestroy() {
     this.alive = false;
