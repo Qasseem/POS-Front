@@ -45,7 +45,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameEn?.errors?.required || f.nameEn.errors.pattern
+                      f.nameEn?.errors?.required || f.nameEn?.errors?.pattern
                   }"
                   type="text"
                   pInputText
@@ -62,7 +62,7 @@
                     <span *ngIf="f.nameEn.errors.required">
                       Channel Name [EN] field is required
                     </span>
-                    <span *ngIf="f.nameEn.errors.pattern">
+                    <span *ngIf="f.nameEn?.errors?.pattern">
                       Only English letters are allowed.
                     </span>
                   </div>
@@ -78,7 +78,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameAr?.errors?.required || f.nameAr.errors.pattern
+                      f.nameAr?.errors?.required || f.nameAr?.errors?.pattern
                   }"
                   type="text"
                   pInputText

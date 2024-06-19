@@ -28,188 +28,183 @@
       </p-button>
     </div>
   </div>
+  <hr class="header-divider" />
 
-  <div>
+  <div class="terminal-form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="grid">
-        <div class="col-8 p-0">
-          <div class="formcontainer">
-            <div class="grid">
-              <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="merchantId">Merchant</label>
-                  <p-dropdown
-                    [options]="allMerchantList"
-                    formControlName="merchantId"
-                    [optionValue]="'id'"
-                    optionLabel="nameEn"
-                  />
+        <div class="col-8 p-0 inputs-div">
+          <div class="p-20 flex flex-wrap">
+            <!-- <div class="grid"> -->
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="merchantId">Merchant</label>
+                <p-dropdown
+                  [options]="allMerchantList"
+                  formControlName="merchantId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                />
+                <div
+                  *ngIf="
+                    f.merchantId.errors &&
+                    (f.merchantId.dirty || f.merchantId.touched)
+                  "
+                  class="invalid-feedback"
+                >
                   <div
-                    *ngIf="
-                      f.merchantId.errors &&
-                      (f.merchantId.dirty || f.merchantId.touched)
-                    "
-                    class="invalid-feedback"
+                    class="fs-10 color-red"
+                    *ngIf="f.merchantId.errors.required"
                   >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.merchantId.errors.required"
-                    >
-                      Merchant field is required
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="terminalId">Terminal ID</label>
-                  <p-inputNumber
-                    [useGrouping]="false"
-                    [ngClass]="{
-                      'ng-invalid ng-dirty': f.terminalId?.errors?.required
-                    }"
-                    type="text"
-                    formControlName="terminalId"
-                  />
-
-                  <div
-                    *ngIf="
-                      f.terminalId.errors &&
-                      (f.terminalId.dirty || f.terminalId.touched)
-                    "
-                    class="invalid-feedback"
-                  >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.terminalId.errors.required"
-                    >
-                      Terminal ID field is required
-                    </div>
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.terminalId.errors.pattern"
-                    >
-                      Terminal ID field length must be between(1,30)
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="phoneNumber"
-                    >Phone Number
-                    <span class="color-info"> (Optional)</span>
-                  </label>
-                  <p-inputNumber
-                    [useGrouping]="false"
-                    [ngClass]="{
-                      'ng-invalid ng-dirty': f.phoneNumber?.errors?.required
-                    }"
-                    type="text"
-                    formControlName="phoneNumber"
-                  />
-
-                  <div
-                    *ngIf="
-                      f.phoneNumber.errors &&
-                      (f.phoneNumber.dirty || f.phoneNumber.touched)
-                    "
-                    class="invalid-feedback"
-                  >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.phoneNumber.errors.pattern"
-                    >
-                      Phone Number field length must be between(10,14)
-                    </div>
+                    Merchant field is required
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="grid">
-              <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="errandChannelId">Errand Channel</label>
-                  <p-dropdown
-                    [options]="errandChannelsList"
-                    formControlName="errandChannelId"
-                    [optionValue]="'id'"
-                    optionLabel="nameEn"
-                  />
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="terminalId">Terminal ID</label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.terminalId?.errors?.required
+                  }"
+                  pInputText
+                  type="number"
+                  formControlName="terminalId"
+                />
+
+                <div
+                  *ngIf="
+                    f.terminalId.errors &&
+                    (f.terminalId.dirty || f.terminalId.touched)
+                  "
+                  class="invalid-feedback"
+                >
                   <div
-                    *ngIf="
-                      f.errandChannelId.errors &&
-                      (f.errandChannelId.dirty || f.errandChannelId.touched)
-                    "
-                    class="invalid-feedback"
+                    class="fs-10 color-red"
+                    *ngIf="f.terminalId.errors.required"
                   >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.errandChannelId.errors.required"
-                    >
-                      Errand Channel field is required
-                    </div>
+                    Terminal ID field is required
                   </div>
-                </div>
-              </div>
-              <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="posTypeId">POS Type</label>
-                  <p-dropdown
-                    [options]="posList"
-                    formControlName="posTypeId"
-                    [optionValue]="'id'"
-                    optionLabel="nameEn"
-                  />
                   <div
-                    *ngIf="
-                      f.posTypeId.errors &&
-                      (f.posTypeId.dirty || f.posTypeId.touched)
-                    "
-                    class="invalid-feedback"
+                    class="fs-10 color-red"
+                    *ngIf="f.terminalId.errors.pattern"
                   >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.posTypeId.errors.required"
-                    >
-                      POS Type field is required
-                    </div>
+                    Terminal ID field length must be between(1,30)
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="phoneNumber"
+                  >Phone Number
+                  <span class="color-info"> (Optional)</span>
+                </label>
+                <input
+                  pInputText
+                  type="number"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.phoneNumber?.errors?.required
+                  }"
+                  formControlName="phoneNumber"
+                />
+
+                <div
+                  *ngIf="
+                    f.phoneNumber.errors &&
+                    (f.phoneNumber.dirty || f.phoneNumber.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.phoneNumber.errors.pattern"
+                  >
+                    Phone Number field length must be between(10,14)
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+
+            <!-- <div class="grid"> -->
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="errandChannelId">Errand Channel</label>
+                <p-dropdown
+                  [options]="errandChannelsList"
+                  formControlName="errandChannelId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                />
+                <div
+                  *ngIf="
+                    f.errandChannelId.errors &&
+                    (f.errandChannelId.dirty || f.errandChannelId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.errandChannelId.errors.required"
+                  >
+                    Errand Channel field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="posTypeId">POS Type</label>
+                <p-dropdown
+                  [options]="posList"
+                  formControlName="posTypeId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                />
+                <div
+                  *ngIf="
+                    f.posTypeId.errors &&
+                    (f.posTypeId.dirty || f.posTypeId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.posTypeId.errors.required"
+                  >
+                    POS Type field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
           </div>
         </div>
         <div class="col-4 p-0">
-          <div class="formcontainer">
-            <div>
-              <span class="font-bold fs-11"> Location </span>
+          <div class="location-form p-20">
+            <div class="location-text">
+              <p class="font-bold fs-11">Location</p>
             </div>
-            <p-divider />
             <div>
               <div class="map-container">
                 <oc-map [mode]="formType"></oc-map>
               </div>
-              <div
-                class="grid fs-11 pt-2 mt-3 font-bold"
-                style="
-                  height: 45px;
-                  background-color: #e6f2fe;
-                  color: #3399fa;
-                  border-radius: 10px;
-                "
-              >
-                <div class="col-6">
+
+              <div class="location-container fs-11 mt-3">
+                <div class="col-6 coordinate">
                   <span class="mt-2"
-                    >Long: {{ form.get("longitude").value }}</span
+                    >Long:
+                    {{ formatLngLat(form?.get("longitude").value) }}</span
                   >
                 </div>
-                <div class="col-6">
+                <p-divider class="divider" />
+                <div class="col-6 coordinate">
                   <span class="mt-2"
-                    >Lat: {{ form.get("latitude").value }}</span
+                    >Lat: {{ formatLngLat(form?.get("latitude").value) }}</span
                   >
                 </div>
               </div>
@@ -222,7 +217,9 @@
             <div class="grid mt-2">
               <div class="col-6">
                 <div class="flex flex-column gap-2">
-                  <label for="regionId">Region</label>
+                  <label for="regionId"
+                    >Region <span class="p-error"> * </span>
+                  </label>
                   <p-dropdown
                     (onChange)="regionChanged($event)"
                     [options]="regionsList"
@@ -248,7 +245,9 @@
               </div>
               <div class="col-6">
                 <div class="flex flex-column gap-2">
-                  <label for="cityId">City</label>
+                  <label for="cityId"
+                    >City <span class="p-error"> * </span>
+                  </label>
                   <p-dropdown
                     [options]="citiesList"
                     (onChange)="cityChanged($event)"
@@ -272,10 +271,12 @@
                 </div>
               </div>
             </div>
-            <div class="grid">
+            <div class="grid pt-10">
               <div class="col-6">
                 <div class="flex flex-column gap-2">
-                  <label for="zoneId">Zone</label>
+                  <label for="zoneId"
+                    >Zone <span class="p-error"> * </span>
+                  </label>
                   <p-dropdown
                     [options]="zonesList"
                     formControlName="zoneId"
@@ -298,13 +299,10 @@
                 </div>
               </div>
             </div>
-            <div class="grid">
+            <div class="grid pt-10">
               <div class="col-12">
                 <div class="flex flex-column gap-2">
-                  <label for="address"
-                    >Address
-                    <span class="color-info"> (Optional)</span>
-                  </label>
+                  <label for="address">Address </label>
                   <input
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.address?.errors?.required
@@ -316,10 +314,10 @@
                 </div>
               </div>
             </div>
-            <div class="grid">
+            <div class="grid pt-10">
               <div class="col-12">
                 <div class="flex flex-column gap-2">
-                  <label for="landMark">Land Mark</label>
+                  <label for="landMark">Landmark</label>
                   <input
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.landMark?.errors?.required

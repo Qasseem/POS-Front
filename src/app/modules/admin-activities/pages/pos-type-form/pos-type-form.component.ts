@@ -9,7 +9,7 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./pos-type-form.component.scss'],
 })
 export class POSTypeFormComponent implements OnInit, OnDestroy {
-  alive: boolean = false;
+  alive: boolean = true;
   form: FormGroup;
   categories = [];
   id;
@@ -41,7 +41,7 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      isDeleted: [''],
+      isDeleted: [false],
     });
   }
   getItemDetails() {

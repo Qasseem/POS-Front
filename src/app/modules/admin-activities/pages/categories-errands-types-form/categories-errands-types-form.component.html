@@ -46,7 +46,7 @@
                   [ngClass]="{
                     'ng-invalid ng-dirty': f.categoryId?.errors?.required
                   }"
-                  type="text"
+                  type="number"
                   pInputText
                   formControlName="categoryId"
                 />
@@ -74,7 +74,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameEn?.errors?.required || f.nameEn.errors.pattern
+                      f.nameEn?.errors?.required || f?.nameEn?.errors?.pattern
                   }"
                   type="text"
                   pInputText
@@ -107,7 +107,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameAr?.errors?.required || f.nameAr.errors.pattern
+                      f.nameAr?.errors?.required || f.nameAr?.errors?.pattern
                   }"
                   type="text"
                   pInputText

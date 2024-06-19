@@ -9,7 +9,7 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./categories-errands-types-form.component.scss'],
 })
 export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
-  alive: boolean = false;
+  alive: boolean = true;
   form: FormGroup;
   id;
   formType = 'add';
@@ -42,8 +42,8 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
       serviceLevel: ['', Validators.required],
-      isActive: [''],
-      isDeleted: [''],
+      isActive: [false],
+      isDeleted: [false],
     });
   }
   getItemDetails() {
@@ -82,7 +82,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate(['main/list/categories-errands-types']);
+    this.router.navigate(['main/admin-activities/categories-errands-types']);
   }
 
   ngOnDestroy() {

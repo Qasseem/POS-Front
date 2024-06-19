@@ -9,7 +9,7 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./errands-channels-form.component.scss'],
 })
 export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
-  alive: boolean = false;
+  alive: boolean = true;
   form: FormGroup;
   categories = [];
   id;
@@ -41,10 +41,8 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      isDeleted: [''],
+      isDeleted: [false],
     });
-
-    // this.getAllMerchantCategories();
   }
   getItemDetails() {
     this.adminActivitiesServices;
