@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
     },
     {
       label: this.translateService.instant('Merchants'),
-      icon: 'Users',
+      icon: 'users',
       expanded: true,
       routerLink: '/main/merchant/list',
       active: false,
@@ -123,17 +123,24 @@ export class MainComponent implements OnInit {
       active: false,
       childs: [
         {
-          label: this.translateService.instant('Locations'),
+          label: this.translateService.instant('Region'),
           // icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/locations/list',
+          routerLink: '/main/locations/region/list',
           active: false,
         },
         {
-          label: this.translateService.instant('Favorite Locations'),
+          label: this.translateService.instant('City'),
           // icon: 'pi pi-users',
           expanded: true,
-          routerLink: '/main/locations/favorites',
+          routerLink: '/main/locations/city/list',
+          active: false,
+        },
+        {
+          label: this.translateService.instant('Zone'),
+          // icon: 'pi pi-users',
+          expanded: true,
+          routerLink: '/main/locations/zone/list',
           active: false,
         },
       ],

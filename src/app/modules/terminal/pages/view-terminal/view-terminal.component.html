@@ -14,120 +14,13 @@
   <p-divider />
 
   <div class="grid m-2 font-12">
-    <div class="col-4 p-0" style="border-radius: 10px">
-      <div class="m-2 box-border">
-        <div class="p-2 wave font-16" style="color: white">
-          <div class="ml-3 mt-2 mb-2">
-            <span style="color: #99ccfd">
-              {{ "Treminal ID : " }}
-            </span>
-            {{ details?.id }}
-          </div>
-          <p-divider />
-          <div class="ml-3 mt-2">{{ details?.merchantNameEN }}</div>
-          <div class="ml-3 mt-1">{{ details?.merchantNameAR }}</div>
-          <div class="ml-3 mt-2">
-            <span> Merchant ID: </span>
-            {{ details?.merchantId }}
-          </div>
-        </div>
-        <div style="height: 100px; margin-top: -57px">
-          <div class="container">
-            <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-              <path
-                d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"
-                style="stroke: none; fill: #1c8ef9"
-              ></path>
-            </svg>
-          </div>
-        </div>
-
-        <div class="grid m-2">
-          <div class="col-6 color-info">Reference</div>
-          <div class="col-6">{{ details?.reference }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Phone Number</div>
-          <div class="col-6">{{ details?.phoneNumber }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">POS Type</div>
-          <div class="col-6">{{ details?.posType }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Errand Channel</div>
-          <div class="col-6">{{ details?.errandChannel }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Created by</div>
-          <div class="col-6">{{ details?.createdBy }}</div>
-        </div>
-        <div class="grid m-2">
-          <div class="col-6 color-info">Created at</div>
-          <div class="col-6">
-            {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
-          </div>
-        </div>
-        <p-divider />
-        <div class="mt-3"></div>
-        <div class="grid">
-          <div class="col-2 ml-3">
-            <div class="icon-container">
-              <i
-                style="font-size: 1.5rem; color: #0080f9"
-                class="pi pi-map-marker"
-              ></i>
-            </div>
-          </div>
-          <div class="col-8">
-            <div class="fc-main" *ngIf="address?.City">{{ address?.City }}</div>
-            <div>
-              <span class="fc-main mr-1">Address:</span>
-              <span class="fw-500" *ngIf="address?.LongLabel">{{
-                address?.LongLabel
-              }}</span>
-            </div>
-            <div>
-              <span class="fc-main mr-2">Landmark</span>
-              <span class="fw-500">{{ details?.landMark }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="grid p-2">
-          <div class="col-12">
-            <div class="map-container">
-              <oc-map [mode]="formType" [coordinates]="coordinates"></oc-map>
-            </div>
-          </div>
-          <p-divider />
-          <div class="grid m-2">
-            <div class="col-2">
-              <p-avatar
-                icon="pi pi-ticket"
-                [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
-                styleClass="mr-2"
-                size="large"
-              />
-            </div>
-            <div class="col-4">
-              <div>Active Tickets</div>
-              <div class="fs-24 mt-1">{{ 5 }}</div>
-            </div>
-            <div class="col-2">
-              <p-avatar
-                icon="pi pi-user"
-                [style]="{ 'background-color': '#CCE6FE', color: '#0080F9' }"
-                styleClass="mr-2"
-                size="large"
-              />
-            </div>
-            <div class="col-4">
-              <div>Agents Visted</div>
-              <div class="fs-24 mt-1">{{ 5 }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-4 p-0">
+      <oc-view-card
+        [details]="details"
+        [formType]="'view'"
+        [coordinates]="coordinates"
+        [cid]="'terminal'"
+      ></oc-view-card>
 
       <!-- //////////////// -->
 
