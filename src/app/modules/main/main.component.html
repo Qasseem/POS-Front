@@ -28,13 +28,13 @@
         </div>
         <hr style="border-top: 1px solid #99ccfd" />
 
-        <div class="mt-3 ml-3">
+        <div class="mt-3 ml-3 menu-container">
           <div *ngFor="let item of items; let i = index">
             <ng-container
               [ngTemplateOutlet]="item?.childs?.length ? accordion : menuItem"
             >
               <ng-template #accordion>
-                <mat-accordion>
+                <mat-accordion class="accordion-container">
                   <mat-expansion-panel
                     style="box-shadow: none; background-color: transparent"
                     class="mt-2"

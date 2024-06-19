@@ -327,6 +327,47 @@
 .divider {
   border-left: 1px solid #e6ecf5;
 }
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Adjust as needed */
+  overflow-y: auto;
+}
+.menu-container {
+  overflow-y: auto;
+  max-height: 625px;
+  &::-webkit-scrollbar {
+    width: 5px; /* Width of the scrollbar track */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: aliceblue; /* Color of the scrollbar track */
+    border-radius: 5px; /* Rounded corners for the track */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #6aa3b9; /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Rounded corners for the thumb */
+  }
+}
+
+:host ::ng-deep .mat-accordion {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  flex: 1;
+}
+
+/* Ensure the bottom container is always at the bottom */
+.user-container {
+  margin-top: auto;
+  background-color: #f0f0f0; /* Example styling */
+  padding: 10px;
+  text-align: center;
+}
 
 .container {
   height: calc(
@@ -345,6 +386,7 @@
   bottom: 0;
   width: inherit;
   top: 75%;
+  background: aliceblue;
 }
 
 .user {
