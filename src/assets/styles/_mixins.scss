@@ -1,0 +1,23 @@
+@mixin breakpoints($breakpoint) {
+  @if ($breakpoint == up-sm) {
+    @media (min-width: 576px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == up-md) {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == up-lg) {
+    @media (min-width: 992px) {
+      @content;
+    }
+  }
+  @if ($breakpoint == up-xl) {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+  // Add more breakpoints as needed
+}

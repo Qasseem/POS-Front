@@ -1,3 +1,4 @@
+@import "../../../assets/styles/mixins";
 ::ng-deep .p-panelmenu {
   width: 100% !important;
 }
@@ -333,9 +334,15 @@
   height: 100%; /* Adjust as needed */
   overflow-y: auto;
 }
-.menu-container {
+:host .menu-container {
   overflow-y: auto;
   max-height: 625px;
+  @include breakpoints(up-sm) {
+    max-height: 325px;
+  }
+  @include breakpoints(up-md) {
+    max-height: 375px;
+  }
   &::-webkit-scrollbar {
     width: 5px; /* Width of the scrollbar track */
   }
