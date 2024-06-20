@@ -42,16 +42,40 @@ import {
 export class LeafletMapComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
-  @Input() mode: 'add' | 'edit' | 'view' = 'add';
-  @Input() set coordinates(value) {
-    if (this.mode == 'view') {
-      this._coordinates = value;
-    }
-  }
-  private _coordinates: { lat: number; lng: number } = {
+  private _coordinates: { lat: any; lng: any } = {
     lat: 51.505,
     lng: -0.09,
   };
+  @Input() mode: 'add' | 'edit' | 'view' = 'add';
+  @Input() set coordinates(value) {
+    if (this.mode != 'add' && value?.lat && value?.lng) {
+      this._coordinates = {
+        lat: parseFloat(value.lat),
+        lng: parseFloat(value.lng),
+      };
+      const customIconOptions: IconOptions = {
+        iconUrl: '../../../../assets/map/marker.svg ',
+        iconSize: [25, 41], // size of the icon
+        iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+        popupAnchor: [1, -34], // point from which the popup should open relative to the iconAnchor
+        // shadowUrl: shadowUrl,
+        shadowSize: [41, 41], // size of the shadow
+        shadowAnchor: [12, 41], // point of the shadow which will correspond to marker's location
+      };
+      const customIcon: Icon = icon(customIconOptions);
+      const markerOptions = {
+        icon: customIcon,
+        draggable: this.mode !== 'view',
+      };
+      this.marker = marker(
+        { lat: this._coordinates.lat, lng: this._coordinates.lng },
+        markerOptions
+      ).addTo(this.map);
+      this.layers.push(this.marker); // Add marker to layers array
+      this.fitMapToBounds();
+    }
+  }
+
   options: MapOptions;
   layers: Marker[] = [];
   maxZoomLevel = 20;
@@ -109,30 +133,6 @@ export class LeafletMapComponent
   onMapReady(map: Map) {
     this.map = map;
     this.map.invalidateSize();
-    if (!this.controlContainer) {
-      {
-        const customIconOptions: IconOptions = {
-          iconUrl: '../../../../assets/map/marker.svg ',
-          iconSize: [25, 41], // size of the icon
-          iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
-          popupAnchor: [1, -34], // point from which the popup should open relative to the iconAnchor
-          // shadowUrl: shadowUrl,
-          shadowSize: [41, 41], // size of the shadow
-          shadowAnchor: [12, 41], // point of the shadow which will correspond to marker's location
-        };
-        const customIcon: Icon = icon(customIconOptions);
-        const markerOptions = {
-          icon: customIcon,
-          draggable: !(this.mode !== 'add' && this.mode !== 'edit'),
-        };
-        this.marker = marker(
-          { lat: this._coordinates.lat, lng: this._coordinates.lng },
-          markerOptions
-        ).addTo(this.map);
-        this.layers.push(this.marker); // Add marker to layers array
-        this.fitMapToBounds();
-      }
-    }
   }
 
   setMarker(latlng: LatLng) {
@@ -151,7 +151,7 @@ export class LeafletMapComponent
       const customIcon: Icon = icon(customIconOptions);
       const markerOptions = {
         icon: customIcon,
-        draggable: this.mode == 'view' ? false : true,
+        draggable: this.mode != 'view',
       };
       this.marker = marker(latlng, markerOptions).addTo(this.map);
       this.layers.push(this.marker); // Add marker to layers array

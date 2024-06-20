@@ -25,6 +25,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   orignalZones = [];
   orignalCities = [];
   formType = 'add';
+  coordinates = { lng: null, lat: null };
 
   constructor(
     private fb: FormBuilder,
@@ -164,6 +165,9 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
               // }, 1000);
 
               this.form.patchValue(this.details);
+              this.coordinates.lng = parseFloat(this.details.longitude);
+              this.coordinates.lat = parseFloat(this.details.latitude);
+              this.coordinates = { ...this.coordinates };
               this.form.updateValueAndValidity();
             }
           }
@@ -206,7 +210,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   formatLngLat(string) {
-    return string !== null ? parseInt(string).toFixed(6).toString() : '-';
+    return string !== null ? parseFloat(string).toFixed(6).toString() : '-';
   }
   cityChanged(event) {
     this.form.controls.zoneId.setValue(null);

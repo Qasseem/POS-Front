@@ -337,13 +337,13 @@
 :host .menu-container {
   overflow-y: auto;
   max-height: 625px;
-  @include breakpoints(up-sm) {
-    max-height: 325px;
-  }
-  @include breakpoints(up-md) {
+  // @include breakpoints(up-sm) {
+  //   max-height: 325px;
+  // }
+  @include breakpoints(up-xl) {
     max-height: 375px;
   }
-  @include breakpoints(up-lg) {
+  @include breakpoints(up-xxl) {
     max-height: 625px;
   }
   &::-webkit-scrollbar {

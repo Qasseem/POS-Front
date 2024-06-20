@@ -3,7 +3,7 @@
     <div
       class="view-container--card--header-container"
       [ngClass]="{
-        mecrchantHeight: cid == 'merchant',
+        merchantHeight: cid == 'merchant',
         terminalHeight: cid == 'terminal'
       }"
     >
@@ -26,7 +26,7 @@
               [width]="'20px'"
               [height]="'20px'"
             ></oc-icon>
-            Hyper
+            {{ details?.zoneEn }}
           </div>
         </div>
       </ng-template>
@@ -34,20 +34,20 @@
         <div class="view-container--card--header-container--header">
           <div class="view-container--card--header-container--header--title">
             <label for="terminalId">Terminal ID :</label>
-            <span>1234</span>
+            <span>{{ details?.terminalId }}</span>
           </div>
           <p-divider></p-divider>
           <div class="view-container--card--header-container--header--text">
-            <label for="terminalId">Carrefour</label>
+            <label for="terminalId">{{ details?.merchantNameEN }}</label>
           </div>
           <div class="view-container--card--header-container--header--text">
-            <label for="terminalId">كارفور</label>
+            <label for="terminalId">{{ details?.merchantNameAR }}</label>
           </div>
           <div
             class="view-container--card--header-container--header--text-label"
           >
             <label for="terminalId">Merchant ID:</label>
-            <span>45678</span>
+            <span>{{ details?.merchantId }}</span>
           </div>
         </div>
       </ng-template>
@@ -92,7 +92,7 @@
         <div class="view-container--card--location-details-container--details">
           <span
             class="view-container--card--location-details-container--details--text"
-            >Ismailia - Ismailia - Canal</span
+            >{{ details?.address?.ShortLabel }}</span
           >
           <div
             class="view-container--card--location-details-container--details--item"
@@ -104,7 +104,7 @@
             >
             <span
               class="view-container--card--location-details-container--details--item--text"
-              >23 Orabi Square, Ismailia</span
+              >{{ details?.address.LongLabel }}</span
             >
           </div>
           <div
@@ -117,7 +117,7 @@
             >
             <span
               class="view-container--card--location-details-container--details--item--text"
-              >text</span
+              >{{ details?.landmark }}</span
             >
           </div>
         </div>
@@ -131,11 +131,12 @@
       class="view-container--card--performance-container"
       *ngIf="cid == 'merchant'"
     >
-      <label
+      <div
         for="perfomance"
         class="view-container--card--performance-container--title"
-        >Merchant performance</label
       >
+        Merchant performance
+      </div>
       <div class="view-container--card--performance-container--item">
         <div
           class="view-container--card--performance-container--item--progress"

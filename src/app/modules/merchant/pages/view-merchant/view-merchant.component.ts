@@ -21,6 +21,7 @@ export class ViewMerchantComponent implements OnInit {
   details: any;
   formType = 'view';
   coordinates = { lat: null, lng: null };
+  address;
   constructor(
     private router: Router,
     private merchantService: MerchantService,
@@ -210,8 +211,21 @@ export class ViewMerchantComponent implements OnInit {
     this.merchantService.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
+        this.handleAddress(resp);
       }
     });
+  }
+  handleAddress(resp: any) {
+    this.coordinates = {
+      lat: resp.data.latitude,
+      lng: resp.data.longitude,
+    };
+    this.terminalService
+      .GetAddressFromLatLng(resp.data.latitude, resp.data.longitude)
+      .subscribe((resp: any) => {
+        this.address = resp?.address;
+        this.details.address = this.address;
+      });
   }
 
   backToList() {

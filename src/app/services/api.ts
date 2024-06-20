@@ -53,6 +53,13 @@ export const APIURL = {
     GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
     GetAllMechantDropDown: '/Terminal/GetAllMechantDropDown',
   },
+  Ticket: {
+    Add: '/Ticket/Add',
+    GetOne: '/Ticket/GetById',
+    Export: '/Ticket/ExportGrid',
+    GetGrid: '/Ticket/GetGrid',
+    GetTicketCategory: '/Ticket/GetTicketCategor',
+  },
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',
   },

@@ -62,29 +62,47 @@ export class ViewTerminalComponent implements OnInit {
   };
   public columns: ColumnsInterface[] = [
     {
-      field: 'reference',
-      header: 'Ref',
+      field: 'ticketId',
+      header: 'Ticket ID',
+    },
+    {
+      field: 'merchantId',
+      header: 'Merchant Id',
+    },
+    {
+      field: [
+        { label: 'merchantEn', custom: 'default' },
+        { label: 'merchantAr', custom: 'default' },
+      ],
+      header: 'Merchant Name',
+      customCell: 'multiLabel',
     },
     {
       field: 'terminalId',
       header: 'Terminal Id',
     },
-
-    {
-      field: 'phoneNumber',
-      header: 'Phone Number',
-    },
-    {
-      field: 'city',
-      header: 'City',
-    },
-
     {
       field: [
-        { label: 'createdBy', custom: 'default' },
-        { label: 'createdAt', custom: 'defaultDate' },
+        { label: 'categoryNameEn', custom: 'default' },
+        { label: 'categoryNameAr', custom: 'default' },
       ],
-      header: 'Created by',
+      header: 'Category',
+      customCell: 'multiLabel',
+    },
+    {
+      field: [
+        { label: 'errandTypeEn', custom: 'default' },
+        { label: 'errandTypeAr', custom: 'default' },
+      ],
+      header: 'Errand Type',
+      customCell: 'multiLabel',
+    },
+    {
+      field: [
+        { label: 'cityEn', custom: 'default' },
+        { label: 'zoneEn', custom: 'default' },
+      ],
+      header: 'City & Zone',
       customCell: 'multiLabel',
     },
   ];
@@ -94,16 +112,6 @@ export class ViewTerminalComponent implements OnInit {
       name: 'Edit',
       icon: 'pi pi-file-edit',
       call: (row: any) => this.editItem(row),
-    },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Add to favorite ',
-      icon: 'pi pi-heart',
-      call: (row: any) => this.addToFavorite(row),
     },
   ];
 
@@ -116,87 +124,22 @@ export class ViewTerminalComponent implements OnInit {
 
     {
       type: SearchInputTypes.text,
-      field: 'terminalId',
+      field: 'tickedId',
       isFixed: true,
     },
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'merchant',
+      field: 'merchantEn',
       isFixed: true,
       url: this.url.Terminal.GetAllMechantDropDown,
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
-
-    {
-      isMultiple: true,
-      type: SearchInputTypes.choice,
-      field: 'users',
-      isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
-      method: HTTPMethods.postReq,
-      propValueName: 'id',
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'phone',
-      isFixed: true,
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'posType',
-      isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'errandChannel',
-      isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'city',
-      isFixed: true,
-      url: this.url.Terminal.GetAllCities,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-      header: '0',
-    },
-
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'zone',
-      isFixed: true,
-      url: this.url.Terminal.GetAllZones,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-      header: '0',
-    },
-
-    {
-      type: SearchInputTypes.text,
-      field: 'address',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'landmark',
-      isFixed: true,
-    },
   ];
 
   navigateToAdd() {
-    this.router.navigate(['main/terminal/add']);
+    this.router.navigate(['main/ticket/add']);
   }
 
   id;
@@ -212,6 +155,9 @@ export class ViewTerminalComponent implements OnInit {
     this.terminalService.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
+        this.coordinates.lng = parseFloat(this.details.longitude);
+        this.coordinates.lat = parseFloat(this.details.latitude);
+        this.coordinates = { ...this.coordinates };
         this.handleAddress(resp);
       }
     });
@@ -225,6 +171,7 @@ export class ViewTerminalComponent implements OnInit {
       .GetAddressFromLatLng(resp.data.latitude, resp.data.longitude)
       .subscribe((resp: any) => {
         this.address = resp?.address;
+        this.details.address = this.address;
       });
   }
 

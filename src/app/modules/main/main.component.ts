@@ -24,7 +24,7 @@ export class MainComponent implements OnInit {
     },
     {
       label: this.translateService.instant('Merchants'),
-      icon: 'Users',
+      icon: 'users',
       expanded: false,
       routerLink: '/main/merchant/list',
       active: false,

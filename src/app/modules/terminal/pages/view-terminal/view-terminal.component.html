@@ -29,13 +29,9 @@
         <div class="p-grid ml-2 m-2">
           <div class="p-col" style="text-align: right">
             <span class="mt-2" style="float: left; font-weight: bolder"
-              >Terminal</span
+              >Tickets</span
             >
-            <p-button
-              (click)="navigateToAdd()"
-              label="Add Terminal"
-              size="small"
-            >
+            <p-button (click)="navigateToAdd()" label="Add Ticket" size="small">
               <span class="ml-1 mr-1 add">
                 <i class="pi pi-plus add-icon"></i>
               </span>
@@ -46,19 +42,16 @@
           <oc-table
             [showSearchBar]="true"
             [url]="{
-              getAll: url.Terminal.GetGrid,
-              export: url.Terminal.Export,
-              import: url.Terminal.ImportTerminals
+              getAll: url.Ticket.GetGrid,
+              export: url.Ticket.Export,
             }"
-            [addButtonLabel]="'Add Terminal'"
+            [addButtonLabel]="'Add Ticket'"
             [columns]="columns"
             [buttonsExistance]="tableBtns"
-            [exportUrl]="url.Terminal.Export"
+            [exportUrl]="url.Ticket.Export"
             [actions]="actions"
-            [options]="{ check: false }"
+            [options]="{ check: false, viewDetails: false }"
             [filters]="filters"
-            [uploadHeader]="'Upload Bulk Terminal'"
-            [sampleName]="'ImportTerminalSample.xlsx'"
           >
           </oc-table>
         </div>
