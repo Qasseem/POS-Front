@@ -44,7 +44,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.getTerminalDropDownsData();
     this.form = this.fb.group({
-      merchantId: ['', Validators.required],
+      merchantId: [null, Validators.required],
       terminalId: [
         null,
         [
@@ -190,7 +190,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate(['main/terminal/all']);
+    this.router.navigate(['main/terminal/list']);
   }
 
   print() {}

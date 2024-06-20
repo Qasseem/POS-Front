@@ -1,1 +1,143 @@
-<p>city-form works!</p>
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Locations</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left"
+        >{{ formType == "add" ? "Add" : "Edit" }} City</span
+      >
+      <p-button
+        class="mr-3 cancel-button"
+        label="Cancel"
+        [text]="true"
+        (click)="backToList()"
+        size="small"
+      />
+
+      <p-button
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <hr class="header-divider" />
+
+  <div class="merchants-form">
+    <form [formGroup]="form">
+      <div class="grid d-flex inputs-div">
+        <div class="col-12 p-0">
+          <div class="p-20 flex flex-wrap">
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="nameEn"
+                  >City Name EN<span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.nameEn?.errors?.required || f.nameEn?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="nameEn"
+                />
+
+                <div
+                  *ngIf="
+                    f.nameEn.errors && (f.nameEn.dirty || f.nameEn.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.nameEn.errors.required">
+                      City Name EN field is required
+                    </span>
+                    <span *ngIf="f.nameEn?.errors?.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="nameAr"
+                  >City Name AR <span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.nameAr?.errors?.required || f.nameAr?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="nameAr"
+                />
+
+                <div
+                  *ngIf="
+                    f.nameAr.errors && (f.nameAr.dirty || f.nameAr.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.nameAr.errors.required">
+                      City Name AR field is required
+                    </span>
+                    <span *ngIf="f.nameAr.errors.pattern">
+                      Only Arabic letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="regionId"
+                  >Region <span class="p-error"> * </span>
+                </label>
+
+                <p-dropdown
+                  [options]="categories"
+                  formControlName="regionId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                />
+                <div
+                  *ngIf="
+                    f.regionId.errors &&
+                    (f.regionId.dirty || f.regionId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.regionId?.errors?.required"
+                  >
+                    Region field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 p-lr pb-16">
+          <div class="col-6 displayFlex align-item-center">
+            <p-checkbox formControlName="isActive" binary="true"></p-checkbox>
+            <label class="isActive" for="isActive">Mark as active</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

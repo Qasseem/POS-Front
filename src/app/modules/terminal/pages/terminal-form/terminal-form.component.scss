@@ -23,6 +23,14 @@ label {
   margin: 12px 12px 12px 20px;
   border-color: rgba(237, 239, 241, 0.2);
 }
+.basic-info {
+  font-size: 12px;
+  color: rgba(33, 37, 41, 1);
+  border-bottom: 1px solid rgba(237, 239, 241, 1);
+  p {
+    margin-bottom: 12px;
+  }
+}
 .terminal-form {
   margin: 10px;
   padding: 20px;
@@ -69,6 +77,14 @@ label {
     }
   }
   .p-20 {
-    padding: 20px;
+    padding: 12px 20px 20px 20px;
   }
+}
+.pt-12 {
+  padding-top: 12px;
+}
+.basic-info {
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
 }

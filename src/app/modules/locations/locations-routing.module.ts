@@ -19,16 +19,17 @@ const routes: Routes = [
         component: RegionListComponent,
       },
       {
+        path: 'region/list',
+        component: RegionListComponent,
+      },
+      {
         path: 'region/add',
         component: RegionFormComponent,
         data: {
           type: 'add',
         },
       },
-      {
-        path: 'region/list',
-        component: RegionListComponent,
-      },
+
       {
         path: 'region/edit/:id',
         component: RegionFormComponent,
