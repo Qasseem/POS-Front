@@ -68,16 +68,29 @@ export class RegionFormComponent implements OnInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
-    this.regionService
-      .addRegion(this.form.value)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            this.backToList();
-          }
-        },
-      });
+    if (this.formType == 'add') {
+      this.regionService
+        .addRegion(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    } else {
+      this.regionService
+        .update(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    }
   }
   backToList() {
     this.router.navigate(['main/locations/region/list']);

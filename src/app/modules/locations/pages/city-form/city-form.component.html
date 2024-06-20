@@ -129,6 +129,38 @@
                 </div>
               </div>
             </div>
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="maxAgentTickets"
+                  >Max Agent Tickets <span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.maxAgentTickets?.errors?.required
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="maxAgentTickets"
+                />
+
+                <div
+                  *ngIf="
+                    f.maxAgentTickets.errors &&
+                    (f.maxAgentTickets.dirty || f.maxAgentTickets.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.maxAgentTickets.errors.required">
+                      Max Agent Tickets field is required
+                    </span>
+                    <!-- <span *ngIf="f.maxAgentTickets.errors.pattern">
+                      Only Arabic letters are allowed.
+                    </span>-->
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-12 p-lr pb-16">

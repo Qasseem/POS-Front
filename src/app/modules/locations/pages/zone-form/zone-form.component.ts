@@ -69,16 +69,29 @@ export class ZoneFormComponent {
     if (!this.id) {
       delete obj.id;
     }
-    this.zoneService
-      .addZone(this.form.value)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            this.backToList();
-          }
-        },
-      });
+    if (this.formType == 'add') {
+      this.zoneService
+        .addZone(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    } else {
+      this.zoneService
+        .update(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    }
   }
   backToList() {
     this.router.navigate(['main/locations/zone/list']);

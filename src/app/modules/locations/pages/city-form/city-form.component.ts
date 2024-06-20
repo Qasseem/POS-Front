@@ -43,7 +43,7 @@ export class CityFormComponent {
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
       regionId: [],
-      maxAgentTickets: [],
+      maxAgentTickets: [0, Validators.required],
       isActive: [false],
     });
   }
@@ -70,16 +70,29 @@ export class CityFormComponent {
     if (!this.id) {
       delete obj.id;
     }
-    this.cityService
-      .addCity(this.form.value)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            this.backToList();
-          }
-        },
-      });
+    if (this.formType == 'add') {
+      this.cityService
+        .addCity(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    } else {
+      this.cityService
+        .update(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    }
   }
   backToList() {
     this.router.navigate(['main/locations/city/list']);
