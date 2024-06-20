@@ -20,11 +20,11 @@
       />
 
       <p-button
-        style="width: 100px !important"
         (click)="submit()"
         [disabled]="!form?.valid"
         label="{{ formType == 'add' ? 'Add' : 'Save' }}"
         size="small"
+        type="submit"
       >
       </p-button>
     </div>
@@ -33,7 +33,7 @@
   <hr class="header-divider" />
 
   <div class="merchants-form">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
       <div class="grid d-flex inputs-div">
         <div class="col-12 p-0">
           <div class="p-20 flex flex-wrap">
@@ -45,7 +45,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameEn?.errors?.required || f.nameEn.errors.pattern
+                      f.nameEn?.errors?.required || f.nameEn?.errors?.pattern
                   }"
                   type="text"
                   pInputText
@@ -78,7 +78,7 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameAr?.errors?.required || f.nameAr.errors.pattern
+                      f.nameAr?.errors?.required || f?.nameAr?.errors?.pattern
                   }"
                   type="text"
                   pInputText

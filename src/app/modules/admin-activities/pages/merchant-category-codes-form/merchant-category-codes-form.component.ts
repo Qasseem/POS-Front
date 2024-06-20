@@ -9,7 +9,7 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
   styleUrls: ['./merchant-category-codes-form.component.scss'],
 })
 export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
-  alive: boolean = false;
+  alive: boolean = true;
   form: FormGroup;
   categories = [];
   id;
@@ -24,14 +24,14 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
-    const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
     if (this.formType == 'edit') {
       this.id = this.route.snapshot.params.id || null;
       if (this.id) {
         this.getItemDetails();
       }
     }
+    const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
+    const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
     this.form = this.fb.group({
       nameEn: [
         '',
@@ -41,10 +41,8 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      isDeleted: [''],
+      isDeleted: [false],
     });
-
-    // this.getAllMerchantCategories();
   }
   getItemDetails() {
     this.adminActivitiesServices;

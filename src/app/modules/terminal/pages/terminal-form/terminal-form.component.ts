@@ -10,7 +10,7 @@ import { TerminalService } from '../../services/terminal.service';
   styleUrls: ['./terminal-form.component.scss'],
 })
 export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
-  alive = false;
+  alive = true;
   form: FormGroup;
   id;
   details: any;
@@ -104,7 +104,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
     this.service
-      .GetAllMechantDropDown()
+      .GetAllMerchantDropDown()
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
@@ -204,6 +204,9 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
         (x) => x.parentId == event.value
       );
     }
+  }
+  formatLngLat(string) {
+    return string !== null ? parseInt(string).toFixed(6).toString() : '-';
   }
   cityChanged(event) {
     this.form.controls.zoneId.setValue(null);

@@ -6,6 +6,7 @@ import { TerminalListComponent } from './pages/terminal-list/terminal-list.compo
 import { ViewTerminalComponent } from './pages/view-terminal/view-terminal.component';
 import { SharedModule } from '../shared/shared.module';
 import { TerminalFavoriteListComponent } from './pages/terminal-favorite-list/terminal-favorite-list.component';
+import { TerminalFormComponent } from './pages/terminal-form/terminal-form.component';
 
 @NgModule({
   imports: [CommonModule, TerminalRoutingModule, SharedModule],
@@ -14,6 +15,7 @@ import { TerminalFavoriteListComponent } from './pages/terminal-favorite-list/te
     TerminalListComponent,
     ViewTerminalComponent,
     TerminalFavoriteListComponent,
+    TerminalFormComponent,
   ],
 })
 export class TerminalModule {}

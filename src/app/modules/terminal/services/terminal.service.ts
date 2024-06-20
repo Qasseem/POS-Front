@@ -24,7 +24,7 @@ export class TerminalService {
   GetAllRegions() {
     return this.http.getReq(APIURL.Terminal.GetAllRegions);
   }
-  GetAllMechantDropDown() {
+  GetAllMerchantDropDown() {
     return this.http.getReq(APIURL.Terminal.GetAllMechantDropDown);
   }
   GetAllZones(parentId) {

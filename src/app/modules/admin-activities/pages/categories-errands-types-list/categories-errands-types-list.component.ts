@@ -81,27 +81,23 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
   filters: SearchInterface[] = [
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameEN',
+      field: 'nameEn',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
+      field: 'nameAr',
       isFixed: true,
     },
     {
       type: SearchInputTypes.text,
-      field: 'UserName',
+      field: 'requireQuantity',
       isFixed: true,
     },
     {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'category',
+      type: SearchInputTypes.text,
+      field: 'status',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
     },
     {
       type: SearchInputTypes.date,
