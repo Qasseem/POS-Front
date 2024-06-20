@@ -343,6 +343,9 @@
   @include breakpoints(up-md) {
     max-height: 375px;
   }
+  @include breakpoints(up-lg) {
+    max-height: 625px;
+  }
   &::-webkit-scrollbar {
     width: 5px; /* Width of the scrollbar track */
   }

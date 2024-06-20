@@ -10,8 +10,8 @@
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left">{{ details?.reference }}</span>
     </div>
+    <p-divider />
   </div>
-  <p-divider />
 
   <div class="view-container">
     <div class="view-container--card">
@@ -19,6 +19,7 @@
         [details]="details"
         [formType]="'view'"
         [coordinates]="coordinates"
+        [cid]="'terminal'"
       ></oc-view-card>
     </div>
     <!-- //////////////// -->

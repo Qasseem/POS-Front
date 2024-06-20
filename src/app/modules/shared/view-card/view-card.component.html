@@ -2,7 +2,10 @@
   <div class="view-container--card">
     <div
       class="view-container--card--header-container"
-      [ngStyle]="{ height: cid == 'merchant' ? '136px' : '154px' }"
+      [ngClass]="{
+        mecrchantHeight: cid == 'merchant',
+        terminalHeight: cid == 'terminal'
+      }"
     >
       <ng-container
         [ngTemplateOutlet]="cid == 'merchant' ? merchant : terminal"

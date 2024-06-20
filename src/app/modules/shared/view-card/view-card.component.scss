@@ -1,4 +1,6 @@
-.view-container {
+@import "../../../../assets/styles/mixins";
+
+:host .view-container {
   // display: flex;
   font-size: 12px;
   // margin: 0.5rem;
@@ -10,12 +12,40 @@
     margin-top: -5px;
     &--header-container {
       @extend .wave;
+      &.merchantHeight {
+        @include breakpoints(up-lg) {
+          height: 136px;
+        }
+        @include breakpoints(up-md) {
+          height: 85px;
+        }
+      }
+      &.terminalHeight {
+        @include breakpoints(up-lg) {
+          height: 154px;
+        }
+        @include breakpoints(up-md) {
+          height: 91px;
+        }
+      }
       &--header {
         font-size: 16px;
         padding: 1rem 0 0 1rem;
+        @include breakpoints(up-lg) {
+          padding: 1rem 0 0 1rem;
+        }
+        @include breakpoints(up-md) {
+          padding: 0.5rem 0 0 0.5rem;
+        }
         color: #fff;
         &--text {
           padding-top: 0.5rem;
+          @include breakpoints(up-lg) {
+            padding-top: 0.5rem;
+          }
+          @include breakpoints(up-md) {
+            padding-top: 0.25rem;
+          }
           //   padding-left: 0.5rem;
           &.icon {
             display: flex;
@@ -242,7 +272,7 @@
   background: url("../../../../assets/icons/view-card-header-sm.svg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  height: 152px;
+  // height: 152px;
   margin-top: -4px;
 }
 .box-border {

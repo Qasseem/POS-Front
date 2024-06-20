@@ -1,3 +1,4 @@
+@import "../../../../../assets/styles/mixins";
 svg {
   display: inline-block;
   position: absolute;
@@ -15,8 +16,15 @@ svg {
 .view-container {
   display: flex;
   font-size: 12px;
-  margin: 0.5rem;
-  gap: 1rem;
+  @include breakpoints(up-lg) {
+    margin: 0.5rem;
+    gap: 1rem;
+  }
+  @include breakpoints(up-md) {
+    gap: 0.25rem;
+    margin: 0;
+  }
+
   &--card {
     width: 30%;
   }
