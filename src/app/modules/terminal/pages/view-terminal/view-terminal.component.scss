@@ -12,13 +12,30 @@ svg {
   vertical-align: middle;
   overflow: hidden;
 }
+.view-container {
+  display: flex;
+  font-size: 12px;
+  margin: 0.5rem;
+  gap: 1rem;
+  &--card {
+    width: 30%;
+  }
+  &--list {
+    width: 70%;
+  }
+}
 
 .wave {
-  height: 120px;
-  background-color: #1c8ef9;
+  background: url("../../../../../assets/icons/view-card-header-sm.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 150px;
+  margin-top: -4px;
+}
+.box-border {
+  background-color: white;
   border-radius: 10px;
-  position: relative;
-  z-index: 4;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */
 }
 
 ::ng-deep .p-divider {
@@ -33,14 +50,4 @@ svg {
 .header-left {
   float: left;
   font-weight: bolder;
-}
-
-.icon-container {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #cce6fe;
-  border-radius: 5px;
 }
