@@ -13,18 +13,17 @@
   </div>
   <p-divider />
 
-  <div class="grid m-2 font-12">
-    <div class="col-4 p-0">
+  <div class="view-container">
+    <div class="view-container--card">
       <oc-view-card
         [details]="details"
         [formType]="'view'"
         [coordinates]="coordinates"
-        [cid]="'terminal'"
       ></oc-view-card>
+    </div>
+    <!-- //////////////// -->
 
-      <!-- //////////////// -->
-
-      <!-- <div class="col-8">
+    <div class="view-container--list">
       <div>
         <div class="p-grid ml-2 m-2">
           <div class="p-col" style="text-align: right">
@@ -63,7 +62,6 @@
           </oc-table>
         </div>
       </div>
-    </div> -->
     </div>
   </div>
 </div>
