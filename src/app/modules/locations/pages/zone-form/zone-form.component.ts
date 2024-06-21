@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ZoneService } from '../../services/zone.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
+import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 
 @Component({
   selector: 'oc-zone-form',
@@ -13,6 +14,10 @@ export class ZoneFormComponent {
   alive: boolean = true;
   form: FormGroup;
   categories = [];
+  citiesList = [];
+  orignalCities = [];
+
+  regionsList = [];
   details: any;
   id;
   formType = 'add';
@@ -20,7 +25,8 @@ export class ZoneFormComponent {
     private fb: FormBuilder,
     private zoneService: ZoneService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private terminalService: TerminalService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -42,9 +48,54 @@ export class ZoneFormComponent {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      cityId: [],
+      regionId: [null, Validators.required],
+      cityId: [null, Validators.required],
       isActive: [false],
     });
+    this.getRegionCityLists();
+  }
+  getRegionCityLists() {
+    const regionControl = this.form.get('regionId');
+    this.terminalService
+      .GetAllRegions()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.regionsList = resp.data;
+            regionControl.setValue(resp.data[0].id);
+          }
+        },
+      });
+    const cityControl = this.form.get('cityId');
+    regionControl.valueChanges.subscribe({
+      next: (regionId) => {
+        if (regionId) {
+          this.terminalService
+            .GetAllCities(regionId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe({
+              next: (resp) => {
+                if (resp.success) {
+                  this.citiesList = resp.data;
+                  this.orignalCities = resp.data;
+                  // cityControl.setValue(resp.data[0].id);
+                }
+              },
+            });
+        }
+      },
+    });
+  }
+
+  regionChanged(event) {
+    this.form.controls.cityId.setValue(null);
+    this.citiesList = this.orignalCities;
+    if (event) {
+      this.citiesList = this.citiesList.filter(
+        (x) => x.parentId == event.value
+      );
+    }
   }
 
   getItemDetails() {
@@ -93,6 +144,7 @@ export class ZoneFormComponent {
         });
     }
   }
+
   backToList() {
     this.router.navigate(['main/locations/zone/list']);
   }

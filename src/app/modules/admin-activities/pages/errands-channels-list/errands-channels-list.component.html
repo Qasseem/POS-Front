@@ -1,6 +1,8 @@
 <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
-    <span class="mt-2" style="float: left; font-weight: bolder">Errand Channels</span>
+    <span class="mt-2" style="float: left; font-weight: bolder"
+      >Errand Channels</span
+    >
     <p-button (click)="navigateToAdd()" label="Add Errand Channel" size="small">
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
@@ -14,14 +16,14 @@
     [url]="{
       getAll: url.AdminActivities.getErrandsChannel,
       export: url.AdminActivities.exportErrandsChannel,
-      import: url.Merchant.ImportMerchants
+      import: url.AdminActivities.importErrandsChannel
     }"
     [addButtonLabel]="'Add Errand Channel'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.AdminActivities.exportErrandsChannel"
     [actions]="actions"
-    [options]="{ check: false, viewDetails : false }"
+    [options]="{ check: false, viewDetails: false }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Errand Channel'"
     [sampleName]="'ImportErrandChannelsSample.xlsx'"

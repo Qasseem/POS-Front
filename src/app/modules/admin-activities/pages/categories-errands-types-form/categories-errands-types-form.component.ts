@@ -12,6 +12,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
   alive: boolean = true;
   form: FormGroup;
   id;
+  details: any;
   formType = 'add';
   constructor(
     private fb: FormBuilder,
@@ -37,28 +38,25 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
-      nameAr: [
-        '',
-        [Validators.required, Validators.pattern(arabicLetterPattern)],
-      ],
+      nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
       serviceLevel: ['', Validators.required],
       isActive: [false],
       isDeleted: [false],
     });
   }
   getItemDetails() {
-    this.adminActivitiesServices;
-    // .GetDetails(this.id)
-    // .pipe(takeWhile(() => this.alive))
-    // .subscribe((resp) => {
-    //   if (resp.success) {
-    //     this.details = resp.data;
-    //     if (this.details) {
-    //       this.form.patchValue(this.details);
-    //       this.form.updateValueAndValidity();
-    //     }
-    //   }
-    // });
+    this.adminActivitiesServices
+      .GetCategoriesErrandsTypesDetails(this.id)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.details = resp.data;
+          if (this.details) {
+            this.form.patchValue(this.details);
+            this.form.updateValueAndValidity();
+          }
+        }
+      });
   }
 
   onSubmit() {}
