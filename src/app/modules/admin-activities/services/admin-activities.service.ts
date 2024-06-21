@@ -11,14 +11,29 @@ export class AdminActivitiesService {
   GetAllMerchantCategories() {
     return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
   }
+  GetMCCDetails(id) {
+    return this.http.getHeaderReq(APIURL.AdminActivities.getOneMCC, id);
+  }
   GetAllErrandsChannel() {
     return this.http.getReq(APIURL.AdminActivities.getErrandsChannel);
+  }
+  GetErrandsChannelDetails(id) {
+    return this.http.getHeaderReq(
+      APIURL.AdminActivities.getOneErrandsChannel,
+      id
+    );
   }
   GetAllCategoriesErrandsTypes() {
     return this.http.getReq(APIURL.ErrandsType.getErrandsType);
   }
+  GetCategoriesErrandsTypesDetails(id) {
+    return this.http.getHeaderReq(APIURL.ErrandsType.getOneErrandType, id);
+  }
   GetAllPOSTypes() {
     return this.http.getReq(APIURL.AdminActivities.getPOSType);
+  }
+  GetPOSTypesDetails(id) {
+    return this.http.getHeaderReq(APIURL.AdminActivities.getOnePOSType, id);
   }
   AddMCC(data) {
     return this.http.postReq(APIURL.AdminActivities.AddMCC, data);

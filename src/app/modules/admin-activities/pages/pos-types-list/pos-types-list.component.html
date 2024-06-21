@@ -14,14 +14,14 @@
     [url]="{
       getAll: url.AdminActivities.getPOSType,
       export: url.AdminActivities.exportPOSType,
-      import: url.Merchant.ImportMerchants
+      import: url.AdminActivities.importPOSType
     }"
     [addButtonLabel]="'Add POS Type'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.AdminActivities.exportPOSType"
     [actions]="actions"
-    [options]="{ check: false , viewDetails : false}"
+    [options]="{ check: false, viewDetails: false }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk POS Type'"
     [sampleName]="'ImportPOSTypeSample.xlsx'"
