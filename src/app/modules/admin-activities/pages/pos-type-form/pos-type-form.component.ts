@@ -12,6 +12,7 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
   alive: boolean = true;
   form: FormGroup;
   categories = [];
+  details: any;
   id;
   formType = 'add';
   constructor(
@@ -45,18 +46,18 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
     });
   }
   getItemDetails() {
-    this.adminActivitiesServices;
-    // .GetDetails(this.id)
-    // .pipe(takeWhile(() => this.alive))
-    // .subscribe((resp) => {
-    //   if (resp.success) {
-    //     this.details = resp.data;
-    //     if (this.details) {
-    //       this.form.patchValue(this.details);
-    //       this.form.updateValueAndValidity();
-    //     }
-    //   }
-    // });
+    this.adminActivitiesServices
+      .GetPOSTypesDetails(this.id)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.details = resp.data;
+          if (this.details) {
+            this.form.patchValue(this.details);
+            this.form.updateValueAndValidity();
+          }
+        }
+      });
   }
 
   onSubmit() {}

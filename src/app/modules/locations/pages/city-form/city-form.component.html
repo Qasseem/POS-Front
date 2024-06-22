@@ -108,7 +108,7 @@
                 </label>
 
                 <p-dropdown
-                  [options]="categories"
+                  [options]="regionsList"
                   formControlName="regionId"
                   [optionValue]="'id'"
                   optionLabel="nameEn"
@@ -154,9 +154,6 @@
                     <span *ngIf="f.maxAgentTickets.errors.required">
                       Max Agent Tickets field is required
                     </span>
-                    <!-- <span *ngIf="f.maxAgentTickets.errors.pattern">
-                      Only Arabic letters are allowed.
-                    </span>-->
                   </div>
                 </div>
               </div>

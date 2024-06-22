@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CityService } from '../../services/city.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
+import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 
 @Component({
   selector: 'oc-city-form',
@@ -13,6 +14,7 @@ export class CityFormComponent {
   alive: boolean = true;
   form: FormGroup;
   categories = [];
+  regionsList = [];
   details: any;
   id;
   formType = 'add';
@@ -20,7 +22,8 @@ export class CityFormComponent {
     private fb: FormBuilder,
     private cityService: CityService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private terminalService: TerminalService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -42,10 +45,26 @@ export class CityFormComponent {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      regionId: [],
+      regionId: [null, Validators.required],
       maxAgentTickets: [0, Validators.required],
       isActive: [false],
     });
+    this.getRegionLists();
+  }
+
+  getRegionLists() {
+    const regionControl = this.form.get('regionId');
+    this.terminalService
+      .GetAllRegions()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.regionsList = resp.data;
+            regionControl.setValue(resp.data[0].id);
+          }
+        },
+      });
   }
 
   getItemDetails() {

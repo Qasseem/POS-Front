@@ -11,6 +11,7 @@ import { AdminActivitiesService } from '../../services/admin-activities.service'
 export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
   alive: boolean = true;
   form: FormGroup;
+  details: any;
   categories = [];
   id;
   formType = 'add';
@@ -37,26 +38,23 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
-      nameAr: [
-        '',
-        [Validators.required, Validators.pattern(arabicLetterPattern)],
-      ],
+      nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
       isDeleted: [false],
     });
   }
   getItemDetails() {
-    this.adminActivitiesServices;
-    // .GetDetails(this.id)
-    // .pipe(takeWhile(() => this.alive))
-    // .subscribe((resp) => {
-    //   if (resp.success) {
-    //     this.details = resp.data;
-    //     if (this.details) {
-    //       this.form.patchValue(this.details);
-    //       this.form.updateValueAndValidity();
-    //     }
-    //   }
-    // });
+    this.adminActivitiesServices
+      .GetErrandsChannelDetails(this.id)
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.details = resp.data;
+          if (this.details) {
+            this.form.patchValue(this.details);
+            this.form.updateValueAndValidity();
+          }
+        }
+      });
   }
 
   onSubmit() {}

@@ -67,19 +67,27 @@ export const APIURL = {
   AdminActivities: {
     AddMCC: '/AdminActivities/SaveMerchantCategory',
     getMCC: '/AdminActivities/GetMerchantCategoryGrid',
+    getOneMCC: '/AdminActivities/GetMerchantCategoryById',
     exportMCC: '/AdminActivities/ExportMerchantCategory',
+    importMCC: '/AdminActivities/ImportMerchantCategory',
     getErrandsChannel: '/AdminActivities/GetErrandChannelGrid',
     AddErrandsChannel: '/AdminActivities/SaveErrandChannel',
+    getOneErrandsChannel: '/AdminActivities/GetErrandChannelById',
     exportErrandsChannel: '/AdminActivities/ExportErrandChannel',
+    importErrandsChannel: '/AdminActivities/ImportErrandChannel',
     getPOSType: '/AdminActivities/GetPOSTypeGrid',
     AddPOSType: '/AdminActivities/SavePOSType',
+    getOnePOSType: '/AdminActivities/GetPOSTypeById',
     exportPOSType: '/AdminActivities/ExportPOSType',
+    importPOSType: '/AdminActivities/ImportPOSType',
   },
 
   ErrandsType: {
     getErrandsType: '/ErrandType/GetErrandTypeGrid',
     addErrandType: '/ErrandType/SaveErrandType',
+    getOneErrandType: '/ErrandType/GetById',
     exportErrandType: '/ErrandType/ExportErrandType',
+    importErrandType: '/ErrandType/ImportErrandType',
   },
 
   Region: {
