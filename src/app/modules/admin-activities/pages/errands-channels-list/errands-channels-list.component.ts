@@ -28,7 +28,7 @@ export class ErrandsChannelsListComponent implements OnInit {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
+    showFilter: false,
     showImport: true,
   };
   public columns: ColumnsInterface[] = [
@@ -66,38 +66,6 @@ export class ErrandsChannelsListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    },
-  ];
-
-  filters: SearchInterface[] = [
-    {
-      type: SearchInputTypes.text,
-      field: 'nameEn',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'UserName',
-      isFixed: true,
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'category',
-      isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
-    {
-      type: SearchInputTypes.date,
-      field: 'createDate',
-      isFixed: true,
     },
   ];
 

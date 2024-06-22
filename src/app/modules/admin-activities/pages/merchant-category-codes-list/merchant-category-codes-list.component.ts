@@ -26,7 +26,7 @@ export class MerchantCategoryCodesListComponent implements OnInit {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
+    showFilter: false,
     showImport: true,
   };
   public columns: ColumnsInterface[] = [
@@ -64,34 +64,6 @@ export class MerchantCategoryCodesListComponent implements OnInit {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    },
-  ];
-
-  filters: SearchInterface[] = [
-    {
-      type: SearchInputTypes.text,
-      field: 'id',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'nameAr',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'nameEn',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'status',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.date,
-      field: 'createDate',
-      isFixed: true,
     },
   ];
 

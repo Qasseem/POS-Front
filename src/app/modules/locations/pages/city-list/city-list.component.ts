@@ -20,8 +20,8 @@ export class CityListComponent {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
-    showImport: false,
+    showFilter: false,
+    showImport: true,
   };
   public columns: ColumnsInterface[] = [
     {
@@ -62,24 +62,6 @@ export class CityListComponent {
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
-    },
-  ];
-
-  filters: SearchInterface[] = [
-    {
-      type: SearchInputTypes.text,
-      field: 'nameEn',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'nameAR',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.date,
-      field: 'createDate',
-      isFixed: true,
     },
   ];
 

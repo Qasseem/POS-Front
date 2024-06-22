@@ -16,15 +16,17 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-        getAll: url.Region.GetGrid,
-        export: url.Region.Export,
-      }"
+      getAll: url.Region.GetGrid,
+      export: url.Region.Export,
+      import: url.Region.import
+    }"
     [addButtonLabel]="'Add Region'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
     [options]="{ check: false, viewDetails: false }"
-    [filters]="filters"
+    [uploadHeader]="'Upload Bulk Regions'"
+    [sampleName]="'ImportRegionsSample.xlsx'"
   >
   </oc-table>
 </div>
