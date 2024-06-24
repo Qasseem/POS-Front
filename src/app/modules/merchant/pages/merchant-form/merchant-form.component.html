@@ -38,24 +38,32 @@
           <div class="p-20 flex flex-wrap">
             <div class="col-4">
               <div class="flex flex-column gap-2">
-                <label for="id"
+                <label for="merchantId"
                   >ID
                   <span class="p-error"> * </span>
                 </label>
 
                 <input
-                  [ngClass]="{ 'ng-invalid ng-dirty': f.id?.errors?.required }"
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.merchantId?.errors?.required
+                  }"
                   type="number"
                   pInputText
-                  formControlName="id"
+                  formControlName="merchantId"
                 />
 
                 <div
-                  *ngIf="f.id.errors && (f.id.dirty || f.id.touched)"
-                  class="invalid-feedback"
+                  *ngIf="
+                    f.merchantId.errors &&
+                    (f.merchantId.dirty || f.merchantId.touched)
+                  "
+                  class="invalmerchantId-feedback"
                 >
-                  <div class="fs-10 color-red" *ngIf="f.id.errors.required">
-                    ID field is required
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.merchantId.errors.required"
+                  >
+                    merchantId field is required
                   </div>
                 </div>
               </div>
