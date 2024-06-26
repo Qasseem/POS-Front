@@ -19,7 +19,6 @@ import { MerchantService } from '../../services/merchant.service';
 export class MerchantListComponent implements OnInit {
   public url = APIURL;
 
-
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,
@@ -34,7 +33,7 @@ export class MerchantListComponent implements OnInit {
       width: '100px',
     },
     {
-      field: 'id',
+      field: 'merchantId',
       header: 'ID',
       width: '100px',
     },
@@ -124,9 +123,9 @@ export class MerchantListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: MerchantService) { }
+  constructor(private router: Router, private service: MerchantService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
@@ -139,10 +138,9 @@ export class MerchantListComponent implements OnInit {
   }
   editItem(row: any): any {
     const URL = `main/merchant/edit/${row?.id}`;
-    console.log(URL);
     this.router.navigate([URL]);
   }
-  
+
   blockItem(row: any): any {
     const URL = `/home/customers/info/${row?.id}`;
     return URL;
@@ -150,9 +148,6 @@ export class MerchantListComponent implements OnInit {
 
   goToDetails(row: any): any {
     const URL = `main/merchant/details/${row?.id}`;
-    console.log(URL);
-
     return URL;
   }
-
 }
