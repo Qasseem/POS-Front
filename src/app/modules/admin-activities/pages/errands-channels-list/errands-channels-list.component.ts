@@ -77,7 +77,7 @@ export class ErrandsChannelsListComponent implements OnInit {
     },
     {
       type: SearchInputTypes.text,
-      field: 'MerchantNameAR',
+      field: 'nameAr',
       isFixed: true,
     },
     {
@@ -88,11 +88,11 @@ export class ErrandsChannelsListComponent implements OnInit {
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'category',
+      field: 'status',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
+      // url: this.url.Merchant.GetAllMerchantCategories,
+      // method: HTTPMethods.getReq,
+      // propValueName: 'id',
     },
     {
       type: SearchInputTypes.date,

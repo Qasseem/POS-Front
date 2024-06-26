@@ -18,7 +18,7 @@ export interface SearchInterface {
   ddlPosition?: string;
   params?: any;
   data?: any;
-  ddlData?: [];
+  ddlData?: Array<any>;
   typeInput?: string;
   headerName?: any;
   mask?: string;
