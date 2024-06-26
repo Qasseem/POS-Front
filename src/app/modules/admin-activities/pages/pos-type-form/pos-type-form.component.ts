@@ -42,7 +42,8 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      isDeleted: [false],
+      // isDeleted: [false],
+      id: [null],
     });
   }
   getItemDetails() {

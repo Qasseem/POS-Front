@@ -47,7 +47,8 @@ export class CityFormComponent {
       ],
       regionId: [null, Validators.required],
       maxAgentTickets: [0, Validators.required],
-      isActive: [false],
+      // isActive: [false],
+      id: [null],
     });
     this.getRegionLists();
   }

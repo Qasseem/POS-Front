@@ -17,6 +17,6 @@ export class ZoneService {
   }
 
   update(id) {
-    return this.http.getHeaderReq(APIURL.Zone.Update, id);
+    return this.http.postReq(APIURL.Zone.Update, id);
   }
 }

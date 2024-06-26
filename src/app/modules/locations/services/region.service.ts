@@ -17,6 +17,6 @@ export class RegionService {
   }
 
   update(id) {
-    return this.http.getHeaderReq(APIURL.Region.Update, id);
+    return this.http.postReq(APIURL.Region.Update, id);
   }
 }

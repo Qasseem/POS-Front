@@ -50,7 +50,8 @@ export class ZoneFormComponent {
       ],
       regionId: [null, Validators.required],
       cityId: [null, Validators.required],
-      isActive: [false],
+      // isActive: [false],
+      id: [null],
     });
     this.getRegionCityLists();
   }

@@ -42,7 +42,8 @@ export class RegionFormComponent implements OnInit, OnDestroy {
         '',
         [Validators.required, Validators.pattern(arabicLetterPattern)],
       ],
-      isActive: [false],
+      // isActive: [false],
+      id: [null],
     });
   }
 

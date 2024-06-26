@@ -39,7 +39,8 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
       nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
-      isDeleted: [false],
+      // isDeleted: [false],
+      id: [null],
     });
   }
   getItemDetails() {
