@@ -11,7 +11,7 @@ import { TerminalService } from '../../services/terminal.service';
 })
 export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   alive = true;
-  form: FormGroup;
+  terminalForm: FormGroup;
   id;
   details: any;
 
@@ -44,7 +44,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }
     this.getTerminalDropDownsData();
-    this.form = this.fb.group({
+    this.terminalForm = this.fb.group({
       merchantId: [null, Validators.required],
       terminalId: [
         null,
@@ -164,11 +164,11 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
               //   this.cityChanged(resp.data?.cityId);
               // }, 1000);
 
-              this.form.patchValue(this.details);
+              this.terminalForm.patchValue(this.details);
               this.coordinates.lng = parseFloat(this.details.longitude);
               this.coordinates.lat = parseFloat(this.details.latitude);
               this.coordinates = { ...this.coordinates };
-              this.form.updateValueAndValidity();
+              this.terminalForm.updateValueAndValidity();
             }
           }
         },
@@ -177,15 +177,15 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onSubmit() {}
   get f() {
-    return this.form.controls;
+    return this.terminalForm.controls;
   }
   submit() {
-    let obj = this.form.value;
+    let obj = this.terminalForm.value;
     if (!this.id) {
       delete obj.id;
     }
     this.service
-      .Add(this.form.value)
+      .Add(this.terminalForm.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe((resp) => {
         if (resp.success) {
@@ -200,8 +200,8 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   print() {}
 
   regionChanged(event) {
-    this.form.controls.cityId.setValue(null);
-    this.form.controls.zoneId.setValue(null);
+    this.terminalForm.controls.cityId.setValue(null);
+    this.terminalForm.controls.zoneId.setValue(null);
     this.citiesList = this.orignalCities;
     if (event) {
       this.citiesList = this.citiesList.filter(
@@ -213,7 +213,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     return string !== null ? parseFloat(string).toFixed(6).toString() : '-';
   }
   cityChanged(event) {
-    this.form.controls.zoneId.setValue(null);
+    this.terminalForm.controls.zoneId.setValue(null);
     this.zonesList = this.orignalZones;
     if (event) {
       this.zonesList = this.zonesList.filter((x) => x.parentId == event.value);

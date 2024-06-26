@@ -3,13 +3,17 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
 import { PasswordModule } from 'primeng/password';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { TabViewModule } from 'primeng/tabview';
+import { TooltipModule } from 'primeng/tooltip';
 import { PreventKeyseDirective } from 'src/app/core/shared/core/directives/prevent-keys.directive';
 import { PrimeTableModule } from 'src/app/core/shared/core/modules/table/table-module';
 import { FormModule } from 'src/app/core/shared/form/form-module';
@@ -19,7 +23,6 @@ import { PrimeNgContainersModule } from 'src/app/core/shared/primeng/primeng-con
 import { PrimeNgInputsModule } from 'src/app/core/shared/primeng/primeng-input-module';
 import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-module';
 import { IconModule } from './inline-svg-icon/icon.module';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMapComponent } from './map/map.component';
 import { ViewCardComponent } from './view-card/view-card.component';
 
@@ -38,6 +41,9 @@ const PRIME_NG_MODULES = [
   MenuModule,
   ButtonModule,
   PasswordModule,
+  RadioButtonModule,
+  InputTextareaModule,
+  TooltipModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

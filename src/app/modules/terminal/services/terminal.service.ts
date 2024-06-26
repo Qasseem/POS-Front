@@ -41,6 +41,7 @@ export class TerminalService {
   Favorite(data) {
     return this.http.postReq(APIURL.Terminal.Favorite, data);
   }
+
   GetAddressFromLatLng(lat, lng) {
     let url =
       'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=json&location=' +

@@ -1,3 +1,311 @@
-<p>
-  add-ticket works!
-</p>
+<div>
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Terminal</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left"
+        >{{ formType == "add" ? "Add" : "Edit" }} Ticket</span
+      >
+      <p-button
+        class="mr-3"
+        label="Cancel"
+        [text]="true"
+        [raised]="true"
+        size="small"
+      />
+
+      <p-button
+        (click)="submit()"
+        [disabled]="!ticketForm?.valid"
+        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+  <hr class="header-divider" />
+
+  <div class="ticket-form">
+    <form [formGroup]="ticketForm">
+      <div class="form-container">
+        <div class="ticket-card">
+          <div class="service-container">
+            <div class="header">
+              <span>Services</span>
+            </div>
+            <p-divider></p-divider>
+            <div class="category">
+              <label for="category"
+                >Category <span class="p-error"> * </span></label
+              >
+              <div class="flex flex-wrap gap-4 category-items">
+                <div
+                  class="flex align-items-center category-item"
+                  *ngFor="let category of categories"
+                >
+                  <p-radioButton
+                    name="categoryId"
+                    [value]="category?.value"
+                    formControlName="categoryId"
+                    [inputId]="category?.inputId"
+                  />
+                  <label [for]="category?.inputId" class="ml-2">
+                    {{ category?.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="errand-types">
+              <div class="errand-type-items" formArrayName="errandTypes">
+                <div
+                  class="errand-type-item"
+                  *ngFor="
+                    let item of ticketForm.get('errandTypes')?.controls;
+                    let i = index;
+                    let first = first
+                  "
+                  [formGroupName]="i"
+                >
+                  <!-- {{item.get('errandTypeId').value | json}} -->
+                  <div class="left-control">
+                    <label for="quanityt">
+                      Errand Type <span class="p-error"> * </span>
+                    </label>
+                    <p-dropdown
+                      [options]="errandTypes"
+                      filter="true"
+                      [formControl]="item.get('errandTypeId')"
+                      placeholder="Select Errand Type"
+                    ></p-dropdown>
+                    <div
+                      *ngIf="
+                        item.get('errandTypeId')?.errors &&
+                        (item.get('errandTypeId').dirty ||
+                          item.get('errandTypeId').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div class="fs-10 color-red">
+                        <span *ngIf="item.get('errandTypeId')?.errors.required">
+                          Errand Type field is required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="right-control">
+                    <label for="quanity">
+                      Quantity <span class="p-error"> * </span>
+                    </label>
+                    <p-inputNumber
+                      placeholder="Enter Quantity"
+                      [formControl]="item.get('quantity')"
+                    />
+                    <div
+                      *ngIf="
+                        item.get('quantity')?.errors &&
+                        (item.get('quantity')?.dirty ||
+                          item.get('quantity')?.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div class="fs-10 color-red">
+                        <span *ngIf="item.get('quantity')?.errors.required">
+                          Quantity field is required
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <i
+                    class="pi pi-trash"
+                    *ngIf="!first"
+                    (click)="removeErrandType(i)"
+                  ></i>
+                </div>
+              </div>
+              <div class="addons">
+                <div class="add-item" (click)="addErrandType()">
+                  <i class="pi pi-plus-circle"></i>
+                </div>
+                <label for="add-item">Addons</label>
+              </div>
+            </div>
+          </div>
+          <div class="details-container">
+            <div class="header">
+              <span>Details</span>
+            </div>
+            <p-divider></p-divider>
+            <div class="details">
+              <div class="control">
+                <label>Merchant <span class="p-error"> * </span></label>
+                <p-dropdown
+                  [options]="merchants"
+                  filter="true"
+                  formControlName="merchantId"
+                  placeholder="Select Merchant"
+                ></p-dropdown>
+                <div
+                  *ngIf="
+                    ticketForm.get('merchantId')?.errors &&
+                    (ticketForm.get('merchantId').dirty ||
+                      ticketForm.get('merchantId').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="ticketForm.get('merchantId')?.errors.required">
+                      Merchant field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="control">
+                <label> Terminal <span class="p-error"> * </span></label>
+                <p-dropdown
+                  [options]="terminals"
+                  filter="true"
+                  formControlName="terminalId"
+                  placeholder="Select Terminal"
+                ></p-dropdown>
+                <div
+                  *ngIf="
+                    ticketForm.get('terminalId')?.errors &&
+                    (ticketForm.get('terminalId').dirty ||
+                      ticketForm.get('terminalId').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="ticketForm.get('terminalId')?.errors.required">
+                      Terminal field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="control">
+                <label class="assignee-label">
+                  Assignee <span class="p-error"> * </span>
+                  <div [pTooltip]="'Test Tooltip'" [tooltipPosition]="'right'">
+                    <oc-icon
+                      [icon]="'message-question'"
+                      [width]="'16px'"
+                      [height]="'16px'"
+                    ></oc-icon></div
+                ></label>
+                <p-dropdown
+                  [options]="assignees"
+                  filter="true"
+                  formControlName="assigneeId"
+                  placeholder="Select Terminal"
+                ></p-dropdown>
+                <div
+                  *ngIf="
+                    ticketForm.get('assigneeId')?.errors &&
+                    (ticketForm.get('assigneeId').dirty ||
+                      ticketForm.get('assigneeId').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="ticketForm.get('assigneeId')?.errors.required">
+                      Assignee field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="control">
+                <label>Note (Optional)</label>
+                <textarea
+                  rows="10"
+                  cols="30"
+                  pInputTextarea
+                  formControlName="notes"
+                >
+                </textarea>
+                <div
+                  *ngIf="
+                    ticketForm.get('notes')?.errors &&
+                    (ticketForm.get('notes').dirty ||
+                      ticketForm.get('notes').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="ticketForm.get('notes')?.errors.required">
+                      Notes field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="upload-control">
+                <label for="upload">Upload Images (Optional)</label>
+                <div class="upload-container">
+                  <div class="add-image-placeholder">
+                    <oc-icon
+                      [icon]="'blue-plus-circle'"
+                      [width]="'24px'"
+                      [height]="'24px'"
+                    ></oc-icon>
+                  </div>
+                  <div class="uploaded-images">
+                    <div class="uploaded-image">
+                      <div class="remove-image">
+                        <i class="pi pi-times"></i>
+                      </div>
+                      <img
+                        src="../../../../../assets/iamges/images/paymob.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container
+          [ngTemplateOutlet]="
+            ticketForm.get('categoryId').value == 'deployment'
+              ? locationTemplate
+              : ticketForm.get('categoryId').value != 'deployment' &&
+                ticketForm.get('terminalId').value
+              ? locationTemplate
+              : emptyTemplate
+          "
+        ></ng-container>
+        <ng-template #emptyTemplate>
+          <div class="location-card" style="padding: 1.5rem; max-height: 360px">
+            <div class="header">
+              <span>Ticket Location</span>
+            </div>
+            <p-divider></p-divider>
+            <div class="location-template">
+              <div class="icon">
+                <oc-icon
+                  [icon]="'pos-device'"
+                  [width]="'71px'"
+                  [height]="'66px'"
+                ></oc-icon>
+              </div>
+              <p>
+                Details about the location will be provided upon selecting
+                terminal.
+              </p>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #locationTemplate>
+          <div class="location-card">
+            <oc-view-card [mode]="formType"></oc-view-card>
+          </div>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+</div>

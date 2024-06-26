@@ -1,4 +1,4 @@
-<div [formGroup]="form">
+<div>
   <div class="p-grid ml-2 m-2">
     <div class="p-col" style="text-align: right">
       <span
@@ -21,7 +21,7 @@
 
       <p-button
         (click)="submit()"
-        [disabled]="!form?.valid"
+        [disabled]="!terminalForm?.valid"
         label="{{ formType == 'add' ? 'Add' : 'Save' }}"
         size="small"
       >
@@ -31,7 +31,7 @@
   <hr class="header-divider" />
 
   <div class="terminal-form">
-    <form [formGroup]="form">
+    <form [formGroup]="terminalForm">
       <div class="grid">
         <div class="col-8 p-0 inputs-div">
           <div class="p-20 flex flex-wrap">
@@ -191,17 +191,22 @@
                 <div class="col-6 coordinate">
                   <span class="mt-2"
                     >Long:
-                    {{ formatLngLat(form?.get("longitude").value) }}</span
+                    {{
+                      formatLngLat(terminalForm?.get("longitude").value)
+                    }}</span
                   >
                 </div>
                 <p-divider class="divider" />
                 <div class="col-6 coordinate">
                   <span class="mt-2"
-                    >Lat: {{ formatLngLat(form?.get("latitude").value) }}</span
+                    >Lat:
+                    {{
+                      formatLngLat(terminalForm?.get("latitude").value)
+                    }}</span
                   >
                 </div>
               </div>
-              <div *ngIf="!form.get('latitude').value">
+              <div *ngIf="!terminalForm.get('latitude').value">
                 <span style="color: red; font-size: 10px"
                   >Please select location on map!</span
                 >
