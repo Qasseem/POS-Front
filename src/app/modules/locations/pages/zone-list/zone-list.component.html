@@ -16,15 +16,18 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-        getAll: url.Zone.GetGrid,
-        export: url.Zone.Export,
-      }"
+      getAll: url.Zone.GetGrid,
+      export: url.Zone.Export,
+      import: url.Zone.Import
+    }"
     [addButtonLabel]="'Add Zone'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
     [options]="{ check: false, viewDetails: false }"
     [filters]="filters"
+    [uploadHeader]="'Upload Bulk Zone'"
+    [sampleName]="'ImportZoneTemplate.xlsx'"
   >
   </oc-table>
 </div>

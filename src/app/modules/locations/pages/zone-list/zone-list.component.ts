@@ -21,7 +21,7 @@ export class ZoneListComponent {
     showAdd: true,
     showExport: true,
     showFilter: true,
-    showImport: false,
+    showImport: true,
   };
   public columns: ColumnsInterface[] = [
     {
