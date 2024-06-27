@@ -25,7 +25,8 @@ import { PrimeNgPanelModule } from 'src/app/core/shared/primeng/primeng-panel-mo
 import { IconModule } from './inline-svg-icon/icon.module';
 import { LeafletMapComponent } from './map/map.component';
 import { ViewCardComponent } from './view-card/view-card.component';
-
+import { AccordionModule } from 'primeng/accordion';
+import { CheckboxModule } from 'primeng/checkbox';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -44,6 +45,8 @@ const PRIME_NG_MODULES = [
   RadioButtonModule,
   InputTextareaModule,
   TooltipModule,
+  AccordionModule,
+  CheckboxModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

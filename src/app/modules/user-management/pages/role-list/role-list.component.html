@@ -1,1 +1,27 @@
-<p>role-list works!</p>
+<div class="p-grid ml-2 m-2">
+  <div class="p-col" style="text-align: right">
+    <span class="mt-2" style="float: left; font-weight: bolder">Role</span>
+    <p-button (click)="navigateToAdd()" label="Add Role" size="small">
+      <span class="ml-1 mr-1 add">
+        <i class="pi pi-plus add-icon"></i>
+      </span>
+    </p-button>
+  </div>
+</div>
+<div class="mt-3">
+  <oc-table
+    [showSearchBar]="true"
+    [url]="{
+      getAll: url.Role.getAll,
+    }"
+    [addButtonLabel]="'Add Role'"
+    [columns]="columns"
+    [buttonsExistance]="tableBtns"
+    [exportUrl]="url.Terminal.Export"
+    [actions]="actions"
+    [options]="{ check: false, viewDetails: false }"
+    [uploadHeader]="'Upload Bulk Role'"
+    [sampleName]="'ImportTemplateSample.xlsx'"
+  >
+  </oc-table>
+</div>

@@ -1,1 +1,138 @@
-<p>role-form works!</p>
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Roles & Permissions</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left"
+        >{{ formType == "add" ? "Add" : "Edit" }} Role</span
+      >
+      <p-button
+        class="mr-3 cancel-button"
+        label="Cancel"
+        [text]="true"
+        (click)="backToList()"
+        size="small"
+      />
+
+      <p-button
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <hr class="header-divider" />
+
+  <div class="merchants-form">
+    <form [formGroup]="form">
+      <div class="grid">
+        <div class="col-12 p-0 inputs-div">
+          <div class="p-20 flex flex-wrap flex-column">
+            <div class="details-text">
+              <p class="font-bold fs-11">Role Details</p>
+            </div>
+            <div>
+              <div class="flex flex-column gap-2">
+                <label for="roleNameEn"
+                  >Role Name <span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.roleNameEn?.errors?.required ||
+                      f.roleNameEn?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="roleNameEn"
+                />
+
+                <div
+                  *ngIf="
+                    f.roleNameEn.errors &&
+                    (f.roleNameEn.dirty || f.roleNameEn.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.roleNameEn.errors.required">
+                      Role Name field is required
+                    </span>
+                    <span *ngIf="f.roleNameEn.errors.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 inputs-div mt-20">
+          <div class="details-text">
+            <p class="font-bold fs-11">Permissions</p>
+          </div>
+          <div
+            class="mt-1"
+            style="margin-left: 12px; margin-right: 12px; padding: 6px"
+          >
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                class="no-border"
+                type="text"
+                placeholder="Search"
+                pInputText
+              />
+            </span>
+          </div>
+          <p-accordion>
+            <div class="permissions">
+              <p-accordionTab
+                *ngFor="let group of permissions; let groupIndex = index"
+              >
+                <ng-template pTemplate="header">
+                  <div>{{ group.nameEn }}</div>
+                  <div class="accordion-header">
+                    <div>
+                      <p-checkbox
+                        [binary]="true"
+                        (onChange)="toggleSelectAll(group, $event.checked)"
+                      >
+                      </p-checkbox>
+                    </div>
+                  </div>
+                </ng-template>
+                <div class="permission-items flex">
+                  <div
+                    class="permission-checkbox"
+                    *ngFor="
+                      let item of group.accessTypeDtos;
+                      let itemIndex = index
+                    "
+                  >
+                    <p-checkbox
+                      [value]="item.id"
+                      (onChange)="togglePermission(item.id)"
+                      [binary]="true"
+                      [checked]="isSelected(item.id)"
+                    >
+                    </p-checkbox>
+                    <label>{{ item.nameEn }}</label>
+                  </div>
+                </div>
+              </p-accordionTab>
+            </div>
+          </p-accordion>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
