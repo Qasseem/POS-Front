@@ -206,3 +206,11 @@ app-merchant-form {
 .align-item-center {
   align-items: center;
 }
+
+oc-user-form {
+  p-radiobutton {
+    .p-radiobutton-label {
+      color: rgba(76, 85, 95, 1) !important;
+    }
+  }
+}

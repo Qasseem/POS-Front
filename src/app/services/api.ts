@@ -74,6 +74,20 @@ export const APIURL = {
   },
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',
+    getUsersGrid: '/User/GetAllUsersGrid',
+    getAllManagerDropdown: '/User/GetAllManagerDropDown',
+    getAllUsersTypeDropdown: '/User/GetAllUserTypeDropDown',
+    checkUsernameExistence: '/User/CheckExistenceUsername',
+    geUserById: '/User/GetUser/',
+    deleteUser: '/User/Delete/',
+    blockUser: '/User/Block',
+    updateUser: '/User/UpdateUser',
+    addUser: '/User/AddUser',
+    exportUser: '/User/ExportUser',
+  },
+
+  Role: {
+    getAllRolesDropdown: '/Role/GetAllRolesDropDown',
   },
 
   AdminActivities: {
