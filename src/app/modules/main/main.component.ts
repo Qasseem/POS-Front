@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
       active: false,
       childs: [
         {
-          label: this.translateService.instant('Merchants'),
+          label: this.translateService.instant('All Merchants'),
           expanded: true,
           routerLink: '/main/merchant/list',
           active: false,
@@ -51,7 +51,7 @@ export class MainComponent implements OnInit {
       active: false,
       childs: [
         {
-          label: this.translateService.instant('Terminals'),
+          label: this.translateService.instant('All Terminals'),
           expanded: true,
           routerLink: '/main/terminal/list',
           active: false,
@@ -72,17 +72,17 @@ export class MainComponent implements OnInit {
       active: false,
       childs: [
         {
-          label: this.translateService.instant('Tickets'),
+          label: this.translateService.instant('All Tickets'),
           expanded: true,
           routerLink: '/main/ticket/list',
           active: false,
         },
-        {
-          label: this.translateService.instant('Favorite Tickets'),
-          expanded: true,
-          routerLink: '/main/ticket/favorites',
-          active: false,
-        },
+        // {
+        //   label: this.translateService.instant('Favorite Tickets'),
+        //   expanded: true,
+        //   routerLink: '/main/ticket/favorites',
+        //   active: false,
+        // },
       ],
     },
     {
