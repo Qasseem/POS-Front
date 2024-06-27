@@ -50,12 +50,12 @@
                 >
                   <p-radioButton
                     name="categoryId"
-                    [value]="category?.value"
+                    [value]="category?.id"
                     formControlName="categoryId"
                     [inputId]="category?.inputId"
                   />
                   <label [for]="category?.inputId" class="ml-2">
-                    {{ category?.name }}
+                    {{ category?.nameEn }}
                   </label>
                 </div>
               </div>
@@ -79,8 +79,12 @@
                     <p-dropdown
                       [options]="errandTypes"
                       filter="true"
+                      [optionLabel]="'nameEn'"
+                      [optionValue]="'id'"
+                      [showClear]="true"
                       [formControl]="item.get('errandTypeId')"
                       placeholder="Select Errand Type"
+                      (onChange)="errandTypeChange($event, i)"
                     ></p-dropdown>
                     <div
                       *ngIf="
@@ -99,7 +103,13 @@
                   </div>
                   <div class="right-control">
                     <label for="quanity">
-                      Quantity <span class="p-error"> * </span>
+                      Quantity
+                      <span
+                        class="p-error"
+                        *ngIf="item.get('quantity')?.errors?.required"
+                      >
+                        *
+                      </span>
                     </label>
                     <p-inputNumber
                       placeholder="Enter Quantity"
@@ -116,6 +126,9 @@
                       <div class="fs-10 color-red">
                         <span *ngIf="item.get('quantity')?.errors.required">
                           Quantity field is required
+                        </span>
+                        <span *ngIf="item.get('quantity')?.errors.max">
+                          Quantity field has to be between 0 and 10000
                         </span>
                       </div>
                     </div>
@@ -146,7 +159,11 @@
                 <label>Merchant <span class="p-error"> * </span></label>
                 <p-dropdown
                   [options]="merchants"
+                  [optionLabel]="'nameEn'"
+                  [optionValue]="'id'"
                   filter="true"
+                  [showClear]="true"
+                  [autoOptionFocus]="false"
                   formControlName="merchantId"
                   placeholder="Select Merchant"
                 ></p-dropdown>
@@ -169,7 +186,10 @@
                 <label> Terminal <span class="p-error"> * </span></label>
                 <p-dropdown
                   [options]="terminals"
+                  [optionLabel]="'terminalId'"
+                  [optionValue]="'id'"
                   filter="true"
+                  [showClear]="true"
                   formControlName="terminalId"
                   placeholder="Select Terminal"
                 ></p-dropdown>
@@ -201,8 +221,10 @@
                 <p-dropdown
                   [options]="assignees"
                   filter="true"
+                  optionValue="id"
+                  optionLabel="nameEn"
                   formControlName="assigneeId"
-                  placeholder="Select Terminal"
+                  placeholder="Select Assignee"
                 ></p-dropdown>
                 <div
                   *ngIf="
@@ -246,7 +268,18 @@
               <div class="upload-control">
                 <label for="upload">Upload Images (Optional)</label>
                 <div class="upload-container">
-                  <div class="add-image-placeholder">
+                  <input
+                    type="file"
+                    #fileInput
+                    (change)="onFileSelected($event)"
+                    multiple
+                    hidden
+                  />
+                  <div
+                    class="add-image-placeholder"
+                    style="cursor: pointer"
+                    (click)="fileInput.click()"
+                  >
                     <oc-icon
                       [icon]="'blue-plus-circle'"
                       [width]="'24px'"
@@ -254,14 +287,18 @@
                     ></oc-icon>
                   </div>
                   <div class="uploaded-images">
-                    <div class="uploaded-image">
-                      <div class="remove-image">
+                    <div
+                      class="uploaded-image"
+                      *ngFor="let base64String of base64Strings; let j = index"
+                    >
+                      <div
+                        class="remove-image"
+                        style="cursor: pointer"
+                        (click)="removeImage(j)"
+                      >
                         <i class="pi pi-times"></i>
                       </div>
-                      <img
-                        src="../../../../../assets/iamges/images/paymob.png"
-                        alt=""
-                      />
+                      <img src="{{ base64String }}" alt="" />
                     </div>
                   </div>
                 </div>
@@ -269,22 +306,33 @@
             </div>
           </div>
         </div>
-        <ng-container
-          [ngTemplateOutlet]="
-            ticketForm.get('categoryId').value == 'deployment'
-              ? locationTemplate
-              : ticketForm.get('categoryId').value != 'deployment' &&
-                ticketForm.get('terminalId').value
-              ? locationTemplate
-              : emptyTemplate
-          "
-        ></ng-container>
-        <ng-template #emptyTemplate>
-          <div class="location-card" style="padding: 1.5rem; max-height: 360px">
-            <div class="header">
-              <span>Ticket Location</span>
-            </div>
-            <p-divider></p-divider>
+        <!-- {{ticketForm.get('categoryId').value | json}} -->
+        <div
+          class="location-card"
+          style="padding: 1.5rem"
+          [ngStyle]="{
+            'max-height':
+              details == null && ticketForm.get('categoryId').value != '1'
+                ? '360px'
+                : '100%'
+          }"
+        >
+          <div class="header">
+            <span>Ticket Location</span>
+          </div>
+          <p-divider></p-divider>
+          <ng-container
+            [ngTemplateOutlet]="
+              ticketForm.get('categoryId').value == '1'
+                ? locationTemplate
+                : ticketForm.get('categoryId').value != '1' &&
+                  ticketForm.get('categoryId').value != '' &&
+                  ticketForm.get('terminalId').value
+                ? locationTemplate
+                : emptyTemplate
+            "
+          ></ng-container>
+          <ng-template #emptyTemplate>
             <div class="location-template">
               <div class="icon">
                 <oc-icon
@@ -298,13 +346,267 @@
                 terminal.
               </p>
             </div>
-          </div>
-        </ng-template>
-        <ng-template #locationTemplate>
-          <div class="location-card">
-            <oc-view-card [mode]="formType"></oc-view-card>
-          </div>
-        </ng-template>
+          </ng-template>
+          <ng-template #locationTemplate>
+            <div class="control">
+              <label for="nameEn">Phone Number </label>
+              <input
+                [ngClass]="{
+                  'ng-invalid ng-dirty':
+                    ticketForm.get('phoneNumber').errors?.required
+                }"
+                type="text"
+                pInputText
+                formControlName="phoneNumber"
+              />
+
+              <div
+                *ngIf="
+                  ticketForm.get('phoneNumber').errors &&
+                  (ticketForm.get('phoneNumber').dirty ||
+                    ticketForm.get('phoneNumber').touched)
+                "
+                class="invalid-feedback"
+              >
+                <div class="fs-10 color-red">
+                  <span *ngIf="ticketForm.get('phoneNumber').errors.required">
+                    Phone Number field is required
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="fields-container">
+              <div class="left-control">
+                <label for="nameEn">Errand Channel </label>
+                <p-dropdown
+                  [options]="errandChannels"
+                  filter="true"
+                  [optionLabel]="'nameEn'"
+                  [optionValue]="'id'"
+                  [showClear]="true"
+                  formControlName="errandChannelId"
+                  placeholder="Select Errand Channel"
+                ></p-dropdown>
+
+                <div
+                  *ngIf="
+                    ticketForm.get('errandChannelId').errors &&
+                    (ticketForm.get('errandChannelId').dirty ||
+                      ticketForm.get('errandChannelId').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span
+                      *ngIf="ticketForm.get('errandChannelId').errors.required"
+                    >
+                      Errand Channel field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="right-control">
+                <label for="nameEn">POS Type </label>
+                <p-dropdown
+                  [options]="posTypes"
+                  filter="true"
+                  [optionLabel]="'nameEn'"
+                  [optionValue]="'id'"
+                  [showClear]="true"
+                  formControlName="posTypeId"
+                  placeholder="Select POS Type"
+                ></p-dropdown>
+
+                <div
+                  *ngIf="
+                    ticketForm.get('posTypeId').errors &&
+                    (ticketForm.get('posTypeId').dirty ||
+                      ticketForm.get('posTypeId').touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="ticketForm.get('posTypeId').errors.required">
+                      POS Type field is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="map-container">
+              <oc-map [mode]="formType" [coordinates]="coordinates"></oc-map>
+            </div>
+            <div class="location-form p-20">
+              <div>
+                <div class="location-container fs-11 mt-3">
+                  <div class="col-6 coordinate">
+                    <span class="mt-2"
+                      >Long:
+                      {{
+                        formatLngLat(ticketForm?.get("longitude").value)
+                      }}</span
+                    >
+                  </div>
+                  <p-divider class="divider" />
+                  <div class="col-6 coordinate">
+                    <span class="mt-2"
+                      >Lat:
+                      {{
+                        formatLngLat(ticketForm?.get("latitude").value)
+                      }}</span
+                    >
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    !ticketForm.get('latitude').value ||
+                    !ticketForm.get('longitude').value
+                  "
+                >
+                  <span style="color: red; font-size: 10px"
+                    >Please select location on map!</span
+                  >
+                </div>
+              </div>
+              <div class="grid mt-2">
+                <div class="col-6">
+                  <div class="flex flex-column gap-2">
+                    <label for="regionId"
+                      >Region <span class="p-error"> * </span>
+                    </label>
+                    <p-dropdown
+                      (onChange)="regionChanged($event)"
+                      [options]="regions"
+                      formControlName="regionId"
+                      [optionValue]="'id'"
+                      optionLabel="nameEn"
+                    />
+                    <div
+                      *ngIf="
+                        ticketForm.get('regionId').errors &&
+                        (ticketForm.get('regionId').dirty ||
+                          ticketForm.get('regionId').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="ticketForm.get('regionId')?.errors.required"
+                      >
+                        Region field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="flex flex-column gap-2">
+                    <label for="cityId"
+                      >City <span class="p-error"> * </span>
+                    </label>
+                    <p-dropdown
+                      [options]="cities"
+                      (onChange)="cityChanged($event)"
+                      [optionValue]="'id'"
+                      optionLabel="nameEn"
+                    />
+                    <div
+                      *ngIf="
+                        ticketForm.get('cityId').errors &&
+                        (ticketForm.get('cityId').dirty ||
+                          ticketForm.get('cityId').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="ticketForm.get('cityId').errors.required"
+                      >
+                        City field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid pt-10">
+                <div class="col-6">
+                  <div class="flex flex-column gap-2">
+                    <label for="zoneId"
+                      >Zone <span class="p-error"> * </span>
+                    </label>
+                    <p-dropdown
+                      [options]="zones"
+                      formControlName="zoneId"
+                      [optionValue]="'id'"
+                      optionLabel="nameEn"
+                    />
+                    <div
+                      *ngIf="
+                        ticketForm.get('zoneId').errors &&
+                        (ticketForm.get('zoneId').dirty ||
+                          ticketForm.get('zoneId').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="ticketForm.get('zoneId').errors.required"
+                      >
+                        Zone field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid pt-10">
+                <div class="col-12">
+                  <div class="flex flex-column gap-2">
+                    <label for="address">Address </label>
+                    <input
+                      [ngClass]="{
+                        'ng-invalid ng-dirty':
+                          ticketForm.get('address')?.errors?.required
+                      }"
+                      type="text"
+                      pInputText
+                      formControlName="address"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="grid pt-10">
+                <div class="col-12">
+                  <div class="flex flex-column gap-2">
+                    <label for="landMark">Landmark</label>
+                    <input
+                      [ngClass]="{
+                        'ng-invalid ng-dirty':
+                          ticketForm.get('landMark')?.errors?.required
+                      }"
+                      type="text"
+                      pInputText
+                      formControlName="landMark"
+                    />
+                    <div
+                      *ngIf="
+                        ticketForm.get('landMark').errors &&
+                        (ticketForm.get('landMark').dirty ||
+                          ticketForm.get('landMark').touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="ticketForm.get('landMark').errors.required"
+                      >
+                        Landmark field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
       </div>
     </form>
   </div>

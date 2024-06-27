@@ -13,7 +13,7 @@ export class TicketService {
   // }
 
   Add(data) {
-    return this.http.postReq(APIURL.Terminal.Add, data);
+    return this.http.postReq(APIURL.Ticket.Add, data);
   }
 
   getTicketCategory() {

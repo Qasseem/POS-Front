@@ -52,6 +52,7 @@ export const APIURL = {
     GetAllErrandChannels: '/Terminal/GetAllErrandChannels',
     GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
     GetAllMechantDropDown: '/Terminal/GetAllMechantDropDown',
+    GetAllTerminalsByMerchantId: '/Terminal/GetAllTerminalByMerchantId/',
   },
   Ticket: {
     Add: '/Ticket/Add',
@@ -60,7 +61,7 @@ export const APIURL = {
     GetGrid: '/Ticket/GetGrid',
     ImportTickets: '/Ticket/ImportTickets',
     GetTicketCategory: '/Ticket/GetTicketCategory',
-    GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandsTypes/',
+    GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes/',
     GetZoneAgents: '/Ticket/GetZoneAgents/',
     GetTerminalDetails: '/Ticket/GetTerminalDetails/',
     GetTicketByStatus: '/Ticket/GetTicketByStatus',

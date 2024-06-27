@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
+import { TicketService } from '../../services/ticket.service';
+import { combineLatest, takeWhile } from 'rxjs';
+import { UserService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'oc-ticket-form',
@@ -9,30 +12,29 @@ import { TerminalService } from 'src/app/modules/terminal/services/terminal.serv
   styleUrls: ['./ticket-form.component.scss'],
 })
 export class TicketFormComponent implements OnInit {
+  alive = true;
   ticketForm: FormGroup;
   formType = 'add';
-  categories = [
-    { name: 'Deployment', value: 'deployment', inputId: 'category-deployment' },
-    { name: 'Visit', value: 'visit', inputId: 'category-visit' },
-    {
-      name: 'Cancellation',
-      value: 'cancellation',
-      inputId: 'category-canellation',
-    },
-    {
-      name: 'After Sales',
-      value: 'after-sales',
-      inputId: 'category-after-sales',
-    },
-  ];
+  categories = [];
   errandTypes = [];
   merchants = [];
   terminals = [];
   assignees = [];
-
+  errandChannels = [];
+  posTypes = [];
+  regions = [];
+  cities = [];
+  orignalCities = [];
+  zones = [];
+  orignalZones = [];
+  details;
+  coordinates = { lat: null, lng: null };
+  base64Strings: string[] = [];
   constructor(
     private fb: FormBuilder,
-    private service: TerminalService,
+    private service: TicketService,
+    private terminalService: TerminalService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -41,6 +43,202 @@ export class TicketFormComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.getLookups();
+    this.categoryValueChange();
+    this.merchantValueChange();
+    this.terminalValueChange();
+    this.GetTicketLocationDropdownValues();
+    this.zoneValueChange();
+    this.latLngValueChange();
+  }
+
+  latLngValueChange() {
+    combineLatest([
+      this.ticketForm.get('latitude').valueChanges,
+      this.ticketForm.get('longitude').valueChanges,
+    ]).subscribe({
+      next: ([lat, lng]) => {
+        if (lat && lng) this.handleAddress({ latitude: lat, longitude: lng });
+      },
+    });
+  }
+  zoneValueChange() {
+    combineLatest([
+      this.ticketForm.get('categoryId').valueChanges,
+      this.ticketForm.get('zoneId').valueChanges,
+    ]).subscribe({
+      next: ([categoryId, zoneId]) => {
+        if (categoryId && zoneId) {
+          this.service.getZoneAgents(zoneId, categoryId).subscribe({
+            next: (res) => {
+              this.assignees = res.data;
+              if (this.assignees.length) {
+                this.ticketForm.get('assigneeId').enable();
+                this.ticketForm.get('assigneeId').updateValueAndValidity();
+              } else {
+                this.ticketForm.get('assigneeId').disable();
+                this.ticketForm.get('assigneeId').updateValueAndValidity();
+              }
+            },
+          });
+        }
+      },
+    });
+  }
+  handleAddress(resp: any) {
+    this.coordinates = {
+      lat: resp.latitude,
+      lng: resp.longitude,
+    };
+    this.terminalService
+      .GetAddressFromLatLng(resp.latitude, resp.longitude)
+      .subscribe((resp: any) => {
+        this.ticketForm.get('address').patchValue(resp?.address.LongLabel);
+      });
+  }
+  terminalValueChange() {
+    this.ticketForm.get('terminalId').valueChanges.subscribe({
+      next: (terminalId) => {
+        if (terminalId) {
+          this.service.getTerminalDetails(terminalId).subscribe({
+            next: (res) => {
+              this.details = res.data;
+              if (this.ticketForm.get('categoryId').value != '1') {
+                this.ticketForm
+                  .get('longitude')
+                  .patchValue(this.details.longitude);
+                this.ticketForm
+                  .get('latitude')
+                  .patchValue(this.details.latitude);
+                this.coordinates = {
+                  lat: this.ticketForm.get('longitude').value,
+                  lng: this.ticketForm.get('latitude').value,
+                };
+                this.coordinates = { ...this.coordinates };
+                this.ticketForm
+                  .get('phoneNumber')
+                  .patchValue(this.details.phoneNumber);
+                this.ticketForm
+                  .get('errandChannelId')
+                  .patchValue(this.details.errandChannelId);
+                this.ticketForm
+                  .get('posTypeId')
+                  .patchValue(this.details.posTypeId);
+                this.handleAddress(this.details);
+              }
+            },
+          });
+        }
+      },
+    });
+  }
+
+  merchantValueChange() {
+    this.ticketForm.get('merchantId').valueChanges.subscribe({
+      next: (merchantId) => {
+        if (merchantId) {
+          this.terminalService
+            .GetAllTerminalsByMerchantId(merchantId)
+            .subscribe({
+              next: (res) => {
+                this.terminals = res.data;
+              },
+            });
+        }
+      },
+    });
+  }
+
+  errandTypeChange(event, index) {
+    const requireQuantity = this.errandTypes.find(
+      (x) => x.id == event.value
+    ).requireQuantity;
+    if (requireQuantity) {
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .enable();
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .addValidators([Validators.required]);
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .updateValueAndValidity();
+    } else {
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .disable();
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .clearValidators();
+      (this.ticketForm.get('errandTypes') as FormArray).controls[index]
+        .get('quantity')
+        .updateValueAndValidity();
+    }
+    // this.ticketForm.get('')
+  }
+  categoryValueChange() {
+    this.ticketForm.get('categoryId').valueChanges.subscribe({
+      next: (categoryId) => {
+        if (categoryId) {
+          this.ticketForm.get('terminalId').patchValue(null);
+          this.service.getCategoryErrandTypes(categoryId).subscribe({
+            next: (res) => {
+              this.errandTypes = res.data;
+            },
+          });
+        }
+      },
+    });
+  }
+
+  getLookups() {
+    this.service.getTicketCategory().subscribe({
+      next: (res) => {
+        res.data.map((item) => {
+          item.inputId = `category-${item.nameEn}`;
+        });
+        this.categories = res.data;
+      },
+    });
+    this.terminalService.GetAllMerchantDropDown().subscribe({
+      next: (res) => {
+        this.merchants = res.data;
+      },
+    });
+    this.terminalService.GetAllErrandChannels().subscribe({
+      next: (res) => {
+        this.errandChannels = res.data;
+      },
+    });
+    this.terminalService.GetAllPOSTypes().subscribe({
+      next: (res) => {
+        this.posTypes = res.data;
+      },
+    });
+    this.userService.getAllUsers().subscribe({
+      next: (res) => {
+        this.assignees = res.data;
+      },
+    });
+  }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const files = event.target.files;
+      Array.from(files).forEach((file: File) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.base64Strings.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
+      (this.ticketForm.get('attachmentsBase64') as FormArray).clear();
+      this.base64Strings.forEach((imageString) => {
+        (this.ticketForm.get('attachmentsBase64') as FormArray).push(
+          this.fb.control(imageString)
+        );
+      });
+    }
   }
 
   buildForm() {
@@ -48,13 +246,14 @@ export class TicketFormComponent implements OnInit {
       categoryId: ['', Validators.required],
       merchantId: [null, Validators.required],
       terminalId: [null, Validators.required],
-      errandTypeId: [null, Validators.required],
       assigneeId: [{ value: null, disabled: true }, Validators.required],
       notes: [null],
       zoneId: [null, Validators.required],
       phoneNumber: [null, Validators.required],
       posTypeId: [null, Validators.required],
       errandChannelId: [null, Validators.required],
+      regionId: [null, Validators.required],
+      cityId: [null, Validators.required],
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       address: [null, Validators.required],
@@ -68,16 +267,110 @@ export class TicketFormComponent implements OnInit {
   addErrandType() {
     const group = this.fb.group({
       errandTypeId: this.fb.control(null, Validators.required),
-      quantity: this.fb.control(null, Validators.required),
+      quantity: this.fb.control(0, [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(10000),
+      ]),
     });
     (this.ticketForm.get('errandTypes') as FormArray).push(group);
   }
   removeErrandType(index) {
     (this.ticketForm.get('errandTypes') as FormArray).removeAt(index);
   }
-  submit() {}
+  cityChanged(event) {
+    this.ticketForm.controls.zoneId.setValue(null);
+    this.zones = this.orignalZones;
+    if (event) {
+      this.zones = this.zones.filter((x) => x.parentId == event.value);
+    }
+  }
+
+  regionChanged(event) {
+    this.ticketForm.controls.cityId.setValue(null);
+    this.ticketForm.controls.zoneId.setValue(null);
+    this.cities = this.orignalCities;
+    if (event) {
+      this.cities = this.cities.filter((x) => x.parentId == event.value);
+    }
+  }
+  GetTicketLocationDropdownValues() {
+    const regionControl = this.ticketForm.get('regionId');
+
+    this.terminalService
+      .GetAllRegions()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.regions = resp.data;
+            regionControl.setValue(resp.data[0].id);
+          }
+        },
+      });
+    const cityControl = this.ticketForm.get('cityId');
+    regionControl.valueChanges.subscribe({
+      next: (regionId) => {
+        if (regionId) {
+          this.terminalService
+            .GetAllCities(regionId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe({
+              next: (resp) => {
+                if (resp.success) {
+                  this.cities = resp.data;
+                  this.orignalCities = resp.data;
+                  cityControl.setValue(resp.data[0].id);
+                }
+              },
+            });
+        }
+      },
+    });
+    cityControl.valueChanges.subscribe({
+      next: (cityId) => {
+        if (cityId) {
+          this.terminalService
+            .GetAllZones(cityId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((resp) => {
+              if (resp.success) {
+                this.zones = resp.data;
+                this.orignalZones = resp.data;
+                this.ticketForm.get('zoneId').setValue(resp.data[0].id);
+              }
+            });
+        }
+      },
+    });
+  }
+  formatLngLat(string) {
+    return string !== null ? parseInt(string).toFixed(6).toString() : '-';
+  }
+
+  submit() {
+    const formValue = structuredClone(this.ticketForm.getRawValue());
+    delete formValue.regionId;
+    delete formValue.cityId;
+    if (this.formType == 'add') {
+      delete formValue.id;
+    }
+    if (this.ticketForm.valid) {
+      this.service.Add(formValue).subscribe({
+        next: (res) => {
+          if (res.success) this.backToList();
+        },
+      });
+    } else {
+      this.ticketForm.errors;
+      this.ticketForm.markAllAsTouched();
+    }
+  }
 
   backToList() {
     this.router.navigate(['main/ticket/list']);
+  }
+  removeImage(index) {
+    this.base64Strings.splice(index, 1);
   }
 }
