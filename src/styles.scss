@@ -198,7 +198,35 @@ app-merchant-form {
     }
   }
 }
-
+oc-role-form {
+  p-accordionTab {
+    .select-all-checkbox {
+      padding-right: 10px;
+      margin-bottom: 0px;
+    }
+    .p-accordion-header {
+      .p-accordion-header-link {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding-bottom: 10px;
+      }
+    }
+    .header-content {
+      display: flex;
+      flex-direction: row-reverse;
+      color: rgba(76, 85, 95, 1);
+      font-weight: 500;
+    }
+  }
+  p-checkbox {
+    padding-right: 5px;
+  }
+  .p-accordion-toggle-icon {
+    transform: rotate(90deg);
+  }
+}
 .pt-10 {
   padding-top: 10px;
 }

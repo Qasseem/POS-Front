@@ -1,0 +1,97 @@
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep .p-button {
+  width: 100px;
+  border: 1px solid rgb(204, 230, 254);
+  .p-button-label {
+    font-weight: 400;
+  }
+}
+
+.header-left {
+  float: left;
+  font-weight: 500;
+}
+.header-divider {
+  // width: 1px;
+  margin: 12px 12px 12px 20px;
+  border-color: rgba(237, 239, 241, 0.2);
+}
+
+::ng-deep .p-inputtext {
+  height: 40px;
+}
+
+.merchants-form {
+  .details-form {
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    label {
+      color: #798693;
+      font-size: 12px;
+    }
+  }
+  .details-text {
+    border-bottom: 1px solid rgba(237, 239, 241, 1);
+    margin-bottom: 12px;
+    p {
+      margin-top: 0px;
+    }
+  }
+  margin: 10px;
+  padding: 20px;
+  .inputs-div {
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    label {
+      color: #798693;
+      font-size: 12px;
+    }
+  }
+
+  .p-20 {
+    padding: 20px;
+  }
+}
+
+/* Center align the accordion tab header */
+.p-accordion-tab .p-accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style for the Select All checkbox */
+.select-all-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Style for individual permission checkboxes */
+.permission-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Add some padding to the content within each accordion tab */
+.p-accordion-content {
+  padding: 10px;
+}
+
+/* Add some margin to the accordion tabs for better separation */
+.p-accordion-tab {
+  margin-bottom: 10px;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.permission-items {
+  justify-content: space-between;
+}
