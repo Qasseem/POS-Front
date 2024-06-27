@@ -107,6 +107,7 @@ export const APIURL = {
     Update: 'Region/Update',
     GetOne: '/Region/GetById',
     Export: '/Region/ExportGrid',
+    Import: '/Region/Import',
     GetGrid: '/Region/GetGrid',
   },
   City: {
@@ -115,6 +116,7 @@ export const APIURL = {
     GetOne: '/City/GetById',
     Export: '/City/ExportGrid',
     GetGrid: '/City/GetGrid',
+    Import: '/City/Import',
   },
   Zone: {
     Add: '/Zone/Add',
@@ -122,5 +124,6 @@ export const APIURL = {
     GetOne: '/Zone/GetById',
     Export: '/Zone/ExportGrid',
     GetGrid: '/Zone/GetGrid',
+    Import: '/Zone/Import',
   },
 };
