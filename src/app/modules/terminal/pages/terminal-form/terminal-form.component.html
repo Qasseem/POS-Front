@@ -41,7 +41,9 @@
             <div class="form flex flex-wrap pt-12">
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="merchantId">Merchant</label>
+                  <label for="merchantId"
+                    >Merchant <span class="p-error"> * </span></label
+                  >
                   <p-dropdown
                     [options]="allMerchantList"
                     formControlName="merchantId"
@@ -49,17 +51,27 @@
                     optionLabel="nameEn"
                   />
                   <div
-                    class="fs-10 color-red"
-                    *ngIf="f.merchantId?.errors?.required"
+                    *ngIf="
+                      f.regionId.errors &&
+                      (f.regionId.dirty || f.regionId.touched)
+                    "
+                    class="invalid-feedback"
                   >
-                    Merchant field is required
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.merchantId?.errors?.required"
+                    >
+                      Merchant field is required
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="terminalId">Terminal ID</label>
+                  <label for="terminalId"
+                    >Terminal ID <span class="p-error"> * </span></label
+                  >
                   <input
                     [ngClass]="{
                       'ng-invalid ng-dirty': f.terminalId?.errors?.required
@@ -94,10 +106,7 @@
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="phoneNumber"
-                    >Phone Number
-                    <span class="color-info"> (Optional)</span>
-                  </label>
+                  <label for="phoneNumber">Phone Number </label>
                   <input
                     pInputText
                     type="number"
@@ -126,7 +135,9 @@
 
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="errandChannelId">Errand Channel</label>
+                  <label for="errandChannelId"
+                    >Errand Channel <span class="p-error"> * </span></label
+                  >
                   <p-dropdown
                     [options]="errandChannelsList"
                     formControlName="errandChannelId"
@@ -151,7 +162,9 @@
               </div>
               <div class="col-4">
                 <div class="flex flex-column gap-2">
-                  <label for="posTypeId">POS Type</label>
+                  <label for="posTypeId"
+                    >POS Type <span class="p-error"> * </span></label
+                  >
                   <p-dropdown
                     [options]="posList"
                     formControlName="posTypeId"
@@ -206,7 +219,14 @@
                   >
                 </div>
               </div>
-              <div *ngIf="!terminalForm.get('latitude').value">
+              <div
+                *ngIf="
+                  f.longitude.errors &&
+                  (f.longitude.dirty || f.longitude.touched) &&
+                  f.latitude.errors &&
+                  (f.latitude.dirty || f.latitude.touched)
+                "
+              >
                 <span style="color: red; font-size: 10px"
                   >Please select location on map!</span
                 >

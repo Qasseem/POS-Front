@@ -70,8 +70,8 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       regionId: [null, Validators.required],
       cityId: [null, Validators.required],
       zoneId: [null, Validators.required],
-      address: [null, Validators.required],
-      landMark: [null, [Validators.required]],
+      address: [null],
+      landMark: [null],
       id: [null],
     });
   }
