@@ -48,7 +48,7 @@ export class LeafletMapComponent
   };
   @Input() mode: 'add' | 'edit' | 'view' = 'add';
   @Input() set coordinates(value) {
-    if (this.mode != 'add' && value?.lat && value?.lng) {
+    if (value?.lat && value?.lng) {
       this._coordinates = {
         lat: parseFloat(value.lat),
         lng: parseFloat(value.lng),
@@ -67,12 +67,14 @@ export class LeafletMapComponent
         icon: customIcon,
         draggable: this.mode !== 'view',
       };
-      this.marker = marker(
-        { lat: this._coordinates.lat, lng: this._coordinates.lng },
-        markerOptions
-      ).addTo(this.map);
-      this.layers.push(this.marker); // Add marker to layers array
-      this.fitMapToBounds();
+      setTimeout(() => {
+        this.marker = marker(
+          { lat: this._coordinates.lat, lng: this._coordinates.lng },
+          markerOptions
+        ).addTo(this.map);
+        this.layers.push(this.marker); // Add marker to layers array
+        this.fitMapToBounds();
+      }, 100);
     }
   }
 

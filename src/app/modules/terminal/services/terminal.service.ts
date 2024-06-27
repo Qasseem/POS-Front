@@ -50,4 +50,10 @@ export class TerminalService {
       lat;
     return this.httpPure.get(url);
   }
+
+  GetAllTerminalsByMerchantId(merchantId) {
+    return this.http.getReq(
+      APIURL.Terminal.GetAllTerminalsByMerchantId + merchantId
+    );
+  }
 }
