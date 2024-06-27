@@ -31,15 +31,16 @@ export class MerchantCategoryCodesFormComponent implements OnInit, OnDestroy {
         this.getItemDetails();
       }
     }
-    const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
-    const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
+    const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
+    const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
     this.form = this.fb.group({
       nameEn: [
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
       nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
-      isDeleted: [false],
+      // isDeleted: [false],
+      id: [null],
     });
   }
   getItemDetails() {

@@ -104,7 +104,7 @@ export const APIURL = {
 
   Region: {
     Add: '/Region/Add',
-    Update: 'Region/Update',
+    Update: '/Region/Update',
     GetOne: '/Region/GetById',
     Export: '/Region/ExportGrid',
     Import: '/Region/Import',
@@ -112,7 +112,7 @@ export const APIURL = {
   },
   City: {
     Add: '/City/Add',
-    Update: 'City/Update',
+    Update: '/City/Update',
     GetOne: '/City/GetById',
     Export: '/City/ExportGrid',
     GetGrid: '/City/GetGrid',
@@ -120,7 +120,7 @@ export const APIURL = {
   },
   Zone: {
     Add: '/Zone/Add',
-    Update: 'Zone/Update',
+    Update: '/Zone/Update',
     GetOne: '/Zone/GetById',
     Export: '/Zone/ExportGrid',
     GetGrid: '/Zone/GetGrid',

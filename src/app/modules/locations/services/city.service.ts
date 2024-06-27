@@ -17,6 +17,6 @@ export class CityService {
   }
 
   update(id) {
-    return this.http.getHeaderReq(APIURL.City.Update, id);
+    return this.http.postReq(APIURL.City.Update, id);
   }
 }

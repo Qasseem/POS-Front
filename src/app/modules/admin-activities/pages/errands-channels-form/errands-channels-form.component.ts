@@ -25,8 +25,8 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const arabicLetterPattern = new RegExp(/[\u0600-\u06FF\s]/u);
-    const englishLetterPattern = new RegExp(/^[a-zA-Z]+$/);
+    const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
+    const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
     if (this.formType == 'edit') {
       this.id = this.route.snapshot.params.id || null;
       if (this.id) {
@@ -39,7 +39,8 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
       nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
-      isDeleted: [false],
+      // isDeleted: [false],
+      id: [null],
     });
   }
   getItemDetails() {
