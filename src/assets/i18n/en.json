@@ -188,11 +188,14 @@
     "id": "ID",
     "status": "Status",
     "requireQuantity": "Require Quantity",
-    "": "",
-    "": "",
-    "": "",
-    "": "",
-    "": "",
-    "": ""
+    "userName": "User Name",
+    "userType": "User Type",
+    "phoneNumber": "Phone Number",
+    "nationalId": "National Id",
+    "role": "Role",
+    "manager": "Manager",
+    "region" :"Region",
+    "username" : "Username",
+    "email" : "Email"
   }
 }

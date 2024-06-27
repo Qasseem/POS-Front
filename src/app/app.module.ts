@@ -18,7 +18,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { AuthGuard } from './core/guards/auth.guard';
+import { AuthGuard } from './core/Guards/auth.guard';
 import { LoginGuard } from './core/guards/login.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {

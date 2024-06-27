@@ -139,7 +139,9 @@
                       type="text"
                       (input)="getInputData($event.target.value, ctrl.field)"
                       [formControlName]="ctrl.field"
+                      style="background-image: none"
                       pInputText
+                      class="form-control"
                       formControlName="text"
                     />
                     <!--
@@ -180,7 +182,7 @@
                       [formControlName]="ctrl.field"
                       style="background-image: none"
                       [type]="'text'"
-                      class="form-control"
+                      class="phone-control"
                       numbersOnly
                     />
                   </div>

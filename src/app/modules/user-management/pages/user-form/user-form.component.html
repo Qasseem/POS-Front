@@ -1,1 +1,540 @@
-<p>user-form works!</p>
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Users</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left"
+        >{{ formType == "add" ? "Add" : "Edit" }} User</span
+      >
+      <p-button
+        class="mr-3 cancel-button"
+        label="Cancel"
+        [text]="true"
+        (click)="backToList()"
+        size="small"
+      />
+
+      <p-button
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <hr class="header-divider" />
+
+  <div class="merchants-form">
+    <form [formGroup]="form">
+      <div class="grid col-12">
+        <div class="col-4 p-0">
+          <div class="details-form p-20">
+            <div class="details-text">
+              <p class="font-bold fs-11">User Card</p>
+            </div>
+            <div class="flex flex-column">
+              <div class="upload-image">
+                <span>
+                  <oc-icon
+                    [icon]="'image-upload'"
+                    [width]="'105px'"
+                    [height]="'105px'"
+                  ></oc-icon>
+                  <input
+                    type="hidden"
+                    pInputText
+                    formControlName="imageBase64String"
+                    accept="image/*"
+                  />
+                </span>
+              </div>
+              <div class="details-input">
+                <div class="username-details flex">
+                  <div class="col-6">
+                    <div class="flex flex-column gap-2">
+                      <label for="firstName"
+                        >First Name <span class="p-error"> * </span>
+                      </label>
+                      <input
+                        [ngClass]="{
+                          'ng-invalid ng-dirty':
+                            f.firstName?.errors?.required ||
+                            f.firstName?.errors?.pattern
+                        }"
+                        type="text"
+                        pInputText
+                        formControlName="firstName"
+                      />
+
+                      <div
+                        *ngIf="
+                          f.firstName.errors &&
+                          (f.firstName.dirty || f.firstName.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span *ngIf="f.firstName.errors.required">
+                            First Name field is required
+                          </span>
+                          <span *ngIf="f.firstName.errors.pattern">
+                            Only English letters are allowed.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="flex flex-column gap-2">
+                      <label for="lastName"
+                        >Last Name <span class="p-error"> * </span>
+                      </label>
+                      <input
+                        [ngClass]="{
+                          'ng-invalid ng-dirty':
+                            f.lastName?.errors?.required ||
+                            f.lastName?.errors?.pattern
+                        }"
+                        type="text"
+                        pInputText
+                        formControlName="lastName"
+                      />
+
+                      <div
+                        *ngIf="
+                          f.lastName.errors &&
+                          (f.lastName.dirty || f.lastName.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span *ngIf="f.lastName.errors.required">
+                            Last Name field is required
+                          </span>
+                          <span *ngIf="f.lastName.errors.pattern">
+                            Only English letters are allowed.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                      <label for="userName"
+                        >Email Address<span class="p-error"> * </span>
+                      </label>
+                      <input
+                        [ngClass]="{
+                          'ng-invalid ng-dirty':
+                            f.userName?.errors?.required ||
+                            f.userName?.errors?.pattern
+                        }"
+                        type="text"
+                        pInputText
+                        formControlName="userName"
+                      />
+
+                      <div
+                        *ngIf="
+                          f.userName.errors &&
+                          (f.userName.dirty || f.userName.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span *ngIf="f.userName.errors.required">
+                            Email Address field is required
+                          </span>
+                          <span *ngIf="f.userName.errors.pattern">
+                            Email Address is invalid.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                      <label for="phoneNumber"
+                        >Phone Number <span class="p-error"> * </span>
+                      </label>
+                      <input
+                        [ngClass]="{
+                          'ng-invalid ng-dirty':
+                            f.phoneNumber?.errors?.required ||
+                            f.phoneNumber?.errors?.pattern
+                        }"
+                        type="text"
+                        pInputText
+                        formControlName="phoneNumber"
+                      />
+
+                      <div
+                        *ngIf="
+                          f.phoneNumber.errors &&
+                          (f.phoneNumber.dirty || f.phoneNumber.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span *ngIf="f.phoneNumber.errors.required">
+                            Phone Number field is required
+                          </span>
+                          <span *ngIf="f.phoneNumber.errors.pattern">
+                            Phone Number is invalid.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                      <label for="nationalId">National ID </label>
+                      <input
+                        [ngClass]="{
+                          'ng-invalid ng-dirty':
+                            f.nationalId?.errors?.required ||
+                            f.nationalId?.errors?.pattern
+                        }"
+                        type="text"
+                        pInputText
+                        formControlName="nationalId"
+                      />
+
+                      <div
+                        *ngIf="
+                          f.nationalId.errors &&
+                          (f.nationalId.dirty || f.nationalId.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span *ngIf="f.nationalId.errors.required">
+                            National ID field is required
+                          </span>
+                          <span *ngIf="f.nationalId.errors.pattern">
+                            National ID is invalid.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="flex flex-column gap-2">
+                      <label for="nationalIdBase64String"
+                        >National ID Image
+                      </label>
+                      <div class="upload-container">
+                        <input type="file" id="file-upload"
+                        formControlName="nationalIdBase64String" hidden = />
+                        <label for="file-upload" class="upload-label">
+                          <div class="upload-box">
+                            <oc-icon
+                              [icon]="'upload-icon'"
+                              [width]="'16px'"
+                              [height]="'16px'"
+                              [scale]="1.5"
+                            ></oc-icon>
+                            <div class="flex flex-column ml-3">
+                              <span class="upload-text">Upload new file</span>
+                              <span
+                                >Drag and drop a file or
+                                <button class="browse-file" type="button">
+                                  browse file
+                                </button></span
+                              >
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+
+                      <div
+                        *ngIf="
+                          f.nationalIdBase64String.errors &&
+                          (f.nationalIdBase64String.dirty ||
+                            f.nationalIdBase64String.touched)
+                        "
+                        class="invalid-feedback"
+                      >
+                        <div class="fs-10 color-red">
+                          <span
+                            *ngIf="f.nationalIdBase64String.errors.required"
+                          >
+                            National ID field is required
+                          </span>
+                          <span *ngIf="f.nationalIdBase64String.errors.pattern">
+                            National ID is invalid.
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-8 pt-0">
+          <div class="col-12 p-20 inputs-div">
+            <div class="details-text">
+              <p class="font-bold fs-11">More Details</p>
+            </div>
+            <div>
+              <div class="userType-field">
+                <label>User Type <span class="p-error">*</span></label>
+                <div class="radio-buttons">
+                  <p-radioButton
+                    *ngFor="let userType of userTypes"
+                    name="userType"
+                    [value]="userType.value"
+                    formControlName="userType"
+                    [label]="userType.label"
+                  >
+                  </p-radioButton>
+                </div>
+              </div>
+              <div class="flex p-0">
+                <div class="col-6">
+                  <div class="flex flex-column gap-2">
+                    <label for="rolesIds"
+                      >Role <span class="p-error"> * </span>
+                    </label>
+                    <p-multiSelect
+                      formControlName="rolesIds"
+                      [options]="rolesIdsLists"
+                      [optionValue]="'id'"
+                      optionLabel="nameEn"
+                    />
+                    <div
+                      *ngIf="
+                        f.rolesIds.errors &&
+                        (f.rolesIds.dirty || f.rolesIds.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="f.rolesIds.errors.required"
+                      >
+                        Roles field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="flex flex-column gap-2">
+                    <label for="managerId"
+                      >Manager <span class="p-error"> * </span>
+                    </label>
+
+                    <p-dropdown
+                      [options]="managerIdsLists"
+                      formControlName="managerId"
+                      [optionValue]="'id'"
+                      optionLabel="nameEn"
+                    />
+                    <div
+                      *ngIf="
+                        f.managerId.errors &&
+                        (f.managerId.dirty || f.managerId.touched)
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div
+                        class="fs-10 color-red"
+                        *ngIf="f.managerId.errors.required"
+                      >
+                        Manager field is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="col-6 p-0 displayFlex align-item-center">
+                  <p-checkbox
+                    formControlName="isManager"
+                    binary="true"
+                  ></p-checkbox>
+                  <label class="isManager" for="isManager"
+                    >Mark as Manager</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 p-20 mt-20 inputs-div">
+            <div class="details-text">
+              <p class="font-bold fs-11">Location</p>
+            </div>
+            <div class="col-12 p-0 flex">
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="regionId"
+                    >Assigned Region <span class="p-error"> * </span>
+                  </label>
+
+                  <p-dropdown
+                    [options]="rolesIdsLists"
+                    formControlName="regionId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.regionId.errors &&
+                      (f.regionId.dirty || f.regionId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.regionId.errors.required"
+                    >
+                      Region field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="cityId"
+                    >City <span class="p-error"> * </span>
+                  </label>
+
+                  <p-dropdown
+                    [options]="citiesLists"
+                    formControlName="cityId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.cityId.errors && (f.cityId.dirty || f.cityId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.cityId.errors.required"
+                    >
+                      City field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="flex flex-column gap-2">
+                  <label for="zoneId"
+                    >Zones <span class="p-error"> * </span>
+                  </label>
+                  <p-multiSelect
+                    [options]="zonesLists"
+                    formControlName="zoneId"
+                    [optionValue]="'id'"
+                    optionLabel="nameEn"
+                  />
+                  <div
+                    *ngIf="
+                      f.zoneId.errors && (f.zoneId.dirty || f.zoneId.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div
+                      class="fs-10 color-red"
+                      *ngIf="f.zoneId.errors.required"
+                    >
+                      Zones field is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 p-20 mt-20 inputs-div">
+            <div class="details-text">
+              <p class="font-bold fs-11">Password</p>
+            </div>
+            <div class="flex">
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label for="password"
+                    >Password <span class="p-error"> * </span>
+                  </label>
+                  <p-password
+                    [toggleMask]="true"
+                    [style]="{ width: '100%' }"
+                    [inputStyle]="{ width: '100%' }"
+                    id="password"
+                    formControlName="password"
+                    [ngClass]="{
+                      'ng-invalid ng-dirty':
+                        f.password?.errors?.required ||
+                        f.password?.errors?.pattern
+                    }"
+                  ></p-password>
+
+                  <div
+                    *ngIf="
+                      f.password.errors &&
+                      (f.password.dirty || f.password.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div class="fs-10 color-red">
+                      <span *ngIf="f.password.errors.required">
+                        Password field is required
+                      </span>
+                      <span *ngIf="f.password.errors.pattern">
+                        Only English letters are allowed.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="flex flex-column gap-2">
+                  <label for="confirmPassword"
+                    >Confirm Password <span class="p-error"> * </span>
+                  </label>
+                  <input
+                    [ngClass]="{
+                      'ng-invalid ng-dirty':
+                        f.confirmPassword?.errors?.required ||
+                        f.confirmPassword?.errors?.pattern
+                    }"
+                    type="text"
+                    pInputText
+                    formControlName="confirmPassword"
+                  />
+
+                  <div
+                    *ngIf="
+                      f.confirmPassword.errors &&
+                      (f.confirmPassword.dirty || f.confirmPassword.touched)
+                    "
+                    class="invalid-feedback"
+                  >
+                    <div class="fs-10 color-red">
+                      <span *ngIf="f.confirmPassword.errors.required">
+                        Last Name field is required
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
