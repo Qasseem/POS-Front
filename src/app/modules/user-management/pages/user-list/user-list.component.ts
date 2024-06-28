@@ -65,10 +65,10 @@ export class UserListComponent implements OnInit {
       field: 'userType',
       header: 'User Type',
     },
-    {
-      field: 'userName',
-      header: 'User Name',
-    },
+    // {
+    //   field: 'userName',
+    //   header: 'User Name',
+    // },
     {
       field: 'phoneNumber',
       header: 'Phone Number',
@@ -76,7 +76,7 @@ export class UserListComponent implements OnInit {
     {
       field: [
         { label: 'createdBy', custom: 'default' },
-        { label: 'createdAt', custom: 'defaultDate' },
+        { label: 'createDate', custom: 'defaultDate' },
       ],
       header: 'Created by',
       customCell: 'multiLabel',
