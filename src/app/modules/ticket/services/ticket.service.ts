@@ -12,15 +12,15 @@ export class TicketService {
   //   return this.http.postReq(APIURL.Terminal.Favorite, data);
   // }
 
-  Add(data) {
-    return this.http.postReq(APIURL.Ticket.Add, data);
+  Save(data) {
+    return this.http.postReq(APIURL.Ticket.Save, data);
   }
 
   getTicketCategory() {
     return this.http.getReq(APIURL.Ticket.GetTicketCategory);
   }
-  getById(data) {
-    return this.http.getReq(APIURL.Ticket.GetOne, data);
+  getById(id) {
+    return this.http.getReq(APIURL.Ticket.GetOne + id);
   }
 
   getCategoryErrandTypes(categoryId) {

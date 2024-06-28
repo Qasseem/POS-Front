@@ -16,6 +16,7 @@
         label="Cancel"
         [text]="true"
         [raised]="true"
+        (click)="backToList()"
         size="small"
       />
 
@@ -133,16 +134,13 @@
                       </div>
                     </div>
                   </div>
-
-                  <i
-                    class="pi pi-trash"
-                    *ngIf="!first"
-                    (click)="removeErrandType(i)"
-                  ></i>
+                  <div class="trash-icon" *ngIf="!first || formType == 'edit'">
+                    <i class="pi pi-trash" (click)="removeErrandType(i)"></i>
+                  </div>
                 </div>
               </div>
               <div class="addons">
-                <div class="add-item" (click)="addErrandType()">
+                <div class="add-item" (click)="addErrandType(errandTypeModel)">
                   <i class="pi pi-plus-circle"></i>
                 </div>
                 <label for="add-item">Addons</label>
@@ -289,7 +287,11 @@
                   <div class="uploaded-images">
                     <div
                       class="uploaded-image"
-                      *ngFor="let base64String of base64Strings; let j = index"
+                      *ngFor="
+                        let base64String of ticketForm.get('attachmentsBase64')
+                          ?.controls;
+                        let j = index
+                      "
                     >
                       <div
                         class="remove-image"
@@ -298,7 +300,7 @@
                       >
                         <i class="pi pi-times"></i>
                       </div>
-                      <img src="{{ base64String }}" alt="" />
+                      <img src="{{ base64String.value }}" alt="" />
                     </div>
                   </div>
                 </div>

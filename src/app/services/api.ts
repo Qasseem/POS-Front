@@ -55,8 +55,8 @@ export const APIURL = {
     GetAllTerminalsByMerchantId: '/Terminal/GetAllTerminalByMerchantId/',
   },
   Ticket: {
-    Add: '/Ticket/Add',
-    GetOne: '/Ticket/GetById',
+    Save: '/Ticket/Save',
+    GetOne: '/Ticket/GetById/',
     Export: '/Ticket/ExportGrid',
     GetGrid: '/Ticket/GetGrid',
     ImportTickets: '/Ticket/ImportTickets',
