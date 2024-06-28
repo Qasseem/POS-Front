@@ -53,10 +53,10 @@ export class UserListComponent implements OnInit {
     },
     {
       field: [
-        // { label: 'imageUrl', custom: 'default' },
+        { label: 'imageUrl', custom: 'image' },
         { label: 'firstName', custom: 'default' },
         { label: 'lastName', custom: 'default' },
-        // { label: 'userName', custom: 'default' },
+        { label: 'userName', custom: 'email' },
       ],
       header: 'User',
       customCell: 'multiLabel',
@@ -67,7 +67,7 @@ export class UserListComponent implements OnInit {
     },
     {
       field: 'userName',
-      header: 'Email',
+      header: 'User Name',
     },
     {
       field: 'phoneNumber',
