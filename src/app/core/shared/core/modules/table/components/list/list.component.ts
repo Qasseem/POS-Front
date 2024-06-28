@@ -493,4 +493,30 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   navigateToUrl(url, id) {
     this.router.navigate([url, id]);
   }
+
+  checkTemplate(fields: Array<any>) {
+    return fields.some((x) => x.custom == 'image');
+  }
+  getTemplate(fields, rowData) {
+    const tempFields = [...fields];
+    const fieldsWithoutImage = tempFields.filter(
+      (x) => x.custom != 'image' && x.custom != 'email'
+    );
+    const fieldCombined = {
+      label: '',
+      custom: 'default',
+    };
+    fieldsWithoutImage.forEach((x) => {
+      fieldCombined.label += rowData[x.label] + ' ';
+    });
+    const emailItem = {
+      label: rowData[tempFields.find((x) => x.custom == 'email').label],
+      custom: 'default',
+    };
+    let item = {
+      list: [fieldCombined, emailItem],
+      imageItem: tempFields.find((x) => x.custom == 'image'),
+    };
+    return item;
+  }
 }

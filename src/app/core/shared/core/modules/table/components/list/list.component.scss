@@ -24,6 +24,26 @@
   padding: 0px 5px 0px 5px;
   background-color: #e0e5ee;
 }
+:host ::ng-deep .multiLabel {
+  display: flex;
+  gap: 0.5rem;
+  .image {
+    height: 40px;
+    width: 40px;
+    img {
+      padding: 0.25rem;
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+      border: 1.5px solid #fff;
+      border-radius: 50%;
+    }
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+  }
+}
 // .dropdown-menu:after {
 //   content: '';
 //   position: absolute;
@@ -77,7 +97,13 @@
     width: 150px;
   }
 }
-:host p-table ::ng-deep .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+:host
+  p-table
+  ::ng-deep
+  .p-datatable.p-datatable-sm
+  .p-datatable-tbody
+  > tr
+  > td {
   font-family: "public-sans";
 }
 

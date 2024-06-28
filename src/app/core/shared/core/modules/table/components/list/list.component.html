@@ -357,50 +357,94 @@
             </div>
 
             <div *ngIf="col.customCell === 'multiLabel'">
-              <div *ngFor="let item of col.field" class="mt-1">
-                <div *ngIf="item.custom === 'navigator'">
-                  <i
-                    style="font-size: 14px; color: #2053a6"
-                    class="fas fa-user"
-                  ></i>
-                  <a
-                    (click)="navigateToUrl(col.link, rowData.id)"
-                    style="font-size: 14px; color: #2053a6; cursor: pointer"
+              <ng-container
+                [ngTemplateOutlet]="checkTemplate(col.field) ? image : default"
+              ></ng-container>
+
+              <!-- <div class="multiLabel"> -->
+              <ng-template #image>
+                <div class="multiLabel">
+                  <div
+                    class="image"
+                    *ngIf="
+                      rowData[getTemplate(col.field, rowData)?.imageItem?.label]
+                    "
+                  >
+                    <img
+                      src="{{
+                        rowData[
+                          getTemplate(col.field, rowData)?.imageItem?.label
+                        ]
+                      }}"
+                    />
+                  </div>
+
+                  <div class="text">
+                    <div
+                      *ngFor="let item of getTemplate(col.field, rowData)?.list"
+                      class="mt-1"
+                    >
+                      <span
+                        style="color: #969696"
+                        *ngIf="item.custom === 'default'"
+                      >
+                        {{ item.label | strLimit : 30 }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template #default>
+                <div *ngFor="let item of col.field" class="mt-1">
+                  <div *ngIf="item.custom === 'navigator'">
+                    <i
+                      style="font-size: 14px; color: #2053a6"
+                      class="fas fa-user"
+                    ></i>
+                    <a
+                      (click)="navigateToUrl(col.link, rowData.id)"
+                      style="font-size: 14px; color: #2053a6; cursor: pointer"
+                    >
+                      {{ rowData[item.label] | strLimit : 30 }}
+                    </a>
+                  </div>
+                  <!-- <div class="text"> -->
+                  <span
+                    style="color: #969696"
+                    *ngIf="item.custom === 'default'"
                   >
                     {{ rowData[item.label] | strLimit : 30 }}
-                  </a>
+                  </span>
+                  <span *ngIf="item.custom === 'normal'">
+                    {{ rowData[item.label] | strLimit : 30 }}
+                  </span>
+                  <span
+                    style="color: #969696"
+                    *ngIf="item.custom === 'defaultDate'"
+                  >
+                    {{
+                      rowData[item.label]
+                        | dateFixer
+                        | date : "dd-MM-yyyy hh:mm a"
+                    }}
+                  </span>
+
+                  <span
+                    style="margin-left: 22px; color: #969696"
+                    *ngIf="item.custom === 'icon'"
+                  >
+                    {{ rowData[item.label] | strLimit : 30 }}
+                  </span>
+                  <span
+                    style="color: #414141"
+                    *ngIf="item.custom === 'firstLabel'"
+                  >
+                    {{ rowData[item.label] | strLimit : 30 }}
+                  </span>
+                  <!-- </div> -->
+                  <!-- </div> -->
                 </div>
-
-                <span style="color: #969696" *ngIf="item.custom === 'default'">
-                  {{ rowData[item.label] | strLimit : 30 }}
-                </span>
-                <span *ngIf="item.custom === 'normal'">
-                  {{ rowData[item.label] | strLimit : 30 }}
-                </span>
-                <span
-                  style="color: #969696"
-                  *ngIf="item.custom === 'defaultDate'"
-                >
-                  {{
-                    rowData[item.label]
-                      | dateFixer
-                      | date : "dd-MM-yyyy hh:mm a"
-                  }}
-                </span>
-
-                <span
-                  style="margin-left: 22px; color: #969696"
-                  *ngIf="item.custom === 'icon'"
-                >
-                  {{ rowData[item.label] | strLimit : 30 }}
-                </span>
-                <span
-                  style="color: #414141"
-                  *ngIf="item.custom === 'firstLabel'"
-                >
-                  {{ rowData[item.label] | strLimit : 30 }}
-                </span>
-              </div>
+              </ng-template>
             </div>
             <div *ngIf="col.customCell === 'integerPipe'">
               {{ rowData[col.field] | number : "1.0-0" }}
@@ -502,8 +546,7 @@
               </button>
             </div>
             <button
-
-            *ngIf="options?.viewDetails"
+              *ngIf="options?.viewDetails"
               style="cursor: pointer; margin-bottom: 7px"
               type="button"
               class="menu-btn mb-0"
