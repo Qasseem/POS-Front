@@ -76,7 +76,7 @@ export class TicketFormComponent implements OnInit {
     if (data.attachments.length) {
       data.attachments.forEach((base64String) => {
         (this.ticketForm.get('attachmentsBase64') as FormArray).push(
-          this.fb.control(base64String)
+          this.fb.control(base64String.attachmentUrl)
         );
       });
     }
