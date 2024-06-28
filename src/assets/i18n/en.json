@@ -196,6 +196,10 @@
     "manager": "Manager",
     "region" :"Region",
     "username" : "Username",
-    "email" : "Email"
+    "email" : "Email",
+    "ticketId" : "Ticket Id",
+    "merchantEn" : "Merchant Name",
+    "overdue" : "Overdue",
+    "assignee" : "Assignee"
   }
 }
