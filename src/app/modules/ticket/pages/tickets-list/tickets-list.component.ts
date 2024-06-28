@@ -26,7 +26,7 @@ export class TicketsListComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/terminal/edit/${row?.id}`;
+    const URL = `main/ticket/edit/${row?.ticketId}`;
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
@@ -35,7 +35,7 @@ export class TicketsListComponent implements OnInit {
   }
   goToDetails(row: any): any {
     const id = row.id;
-    const URL = `main/merchant/details/${row?.id}`;
+    const URL = `main/ticket/details/${row?.id}`;
     return URL;
   }
 

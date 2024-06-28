@@ -104,12 +104,16 @@ label {
                   }
                 }
               }
-              i {
+              .trash-icon {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                color: #798693;
-                cursor: pointer;
+                padding-top: 16px;
+                i {
+                  color: #798693;
+
+                  cursor: pointer;
+                }
               }
               &:not(:last-child) {
                 margin-bottom: 1.25rem;

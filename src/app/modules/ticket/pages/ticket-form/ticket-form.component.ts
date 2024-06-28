@@ -30,6 +30,11 @@ export class TicketFormComponent implements OnInit {
   details;
   coordinates = { lat: null, lng: null };
   base64Strings: string[] = [];
+  id;
+  errandTypeModel = {
+    errandTypeId: null,
+    quantity: 0,
+  };
   constructor(
     private fb: FormBuilder,
     private service: TicketService,
@@ -39,6 +44,7 @@ export class TicketFormComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.formType = this.route.snapshot.data.type;
+    this.id = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
@@ -50,6 +56,31 @@ export class TicketFormComponent implements OnInit {
     this.GetTicketLocationDropdownValues();
     this.zoneValueChange();
     this.latLngValueChange();
+    if (this.id) {
+      this.getTicket(this.id);
+    }
+  }
+  getTicket(id) {
+    this.service.getById(id).subscribe({
+      next: (res) => {
+        this.patchForm(res.data);
+      },
+    });
+  }
+  patchForm(data) {
+    if (data.errandType.length) {
+      data.errandType.forEach((x) => {
+        this.addErrandType(x);
+      });
+    }
+    if (data.attachments.length) {
+      data.attachments.forEach((base64String) => {
+        (this.ticketForm.get('attachmentsBase64') as FormArray).push(
+          this.fb.control(base64String.attachmentUrl)
+        );
+      });
+    }
+    this.ticketForm.patchValue(data);
   }
 
   latLngValueChange() {
@@ -228,15 +259,11 @@ export class TicketFormComponent implements OnInit {
       Array.from(files).forEach((file: File) => {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.base64Strings.push(e.target.result);
+          (this.ticketForm.get('attachmentsBase64') as FormArray).push(
+            this.fb.control(e.target.result)
+          );
         };
         reader.readAsDataURL(file);
-      });
-      (this.ticketForm.get('attachmentsBase64') as FormArray).clear();
-      this.base64Strings.forEach((imageString) => {
-        (this.ticketForm.get('attachmentsBase64') as FormArray).push(
-          this.fb.control(imageString)
-        );
       });
     }
   }
@@ -262,12 +289,14 @@ export class TicketFormComponent implements OnInit {
       errandTypes: this.fb.array([], Validators.required),
       id: [null],
     });
-    this.addErrandType();
+
+    if (this.formType == 'add')
+      this.addErrandType({ errandTypeId: null, quantity: 0 });
   }
-  addErrandType() {
+  addErrandType(data) {
     const group = this.fb.group({
-      errandTypeId: this.fb.control(null, Validators.required),
-      quantity: this.fb.control(0, [
+      errandTypeId: this.fb.control(data.errandTypeId, Validators.required),
+      quantity: this.fb.control(data.quantity, [
         Validators.required,
         Validators.min(0),
         Validators.max(10000),
@@ -356,7 +385,7 @@ export class TicketFormComponent implements OnInit {
       delete formValue.id;
     }
     if (this.ticketForm.valid) {
-      this.service.Add(formValue).subscribe({
+      this.service.Save(formValue).subscribe({
         next: (res) => {
           if (res.success) this.backToList();
         },
@@ -371,6 +400,6 @@ export class TicketFormComponent implements OnInit {
     this.router.navigate(['main/ticket/list']);
   }
   removeImage(index) {
-    this.base64Strings.splice(index, 1);
+    (this.ticketForm.get('attachmentsBase64') as FormArray).removeAt(index);
   }
 }
