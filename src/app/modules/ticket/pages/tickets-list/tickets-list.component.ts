@@ -135,32 +135,45 @@ export class TicketsListComponent implements OnInit {
 
     {
       type: SearchInputTypes.text,
+      field: 'ticketId',
+      isFixed: true,
+    },
+    {
+      type: SearchInputTypes.text,
       field: 'terminalId',
       isFixed: true,
     },
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'merchant',
+      field: 'merchantEn',
       isFixed: true,
       url: this.url.Terminal.GetAllMechantDropDown,
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
-
     {
       isMultiple: true,
       type: SearchInputTypes.choice,
-      field: 'users',
+      field: 'status',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      // url: this.url.Users.GetAllUsersDropDown,
       method: HTTPMethods.postReq,
       propValueName: 'id',
     },
     {
       type: SearchInputTypes.text,
-      field: 'phone',
+      field: 'overdue',
       isFixed: true,
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.choice,
+      field: 'assignee',
+      isFixed: true,
+      url: this.url.Users.GetAllUsersDropDown,
+      method: HTTPMethods.postReq,
+      propValueName: 'id',
     },
     {
       isMultiple: true,
@@ -183,6 +196,16 @@ export class TicketsListComponent implements OnInit {
     {
       isMultiple: true,
       type: SearchInputTypes.select,
+      field: 'region',
+      isFixed: true,
+      url: this.url.Terminal.GetAllRegions,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+      header: '0',
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
       url: this.url.Terminal.GetAllCities,
@@ -190,7 +213,6 @@ export class TicketsListComponent implements OnInit {
       propValueName: 'id',
       header: '0',
     },
-
     {
       isMultiple: true,
       type: SearchInputTypes.select,
@@ -200,17 +222,6 @@ export class TicketsListComponent implements OnInit {
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
-    },
-
-    {
-      type: SearchInputTypes.text,
-      field: 'address',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'landmark',
-      isFixed: true,
     },
   ];
 
