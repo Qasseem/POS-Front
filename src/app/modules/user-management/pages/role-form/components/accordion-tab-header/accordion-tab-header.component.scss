@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+}
+.accordion-header span {
+  margin-left: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #4c555f;
+  font-family: unquote("Poppins, sans-serif");
+  span {
+    color: #798693;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: unquote("Poppins, sans-serif");
+  }
+}
+::ng-deep
+  .p-accordion
+  .p-accordion-header
+  .p-accordion-header-link
+  chevronrighticon {
+  background: #66b3fb;
+  padding: 4px;
+  color: #fff;
+  border-radius: 50%;
+  transform: rotate(90deg);
+}
+::ng-deep
+  .p-accordion
+  .p-accordion-header
+  .p-accordion-header-link
+  chevrondownicon {
+  background: #66b3fb;
+  padding: 4px;
+  color: #fff;
+  border-radius: 50%;
+  transform: rotate(-180deg);
+}
