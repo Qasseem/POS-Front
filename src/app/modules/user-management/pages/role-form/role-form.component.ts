@@ -50,6 +50,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
     const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
 
     this.form = this.fb.group({
+      id: [null],
       roleNameEn: [
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
