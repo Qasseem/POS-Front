@@ -18,6 +18,9 @@ export class UserFormComponent {
   id;
   rolesIdsLists = [];
   managerIdsLists = [];
+  regionsIdsLists = [];
+  orignalCities = [];
+  orignalZones = [];
   citiesLists = [];
   imageFieldName: string;
   zonesLists = [];
@@ -29,6 +32,8 @@ export class UserFormComponent {
     { label: 'Service Agent', value: 1 },
     { label: 'Sales Agent', value: 3 },
   ];
+  profileImage: string | ArrayBuffer | null = null;
+  fileName: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -66,10 +71,11 @@ export class UserFormComponent {
         userType: [null, Validators.required],
         managerId: [null],
         rolesIds: [null, Validators.required],
+        id: [null],
         isManager: [false],
-        zoneId: [null, Validators.required],
         regionId: [null, Validators.required],
         cityId: [null, Validators.required],
+        zoneId: [null, Validators.required],
         password: [
           '',
           [
@@ -82,6 +88,38 @@ export class UserFormComponent {
       },
       { validators: PasswordMatchValidator('password', 'confirmPassword') }
     );
+
+    // this.form.valueChanges.subscribe(() => {
+    //   console.log(this.form);
+
+    // })
+  }
+  onFileSelectedNationalId(event: any) {
+    const file = event.target.files[0];
+    if (file && file.type.match('image.*')) {
+      this.fileName = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.form.patchValue({
+          nationalIdBase64String: reader.result as string,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const result = e.target?.result;
+        this.profileImage = result;
+        this.form.patchValue({ imageBase64String: result });
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   ngOnInit() {
@@ -116,6 +154,75 @@ export class UserFormComponent {
           }
         },
       });
+    const regionControl = this.form.get('regionId');
+    this.terminalService
+      .GetAllRegions()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.regionsIdsLists = resp.data;
+            regionControl.setValue(resp.data[0].id);
+          }
+        },
+      });
+    const cityControl = this.form.get('cityId');
+    regionControl.valueChanges.subscribe({
+      next: (regionId) => {
+        if (regionId) {
+          this.terminalService
+            .GetAllCities(regionId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe({
+              next: (resp) => {
+                if (resp.success) {
+                  this.citiesLists = resp.data;
+                  this.orignalCities = resp.data;
+                  // cityControl.setValue(resp.data[0].id);
+                }
+              },
+            });
+        }
+      },
+    });
+    cityControl.valueChanges.subscribe({
+      next: (cityId) => {
+        if (cityId) {
+          this.terminalService
+            .GetAllZones(cityId)
+            .pipe(takeWhile(() => this.alive))
+            .subscribe({
+              next: (resp) => {
+                if (resp.success) {
+                  this.zonesLists = resp.data;
+                  this.orignalZones = resp.data;
+                  // this.form.get('zoneId').setValue(resp.data[0].id);
+                }
+              },
+            });
+        }
+      },
+    });
+  }
+
+  regionChanged(event) {
+    this.form.controls.cityId.setValue(null);
+    this.citiesLists = this.orignalCities;
+    if (event) {
+      this.citiesLists = this.citiesLists.filter(
+        (x) => x.parentId == event.value
+      );
+    }
+  }
+
+  cityChanged(event) {
+    this.form.controls.zoneId.setValue(null);
+    this.zonesLists = this.orignalZones;
+    if (event) {
+      this.zonesLists = this.zonesLists.filter(
+        (x) => x.parentId == event.value
+      );
+    }
   }
 
   getItemDetails() {

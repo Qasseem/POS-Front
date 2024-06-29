@@ -40,20 +40,39 @@
               <p class="font-bold fs-11">User Card</p>
             </div>
             <div class="flex flex-column">
-              <div class="upload-image">
-                <span>
-                  <oc-icon
-                    [icon]="'image-upload'"
-                    [width]="'105px'"
-                    [height]="'105px'"
-                  ></oc-icon>
-                  <input
-                    type="hidden"
-                    pInputText
-                    formControlName="imageBase64String"
-                    accept="image/*"
+              <div class="profile-image-wrapper">
+                <div
+                  class="profile-image-container"
+                  (click)="fileInput.click()"
+                >
+                  <img
+                    [src]="profileImage || 'assets/default-profile.png'"
+                    class="profile-image"
                   />
-                </span>
+                  <input
+                    type="file"
+                    #fileInput
+                    (change)="onFileSelected($event)"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                  <div class="icon-overlay" *ngIf="!profileImage">
+                    <oc-icon
+                      [icon]="'user'"
+                      [width]="'25px'"
+                      [height]="'25px'"
+                    ></oc-icon>
+                  </div>
+                  <div class="upload-icon-container">
+                    <oc-icon
+                      [icon]="'plus-icon'"
+                      [width]="'20px'"
+                      [height]="'20px'"
+                      [scale]="1.6"
+                    ></oc-icon>
+                  </div>
+                </div>
+                <input formControlName="imageBase64String" type="hidden" />
               </div>
               <div class="details-input">
                 <div class="username-details flex">
@@ -228,7 +247,49 @@
                     </div>
                   </div>
                   <div class="col-12">
-                    <div class="flex flex-column gap-2">
+                    <div>
+                      <h4>National ID Image</h4>
+                      <div class="upload-container">
+                        <label for="file-upload" class="upload-label">
+                          <div class="upload-content">
+                            <!-- <i class="pi pi-cloud-upload"></i> -->
+                            <oc-icon
+                              [icon]="'upload-icon'"
+                              [width]="'25px'"
+                              [height]="'25px'"
+                            ></oc-icon>
+                            <div class="flex flex-column file-upload-text">
+                              <span>Upload new file</span>
+                              <span
+                                >Drag and drop a file or
+                                <span class="browse-file"
+                                  >browse file</span
+                                ></span
+                              >
+                            </div>
+                          </div>
+                        </label>
+                        <input
+                          id="file-upload"
+                          type="file"
+                          accept="image/*"
+                          (change)="onFileSelectedNationalId($event)"
+                          hidden
+                        />
+                      </div>
+                      <div *ngIf="fileName" class="file-info">
+                        <oc-icon
+                          [icon]="'files-icon'"
+                          [width]="'25px'"
+                          [height]="'25px'"
+                        ></oc-icon>
+                        <span class="file-info-text">
+                          {{ fileName }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- <div class="flex flex-column gap-2">
                       <label for="nationalIdBase64String"
                         >National ID Image
                       </label>
@@ -255,27 +316,7 @@
                           </div>
                         </label>
                       </div>
-
-                      <div
-                        *ngIf="
-                          f.nationalIdBase64String.errors &&
-                          (f.nationalIdBase64String.dirty ||
-                            f.nationalIdBase64String.touched)
-                        "
-                        class="invalid-feedback"
-                      >
-                        <div class="fs-10 color-red">
-                          <span
-                            *ngIf="f.nationalIdBase64String.errors.required"
-                          >
-                            National ID field is required
-                          </span>
-                          <span *ngIf="f.nationalIdBase64String.errors.pattern">
-                            National ID is invalid.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -383,7 +424,8 @@
                   </label>
 
                   <p-dropdown
-                    [options]="rolesIdsLists"
+                    (onChange)="regionChanged($event)"
+                    [options]="regionsIdsLists"
                     formControlName="regionId"
                     [optionValue]="'id'"
                     optionLabel="nameEn"
@@ -411,6 +453,7 @@
                   </label>
 
                   <p-dropdown
+                    (onChange)="cityChanged($event)"
                     [options]="citiesLists"
                     formControlName="cityId"
                     [optionValue]="'id'"
@@ -434,7 +477,7 @@
               <div class="col-4">
                 <div class="flex flex-column gap-2">
                   <label for="zoneId"
-                    >Zones <span class="p-error"> * </span>
+                    >Zone <span class="p-error"> * </span>
                   </label>
                   <p-multiSelect
                     [options]="zonesLists"
