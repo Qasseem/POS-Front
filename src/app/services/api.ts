@@ -92,7 +92,7 @@ export const APIURL = {
     addRole: '/Role/AddRole',
     updateRole: '/Role/UpdateRole',
     deleteRole: '/Role/Delete/',
-    getRoleById: '/Role/GetRole/',
+    getRoleById: '/Role/GetRole',
     getRoleServiceDetails: '/Role/GetRoleServiceDetails',
     blockRole: '/Role/Block',
     getAllRolesDropdown: '/Role/GetAllRolesDropDown',

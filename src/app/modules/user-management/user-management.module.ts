@@ -7,6 +7,7 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserManagementRoutingModule } from './user-management-routing.module';
 import { UserManagementComponent } from './user-management.component';
 import { SharedModule } from '../shared/shared.module';
+import { AccordionTabHeaderComponent } from './pages/role-form/components/accordion-tab-header/accordion-tab-header.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
     UserFormComponent,
     RoleListComponent,
     RoleFormComponent,
+    AccordionTabHeaderComponent,
   ],
   imports: [CommonModule, UserManagementRoutingModule, SharedModule],
 })

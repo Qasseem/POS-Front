@@ -30,12 +30,15 @@ interface AccessType {
 })
 export class RoleFormComponent implements OnInit, OnDestroy {
   permissions: Permission[] = [];
+  filteredGroups = [];
+
   alive: boolean = true;
   form: FormGroup;
   categories = [];
   id;
   details: any;
   formType = 'add';
+
   constructor(
     private fb: FormBuilder,
     private roleService: RoleService,
@@ -44,56 +47,114 @@ export class RoleFormComponent implements OnInit, OnDestroy {
   ) {
     this.formType = this.route.snapshot.data.type;
     const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
+    const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
 
     this.form = this.fb.group({
       roleNameEn: [
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
       ],
-      servicesAccessIds: [[], Validators.required],
+      roleNameAr: [
+        '',
+        [Validators.required, Validators.pattern(arabicLetterPattern)],
+      ],
+      servicesAccessIds: this.fb.array([], [Validators.required]),
     });
-    // this.form.valueChanges.subscribe((response) => {
-    //   console.log(response);
-    // })
-
-    this.getRolesServiceByRoleId();
+    if (this.formType == 'add') this.getRolesServiceByRoleId();
   }
 
-  toggleSelectAll(group: any, isChecked: boolean) {
-    let selectedPermissions = this.form.get('servicesAccessIds')
-      .value as number[];
-
-    group.accessTypeDtos.forEach((item) => {
-      this.form.get(String(item.id)).setValue(isChecked);
-
-      if (isChecked && !selectedPermissions.includes(item.id)) {
-        selectedPermissions.push(item.id);
-      } else if (!isChecked) {
-        selectedPermissions = selectedPermissions.filter(
-          (id) => id !== item.id
-        );
-      }
+  get servicesAccessIds(): FormArray {
+    return this.form.get('servicesAccessIds') as FormArray;
+  }
+  initializeFormArray(permissions): void {
+    permissions.forEach((group) => {
+      const allChecked = group.accessTypeDtos.every((item) => item.isSelected);
+      const groupArray = this.fb.group({
+        groupName: group.nameEn,
+        items: this.fb.array(
+          group.accessTypeDtos.map((item) =>
+            this.fb.group({
+              id: item.id,
+              name: item.nameEn,
+              checked: this.formType == 'add' ? false : item.isSelected,
+            })
+          )
+        ),
+        isChecked: allChecked, // Initialize isChecked based on allChecked condition
+      });
+      (this.form.get('servicesAccessIds') as FormArray).push(groupArray);
     });
 
-    this.form.get('servicesAccessIds').setValue(selectedPermissions);
+    // Initially display all groups
+    this.filteredGroups = [
+      ...(this.form.get('servicesAccessIds') as FormArray).controls,
+    ];
   }
 
-  isSelected(permissionId: number): boolean {
-    const control = this.form.get('servicesAccessIds') as FormControl;
-    return control.value.includes(permissionId);
+  groupSearch(searchTerm: string): void {
+    if (!searchTerm.trim()) {
+      // If search term is empty, show all groups
+      this.filteredGroups = [
+        ...(this.form.get('servicesAccessIds') as FormArray).controls,
+      ];
+    } else {
+      // Filter groups based on GroupName
+      this.filteredGroups = (
+        this.form.get('servicesAccessIds') as FormArray
+      ).controls.filter((group) =>
+        group
+          .get('groupName')
+          .value.toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      );
+    }
   }
 
-  getRolesServiceByRoleId() {
+  toggleAllCheckboxes(groupIndex: number, isChecked: boolean): void {
+    const groupArray = (this.form.get('servicesAccessIds') as FormArray)
+      .at(groupIndex)
+      .get('items') as FormArray;
+    if (groupArray) {
+      groupArray.controls.forEach((control) => {
+        control.get('checked').setValue(isChecked);
+      });
+    }
+
+    // Update isChecked state for the current group
+    const allChecked = groupArray.controls.every(
+      (control) => control.get('checked').value
+    );
+    (this.form.get('servicesAccessIds') as FormArray)
+      .at(groupIndex)
+      .get('isChecked')
+      .setValue(allChecked);
+  }
+
+  isChecked(groupIndex: number): boolean {
+    const groupArray = (this.form.get('servicesAccessIds') as FormArray)
+      .at(groupIndex)
+      .get('items') as FormArray;
+    if (!groupArray) return false;
+
+    // Check if all items in the group are checked
+    return groupArray.controls.every((control) => control.get('checked').value);
+  }
+
+  getRolesServiceByRoleId(id = 0) {
     this.roleService
-      .getServicesByRoleId(0)
+      .getServicesByRoleId(this.formType == 'add' ? 0 : id)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
           if (resp.success) {
             this.permissions = resp.data;
+            this.initializeFormArray(this.permissions);
           }
         },
       });
+  }
+  getSelectedGroupCount(items) {
+    return items.filter((item) => item.checked).length;
   }
 
   ngOnInit() {
@@ -103,113 +164,78 @@ export class RoleFormComponent implements OnInit, OnDestroy {
         this.getItemDetails();
       }
     }
-
-    this.getAllMerchantCategories();
-    // this.GetMerchantDropdownValues();
   }
   getItemDetails() {
-    // this.roleService
-    //   .GetDetails(this.id)
-    //   .pipe(takeWhile(() => this.alive))
-    //   .subscribe({
-    //     next: (resp) => {
-    //       if (resp.success) {
-    //         this.details = resp.data;
-    //         if (this.details) {
-    //           this.form.patchValue(this.details);
-    //           this.form.updateValueAndValidity();
-    //         }
-    //       }
-    //     },
-    //   });
-  }
-
-  getAllMerchantCategories() {
-    // this.merchantService
-    //   .GetAllMerchantCategories()
-    //   .pipe(takeWhile(() => this.alive))
-    //   .subscribe({
-    //     next: (resp) => {
-    //       if (resp.success) {
-    //         this.categories = resp.data;
-    //       }
-    //     },
-    //   });
-  }
-  onSubmit() {}
-  get f() {
-    return this.form.controls;
-  }
-  submit() {
-    let obj = this.form.value;
-    if (!this.id) {
-      delete obj.id;
-    }
     this.roleService
-      .Save(this.form.value)
+      .GetDetails(this.id)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
         next: (resp) => {
           if (resp.success) {
-            this.backToList();
+            this.details = resp.data;
+            if (this.details) {
+              this.form.patchValue(this.details);
+              this.getRolesServiceByRoleId(this.id);
+            }
           }
         },
       });
   }
+
+  getControl(groupIndex, itemIndex) {
+    return (this.servicesAccessIds.at(groupIndex) as FormArray)?.controls
+      .at(itemIndex)
+      ?.get('checked');
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  beforeSubmit(formValue) {
+    const accessIds = structuredClone(formValue.servicesAccessIds);
+    let ids = [];
+    accessIds.forEach((group) => {
+      group.items.forEach((item) => {
+        if (item.checked) ids.push(item.id);
+      });
+    });
+    formValue.servicesAccessIds = ids;
+    return formValue;
+  }
+  submit() {
+    let formValue = structuredClone(this.form.value);
+    formValue = this.beforeSubmit(formValue);
+    if (!this.id) {
+      delete formValue.id;
+    }
+    if (this.formType == 'add') {
+      this.roleService
+        .Add(formValue)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    } else {
+      this.roleService
+        .Update(formValue)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    }
+  }
   backToList() {
     this.router.navigate(['main/user-management/role/list']);
   }
-
-  // GetMerchantDropdownValues() {
-  //   const regionControl = this.form.get('regionId');
-
-  //   this.terminalService
-  //     .GetAllRegions()
-  //     .pipe(takeWhile(() => this.alive))
-  //     .subscribe({
-  //       next: (resp) => {
-  //         if (resp.success) {
-  //           this.regionsList = resp.data;
-  //           regionControl.setValue(resp.data[0].id);
-  //         }
-  //       },
-  //     });
-  //   const cityControl = this.form.get('cityId');
-  //   regionControl.valueChanges.subscribe({
-  //     next: (regionId) => {
-  //       if (regionId) {
-  //         this.terminalService
-  //           .GetAllCities(regionId)
-  //           .pipe(takeWhile(() => this.alive))
-  //           .subscribe({
-  //             next: (resp) => {
-  //               if (resp.success) {
-  //                 this.citiesList = resp.data;
-  //                 this.orignalCities = resp.data;
-  //                 cityControl.setValue(resp.data[0].id);
-  //               }
-  //             },
-  //           });
-  //       }
-  //     },
-  //   });
-  //   cityControl.valueChanges.subscribe({
-  //     next: (cityId) => {
-  //       if (cityId) {
-  //         this.terminalService
-  //           .GetAllZones(cityId)
-  //           .pipe(takeWhile(() => this.alive))
-  //           .subscribe((resp) => {
-  //             if (resp.success) {
-  //               this.zonesList = resp.data;
-  //               this.orignalZones = resp.data;
-  //               this.form.get('zoneId').setValue(resp.data[0].id);
-  //             }
-  //           });
-  //       }
-  //     },
-  //   });
-  // }
 
   ngOnDestroy() {
     this.alive = false;

@@ -8,10 +8,10 @@ import { APIURL } from 'src/app/services/api';
 export class RoleService {
   constructor(private http: HttpService) {}
 
-  update(id) {
+  Update(id) {
     return this.http.postReq(APIURL.Role.updateRole, id);
   }
-  Save(data) {
+  Add(data) {
     return this.http.postReq(APIURL.Role.addRole, data);
   }
   GetDetails(id) {
