@@ -364,18 +364,17 @@
               <!-- <div class="multiLabel"> -->
               <ng-template #image>
                 <div class="multiLabel">
-                  <div
-                    class="image"
-                    *ngIf="
-                      rowData[getTemplate(col.field, rowData)?.imageItem?.label]
-                    "
-                  >
+                  <div class="image">
                     <img
-                      src="{{
+                      [src]="
                         rowData[
                           getTemplate(col.field, rowData)?.imageItem?.label
                         ]
-                      }}"
+                          ? rowData[
+                              getTemplate(col.field, rowData)?.imageItem?.label
+                            ]
+                          : 'assets/iamges/default-avatar.png'
+                      "
                     />
                   </div>
 
