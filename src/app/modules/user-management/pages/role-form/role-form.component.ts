@@ -176,6 +176,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
             this.details = resp.data;
             if (this.details) {
               this.form.patchValue(this.details);
+              this.form.get('id').patchValue(this.details.roleId);
               this.getRolesServiceByRoleId(this.id);
             }
           }
