@@ -50,7 +50,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
     const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
 
     this.form = this.fb.group({
-      id: [null],
+      roleId: [null],
       roleNameEn: [
         '',
         [Validators.required, Validators.pattern(englishLetterPattern)],
@@ -176,7 +176,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
             this.details = resp.data;
             if (this.details) {
               this.form.patchValue(this.details);
-              this.form.get('id').patchValue(this.details.roleId);
+              this.form.get('roleId').patchValue(this.details.roleId);
               this.getRolesServiceByRoleId(this.id);
             }
           }
@@ -209,7 +209,7 @@ export class RoleFormComponent implements OnInit, OnDestroy {
     let formValue = structuredClone(this.form.value);
     formValue = this.beforeSubmit(formValue);
     if (!this.id) {
-      delete formValue.id;
+      delete formValue.roleId;
     }
     if (this.formType == 'add') {
       this.roleService

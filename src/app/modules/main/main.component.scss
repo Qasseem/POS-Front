@@ -377,6 +377,7 @@
   background-color: #f0f0f0; /* Example styling */
   padding: 10px;
   text-align: center;
+  width: 280px;
 }
 
 .container {
@@ -394,7 +395,7 @@
 .user-container {
   position: absolute;
   bottom: 0;
-  width: inherit;
+  // width: inherit;
   top: 75%;
   background: aliceblue;
 }
