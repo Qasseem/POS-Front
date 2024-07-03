@@ -35,6 +35,7 @@ export class TicketFormComponent implements OnInit {
     errandTypeId: null,
     quantity: 0,
   };
+  viewModel;
   constructor(
     private fb: FormBuilder,
     private service: TicketService,
@@ -50,8 +51,8 @@ export class TicketFormComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.getLookups();
-    this.categoryValueChange();
     this.merchantValueChange();
+    this.categoryValueChange();
     this.terminalValueChange();
     this.GetTicketLocationDropdownValues();
     this.zoneValueChange();
@@ -63,6 +64,7 @@ export class TicketFormComponent implements OnInit {
   getTicket(id) {
     this.service.getById(id).subscribe({
       next: (res) => {
+        this.viewModel = res.data;
         this.patchForm(res.data);
       },
     });
@@ -81,6 +83,8 @@ export class TicketFormComponent implements OnInit {
       });
     }
     this.ticketForm.patchValue(data);
+    this.ticketForm.get('categoryId').disable();
+    this.ticketForm.get('categoryId').updateValueAndValidity();
   }
 
   latLngValueChange() {
@@ -217,8 +221,10 @@ export class TicketFormComponent implements OnInit {
               this.errandTypes = res.data;
             },
           });
-          (this.ticketForm.get('errandTypes') as FormArray).clear();
-          this.addErrandType({ errandTypeId: null, quantity: null });
+          if (this.formType == 'add') {
+            (this.ticketForm.get('errandTypes') as FormArray).clear();
+            this.addErrandType({ errandTypeId: null, quantity: null });
+          }
           if (categoryId == '1') {
             this.ticketForm.get('terminalId').clearValidators();
             this.ticketForm.get('terminalId').disable();
@@ -311,7 +317,7 @@ export class TicketFormComponent implements OnInit {
       errandTypeId: this.fb.control(data.errandTypeId, Validators.required),
       quantity: this.fb.control(data.quantity, [
         Validators.required,
-        Validators.min(0),
+        Validators.min(1),
         Validators.max(10000),
       ]),
     });
