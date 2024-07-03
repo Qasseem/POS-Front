@@ -346,7 +346,6 @@ export class TicketFormComponent implements OnInit {
         next: (resp) => {
           if (resp.success) {
             this.regions = resp.data;
-            regionControl.setValue(resp.data[0].id);
           }
         },
       });
@@ -362,7 +361,6 @@ export class TicketFormComponent implements OnInit {
                 if (resp.success) {
                   this.cities = resp.data;
                   this.orignalCities = resp.data;
-                  cityControl.setValue(resp.data[0].id);
                 }
               },
             });
@@ -379,7 +377,6 @@ export class TicketFormComponent implements OnInit {
               if (resp.success) {
                 this.zones = resp.data;
                 this.orignalZones = resp.data;
-                this.ticketForm.get('zoneId').setValue(resp.data[0].id);
               }
             });
         }
