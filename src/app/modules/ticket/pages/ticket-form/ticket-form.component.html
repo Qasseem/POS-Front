@@ -220,7 +220,12 @@
               <div class="control">
                 <label class="assignee-label">
                   Assignee <span class="p-error"> * </span>
-                  <div [pTooltip]="'Test Tooltip'" [tooltipPosition]="'right'">
+                  <div
+                    [pTooltip]="
+                      'The assigned agent is recommended based on the selected zone'
+                    "
+                    [tooltipPosition]="'right'"
+                  >
                     <oc-icon
                       [icon]="'message-question'"
                       [width]="'16px'"
