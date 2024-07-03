@@ -14,6 +14,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
   id;
   details: any;
   formType = 'add';
+  categoriesLists = [];
   constructor(
     private fb: FormBuilder,
     private adminActivitiesServices: AdminActivitiesService,
@@ -40,10 +41,22 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       ],
       nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
       serviceLevel: ['', Validators.required],
-      isActive: [false],
-      // isDeleted: [false],
+      isActive: [null, Validators.required],
       id: [null],
     });
+
+    this.getCategoriesErrandType();
+  }
+
+  getCategoriesErrandType() {
+    this.adminActivitiesServices
+      .getCategoriesFixed()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.categoriesLists = resp.data;
+        }
+      });
   }
   getItemDetails() {
     this.adminActivitiesServices
@@ -81,7 +94,9 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate(['main/admin-activities/categories-errands-types']);
+    this.router.navigate([
+      'main/admin-activities/list/categories-errands-types',
+    ]);
   }
 
   ngOnDestroy() {

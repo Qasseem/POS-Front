@@ -71,7 +71,6 @@ export const APIURL = {
     TicketPostpone: '/Ticket/Postpone',
     TicketDeploymentStatus: '/Ticket/DeploymentStatus/',
     TicketStartInstall: '/Ticket/StartInstall',
-    // GetTicketCategory: '/Ticket/GetTicketCategor',
   },
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',

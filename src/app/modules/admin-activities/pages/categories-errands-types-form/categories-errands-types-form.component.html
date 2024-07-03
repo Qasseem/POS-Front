@@ -20,7 +20,6 @@
       />
 
       <p-button
-        style="width: 100px !important"
         (click)="submit()"
         [disabled]="!form?.valid"
         label="{{ formType == 'add' ? 'Add' : 'Save' }}"
@@ -42,13 +41,11 @@
                 <label for="categoryId"
                   >Category<span class="p-error"> * </span>
                 </label>
-                <input
-                  [ngClass]="{
-                    'ng-invalid ng-dirty': f.categoryId?.errors?.required
-                  }"
-                  type="number"
-                  pInputText
+                <p-dropdown
+                  [options]="categoriesLists"
                   formControlName="categoryId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
                 />
 
                 <div
@@ -69,7 +66,7 @@
             <div class="col-3">
               <div class="flex flex-column gap-2">
                 <label for="nameEn"
-                  >POS Type [EN]<span class="p-error"> * </span>
+                  >Name Type [EN]<span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
@@ -89,7 +86,7 @@
                 >
                   <div class="fs-10 color-red">
                     <span *ngIf="f.nameEn.errors.required">
-                      POS Type [EN] field is required
+                      Name Type [EN] field is required
                     </span>
                     <span *ngIf="f.nameEn.errors.pattern">
                       Only English letters are allowed.
@@ -101,7 +98,7 @@
 
             <div class="col-3">
               <div class="flex flex-column gap-2">
-                <label for="nameAr">POS Type [AR] </label>
+                <label for="nameAr">Name Type [AR] </label>
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty': f.nameAr?.errors?.pattern
@@ -154,12 +151,22 @@
         <div class="col-12 p-lr pb-16">
           <div class="col-12 displayFlex align-item-center">
             <p-checkbox formControlName="isActive" binary="true"></p-checkbox>
-            <label class="isActive" for="isActive">Require Qty</label>
+            <label class="isActive" for="isActive"
+              >Require Qty <span class="p-error"> * </span></label
+            >
+            <div
+              *ngIf="
+                f.isActive.errors && (f.isActive.dirty || f.isActive.touched)
+              "
+              class="invalid-feedback"
+            >
+              <div class="fs-10 color-red">
+                <span *ngIf="f.isActive.errors.required">
+                  Require Qty field is required
+                </span>
+              </div>
+            </div>
           </div>
-          <!-- <div class="col-12 displayFlex align-item-center">
-            <p-checkbox formControlName="isDeleted" binary="true"></p-checkbox>
-            <label class="isDeleted" for="isDeleted">Mark as active</label>
-          </div> -->
         </div>
       </div>
     </form>
