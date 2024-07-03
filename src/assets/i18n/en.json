@@ -201,5 +201,8 @@
     "merchantEn" : "Merchant Name",
     "overdue" : "Overdue",
     "assignee" : "Assignee"
+  },
+  "merchants" : {
+    "blocked-merchant" : "Merchant Has been blocked"
   }
 }
