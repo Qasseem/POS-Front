@@ -36,6 +36,7 @@ export const APIURL = {
     GetAllRegions: '/Merchant/GetAllRegions',
     GetAllCities: '/Merchant/GetAllCities',
     GetAllZones: '/Merchant/GetAllZones',
+    Block: '/Merchant/Block',
   },
 
   Terminal: {

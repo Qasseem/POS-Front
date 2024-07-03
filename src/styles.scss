@@ -186,6 +186,15 @@ body {
   font-size: 24px;
 }
 
+.p-dropdown {
+  .p-dropdown-panel .p-dropdown-header {
+    padding: 10px 5px !important;
+    .p-inputtext {
+      height: 30px !important;
+    }
+  }
+}
+
 app-merchant-form {
   p-divider {
     .p-divider-solid.p-divider-horizontal:before {
