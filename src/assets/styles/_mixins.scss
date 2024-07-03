@@ -20,7 +20,7 @@
     }
   }
   @if ($breakpoint == up-xxl) {
-    @media (min-width: 1900px) {
+    @media (min-width: 1800px) {
       @content;
     }
   }

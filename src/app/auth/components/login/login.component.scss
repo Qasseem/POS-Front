@@ -1,3 +1,4 @@
+@import "../../../../assets/styles/mixins";
 .login-container {
   display: flex;
   justify-content: center;
@@ -42,7 +43,9 @@ p-password {
   img {
     background: url("../../../../assets/iamges/BG.svg");
     background-repeat: no-repeat;
-    background-size: 100% 75%;
+    @include breakpoints(up-xxl) {
+      background-size: 100% 75%;
+    }
     background-color: #001a32;
   }
 }
