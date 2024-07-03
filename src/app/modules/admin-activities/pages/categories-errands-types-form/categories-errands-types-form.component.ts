@@ -41,7 +41,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       ],
       nameAr: ['', [Validators.pattern(arabicLetterPattern)]],
       serviceLevel: ['', Validators.required],
-      isActive: [null, Validators.required],
+      requireQuantity: [null, Validators.required],
       id: [null],
     });
 

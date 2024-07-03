@@ -150,18 +150,22 @@
         </div>
         <div class="col-12 p-lr pb-16">
           <div class="col-12 displayFlex align-item-center">
-            <p-checkbox formControlName="isActive" binary="true"></p-checkbox>
-            <label class="isActive" for="isActive"
+            <p-checkbox
+              formControlName="requireQuantity"
+              binary="true"
+            ></p-checkbox>
+            <label class="requireQuantity" for="requireQuantity"
               >Require Qty <span class="p-error"> * </span></label
             >
             <div
               *ngIf="
-                f.isActive.errors && (f.isActive.dirty || f.isActive.touched)
+                f.requireQuantity.errors &&
+                (f.requireQuantity.dirty || f.requireQuantity.touched)
               "
               class="invalid-feedback"
             >
               <div class="fs-10 color-red">
-                <span *ngIf="f.isActive.errors.required">
+                <span *ngIf="f.requireQuantity.errors.required">
                   Require Qty field is required
                 </span>
               </div>
