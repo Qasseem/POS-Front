@@ -48,6 +48,10 @@ export class AdminActivitiesService {
     return this.http.postReq(APIURL.ErrandsType.addErrandType, data);
   }
 
+  getCategoriesFixed() {
+    return this.http.getReq(APIURL.Ticket.GetTicketCategory);
+  }
+
   // Favorite(data) {
   //   return this.http.postReq(APIURL.Merchant.Favorite, data);
   // }
