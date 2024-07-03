@@ -362,3 +362,22 @@ label {
   margin-left: 10px;
   margin-right: 10px;
 }
+:host ::ng-deep {
+  chevrondownicon {
+    svg {
+      height: 12px;
+    }
+  }
+  timesicon {
+    svg {
+      margin-top: -6px;
+      height: 12px;
+    }
+  }
+  .p-dropdown-label {
+    font-size: 12px;
+  }
+  .p-inputtext {
+    font-size: 12px;
+  }
+}

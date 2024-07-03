@@ -217,6 +217,19 @@ export class TicketFormComponent implements OnInit {
               this.errandTypes = res.data;
             },
           });
+          (this.ticketForm.get('errandTypes') as FormArray).clear();
+          this.addErrandType({ errandTypeId: null, quantity: null });
+          if (categoryId == '1') {
+            this.ticketForm.get('terminalId').clearValidators();
+            this.ticketForm.get('terminalId').disable();
+            this.ticketForm.get('terminalId').updateValueAndValidity();
+          } else {
+            this.ticketForm
+              .get('terminalId')
+              .addValidators([Validators.required]);
+            this.ticketForm.get('terminalId').enable();
+            this.ticketForm.get('terminalId').updateValueAndValidity();
+          }
         }
       },
     });
@@ -284,14 +297,14 @@ export class TicketFormComponent implements OnInit {
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       address: [null, Validators.required],
-      landMark: [null, [Validators.required]],
+      landMark: [null],
       attachmentsBase64: this.fb.array([]),
       errandTypes: this.fb.array([], Validators.required),
       id: [null],
     });
 
     if (this.formType == 'add')
-      this.addErrandType({ errandTypeId: null, quantity: 0 });
+      this.addErrandType({ errandTypeId: null, quantity: null });
   }
   addErrandType(data) {
     const group = this.fb.group({

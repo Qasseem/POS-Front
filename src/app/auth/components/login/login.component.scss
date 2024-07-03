@@ -38,6 +38,14 @@ p-password {
   cursor: pointer;
   margin-top: 10px;
 }
+:host ::ng-deep .gif-container {
+  img {
+    background: url("../../../../assets/iamges/BG.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 75%;
+    background-color: #001a32;
+  }
+}
 
 .login-center {
   width: 50%;

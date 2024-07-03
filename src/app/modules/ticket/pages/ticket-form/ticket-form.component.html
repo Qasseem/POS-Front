@@ -5,7 +5,7 @@
         (click)="backToList()"
         class="mt-2 ml-3 header-left"
         style="color: #0080f9; cursor: pointer"
-        >Terminal</span
+        >Ticket</span
       >
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left"
@@ -139,7 +139,10 @@
                   </div>
                 </div>
               </div>
-              <div class="addons">
+              <div
+                class="addons"
+                *ngIf="ticketForm.get('categoryId').value != '1'"
+              >
                 <div class="add-item" (click)="addErrandType(errandTypeModel)">
                   <i class="pi pi-plus-circle"></i>
                 </div>
@@ -181,7 +184,15 @@
                 </div>
               </div>
               <div class="control">
-                <label> Terminal <span class="p-error"> * </span></label>
+                <label>
+                  Terminal
+                  <span
+                    class="p-error"
+                    *ngIf="ticketForm.get('terminalId')?.errors?.required"
+                  >
+                    *
+                  </span></label
+                >
                 <p-dropdown
                   [options]="terminals"
                   [optionLabel]="'terminalId'"
@@ -589,7 +600,7 @@
                       pInputText
                       formControlName="landMark"
                     />
-                    <div
+                    <!-- <div
                       *ngIf="
                         ticketForm.get('landMark').errors &&
                         (ticketForm.get('landMark').dirty ||
@@ -603,7 +614,7 @@
                       >
                         Landmark field is required
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>

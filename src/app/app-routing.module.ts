@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NotAuthComponent } from './auth/components/not-auth/not-auth.component';
 import { NotFoundComponent } from './auth/components/not-found/not-found.component';
-import { AuthGuard } from './core/Guards/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,7 +25,7 @@ const routes: Routes = [
     component: NotAuthComponent,
   },
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/404', pathMatch: 'full' },
+  { path: '**', redirectTo: '404', pathMatch: 'full' },
 ];
 
 const config: ExtraOptions = {
