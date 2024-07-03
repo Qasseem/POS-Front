@@ -17,12 +17,6 @@ import { APIURL } from 'src/app/services/api';
   styleUrls: ['./tickets-list.component.scss'],
 })
 export class TicketsListComponent implements OnInit {
-  // addToFavorite(row: any): any {
-  //   this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-  //     if (resp.success) {
-  //     }
-  //   });
-  // }
   public url = APIURL;
 
   editItem(row: any): any {

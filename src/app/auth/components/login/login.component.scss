@@ -1,3 +1,4 @@
+@import "../../../../assets/styles/mixins";
 .login-container {
   display: flex;
   justify-content: center;
@@ -37,6 +38,16 @@ p-password {
   color: blue;
   cursor: pointer;
   margin-top: 10px;
+}
+:host ::ng-deep .gif-container {
+  img {
+    background: url("../../../../assets/iamges/BG.svg");
+    background-repeat: no-repeat;
+    @include breakpoints(up-xxl) {
+      background-size: 100% 75%;
+    }
+    background-color: #001a32;
+  }
 }
 
 .login-center {
