@@ -1,14 +1,19 @@
 <div class="view-container">
   <div class="view-container--card">
     <div
-      class="view-container--card--header-container"
       [ngClass]="{
         merchantHeight: cid == 'merchant',
-        terminalHeight: cid == 'terminal'
+        terminalHeight: cid == 'terminal',
+        ticketHeight: cid == 'ticket',
+        'view-container--card--header-container':
+          cid == 'terminal' || cid == 'merchant',
+        'view-container--card--header-custom-container': cid == 'ticket'
       }"
     >
       <ng-container
-        [ngTemplateOutlet]="cid == 'merchant' ? merchant : terminal"
+        [ngTemplateOutlet]="
+          cid == 'merchant' ? merchant : cid == 'terminal' ? terminal : ticket
+        "
       ></ng-container>
       <ng-template #merchant>
         <div class="view-container--card--header-container--header">
@@ -51,29 +56,119 @@
           </div>
         </div>
       </ng-template>
-    </div>
-    <div class="view-container--card--details">
-      <div class="view-container--card--details--item">
-        <div class="color-info">Reference</div>
-        <div class="">{{ details?.reference }}</div>
-      </div>
-      <div class="view-container--card--details--item">
-        <div class="color-info">Merchant ID</div>
-        <div class="">{{ details?.id }}</div>
-      </div>
-
-      <div class="view-container--card--details--item">
-        <div class="color-info">Created by</div>
-        <div class="">{{ details?.createdBy }}</div>
-      </div>
-      <div class="view-container--card--details--item">
-        <div class="color-info">Created at</div>
-        <div class="">
-          {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+      <ng-template #ticket>
+        <div class="view-container--card--header-custom-container--header">
+          <div
+            class="view-container--card--header-custom-container--header--title"
+          >
+            <label for="terminalId">Ticket ID :</label>
+            <span>{{ details?.id }}</span>
+          </div>
+          <p-divider></p-divider>
+          <div
+            class="view-container--card--header-custom-container--header--text"
+          >
+            <label for="merchantNameEn">{{ details?.merchantEn }}</label>
+          </div>
+          <div
+            class="view-container--card--header-custom-container--header--text"
+          >
+            <label for="merchantNameAr">{{ details?.merchantAr }}</label>
+          </div>
+          <div
+            class="view-container--card--header-custom-container--header--text-label"
+          >
+            <label for="merchantId">Merchant ID:</label>
+            <span>{{ details?.merchantId }}</span>
+          </div>
         </div>
-      </div>
+        <div
+          class="view-container--card--header-custom-container--header--card-divider"
+        ></div>
+      </ng-template>
     </div>
-    <p-divider />
+    <div
+      [ngClass]="{
+        'view-container--card--details': cid == 'merchant' || cid == 'terminal',
+        'view-container--card--custom-details': cid == 'ticket'
+      }"
+    >
+      <ng-container
+        [ngTemplateOutlet]="cid == 'ticket' ? ticketDetails : defaultDetails"
+      >
+        <ng-template #defaultDetails>
+          <div class="view-container--card--details--item">
+            <div class="color-info">Reference</div>
+            <div class="">{{ details?.reference }}</div>
+          </div>
+          <div class="view-container--card--details--item">
+            <div class="color-info">Merchant ID</div>
+            <div class="">{{ details?.id }}</div>
+          </div>
+
+          <div class="view-container--card--details--item">
+            <div class="color-info">Created by</div>
+            <div class="">{{ details?.createdBy }}</div>
+          </div>
+          <div class="view-container--card--details--item">
+            <div class="color-info">Created at</div>
+            <div class="">
+              {{ details?.createdAt | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+            </div>
+          </div>
+        </ng-template>
+        <ng-template #ticketDetails>
+          <div class="view-container--card--custom-details--category-item">
+            <!-- <div class="color-info">Reference</div> -->
+            <div
+              class="view-container--card--custom-details--category-item--text"
+            >
+              {{ details?.categoryNameEn }}
+            </div>
+          </div>
+          <div
+            class="view-container--card--custom-details--errand-type-container"
+          >
+            <div
+              class="view-container--card--custom-details--errand-type-container--title"
+            >
+              Errand Type
+            </div>
+            <div
+              class="view-container--card--custom-details--errand-type-container--items"
+            >
+              <div
+                class="view-container--card--custom-details--errand-type-container--items--item"
+                *ngFor="let item of details?.errandType"
+              >
+                <div
+                  class="view-container--card--custom-details--errand-type-container--items--item--name"
+                >
+                  <div
+                    class="view-container--card--custom-details--errand-type-container--items--item--name--bullet"
+                  >
+                    <div
+                      class="view-container--card--custom-details--errand-type-container--items--item--name--bullet--dot"
+                    ></div>
+                  </div>
+                  <div
+                    class="view-container--card--custom-details--errand-type-container--items--item--name--text"
+                  >
+                    <span>{{ item?.errandTypeEn }}</span>
+                  </div>
+                </div>
+                <div
+                  class="view-container--card--custom-details--errand-type-container--items--item--quantity"
+                >
+                  <label for="quantity"> Qty:&nbsp; {{ item.quantity }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ng-container>
+      <p-divider />
+    </div>
     <div class="view-container--card--location-details-container">
       <div
         class="view-container--card--location-details-container--icon-container"
@@ -104,7 +199,7 @@
             >
             <span
               class="view-container--card--location-details-container--details--item--text"
-              >{{ details?.address.LongLabel }}</span
+              >{{ details?.address?.LongLabel }}</span
             >
           </div>
           <div
@@ -259,9 +354,15 @@
       </div>
     </div>
 
-    <p-divider />
+    <p-divider *ngIf="cid == 'merchant' || cid == 'terminal'" />
     <ng-container
-      [ngTemplateOutlet]="cid == 'merchant' ? merchantStats : terminalStats"
+      [ngTemplateOutlet]="
+        cid == 'merchant'
+          ? merchantStats
+          : cid == 'terminal'
+          ? terminalStats
+          : ticketStats
+      "
     >
       <ng-template #merchantStats>
         <div class="view-container--card--chart-container">
@@ -345,6 +446,7 @@
           </div>
         </div>
       </ng-template>
+      <ng-template #ticketStats></ng-template>
     </ng-container>
 
     <div class="view-container--card--image" *ngIf="cid == 'merchant'"></div>

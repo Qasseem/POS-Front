@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MerchantComponent } from './merchant.component';
-import { MerchantListComponent } from './pages/merchant-list/merchant-list.component';
-import { MerchantFormComponent } from './pages/merchant-form/merchant-form.component';
-import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.component';
 import { MerchantFavoriteListComponent } from './pages/merchant-favorite-list/merchant-favorite-list.component';
+import { MerchantFormComponent } from './pages/merchant-form/merchant-form.component';
+import { MerchantListComponent } from './pages/merchant-list/merchant-list.component';
+import { ViewMerchantComponent } from './pages/view-merchant/view-merchant.component';
 
 const routes: Routes = [
   {
@@ -16,45 +16,39 @@ const routes: Routes = [
         path: 'add',
         component: MerchantFormComponent,
         data: {
-          type: 'add'
-        }
-
+          type: 'add',
+        },
       },
       {
         path: 'list',
-        component: MerchantListComponent
-
+        component: MerchantListComponent,
       },
       {
         path: 'favorites',
-        component: MerchantFavoriteListComponent
-
+        component: MerchantFavoriteListComponent,
       },
       {
         path: '',
-        component: MerchantListComponent
-
+        component: MerchantListComponent,
       },
       {
         path: 'edit/:id',
         component: MerchantFormComponent,
         data: {
-          type:'edit'
-        }
-
+          type: 'edit',
+        },
       },
       {
         path: 'details/:id',
-        component: ViewMerchantComponent
-
+        component: ViewMerchantComponent,
       },
-      { path: '', redirectTo: 'list', pathMatch: 'full' },
     ],
   },
+  { path: '', redirectTo: '/main/merchant/list', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MerchanRoutingtModule { }
+export class MerchanRoutingtModule {}

@@ -1,3 +1,4 @@
+@import "../../../../../assets/styles/mixins";
 svg {
   display: inline-block;
   position: absolute;
@@ -17,11 +18,28 @@ svg {
   font-size: 12px;
   margin: 0.5rem;
   gap: 1rem;
+  @include breakpoints(up-xl) {
+    margin: 0.5rem;
+    gap: 1.25rem;
+  }
+  @include breakpoints(up-xxl) {
+    gap: 1.75rem;
+    margin: 0;
+  }
   &--card {
     width: 30%;
+    margin-left: 1rem;
   }
   &--list {
     width: 70%;
+  }
+}
+:host ::ng-deep .header-divider .p-divider {
+  width: 99%;
+  right: 0.25rem;
+  margin: 0.15rem 0 1rem 1rem;
+  &::before {
+    border-top: 1px solid #e5e7eb79;
   }
 }
 

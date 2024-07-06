@@ -1,3 +1,212 @@
-<p>
-  view-ticket works!
-</p>
+<div>
+  <div class="grid font-14 ml-2 m-2 mb-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Ticket</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">{{ details?.id }}</span>
+    </div>
+  </div>
+  <p-divider class="header-divider" />
+
+  <div class="view-container">
+    <div class="view-container--card">
+      <oc-view-card
+        [details]="details"
+        [formType]="'view'"
+        [coordinates]="coordinates"
+        [cid]="'ticket'"
+      ></oc-view-card>
+    </div>
+    <!-- //////////////// -->
+
+    <div class="view-container--details-card">
+      <div class="view-container--details-card--title">Ticket Details</div>
+      <p-divider></p-divider>
+      <div class="view-container--details-card--addons">
+        <div class="view-container--details-card--addons--title">Addons</div>
+        <div class="view-container--details-card--addons--items">
+          <div class="view-container--details-card--addons--items--item"></div>
+        </div>
+        <div class="view-container--details-card--addons--empty">
+          No addons !
+        </div>
+        <p-divider></p-divider>
+      </div>
+      <div class="view-container--details-card--info">
+        <div class="view-container--details-card--info--container">
+          <div class="view-container--details-card--info--container--left">
+            <div
+              class="view-container--details-card--info--container--left--item"
+            >
+              <div
+                class="view-container--details-card--info--container--left--item--label"
+              >
+                <label for="username">Username</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--left--item--text"
+              >
+                {{ details?.merchantUsername }}
+              </div>
+            </div>
+            <div
+              class="view-container--details-card--info--container--left--item"
+            >
+              <div
+                class="view-container--details-card--info--container--left--item--label"
+              >
+                <label for="assignee">Assignee</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--left--item--text"
+              >
+                {{ details?.assignee }}
+              </div>
+            </div>
+            <div
+              class="view-container--details-card--info--container--left--item"
+            >
+              <div
+                class="view-container--details-card--info--container--left--item--label"
+              >
+                <label for="pos-type">POS type</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--left--item--text"
+              >
+                {{ details?.posTypeEn }}
+              </div>
+            </div>
+            <div
+              class="view-container--details-card--info--container--left--item"
+            >
+              <div
+                class="view-container--details-card--info--container--left--item--label"
+              >
+                <label for="errand-channel">Errand Channel</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--left--item--text"
+              >
+                {{ details?.errandChannelEn }}
+              </div>
+            </div>
+          </div>
+          <div class="view-container--details-card--info--container--right">
+            <div
+              class="view-container--details-card--info--container--right--item"
+            >
+              <div
+                class="view-container--details-card--info--container--right--item--label"
+              >
+                <label for="created-by">Created By</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--right--item--container"
+              >
+                <div
+                  class="view-container--details-card--info--container--right--item--container--image"
+                >
+                  <img
+                    src="{{
+                      details?.imgUrl
+                        ? details?.imgUrl
+                        : 'assets/iamges/default-avatar.png'
+                    }}"
+                    alt=""
+                  />
+                </div>
+                <div
+                  class="view-container--details-card--info--container--right--item--container--text"
+                >
+                  {{ details?.creator }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="view-container--details-card--info--container--right--item"
+            >
+              <div
+                class="view-container--details-card--info--container--right--item--label"
+              >
+                <label for="created-at">Created At</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--right--item--text"
+              ></div>
+            </div>
+            <div
+              class="view-container--details-card--info--container--right--item"
+            >
+              <div
+                class="view-container--details-card--info--container--right--item--label"
+              >
+                <label for="created-at">Due At</label>
+              </div>
+              <div
+                class="view-container--details-card--info--container--right--item--text"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-divider></p-divider>
+      <div class="view-container--details-card--info--attachments">
+        <div class="view-container--details-card--info--attachments--title">
+          Attached Files
+        </div>
+        <div
+          class="view-container--details-card--info--attachments--items"
+          *ngIf="details?.attachments?.length"
+        >
+          <div
+            class="view-container--details-card--info--attachments--items--item"
+            *ngFor="let item of details?.attachments; let i = index"
+          >
+            <div
+              class="view-container--details-card--info--attachments--items--item--info"
+            >
+              <div
+                class="view-container--details-card--info--attachments--items-item--info--icon"
+              >
+                <oc-icon
+                  [icon]="'attachment-icon'"
+                  width="24px"
+                  height="24px"
+                ></oc-icon>
+              </div>
+              <div
+                class="view-container--details-card--info--attachments--items-item--info--text"
+              >
+                {{ "Example File " + (i + 1) }}
+              </div>
+            </div>
+            <div
+              class="view-container--details-card--info--attachments--items--item--download"
+              (click)="
+                downloadImage(item?.attachmentUrl, 'Example File ' + (i + 1))
+              "
+            >
+              <oc-icon
+                [icon]="'download-icon'"
+                width="20px"
+                height="20px"
+              ></oc-icon>
+            </div>
+          </div>
+        </div>
+        <div
+          class="view-container--details-card--info--attachments--items-empty"
+          *ngIf="!details?.attachments?.length"
+        >
+          No Files Uploaded!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

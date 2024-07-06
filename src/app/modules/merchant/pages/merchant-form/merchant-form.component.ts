@@ -22,6 +22,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   orignalZones = [];
   orignalCities = [];
   formType = 'add';
+  coordinates;
   constructor(
     private fb: FormBuilder,
     private merchantService: MerchantService,
@@ -91,6 +92,10 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
             this.details = resp.data;
             if (this.details) {
               this.form.patchValue(this.details);
+              this.coordinates = {
+                lat: this.form.get('latitude').value,
+                lng: this.form.get('longitude').value,
+              };
               this.form.updateValueAndValidity();
             }
           }

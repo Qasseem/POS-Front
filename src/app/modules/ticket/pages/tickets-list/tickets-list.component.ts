@@ -24,12 +24,12 @@ export class TicketsListComponent implements OnInit {
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
+    const URL = `/home/ticket/info/${row?.tickedId}`;
     return URL;
   }
   goToDetails(row: any): any {
-    const id = row.id;
-    const URL = `main/ticket/details/${row?.id}`;
+    const id = row.tickedId;
+    const URL = `/main/ticket/details/${id}`;
     return URL;
   }
 

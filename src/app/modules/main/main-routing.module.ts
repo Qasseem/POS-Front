@@ -56,12 +56,12 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
-      {
-        path: '',
-        redirectTo: 'merchant',
-        pathMatch: 'full',
-      },
     ],
+  },
+  {
+    path: '',
+    redirectTo: '/main/merchant/list',
+    pathMatch: 'full',
   },
 ];
 @NgModule({
