@@ -484,6 +484,9 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
         relativeTo: this.route.parent,
       });
     } else {
+      if (!rowData.id && rowData.ticketId) {
+        rowData.id = rowData.ticketId;
+      }
       return this.router.navigate(['details', rowData?.id], {
         relativeTo: this.route.parent,
       });

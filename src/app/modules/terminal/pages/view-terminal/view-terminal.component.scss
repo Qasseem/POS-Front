@@ -16,20 +16,29 @@ svg {
 .view-container {
   display: flex;
   font-size: 12px;
-  @include breakpoints(up-lg) {
-    margin: 0.5rem;
+  @include breakpoints(up-xxl) {
+    margin: 1rem;
     gap: 1rem;
   }
-  @include breakpoints(up-md) {
-    gap: 0.25rem;
+  @include breakpoints(up-xl) {
+    gap: 1.75rem;
     margin: 0;
   }
 
   &--card {
     width: 30%;
+    margin-left: 1rem;
   }
   &--list {
     width: 70%;
+  }
+}
+:host ::ng-deep .header-divider .p-divider {
+  width: 99%;
+  right: 0.25rem;
+  margin: 0.15rem 0 1rem 1rem;
+  &::before {
+    border-top: 1px solid #e5e7eb79;
   }
 }
 
@@ -46,10 +55,10 @@ svg {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adjust the offset, blur, and color as needed */
 }
 
-::ng-deep .p-divider {
-  width: 90%;
-  margin: auto;
-}
+// ::ng-deep .p-divider {
+//   width: 90%;
+//   margin: auto;
+// }
 
 ::ng-deep .p-progressbar {
   height: 15px;

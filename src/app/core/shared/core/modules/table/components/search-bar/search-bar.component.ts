@@ -108,8 +108,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
-    console.log(this.buttonsExistance);
-
     //check if there is any history for the activated page
     if (this.tableCoreService.gridSearchHistory[this.router.url]) {
       //assign the search ker if exist in history obj
@@ -162,8 +160,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.filtersInput.find((x) => x.field == item.field).ddlData =
           resp.data;
       } else {
-        console.log(item);
-
         resp.data?.data.forEach((item) => {
           item?.code ? (item.code = item.code.trim()) : '';
         });
@@ -376,7 +372,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
   navigateToAdd() {
-    console.log(this.router.url);
     if (this.router.url?.endsWith('all')) {
       return this.router.navigate(['../add'], {
         relativeTo: this.route.parent,
@@ -410,7 +405,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
       .import(this.url.import, formData)
       .subscribe((resp) => {
         if (resp.success) {
-          console.log(resp);
           this.visible = false;
           location.reload();
         }

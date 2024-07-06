@@ -53,14 +53,15 @@ export class ErrorHandlingInterceptor implements HttpInterceptor {
               event.body.status !== 403 &&
               !request.url.includes('lon=')
             )
-              this.toaster.showError(event.body.message);
-            else if (event.body.status === 403) {
-              this.toaster.showWarning(event.body.message);
-            } else if (event.body.status === 404)
-              this.router.navigate(['/404']);
-            else if (event.body.status === 401) this.clearStorage();
-            else if (event.body.message)
-              this.toaster.showSuccess(event.body.message);
+              if (event.body.message)
+                this.toaster.showError(event.body.message);
+              else if (event.body.status === 403) {
+                this.toaster.showWarning(event.body.message);
+              } else if (event.body.status === 404)
+                this.router.navigate(['/404']);
+              else if (event.body.status === 401) this.clearStorage();
+              else if (event.body.message)
+                this.toaster.showSuccess(event.body.message);
           }
         },
         (error: any) => {

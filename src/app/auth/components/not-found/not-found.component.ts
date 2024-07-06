@@ -14,7 +14,7 @@ export class NotFoundComponent implements OnInit {
 
   backToHome() {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/main']).then(() => {
+      this.router.navigate(['/main/merchant/list']).then(() => {
         window.location.reload();
       });
     } else {
