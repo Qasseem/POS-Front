@@ -22,9 +22,9 @@ export class TerminalFavoriteListComponent {
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,
-    showExport: true,
+    showExport: false,
     showFilter: true,
-    showImport: true,
+    showImport: false,
   };
   public columns: ColumnsInterface[] = [
     {
@@ -87,9 +87,9 @@ export class TerminalFavoriteListComponent {
       call: (row: any) => this.blockItem(row),
     },
     {
-      name: 'Add to favorite ',
+      name: 'Unfavorite',
       icon: 'pi pi-heart',
-      call: (row: any) => this.addToFavorite(row),
+      call: (row: any) => this.removeFromFavorite(row),
     },
   ];
 
@@ -185,11 +185,13 @@ export class TerminalFavoriteListComponent {
     const URL = `main/terminal/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
-  addToFavorite(row: any): any {
-    this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-      if (resp.success) {
-      }
-    });
+  removeFromFavorite(row: any): any {
+    this.service
+      .Favorite({ id: row?.id, isFavorite: false })
+      .subscribe((resp) => {
+        if (resp.success) {
+        }
+      });
   }
   blockItem(row: any): any {
     const URL = `/home/customers/info/${row?.id}`;
