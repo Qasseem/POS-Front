@@ -1,11 +1,8 @@
-<div class="p-grid ml-2 m-2">
-  <div class="p-col" style="text-align: right">
-    <span class="mt-2" style="float: left; font-weight: bolder">Terminal</span>
-    <p-button (click)="navigateToAdd()" label="Add Terminal" size="small">
-      <span class="ml-1 mr-1 add">
-        <i class="pi pi-plus add-icon"></i>
-      </span>
-    </p-button>
+<div class="p-grid ml-2 m-2 col-12">
+  <div class="p-col col-12" style="text-align: left; margin: 0; padding: 0">
+    <p style="font-weight: bolder; margin-bottom: 0px; margin-top: 0">
+      Favorite Terminal
+    </p>
   </div>
 </div>
 <div class="mt-3">
@@ -13,18 +10,12 @@
     [showSearchBar]="true"
     [url]="{
       getAll: url.Terminal.GetFavoriteTerminalGrid,
-      export: url.Terminal.Export,
-      import: url.Terminal.ImportTerminals
     }"
-    [addButtonLabel]="'Add Terminal'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Terminal.Export"
     [actions]="actions"
     [options]="{ check: false }"
     [filters]="filters"
-    [uploadHeader]="'Upload Bulk Terminal'"
-    [sampleName]="'ImportTerminalSample.xlsx'"
   >
   </oc-table>
 </div>

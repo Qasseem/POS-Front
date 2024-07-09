@@ -19,13 +19,12 @@ import { MerchantService } from '../../services/merchant.service';
 export class MerchantFavoriteListComponent implements OnInit {
   public url = APIURL;
 
-
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
-    showAdd: true,
-    showExport: true,
+    showAdd: false,
+    showExport: false,
     showFilter: true,
-    showImport: true,
+    showImport: false,
   };
   public columns: ColumnsInterface[] = [
     {
@@ -124,9 +123,9 @@ export class MerchantFavoriteListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: MerchantService) { }
+  constructor(private router: Router, private service: MerchantService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
@@ -139,7 +138,6 @@ export class MerchantFavoriteListComponent implements OnInit {
   }
   editItem(row: any): any {
     const URL = `main/merchant/edit/${row?.id}`;
-    console.log(URL);
     this.router.navigate([URL]);
   }
 
@@ -150,9 +148,6 @@ export class MerchantFavoriteListComponent implements OnInit {
 
   goToDetails(row: any): any {
     const URL = `main/merchant/details/${row?.id}`;
-    console.log(URL);
-
     return URL;
   }
-
 }
