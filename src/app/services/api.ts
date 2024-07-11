@@ -79,7 +79,7 @@ export const APIURL = {
     getAllManagerDropdown: '/User/GetAllManagerDropDown',
     getAllUsersTypeDropdown: '/User/GetAllUserTypeDropDown',
     checkUsernameExistence: '/User/CheckExistenceUsername',
-    geUserById: '/User/GetUser/',
+    geUserById: '/User/GetUser',
     deleteUser: '/User/Delete/',
     blockUser: '/User/Block',
     updateUser: '/User/UpdateUser',
