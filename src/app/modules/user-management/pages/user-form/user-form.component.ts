@@ -27,11 +27,7 @@ export class UserFormComponent {
   details: any;
   selectedImages: any = {};
   previewImage: string;
-  userTypes = [
-    { label: 'System User', value: 0 },
-    { label: 'Service Agent', value: 1 },
-    { label: 'Sales Agent', value: 3 },
-  ];
+  userTypes = [];
   profileImage: string | ArrayBuffer | null = null;
   fileName: string | null = null;
 
@@ -51,7 +47,7 @@ export class UserFormComponent {
 
     this.form = this.fb.group(
       {
-        imageBase64String: [''],
+        imageBase64String: [null],
         firstName: ['', [Validators.required, Validators.pattern(namePattern)]],
         lastName: ['', [Validators.required, Validators.pattern(namePattern)]],
         userName: [
@@ -67,10 +63,10 @@ export class UserFormComponent {
           [Validators.required, Validators.pattern(phoneNumberValidation)],
         ],
         nationalId: [''],
-        nationalIdBase64String: [''],
+        nationalIdBase64String: [null],
         userType: [null, Validators.required],
         managerId: [null],
-        rolesIds: [null, Validators.required],
+        rolesIds: [[], Validators.required],
         id: [null],
         isManager: [false],
         regionId: [null, Validators.required],
@@ -88,11 +84,6 @@ export class UserFormComponent {
       },
       { validators: PasswordMatchValidator('password', 'confirmPassword') }
     );
-
-    // this.form.valueChanges.subscribe(() => {
-    //   console.log(this.form);
-
-    // })
   }
   onFileSelectedNationalId(event: any) {
     const file = event.target.files[0];
@@ -129,7 +120,6 @@ export class UserFormComponent {
         this.getItemDetails();
       }
     }
-    // this.getAllMerchantCategories();
     this.GetUsersDropdownValues();
   }
   GetUsersDropdownValues() {
@@ -151,6 +141,17 @@ export class UserFormComponent {
         next: (resp) => {
           if (resp.success) {
             this.managerIdsLists = resp.data;
+          }
+        },
+      });
+
+    this.userService
+      ?.getAllUsersTypeDropDown()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (resp) => {
+          if (resp.success) {
+            this.userTypes = resp.data;
           }
         },
       });
@@ -235,6 +236,11 @@ export class UserFormComponent {
             this.details = resp.data;
             if (this.details) {
               this.form.patchValue(this.details);
+              if (resp.data.rolesIds) {
+                this.form.get('rolesIds').setValue(resp.data.rolesIds);
+              }
+              this.profileImage = resp.data.imageUrl;
+              this.fileName = resp.data.nationalIdUrl;
               this.form.updateValueAndValidity();
             }
           }
@@ -250,16 +256,30 @@ export class UserFormComponent {
       delete obj.id;
     }
     obj = this.refactorObjectBeforeSubmit(obj);
-    this.userService
-      .Save(this.form.value)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            this.backToList();
-          }
-        },
-      });
+
+    if (this.formType == 'add') {
+      this.userService
+        .Save(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    } else {
+      this.userService
+        .UpdateUser(this.form.value)
+        .pipe(takeWhile(() => this.alive))
+        .subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.backToList();
+            }
+          },
+        });
+    }
   }
 
   refactorObjectBeforeSubmit(object) {
@@ -276,5 +296,9 @@ export class UserFormComponent {
 
   backToList() {
     this.router.navigate(['main/user-management/user/list']);
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }

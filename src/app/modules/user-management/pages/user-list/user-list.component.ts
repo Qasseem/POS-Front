@@ -25,16 +25,11 @@ export class UserListComponent implements OnInit {
   public url = APIURL;
 
   editItem(row: any): any {
-    const URL = `main/user/edit/${row?.id}`;
+    const URL = `main/user-management/user/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
     const URL = `/home/customers/info/${row?.id}`;
-    return URL;
-  }
-  goToDetails(row: any): any {
-    const id = row.id;
-    const URL = `main/user/details/${row?.id}`;
     return URL;
   }
 

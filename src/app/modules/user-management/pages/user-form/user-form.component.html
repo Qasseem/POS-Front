@@ -335,9 +335,10 @@
                   <p-radioButton
                     *ngFor="let userType of userTypes"
                     name="userType"
-                    [value]="userType.value"
+                    [value]="userType.id"
                     formControlName="userType"
-                    [label]="userType.label"
+                    [label]="userType.nameEn"
+                    [checked]="userType.id === form.get('userType').value"
                   >
                   </p-radioButton>
                 </div>

@@ -23,4 +23,12 @@ export class UserService {
   getAllUsers() {
     return this.http.getReq(APIURL.Users.GetAllUsersDropDown);
   }
+
+  UpdateUser(id) {
+    return this.http.postReq(APIURL.Users.updateUser, id);
+  }
+
+  getAllUsersTypeDropDown() {
+    return this.http.getReq(APIURL.Users.getAllUsersTypeDropdown);
+  }
 }
