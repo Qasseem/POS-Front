@@ -8,8 +8,8 @@
     "save": "Save",
     "submit": "Submit"
   },
-  "table":{
-    "noDataToDisplay":"No data to display"
+  "table": {
+    "noDataToDisplay": "No data to display"
   },
   "validations": {
     "mustMatch": "Passwords must match",
@@ -194,15 +194,16 @@
     "nationalId": "National Id",
     "role": "Role",
     "manager": "Manager",
-    "region" :"Region",
-    "username" : "Username",
-    "email" : "Email",
-    "ticketId" : "Ticket Id",
-    "merchantEn" : "Merchant Name",
-    "overdue" : "Overdue",
-    "assignee" : "Assignee"
+    "region": "Region",
+    "username": "Username",
+    "email": "Email",
+    "ticketId": "Ticket Id",
+    "merchantEn": "Merchant Name",
+    "overdue": "Overdue",
+    "assignee": "Assignee",
+    "feedback": "Feedback"
   },
-  "merchants" : {
-    "blocked-merchant" : "Merchant Has been blocked"
+  "merchants": {
+    "blocked-merchant": "Merchant Has been blocked"
   }
 }

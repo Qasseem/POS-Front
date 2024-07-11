@@ -27,7 +27,6 @@ export class TerminalListComponent implements OnInit {
 
   editItem(row: any): any {
     const URL = `main/terminal/edit/${row?.id}`;
-    console.log(URL);
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
@@ -143,7 +142,7 @@ export class TerminalListComponent implements OnInit {
       field: 'users',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
-      method: HTTPMethods.postReq,
+      method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {

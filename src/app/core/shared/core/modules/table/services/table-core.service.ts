@@ -44,10 +44,13 @@ export class TableCoreService {
    * @returns {Observable<any>}
    * @memberof TableCoreService
    */
-  getAllData(url: string, refId?: number): Observable<any> {
+  getAllData(url: string, params?: any): Observable<any> {
     this.tableData = [];
     let options = this.getRequestObject();
-    options = { ...options, refId: refId };
+    if (params && !Object.keys(params).includes('refId')) {
+      delete options.refId;
+    }
+    options = { ...options, ...params };
     options = this.getSearchHistory(options);
 
     return this.http.postReq(url, options).pipe(
@@ -179,6 +182,8 @@ export class TableCoreService {
       pageNumber: this.pageOptions.offset,
       searchCriteria: this.search,
       refId: 0,
+      merchantId: 0,
+      terminalId: 0,
     };
   }
 

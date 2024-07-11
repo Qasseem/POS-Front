@@ -205,15 +205,49 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
    * @memberof TableComponent
    */
   getTableData(): void {
-    if (this.url && this.url.getAll)
+    if (this.url && this.url.getAll && !this.url.refScope && !this.url.refId) {
+      const params = { refId: this.route.snapshot.params.id };
       this.tableCore
-        .getAllData(this.url.getAll, this.route.snapshot.params.id)
+        .getAllData(this.url.getAll, params)
         .pipe(
           take(1),
           map(() => (this.data = this.tableCore.tableData)),
           finalize(() => (this.firstInit = true))
         )
         .subscribe();
+    } else if (
+      this.url &&
+      this.url.getAll &&
+      this.url.refScope &&
+      this.url.refId
+    ) {
+      switch (this.url.refScope) {
+        case 'merchantId': {
+          const merchantParams = { merchantId: parseInt(this.url.refId) };
+          this.tableCore
+            .getAllData(this.url.getAll, merchantParams)
+            .pipe(
+              take(1),
+              map(() => (this.data = this.tableCore.tableData)),
+              finalize(() => (this.firstInit = true))
+            )
+            .subscribe();
+          break;
+        }
+        case 'terminalId': {
+          const terminalParams = { terminalId: parseInt(this.url.refId) };
+          this.tableCore
+            .getAllData(this.url.getAll, terminalParams)
+            .pipe(
+              take(1),
+              map(() => (this.data = this.tableCore.tableData)),
+              finalize(() => (this.firstInit = true))
+            )
+            .subscribe();
+          break;
+        }
+      }
+    }
   }
   checkConstAction(actions) {
     if (typeof actions === 'boolean' && actions == false) {

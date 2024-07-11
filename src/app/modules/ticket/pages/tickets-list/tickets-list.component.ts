@@ -140,7 +140,7 @@ export class TicketsListComponent implements OnInit {
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'merchantEn',
+      field: 'merchant',
       isFixed: true,
       url: this.url.Terminal.GetAllMechantDropDown,
       method: HTTPMethods.getReq,
@@ -156,8 +156,13 @@ export class TicketsListComponent implements OnInit {
       propValueName: 'id',
     },
     {
-      type: SearchInputTypes.text,
+      isMultiple: false,
+      type: SearchInputTypes.select,
       field: 'overdue',
+      ddlData: [
+        { nameEn: 'True', id: true },
+        { nameEn: 'False', id: false },
+      ],
       isFixed: true,
     },
     {
@@ -166,7 +171,7 @@ export class TicketsListComponent implements OnInit {
       field: 'assignee',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
-      method: HTTPMethods.postReq,
+      method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {
@@ -195,7 +200,6 @@ export class TicketsListComponent implements OnInit {
       url: this.url.Terminal.GetAllRegions,
       method: HTTPMethods.getReq,
       propValueName: 'id',
-      header: '0',
     },
     {
       isMultiple: true,
@@ -216,6 +220,15 @@ export class TicketsListComponent implements OnInit {
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'feedback',
+      isFixed: true,
+      url: this.url.Ticket.GetAllFeedbacks,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
     },
   ];
 

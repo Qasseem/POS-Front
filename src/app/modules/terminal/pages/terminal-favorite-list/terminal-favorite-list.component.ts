@@ -121,7 +121,7 @@ export class TerminalFavoriteListComponent {
       field: 'users',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
-      method: HTTPMethods.postReq,
+      method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {

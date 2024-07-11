@@ -134,7 +134,7 @@ export class ViewMerchantComponent implements OnInit {
       field: 'users',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
-      method: HTTPMethods.postReq,
+      method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {
@@ -229,6 +229,6 @@ export class ViewMerchantComponent implements OnInit {
   }
 
   backToList() {
-    this.router.navigate(['main/merchant/all']);
+    this.router.navigate(['main/merchant/list']);
   }
 }

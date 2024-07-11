@@ -215,7 +215,8 @@ export class TicketFormComponent implements OnInit {
     this.ticketForm.get('categoryId').valueChanges.subscribe({
       next: (categoryId) => {
         if (categoryId) {
-          this.ticketForm.get('terminalId').patchValue(null);
+          if (this.formType == 'add')
+            this.ticketForm.get('terminalId').patchValue(null);
           this.service.getCategoryErrandTypes(categoryId).subscribe({
             next: (res) => {
               this.errandTypes = res.data;

@@ -160,7 +160,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
         this.filtersInput.find((x) => x.field == item.field).ddlData =
           resp.data;
       } else {
-        resp.data?.data.forEach((item) => {
+        resp.data?.data?.forEach((item) => {
           item?.code ? (item.code = item.code.trim()) : '';
         });
         this.filtersInput.find((x) => x.field == item.field).ddlData =
@@ -217,7 +217,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
     else return new UntypedFormControl([]);
   }
 
-  async search(filtersFormValue) {
+  async search() {
     this.searchFilterTriggered.emit(true);
     const toolTipData = await this.prepareTooltipData();
     //addd tool tip data with form value to store it in search history obj to retriev later
@@ -309,7 +309,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
           ? (propValue = event?.value.nameEn)
           : (propValue = event?.value.nameAr);
       }
-      this.formValueDictionary[ctrlName] = propValue;
+      this.formValueDictionary[ctrlName] = propValue ? propValue : event.value;
     }
   }
   getInputData(value, ctrlName) {

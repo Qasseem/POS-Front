@@ -3,6 +3,8 @@ export interface TableUrlInterface {
   export?: string;
   exportDetails?: string;
   getAll: string;
+  refScope?: string;
+  refId?: string;
   delete?: string;
   deleteAll?: string;
   block?: string;

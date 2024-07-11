@@ -67,6 +67,7 @@ export const APIURL = {
     GetTerminalDetails: '/Ticket/GetTerminalDetails/',
     GetTicketByStatus: '/Ticket/GetTicketByStatus',
     GoToCustomer: '/Ticket/GoToCustomer',
+    GetAllFeedbacks: '/Ticket/GetAllFeedbacks',
     TicketStart: '/Ticket/Start',
     TicketResume: '/Ticket/Resume',
     TicketPostpone: '/Ticket/Postpone',

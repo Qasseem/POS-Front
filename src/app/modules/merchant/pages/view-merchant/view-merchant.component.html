@@ -46,6 +46,8 @@
             [showSearchBar]="true"
             [url]="{
               getAll: url.Terminal.GetGrid,
+              refId: id,
+              refScope: 'merchantId',
               export: url.Terminal.Export,
               import: url.Terminal.ImportTerminals
             }"

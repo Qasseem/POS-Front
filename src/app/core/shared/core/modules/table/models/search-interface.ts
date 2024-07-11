@@ -1,7 +1,7 @@
 export interface SearchInterface {
   id?: string;
   type?: string;
-  header?: string;
+  header?: string | boolean;
   propValueName?: string;
   field?: string;
   url?: string;

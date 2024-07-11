@@ -592,7 +592,7 @@
     <tr>
       <td
         style="font-weight: bold; text-align: center; padding-top: 30px"
-        [attr.colspan]="columns.length"
+        [attr.colspan]="actions ? columns.length + 1 : columns.length"
       >
         <div *ngIf="!noDataText">
           <img src="assets/iamges/icons/Group5079.svg" alt="drag" />

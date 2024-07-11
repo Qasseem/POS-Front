@@ -27,7 +27,7 @@
     <div class="view-container--details-card">
       <div class="view-container--details-card--title">Ticket Details</div>
       <p-divider></p-divider>
-      <div class="view-container--details-card--addons">
+      <!-- <div class="view-container--details-card--addons">
         <div class="view-container--details-card--addons--title">Addons</div>
         <div class="view-container--details-card--addons--items">
           <div class="view-container--details-card--addons--items--item"></div>
@@ -36,7 +36,7 @@
           No addons !
         </div>
         <p-divider></p-divider>
-      </div>
+      </div> -->
       <div class="view-container--details-card--info">
         <div class="view-container--details-card--info--container">
           <div class="view-container--details-card--info--container--left">
@@ -114,8 +114,8 @@
                 >
                   <img
                     src="{{
-                      details?.imgUrl
-                        ? details?.imgUrl
+                      details?.creatorImageUrl
+                        ? details?.creatorImageUrl
                         : 'assets/iamges/default-avatar.png'
                     }}"
                     alt=""
@@ -138,7 +138,9 @@
               </div>
               <div
                 class="view-container--details-card--info--container--right--item--text"
-              ></div>
+              >
+                {{ details?.createDate }}
+              </div>
             </div>
             <div
               class="view-container--details-card--info--container--right--item"
@@ -150,7 +152,9 @@
               </div>
               <div
                 class="view-container--details-card--info--container--right--item--text"
-              ></div>
+              >
+                {{ details?.dueDate }}
+              </div>
             </div>
           </div>
         </div>

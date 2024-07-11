@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../../services/ticket.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +17,8 @@ export class ViewTicketComponent implements OnInit {
     private service: TicketService,
     private route: ActivatedRoute,
     private terminalService: TerminalService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {
     this.id = this.route.snapshot.params.id;
   }
@@ -51,7 +52,9 @@ export class ViewTicketComponent implements OnInit {
         this.details.address = resp.address;
       });
   }
-  backToList() {}
+  backToList() {
+    this.router.navigate(['/main/ticket/list']);
+  }
   downloadImage(url, filename) {
     this.http.get(url, { responseType: 'blob' }).subscribe({
       next: (blob: Blob) => {
