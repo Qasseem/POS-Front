@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs';
+import { ToastService } from 'src/app/core/services/toaster.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
   SearchInputTypes,
@@ -10,6 +12,8 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { APIURL } from 'src/app/services/api';
+import { DialogService } from 'src/app/services/dialog.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'oc-user-list',
@@ -17,6 +21,7 @@ import { APIURL } from 'src/app/services/api';
   styleUrl: './user-list.component.scss',
 })
 export class UserListComponent implements OnInit {
+  alive: boolean = true;
   statusList = [
     { id: 'active', name: 'Active' },
     { id: 'blocked', name: 'Blocked' },
@@ -28,9 +33,51 @@ export class UserListComponent implements OnInit {
     const URL = `main/user-management/user/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
-  blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
+  toggleBlockItem(row: any): any {
+    const isBlock = !row.isBlocked;
+    const action = isBlock ? 'block' : 'unblock';
+    this.service
+      .confirm(
+        `Are you sure you want to ${action} this item?`,
+        `${action} Item`
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.service
+            .Block({ id: row.id, isBlock })
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((response) => {
+              if (response.success) {
+                const message = isBlock
+                  ? 'Blocked successfully'
+                  : 'Unblocked successfully';
+                this.toaster.showSuccess(message);
+                row.isBlocked = isBlock; // Update the row's block status
+                this.updateActions(row);
+              }
+            });
+        }
+      });
+  }
+  updateActions(row: any) {
+    this.actions = this.actions.map((actionItem) => {
+      if (actionItem.name === 'Block' && row.isBlocked) {
+        return {
+          ...actionItem,
+          name: 'Unblock',
+          icon: 'pi pi-check',
+          call: (r: any) => this.toggleBlockItem(r),
+        };
+      } else if (actionItem.name === 'Unblock' && !row.isBlocked) {
+        return {
+          ...actionItem,
+          name: 'Block',
+          icon: 'pi pi-ban',
+          call: (r: any) => this.toggleBlockItem(r),
+        };
+      }
+      return actionItem;
+    });
   }
 
   public tableBtns: TableButtonsExistanceInterface = {
@@ -93,7 +140,7 @@ export class UserListComponent implements OnInit {
     {
       name: 'Block',
       icon: 'pi pi-ban',
-      call: (row: any) => this.blockItem(row),
+      call: (row: any) => this.toggleBlockItem(row),
     },
   ];
 
@@ -199,7 +246,12 @@ export class UserListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: TerminalService) {}
+  constructor(
+    private router: Router,
+    private service: UserService,
+    public dialogService: DialogService,
+    public toaster: ToastService
+  ) {}
 
   ngOnInit() {}
   navigateToAdd() {
