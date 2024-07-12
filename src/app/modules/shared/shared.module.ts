@@ -27,6 +27,7 @@ import { LeafletMapComponent } from './map/map.component';
 import { ViewCardComponent } from './view-card/view-card.component';
 import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -47,6 +48,7 @@ const PRIME_NG_MODULES = [
   TooltipModule,
   AccordionModule,
   CheckboxModule,
+  ConfirmDialogModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

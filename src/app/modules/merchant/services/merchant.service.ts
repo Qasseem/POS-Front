@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
 import { APIURL } from 'src/app/services/api';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MerchantService {
-  constructor(private http: HttpService) {}
+  constructor(private http: HttpService, public dialogService: DialogService) {}
 
   GetAllCities(parentId) {
     return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
@@ -32,5 +33,18 @@ export class MerchantService {
 
   Favorite(data) {
     return this.http.postReq(APIURL.Merchant.Favorite, data);
+  }
+
+  Block(data) {
+    return this.http.postReq(APIURL.Merchant.Block, data);
+  }
+
+  confirm(
+    msg: string = 'messages.block-item-content',
+    title: string = 'messages.block-item-title',
+    params = null,
+    params2 = null
+  ) {
+    return this.dialogService.confirm(msg, title, params, params2);
   }
 }
