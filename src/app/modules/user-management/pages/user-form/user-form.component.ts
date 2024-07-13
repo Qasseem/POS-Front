@@ -241,6 +241,10 @@ export class UserFormComponent {
               }
               this.profileImage = resp.data.imageUrl;
               this.fileName = resp.data.nationalIdUrl;
+              this.form.get('password').clearValidators();
+              this.form.get('password').updateValueAndValidity();
+              this.form.get('confirmPassword').clearValidators();
+              this.form.get('confirmPassword').updateValueAndValidity();
               this.form.updateValueAndValidity();
             }
           }

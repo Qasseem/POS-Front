@@ -29,6 +29,10 @@ export class UserService {
     return this.http.postReq(APIURL.Users.updateUser, id);
   }
 
+  UserChangePassword(data) {
+    return this.http.postReq(APIURL.Users.changePassword, data);
+  }
+
   getAllUsersTypeDropDown() {
     return this.http.getReq(APIURL.Users.getAllUsersTypeDropdown);
   }

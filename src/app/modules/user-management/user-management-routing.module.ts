@@ -5,6 +5,7 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserFormComponent } from './pages/user-form/user-form.component';
 import { RoleListComponent } from './pages/role-list/role-list.component';
 import { RoleFormComponent } from './pages/role-form/role-form.component';
+import { UserChangePasswordFormComponent } from './pages/user-change-password-form/user-change-password-form.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,13 @@ const routes: Routes = [
       {
         path: 'user/edit/:id',
         component: UserFormComponent,
+        data: {
+          type: 'edit',
+        },
+      },
+      {
+        path: 'user/change-password/:id',
+        component: UserChangePasswordFormComponent,
         data: {
           type: 'edit',
         },

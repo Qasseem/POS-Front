@@ -506,7 +506,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 p-20 mt-20 inputs-div">
+          <div class="col-12 p-20 mt-20 inputs-div" *ngIf="formType === 'add'">
             <div class="details-text">
               <p class="font-bold fs-11">Password</p>
             </div>
@@ -572,7 +572,7 @@
                   >
                     <div class="fs-10 color-red">
                       <span *ngIf="f.confirmPassword.errors.required">
-                        Last Name field is required
+                        Confirm Password field is required
                       </span>
                     </div>
                   </div>
