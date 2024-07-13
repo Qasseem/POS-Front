@@ -36,10 +36,13 @@ export class UserListComponent implements OnInit {
   toggleBlockItem(row: any): any {
     const isBlock = !row.isBlocked;
     const action = isBlock ? 'block' : 'unblock';
+    const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
     this.service
       .confirm(
         `Are you sure you want to ${action} this item?`,
-        `${action} Item`
+        `${action} Item`,
+        okText,
+        'No,Cancel'
       )
       .subscribe((response) => {
         if (response) {
