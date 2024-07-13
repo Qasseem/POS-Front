@@ -43,8 +43,10 @@ export class MerchantService {
     msg: string = 'messages.block-item-content',
     title: string = 'messages.block-item-title',
     params = null,
-    params2 = null
+    params2 = null,
+    ok: string = 'OK',
+    cancel: string = 'Cancel'
   ) {
-    return this.dialogService.confirm(msg, title, params, params2);
+    return this.dialogService.confirm(msg, title, ok, cancel, params, params2);
   }
 }

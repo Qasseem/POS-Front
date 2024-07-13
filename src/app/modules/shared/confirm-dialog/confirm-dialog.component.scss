@@ -13,9 +13,10 @@
 
 .dialog {
   background: white;
-  padding: 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 400px;
+  height: 188px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,17 +24,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
 }
-
-.dialog-header button {
-  background: none;
-  border: none;
+.dialog-header h2 {
   font-size: 20px;
-  cursor: pointer;
+  margin-bottom: 10;
 }
 
 .dialog-body {
-  margin: 20px 0;
+  margin-bottom: 30px;
+}
+.dialog-body p {
+  color: rgba(105, 118, 130, 1);
 }
 
 .dialog-footer {
@@ -43,17 +50,18 @@
 }
 
 .dialog-footer button {
+  border-radius: 4px;
   padding: 10px 20px;
   cursor: pointer;
 }
-
 .dialog-footer button:first-child {
-  background: #e0e0e0;
-  border: none;
+  background: white;
+  border: 1px solid rgba(204, 230, 254, 1);
+  color: rgba(0, 128, 249, 1);
 }
 
 .dialog-footer button:last-child {
-  background: #f44336;
+  background: rgba(221, 58, 42, 1);
   border: none;
   color: white;
 }
