@@ -8,6 +8,7 @@ import { UserManagementRoutingModule } from './user-management-routing.module';
 import { UserManagementComponent } from './user-management.component';
 import { SharedModule } from '../shared/shared.module';
 import { AccordionTabHeaderComponent } from './pages/role-form/components/accordion-tab-header/accordion-tab-header.component';
+import { UserChangePasswordFormComponent } from './pages/user-change-password-form/user-change-password-form.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AccordionTabHeaderComponent } from './pages/role-form/components/accord
     UserFormComponent,
     RoleListComponent,
     RoleFormComponent,
+    UserChangePasswordFormComponent,
     AccordionTabHeaderComponent,
   ],
   imports: [CommonModule, UserManagementRoutingModule, SharedModule],

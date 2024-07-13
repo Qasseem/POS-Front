@@ -33,6 +33,11 @@ export class UserListComponent implements OnInit {
     const URL = `main/user-management/user/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
+
+  changePassword(row: any): any {
+    const URL = `main/user-management/user/change-password/${row?.id}`;
+    this.router.navigate([URL]);
+  }
   toggleBlockItem(row: any): any {
     const isBlock = !row.isBlocked;
     const action = isBlock ? 'block' : 'unblock';
@@ -144,6 +149,11 @@ export class UserListComponent implements OnInit {
       name: 'Block',
       icon: 'pi pi-ban',
       call: (row: any) => this.toggleBlockItem(row),
+    },
+    {
+      name: 'Change Password',
+      icon: 'pi pi-eye',
+      call: (row: any) => this.changePassword(row),
     },
   ];
 

@@ -86,6 +86,7 @@ export const APIURL = {
     updateUser: '/User/UpdateUser',
     addUser: '/User/AddUser',
     exportUser: '/User/ExportUser',
+    changePassword: '/User/ChangePassword',
   },
 
   Role: {
