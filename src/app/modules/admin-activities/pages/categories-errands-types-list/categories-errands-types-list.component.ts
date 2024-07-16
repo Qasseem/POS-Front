@@ -28,7 +28,7 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
+    showFilter: false,
     showImport: true,
   };
   public columns: ColumnsInterface[] = [
@@ -78,33 +78,33 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     },
   ];
 
-  filters: SearchInterface[] = [
-    {
-      type: SearchInputTypes.text,
-      field: 'nameEn',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'nameAr',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'requireQuantity',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'status',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.date,
-      field: 'createDate',
-      isFixed: true,
-    },
-  ];
+  // filters: SearchInterface[] = [
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'nameEn',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'nameAr',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'requireQuantity',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'status',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.date,
+  //     field: 'createDate',
+  //     isFixed: true,
+  //   },
+  // ];
 
   constructor(
     private router: Router,
