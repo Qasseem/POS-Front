@@ -28,7 +28,7 @@ export class ErrandsChannelsListComponent implements OnInit {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
+    showFilter: false,
     showImport: true,
   };
   public columns: ColumnsInterface[] = [
@@ -69,37 +69,37 @@ export class ErrandsChannelsListComponent implements OnInit {
     },
   ];
 
-  filters: SearchInterface[] = [
-    {
-      type: SearchInputTypes.text,
-      field: 'nameEn',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'nameAr',
-      isFixed: true,
-    },
-    {
-      type: SearchInputTypes.text,
-      field: 'UserName',
-      isFixed: true,
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'status',
-      isFixed: true,
-      // url: this.url.Merchant.GetAllMerchantCategories,
-      // method: HTTPMethods.getReq,
-      // propValueName: 'id',
-    },
-    {
-      type: SearchInputTypes.date,
-      field: 'createDate',
-      isFixed: true,
-    },
-  ];
+  // filters: SearchInterface[] = [
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'nameEn',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'nameAr',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     type: SearchInputTypes.text,
+  //     field: 'UserName',
+  //     isFixed: true,
+  //   },
+  //   {
+  //     isMultiple: true,
+  //     type: SearchInputTypes.select,
+  //     field: 'status',
+  //     isFixed: true,
+  //     // url: this.url.Merchant.GetAllMerchantCategories,
+  //     // method: HTTPMethods.getReq,
+  //     // propValueName: 'id',
+  //   },
+  //   {
+  //     type: SearchInputTypes.date,
+  //     field: 'createDate',
+  //     isFixed: true,
+  //   },
+  // ];
 
   constructor(
     private router: Router,
