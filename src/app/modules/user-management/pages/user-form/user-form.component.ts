@@ -243,7 +243,8 @@ export class UserFormComponent {
               if (resp.data.rolesIds) {
                 this.form.get('rolesIds').setValue(resp.data.rolesIds);
               }
-              this.profileImage = resp.data.imageUrl;
+              // this.profileImage = resp.data.imageUrl;
+              this.form.get('imageBase64String').patchValue(resp.data.imageUrl);
               this.fileName = resp.data.nationalIdUrl;
               this.form.get('password').clearValidators();
               this.form.get('password').updateValueAndValidity();
