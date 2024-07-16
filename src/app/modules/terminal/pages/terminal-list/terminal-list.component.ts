@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
@@ -10,18 +10,34 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
+import { first, shareReplay, take, takeWhile } from 'rxjs';
+import { ToastService } from 'src/app/core/services/toaster.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-terminal-list',
   templateUrl: './terminal-list.component.html',
   styleUrls: ['./terminal-list.component.scss'],
 })
-export class TerminalListComponent implements OnInit {
+export class TerminalListComponent implements OnInit, OnDestroy {
+  alive = true;
+  reloadIfUpdated = false;
   addToFavorite(row: any): any {
-    this.service.Favorite({ id: row?.id }).subscribe((resp) => {
-      if (resp.success) {
-      }
-    });
+    let isFavorite = !row.isFavourite;
+    this.service
+      .Favorite({ id: row?.id, isFavorite: isFavorite })
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.reloadIfUpdated = true;
+          const message = isFavorite
+            ? 'Add to favorites successfully'
+            : 'Removed from favorites successfully';
+          this.toaster.showSuccess(message);
+          row.isFavourite = isFavorite;
+          return row;
+        }
+      });
+    this.reloadIfUpdated = false;
   }
   public url = APIURL;
 
@@ -30,9 +46,42 @@ export class TerminalListComponent implements OnInit {
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
+    const isBlock = !row.isBlock;
+    const action = isBlock ? 'Block' : 'Unblock';
+    const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    this.service
+      .confirm(
+        `Are you sure you want to ${action} this item?`,
+        `${action} Item`,
+        okText,
+        'No,Cancel'
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.service
+            .Block({ id: row.id, isBlock })
+            .pipe(
+              takeWhile(() => this.alive),
+              first()
+            )
+            .subscribe((response) => {
+              if (response.success) {
+                const message = isBlock
+                  ? 'Blocked successfully'
+                  : 'Unblocked successfully';
+                this.toaster.toaster.clear();
+                this.toaster.showSuccess(message);
+                row.isBlock = isBlock; // Update the row's block status
+                // this.updateActions(row);
+                this.reloadIfUpdated = true;
+                return row;
+              }
+            });
+        }
+      });
+    this.reloadIfUpdated = false;
   }
+
   goToDetails(row: any): any {
     const id = row.id;
     const URL = `main/merchant/details/${row?.id}`;
@@ -108,7 +157,7 @@ export class TerminalListComponent implements OnInit {
       call: (row: any) => this.blockItem(row),
     },
     {
-      name: 'Add to favorite ',
+      name: 'Add to favorites',
       icon: 'pi pi-heart',
       call: (row: any) => this.addToFavorite(row),
     },
@@ -201,10 +250,35 @@ export class TerminalListComponent implements OnInit {
       isFixed: true,
     },
   ];
+  viewDetails = true;
+  constructor(
+    private router: Router,
+    private service: TerminalService,
+    public toaster: ToastService,
+    public authService: AuthService
+  ) {}
 
-  constructor(private router: Router, private service: TerminalService) {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('terminals-all-terminals-details')) {
+      this.viewDetails = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-block')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Edit');
+    }
 
-  ngOnInit() {}
+    if (!this.authService.hasPermission('terminals-all-terminals-favorite')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
+    }
+  }
+  ngOnDestroy(): void {
+    this.alive = false;
+  }
   navigateToAdd() {
     this.router.navigate(['main/terminal/add']);
   }

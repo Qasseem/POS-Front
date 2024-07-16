@@ -35,62 +35,67 @@
             >
               <ng-template #accordion>
                 <mat-accordion class="accordion-container">
-                  <mat-expansion-panel
-                    style="box-shadow: none; background-color: transparent"
-                    class="mt-2"
-                    [expanded]="item.expanded"
-                    (opened)="panelExpanded($event, i)"
-                    (click)="navigate(item)"
-                  >
-                    <mat-expansion-panel-header
-                      [ngStyle]="{
-                        'background-color': item.active ? '#99CCFD' : null,
-                        'border-radius': '10px 0px 0px 10px'
-                      }"
-                      style="height: 40px"
+                  <ng-container *secured="item.permission">
+                    <mat-expansion-panel
+                      style="box-shadow: none; background-color: transparent"
+                      class="mt-2"
+                      [expanded]="item.expanded"
+                      (opened)="panelExpanded($event, i)"
+                      (click)="navigate(item)"
                     >
-                      <mat-panel-title>
-                        <oc-icon
-                          [icon]="item.icon"
-                          [width]="'20px'"
-                          [height]="'20px'"
-                          [class]="item.icon"
-                          [ngClass]="item.active ? 'active-cild' : ''"
-                          [ngStyle]="{
-                            color: item.active ? '#2053a6' : '#5b6671'
-                          }"
-                        >
-                        </oc-icon>
-                        <span
-                          [ngClass]="item.active ? 'active-cild' : ''"
-                          class="text-color"
-                        >
-                          {{ item?.label }}
-                        </span>
-                      </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div class="child-container">
-                      <div
-                        *ngFor="let child of item?.childs"
-                        style="cursor: pointer"
+                      <mat-expansion-panel-header
+                        [ngStyle]="{
+                          'background-color': item.active ? '#99CCFD' : null,
+                          'border-radius': '10px 0px 0px 10px'
+                        }"
+                        style="height: 40px"
                       >
-                        <div (click)="navigate(item, child)">
-                          <span class="child-branch"></span>
-                          <span class="ml-2">
-                            <p
-                              class="text-color"
-                              style="display: inline"
-                              [ngClass]="
-                                child.active ? 'active-title-cild' : ''
-                              "
-                            >
-                              {{ child?.label }}
-                            </p>
+                        <mat-panel-title>
+                          <oc-icon
+                            [icon]="item.icon"
+                            [width]="'20px'"
+                            [height]="'20px'"
+                            [class]="item.icon"
+                            [ngClass]="item.active ? 'active-cild' : ''"
+                            [ngStyle]="{
+                              color: item.active ? '#2053a6' : '#5b6671'
+                            }"
+                          >
+                          </oc-icon>
+                          <span
+                            [ngClass]="item.active ? 'active-cild' : ''"
+                            class="text-color"
+                          >
+                            {{ item?.label }}
                           </span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="child-container">
+                        <div
+                          *ngFor="let child of item?.childs"
+                          style="cursor: pointer"
+                        >
+                          <div
+                            (click)="navigate(item, child)"
+                            *secured="child.permission"
+                          >
+                            <span class="child-branch"></span>
+                            <span class="ml-2">
+                              <p
+                                class="text-color"
+                                style="display: inline"
+                                [ngClass]="
+                                  child.active ? 'active-title-cild' : ''
+                                "
+                              >
+                                {{ child?.label }}
+                              </p>
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </mat-expansion-panel>
+                    </mat-expansion-panel>
+                  </ng-container>
                 </mat-accordion>
               </ng-template>
               <ng-template #menuItem>
@@ -141,7 +146,9 @@
           <div class="grid">
             <div class="col-4">
               <p-avatar
-                image="https://primefaces.org/cdn/primeng/images/demo/avatar/walter.jpg"
+                [image]="
+                  userImage ? userImage : 'assets/iamges/default-avatar.png'
+                "
                 styleClass="ml-2"
                 size="large"
                 shape="circle"
@@ -216,6 +223,7 @@
               'border-radius': '10px'
             }"
             style="height: 40px; width: 40px"
+            *secured="item.permission"
           >
             <div
               style="
@@ -259,6 +267,7 @@
                     align-items: center;
                     cursor: pointer;
                   "
+                  *secured="item.permission"
                   (click)="navigate(item, child)"
                 >
                   <span
@@ -276,7 +285,10 @@
         </div>
         <!-- </mat-accordion> -->
       </div>
-      <div class="user-container p-3">
+      <div
+        class="user-container p-3"
+        style="width: 100px; background: transparent"
+      >
         <div class="user">
           <div
             style="
@@ -286,9 +298,9 @@
               height: 100%;
             "
           >
-            <div>
+            <div style="margin-left: 4px">
               <p-avatar
-                image="https://primefaces.org/cdn/primeng/images/demo/avatar/walter.jpg"
+                image="{{ userImage }}"
                 styleClass="ml-1"
                 size="large"
                 shape="circle"

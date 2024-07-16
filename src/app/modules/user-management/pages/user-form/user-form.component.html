@@ -46,7 +46,11 @@
                   (click)="fileInput.click()"
                 >
                   <img
-                    [src]="profileImage || 'assets/default-profile.png'"
+                    [src]="
+                      form.get('imageBase64String').value
+                        ? form.get('imageBase64String').value
+                        : 'assets/default-profile.png'
+                    "
                     class="profile-image"
                   />
                   <input
@@ -54,9 +58,12 @@
                     #fileInput
                     (change)="onFileSelected($event)"
                     accept="image/*"
-                    style="display: none"
+                    hidden
                   />
-                  <div class="icon-overlay" *ngIf="!profileImage">
+                  <div
+                    class="icon-overlay"
+                    *ngIf="!form.get('imageBase64String').value"
+                  >
                     <oc-icon
                       [icon]="'user'"
                       [width]="'25px'"
@@ -72,7 +79,7 @@
                     ></oc-icon>
                   </div>
                 </div>
-                <input formControlName="imageBase64String" type="hidden" />
+                <input formControlName="imageBase64String" hidden />
               </div>
               <div class="details-input">
                 <div class="username-details flex">
@@ -338,7 +345,7 @@
                     [value]="userType.id"
                     formControlName="userType"
                     [label]="userType.nameEn"
-                    [checked]="userType.id === form.get('userType').value"
+                    [inputId]="userType?.inputId"
                   >
                   </p-radioButton>
                 </div>

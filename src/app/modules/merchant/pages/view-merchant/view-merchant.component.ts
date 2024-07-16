@@ -11,6 +11,7 @@ import { APIURL } from 'src/app/services/api';
 import { MerchantService } from '../../services/merchant.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-view-merchant',
@@ -22,11 +23,13 @@ export class ViewMerchantComponent implements OnInit {
   formType = 'view';
   coordinates = { lat: null, lng: null };
   address;
+  viewDetails = true;
   constructor(
     private router: Router,
     private merchantService: MerchantService,
     private terminalService: TerminalService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
   public url = APIURL;
 
@@ -204,6 +207,21 @@ export class ViewMerchantComponent implements OnInit {
     this.id = this.route.snapshot.params.id || null;
     if (this.id) {
       this.getItemDetails();
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-details')) {
+      this.viewDetails = false;
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-block')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-edit')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Edit');
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-favorite')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
     }
   }
 

@@ -1,7 +1,7 @@
 export const APIURL = {
   login: '/Security/Login',
-  menuLinks: '/CustomerSecurity/menuIC',
-  register: '/CustomerSecurity/RegisterCustomerUser',
+  menuLinks: '/Security/Menu',
+  register: '/Security/RegisterCustomerUser',
   getAllCities: '/City/GetAllCities',
 
   customerProfile: {
@@ -45,6 +45,7 @@ export const APIURL = {
     Export: '/Terminal/ExportLeadGrid',
     GetGrid: '/Terminal/GetTerminalGrid',
     Favorite: '/Terminal/AddFavorite',
+    Block: '/Terminal/Block',
     GetFavoriteTerminalGrid: '/Terminal/GetFavoriteTerminalGrid',
     ImportTerminals: '/Terminal/ImportTerminals',
     GetAllRegions: '/Terminal/GetAllRegions',
@@ -60,6 +61,7 @@ export const APIURL = {
     GetOne: '/Ticket/GetById/',
     Export: '/Ticket/ExportGrid',
     GetGrid: '/Ticket/GetGrid',
+    Block: '/Ticket/Block',
     ImportTickets: '/Ticket/ImportTickets',
     GetTicketCategory: '/Ticket/GetTicketCategory',
     GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes/',
@@ -68,6 +70,7 @@ export const APIURL = {
     GetTicketByStatus: '/Ticket/GetTicketByStatus',
     GoToCustomer: '/Ticket/GoToCustomer',
     GetAllFeedbacks: '/Ticket/GetAllFeedbacks',
+    GetAllTicketsStatuses: '/Ticket/GetAllTicketStatus',
     TicketStart: '/Ticket/Start',
     TicketResume: '/Ticket/Resume',
     TicketPostpone: '/Ticket/Postpone',

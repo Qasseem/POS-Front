@@ -67,7 +67,7 @@ export class UserFormComponent {
         userType: [null, Validators.required],
         managerId: [null],
         rolesIds: [[], Validators.required],
-        id: [null],
+        userId: [null],
         isManager: [false],
         regionId: [null, Validators.required],
         cityId: [null, Validators.required],
@@ -106,8 +106,8 @@ export class UserFormComponent {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const result = e.target?.result;
-        this.profileImage = result;
-        this.form.patchValue({ imageBase64String: result });
+        // this.profileImage = result;
+        this.form.get('imageBase64String').patchValue(result);
       };
       reader.readAsDataURL(file);
     }
@@ -151,7 +151,10 @@ export class UserFormComponent {
       .subscribe({
         next: (resp) => {
           if (resp.success) {
-            this.userTypes = resp.data;
+            this.userTypes = resp.data.map((x) => {
+              x.inputId = x.nameEn;
+              return x;
+            });
           }
         },
       });
@@ -236,6 +239,7 @@ export class UserFormComponent {
             this.details = resp.data;
             if (this.details) {
               this.form.patchValue(this.details);
+              this.form.get('userId').patchValue(this.details.userId);
               if (resp.data.rolesIds) {
                 this.form.get('rolesIds').setValue(resp.data.rolesIds);
               }
@@ -245,7 +249,7 @@ export class UserFormComponent {
               this.form.get('password').updateValueAndValidity();
               this.form.get('confirmPassword').clearValidators();
               this.form.get('confirmPassword').updateValueAndValidity();
-              this.form.updateValueAndValidity();
+              // this.form.updateValueAndValidity();
             }
           }
         },
@@ -257,7 +261,7 @@ export class UserFormComponent {
   submit() {
     let obj = this.form.value;
     if (!this.id) {
-      delete obj.id;
+      delete obj.userId;
     }
     obj = this.refactorObjectBeforeSubmit(obj);
 

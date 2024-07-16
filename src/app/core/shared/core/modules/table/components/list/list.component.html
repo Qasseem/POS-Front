@@ -566,6 +566,7 @@
             ></button>
             <p-menu
               #menu
+              (onShow)="onShow($event, rowData, listActions, actions)"
               [popup]="true"
               appendTo="body"
               [model]="listActions"

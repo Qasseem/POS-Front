@@ -104,6 +104,79 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       action.call(this.rowData);
     }
   }
+  onShow(event, rowData, listActions, actions) {
+    actions = actions.map((actionItem) => {
+      // console.log(actionItem,rowData);
+      if (actionItem.name === 'Block' && rowData.isBlock) {
+        return {
+          ...actionItem,
+          name: 'Unblock',
+          icon: 'pi pi-check',
+        };
+      } else if (actionItem.name === 'Unblock' && !rowData.isBlock) {
+        return {
+          ...actionItem,
+          name: 'Block',
+          icon: 'pi pi-ban',
+        };
+      }
+      if (actionItem.name === 'Add to favorites' && rowData.isFavourite) {
+        return {
+          ...actionItem,
+          name: 'Remove from favorites',
+          icon: 'pi pi-heart-fill',
+        };
+      } else if (
+        actionItem.name === 'Remove from favorites' &&
+        !rowData.isFavourite
+      ) {
+        return {
+          ...actionItem,
+          name: 'Add to favorites',
+          icon: 'pi pi-heart',
+        };
+      }
+
+      return actionItem;
+    });
+    this.actions = [...this.actions];
+    listActions = listActions.map((actionItem) => {
+      // console.log(actionItem,rowData);
+      if (actionItem.label === 'Block' && rowData.isBlock) {
+        return {
+          ...actionItem,
+          label: 'Unblock',
+          icon: 'pi pi-check',
+        };
+      } else if (actionItem.label === 'Unblock' && !rowData.isBlock) {
+        return {
+          ...actionItem,
+          label: 'Block',
+          icon: 'pi pi-ban',
+        };
+      }
+      if (actionItem.label === 'Add to favorites' && rowData.isFavourite) {
+        return {
+          ...actionItem,
+          label: 'Remove from favorites',
+          icon: 'pi pi-heart-fill',
+        };
+      } else if (
+        actionItem.label === 'Remove from favorites' &&
+        !rowData.isFavourite
+      ) {
+        return {
+          ...actionItem,
+          label: 'Add to favorites',
+          icon: 'pi pi-heart',
+        };
+      }
+
+      return actionItem;
+    });
+    this.listActions = listActions;
+    // console.log(listActions)
+  }
   validateActionsForRow(rowData) {
     this.listActions = [];
     this.actions.forEach((element) => {

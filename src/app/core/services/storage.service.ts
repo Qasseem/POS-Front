@@ -68,7 +68,7 @@ export class StorageService {
    * @memberof StorageService
    */
   clearStorage(): Observable<void> {
-    console.log('asdddddddddd');
+    // console.log('asdddddddddd');
     // location.reload();
     return of(localStorage.clear());
   }
@@ -114,6 +114,14 @@ export class StorageService {
     value = value ? JSON.parse(value) : null;
     return value;
   }
+  convertToKebabCase(input: string): string {
+    return input
+      .toLowerCase() // Convert the string to lowercase
+      .replace(/&/g, 'and') // Replace '&' with 'and' if needed
+      .replace(/[^\w\s-]/g, '') // Remove any non-word characters except spaces and hyphens
+      .replace(/\s+/g, '-') // Replace one or more spaces with a hyphen
+      .replace(/-+/g, '-');
+  }
 
   public setLoginData(resp) {
     this.setItem('token', resp.data.token);
@@ -123,5 +131,25 @@ export class StorageService {
     this.setItem('userId', resp.data.userId);
     this.setItem('userType', resp.data.userType);
     this.setItem('employeeId', resp.data.employeeId);
+    this.setItem('userImage', resp.data.imagePath);
+    let permissions = [];
+    resp.data.permissions.forEach((permission) => {
+      permission.pages.forEach((page) => {
+        const pagePermissions = page.frontEndNames.split(',');
+        pagePermissions.forEach((x) => {
+          x = this.convertToKebabCase(
+            permission.nameEn + ' ' + page.nameEn + ' ' + x
+          );
+          permissions.push(x);
+        });
+      });
+    });
+    permissions = Array.from(new Set([...permissions]));
+    permissions = this.sortAlphabetically(permissions);
+    // console.log(permissions);
+    this.setItem('permissions', JSON.stringify(permissions));
+  }
+  sortAlphabetically(arr: string[]): string[] {
+    return arr.sort((a, b) => a.localeCompare(b));
   }
 }

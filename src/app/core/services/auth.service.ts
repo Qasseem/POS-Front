@@ -13,7 +13,10 @@ import { StorageService } from './storage.service';
  */
 export class AuthService {
   items: any[] = [];
-  constructor(private http: HttpService,private storgeService:StorageService) {}
+  constructor(
+    private http: HttpService,
+    private storgeService: StorageService
+  ) {}
 
   login(loginData) {
     return this.http.postReq(APIURL.login, loginData);
@@ -30,5 +33,11 @@ export class AuthService {
   }
   isAuthenticated() {
     return !!this.storgeService.getToken();
+  }
+  hasPermission(permission: string): boolean {
+    // console.log(this.storgeService.getCachedItem('permissions'))
+    return JSON.parse(
+      this.storgeService.getStringItem('permissions')
+    )?.includes(permission);
   }
 }

@@ -13,6 +13,7 @@ import { MerchantService } from '../../services/merchant.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { takeWhile } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toaster.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-merchant-list',
@@ -22,6 +23,7 @@ import { ToastService } from 'src/app/core/services/toaster.service';
 export class MerchantListComponent implements OnInit {
   public url = APIURL;
   alive: boolean = true;
+  reloadIfUpdated = false;
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,
@@ -88,7 +90,7 @@ export class MerchantListComponent implements OnInit {
     },
 
     {
-      name: 'Add to favorite ',
+      name: 'Add to favorites',
       icon: 'pi pi-heart',
       permission: 'completedata',
       call: (row: any) => this.addToFavorite(row),
@@ -126,26 +128,57 @@ export class MerchantListComponent implements OnInit {
       isFixed: true,
     },
   ];
+  viewDetails = true;
 
   constructor(
     private router: Router,
     private service: MerchantService,
     public dialogService: DialogService,
-    public toaster: ToastService
+    public toaster: ToastService,
+    public authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('merchants-all-merchants-details')) {
+      this.viewDetails = false;
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-block')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-edit')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Edit');
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-add')) {
+      this.tableBtns.showImport = false;
+    }
+    if (!this.authService.hasPermission('merchants-all-merchants-favorite')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
+    }
+  }
 
   navigateToAdd() {
     this.router.navigate(['main/merchant/add']);
   }
   addToFavorite(row: any): any {
+    let isFavorite = !row.isFavourite;
     this.service
-      .Favorite({ id: row?.id, isFavorite: true })
+      .Favorite({ id: row?.id, isFavorite: isFavorite })
       .subscribe((resp) => {
         if (resp.success) {
+          this.reloadIfUpdated = true;
+          const message = isFavorite
+            ? 'Add to favorites successfully'
+            : 'Removed from favorites successfully';
+          this.toaster.toaster.clear();
+          this.toaster.showSuccess(message);
+          row.isFavourite = isFavorite;
+          return row;
         }
       });
+    this.reloadIfUpdated = false;
   }
   editItem(row: any): any {
     const URL = `main/merchant/edit/${row?.id}`;
@@ -153,8 +186,8 @@ export class MerchantListComponent implements OnInit {
   }
 
   toggleBlockItem(row: any): any {
-    const isBlock = !row.isBlocked;
-    const action = isBlock ? 'block' : 'unblock';
+    const isBlock = !row.isBlock;
+    const action = isBlock ? 'Block' : 'Unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
     this.service
       .confirm(
@@ -173,33 +206,17 @@ export class MerchantListComponent implements OnInit {
                 const message = isBlock
                   ? 'Blocked successfully'
                   : 'Unblocked successfully';
+                this.toaster.toaster.clear();
                 this.toaster.showSuccess(message);
-                row.isBlocked = isBlock; // Update the row's block status
-                this.updateActions(row);
+                row.isBlock = isBlock; // Update the row's block status
+                // this.updateActions(row);
+                this.reloadIfUpdated = true;
+                return row;
               }
             });
         }
       });
-  }
-  updateActions(row: any) {
-    this.actions = this.actions.map((actionItem) => {
-      if (actionItem.name === 'Block' && row.isBlocked) {
-        return {
-          ...actionItem,
-          name: 'Unblock',
-          icon: 'pi pi-check',
-          call: (r: any) => this.toggleBlockItem(r),
-        };
-      } else if (actionItem.name === 'Unblock' && !row.isBlocked) {
-        return {
-          ...actionItem,
-          name: 'Block',
-          icon: 'pi pi-ban',
-          call: (r: any) => this.toggleBlockItem(r),
-        };
-      }
-      return actionItem;
-    });
+    this.reloadIfUpdated = false;
   }
 
   goToDetails(row: any): any {

@@ -54,9 +54,9 @@ export class LoginComponent implements OnInit {
       // this.storage.clearStorage();
       this.authService.items = [];
       this.storage.setLoginData(resp);
-      const url = '/home/dashboard';
+      const url = '/main/dashboard';
       // this.permissions.syncRolesPermissions();
-      this.router.navigate(['/main']);
+      this.router.navigate([url]);
     }
   }
   handleError(err) {

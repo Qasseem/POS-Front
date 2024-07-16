@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
@@ -10,14 +10,19 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { takeWhile } from 'rxjs';
+import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'oc-terminal-favorite-list',
   templateUrl: './terminal-favorite-list.component.html',
   styleUrl: './terminal-favorite-list.component.scss',
 })
-export class TerminalFavoriteListComponent {
+export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
   public url = APIURL;
+  reloadIfUpdated = false;
+  alive = false;
 
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
@@ -87,8 +92,8 @@ export class TerminalFavoriteListComponent {
       call: (row: any) => this.blockItem(row),
     },
     {
-      name: 'Unfavorite',
-      icon: 'pi pi-heart',
+      name: 'Remove from favorites',
+      icon: 'pi pi-heart-fill',
       call: (row: any) => this.removeFromFavorite(row),
     },
   ];
@@ -180,22 +185,81 @@ export class TerminalFavoriteListComponent {
       isFixed: true,
     },
   ];
-  constructor(private router: Router, private service: TerminalService) {}
+  viewDetails = true;
+  constructor(
+    private router: Router,
+    private service: TerminalService,
+    private authService: AuthService,
+    private toaster: ToastService
+  ) {}
+
+  ngOnInit(): void {
+    if (!this.authService.hasPermission('terminals-all-terminals-details')) {
+      this.viewDetails = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-block')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Edit');
+    }
+  }
   editItem(row: any): any {
     const URL = `main/terminal/edit/${row?.id}`;
     this.router.navigate([URL]);
   }
   removeFromFavorite(row: any): any {
+    let isFavorite = !row.isFavourite;
     this.service
-      .Favorite({ id: row?.id, isFavorite: false })
+      .Favorite({ id: row?.id, isFavorite: isFavorite })
       .subscribe((resp) => {
         if (resp.success) {
+          this.reloadIfUpdated = true;
+          const message = isFavorite
+            ? 'Add to favorites successfully'
+            : 'Removed from favorites successfully';
+          this.toaster.showSuccess(message);
+          row.isFavourite = isFavorite;
+          return row;
         }
       });
+    this.reloadIfUpdated = false;
   }
   blockItem(row: any): any {
-    const URL = `/home/customers/info/${row?.id}`;
-    return URL;
+    const isBlock = !row.isBlock;
+    const action = isBlock ? 'Block' : 'Unblock';
+    const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    this.service
+      .confirm(
+        `Are you sure you want to ${action} this item?`,
+        `${action} Item`,
+        okText,
+        'No,Cancel'
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.service
+            .Block({ id: row.id, isBlock })
+            .pipe(takeWhile(() => this.alive))
+            .subscribe((res) => {
+              if (res.success) {
+                const message = isBlock
+                  ? 'Blocked successfully'
+                  : 'Unblocked successfully';
+                this.toaster.toaster.clear();
+                this.toaster.showSuccess(message);
+                row.isBlock = isBlock; // Update the row's block status
+                // this.updateActions(row);
+                this.reloadIfUpdated = true;
+                return row;
+              }
+            });
+        }
+      });
+    this.reloadIfUpdated = false;
   }
   goToDetails(row: any): any {
     const id = row.id;
@@ -204,5 +268,8 @@ export class TerminalFavoriteListComponent {
   }
   navigateToAdd() {
     this.router.navigate(['main/terminal/add']);
+  }
+  ngOnDestroy(): void {
+    this.alive = false;
   }
 }

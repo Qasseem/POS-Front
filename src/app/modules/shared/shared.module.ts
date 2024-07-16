@@ -28,6 +28,7 @@ import { ViewCardComponent } from './view-card/view-card.component';
 import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SecuredDirective } from './directives/secured.directive';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -61,7 +62,7 @@ const CUSTOM_MODULES = [
 ];
 
 const CORE_MODULES = [TranslateModule];
-const CUSTOM_DIRECTIVES = [PreventKeyseDirective];
+const CUSTOM_DIRECTIVES = [PreventKeyseDirective, SecuredDirective];
 
 @NgModule({
   declarations: [...CUSTOM_DIRECTIVES, LeafletMapComponent, ViewCardComponent],

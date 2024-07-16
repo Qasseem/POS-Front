@@ -18,7 +18,7 @@ export class ConfirmDialogComponent implements OnInit, OnDestroy {
   constructor(private dialogService: DialogService) {}
 
   ngOnInit() {
-    this.dialogService.message
+    this.dialogSubscription = this.dialogService.message
       .pipe(takeWhile(() => this.alive))
       .subscribe((data) => {
         this.show = true;
@@ -40,6 +40,6 @@ export class ConfirmDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dialogSubscription.unsubscribe();
+    if (this.dialogSubscription) this.dialogSubscription.unsubscribe();
   }
 }

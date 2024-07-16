@@ -2,12 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
 import { APIURL } from 'src/app/services/api';
+import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TerminalService {
-  constructor(private http: HttpService, private httpPure: HttpClient) {}
+  constructor(
+    private http: HttpService,
+    private httpPure: HttpClient,
+    private dialogService: DialogService
+  ) {}
 
   GetAllCities(parentId) {
     return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
@@ -42,6 +47,10 @@ export class TerminalService {
     return this.http.postReq(APIURL.Terminal.Favorite, data);
   }
 
+  Block(data) {
+    return this.http.postReq(APIURL.Terminal.Block, data);
+  }
+
   GetAddressFromLatLng(lat, lng) {
     let url =
       'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=json&location=' +
@@ -55,5 +64,15 @@ export class TerminalService {
     return this.http.getReq(
       APIURL.Terminal.GetAllTerminalsByMerchantId + merchantId
     );
+  }
+  confirm(
+    msg: string = 'messages.block-item-content',
+    title: string = 'messages.block-item-title',
+    params = null,
+    params2 = null,
+    ok: string = 'OK',
+    cancel: string = 'Cancel'
+  ) {
+    return this.dialogService.confirm(msg, title, ok, cancel, params, params2);
   }
 }

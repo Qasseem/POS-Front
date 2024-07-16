@@ -145,6 +145,11 @@ export class TicketFormComponent implements OnInit {
                 this.ticketForm
                   .get('latitude')
                   .patchValue(this.details.latitude);
+                this.ticketForm
+                  .get('regionId')
+                  .patchValue(this.details.regionId);
+                this.ticketForm.get('cityId').patchValue(this.details.cityId);
+                this.ticketForm.get('zoneId').patchValue(this.details.zoneId);
                 this.coordinates = {
                   lat: this.ticketForm.get('longitude').value,
                   lng: this.ticketForm.get('latitude').value,

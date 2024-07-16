@@ -1,13 +1,19 @@
 <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
     <span class="mt-2" style="float: left; font-weight: bolder">Terminal</span>
-    <p-button (click)="navigateToAdd()" label="Add Terminal" size="small">
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add Terminal"
+      size="small"
+      *secured="['terminals-all-terminal-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br *ngIf="!authService.hasPermission('terminals-all-terminal-add')" />
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -21,10 +27,11 @@
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Terminal.Export"
     [actions]="actions"
-    [options]="{ check: false }"
+    [options]="{ check: false, viewDetails: viewDetails }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Terminal'"
     [sampleName]="'ImportTerminalSample.xlsx'"
+    [reloadIfUpdated]="reloadIfUpdated"
   >
   </oc-table>
 </div>

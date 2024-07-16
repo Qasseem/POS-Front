@@ -1,13 +1,23 @@
 <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
-    <span class="mt-2 " style="float: left; font-weight: 600; font-family: 'public-sans';">Merchant</span>
-    <p-button (click)="navigateToAdd()" label="Add Merchant" size="small">
+    <span
+      class="mt-2"
+      style="float: left; font-weight: 600; font-family: 'public-sans'"
+      >Merchant</span
+    >
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add Merchant"
+      size="small"
+      *secured="['merchants-all-merchants-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br *ngIf="!authService.hasPermission('merchants-all-merchants-add')" />
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -21,10 +31,11 @@
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Merchant.Export"
     [actions]="actions"
-    [options]="{ check: false }"
+    [options]="{ check: false, viewDetails: viewDetails }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Merchant'"
     [sampleName]="'ImportMerchantSample.xlsx'"
+    [reloadIfUpdated]="reloadIfUpdated"
   >
   </oc-table>
 </div>

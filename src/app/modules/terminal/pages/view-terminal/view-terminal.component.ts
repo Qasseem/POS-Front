@@ -10,6 +10,7 @@ import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/s
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-view-terminal',
@@ -27,7 +28,8 @@ export class ViewTerminalComponent implements OnInit {
   constructor(
     private router: Router,
     private terminalService: TerminalService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -143,11 +145,23 @@ export class ViewTerminalComponent implements OnInit {
   }
 
   id;
-
+  viewDetails = true;
   ngOnInit() {
     this.id = this.route.snapshot.params.id || null;
     if (this.id) {
       this.getItemDetails();
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-details')) {
+      this.viewDetails = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-block')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
+      this.actions = this.actions.filter((x) => x.name !== 'Edit');
     }
   }
 

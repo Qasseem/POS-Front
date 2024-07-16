@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private toaster: ToastrService) {}
+  constructor(public toaster: ToastrService) {}
   showSuccess(message: string, title?: string, time: number = 4000) {
     this.toaster.success(message, title, {
       timeOut: time,

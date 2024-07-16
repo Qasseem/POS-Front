@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { LoadingService } from 'src/app/core/loading/loading.service';
 import { BehaviorSubject } from 'rxjs';
 import { APIURL } from '../api';
 import { take, finalize, map } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class PermissionsService {
   private currentPageRole$ = new BehaviorSubject('');
   private routes$ = new BehaviorSubject([]);
 
-  constructor(private http: HttpService, private loading: LoadingService) {
+  constructor(private http: HttpService, private loading: NgxSpinnerService) {
     this.getRolesPermissions();
   }
 

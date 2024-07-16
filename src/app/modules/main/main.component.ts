@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize, take } from 'rxjs';
@@ -27,18 +27,24 @@ export class MainComponent implements OnInit {
       icon: 'users',
       expanded: false,
       routerLink: '/main/merchant/list',
+      permission: [
+        'merchants-all-merchants-view',
+        'merchants-favorite-merchants-view',
+      ],
       active: false,
       childs: [
         {
           label: this.translateService.instant('All Merchants'),
           expanded: true,
           routerLink: '/main/merchant/list',
+          permission: ['merchants-all-merchants-view'],
           active: false,
         },
         {
           label: this.translateService.instant('Favorite Merchants'),
           expanded: true,
           routerLink: '/main/merchant/favorites',
+          permission: ['merchants-favorite-merchants-view'],
           active: false,
         },
       ],
@@ -49,18 +55,25 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/terminal/list',
       active: false,
+      permission: [
+        'terminals-all-terminals-view',
+        'terminals-favorite-terminals-view',
+      ],
+
       childs: [
         {
           label: this.translateService.instant('All Terminals'),
           expanded: true,
           routerLink: '/main/terminal/list',
           active: false,
+          permission: ['terminals-all-terminals-view'],
         },
         {
           label: this.translateService.instant('Favorite Terminals'),
           expanded: true,
           routerLink: '/main/terminal/favorites',
           active: false,
+          permission: ['terminals-favorite-terminals-view'],
         },
       ],
     },
@@ -70,12 +83,14 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/ticket/list',
       active: false,
+      permission: ['tickets-all-tickets-view'],
       childs: [
         {
           label: this.translateService.instant('All Tickets'),
           expanded: true,
           routerLink: '/main/ticket/list',
           active: false,
+          permission: ['tickets-all-tickets-view'],
         },
         // {
         //   label: this.translateService.instant('Favorite Tickets'),
@@ -91,18 +106,24 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/user-management/list',
       active: false,
+      permission: [
+        'users-and-permissions-roles-view',
+        'users-and-permissions-users-view',
+      ],
       childs: [
         {
           label: this.translateService.instant('Users'),
           expanded: true,
           routerLink: '/main/user-management/user/list',
           active: false,
+          permission: ['users-and-permissions-users-view'],
         },
         {
           label: this.translateService.instant('Roles & Permissions'),
           expanded: true,
           routerLink: '/main/user-management/role/list',
           active: false,
+          permission: ['users-and-permissions-roles-view'],
         },
       ],
     },
@@ -112,24 +133,32 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/locations/list',
       active: false,
+      permission: [
+        'locations-cities-view',
+        'locations-regions-view',
+        'locations-zones-view',
+      ],
       childs: [
         {
           label: this.translateService.instant('Region'),
           expanded: true,
           routerLink: '/main/locations/region/list',
           active: false,
+          permission: ['locations-regions-view'],
         },
         {
           label: this.translateService.instant('City'),
           expanded: true,
           routerLink: '/main/locations/city/list',
           active: false,
+          permission: ['locations-cities-view'],
         },
         {
           label: this.translateService.instant('Zone'),
           expanded: true,
           routerLink: '/main/locations/zone/list',
           active: false,
+          permission: ['locations-zones-view'],
         },
       ],
     },
@@ -140,30 +169,40 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/admin-activities/list',
       active: false,
+      permission: [
+        'admin-activities-errand-channel-view',
+        'admin-activities-errand-types-view',
+        'admin-activities-merchant-category-view',
+        'admin-activities-pos-type-view',
+      ],
       childs: [
         {
           label: this.translateService.instant('Merchant Category Codes'),
           expanded: true,
           routerLink: '/main/admin-activities/list/merchant-category-codes',
           active: false,
+          permission: ['admin-activities-merchant-category-view'],
         },
         {
           label: this.translateService.instant('Errand Channels'),
           expanded: true,
           routerLink: '/main/admin-activities/list/errands-channels',
           active: false,
+          permission: ['admin-activities-errand-channel-view'],
         },
         {
           label: this.translateService.instant('POS Types'),
           expanded: true,
           routerLink: '/main/admin-activities/list/pos-types',
           active: false,
+          permission: ['admin-activities-pos-type-view'],
         },
         {
           label: this.translateService.instant('Categories Errand Types'),
           expanded: true,
           routerLink: '/main/admin-activities/list/categories-errands-types',
           active: false,
+          permission: ['admin-activities-errand-types-view'],
         },
       ],
     },
@@ -182,6 +221,7 @@ export class MainComponent implements OnInit {
   moduleHeader: string;
   userType: any;
   userName: any;
+  userImage: any;
 
   constructor(
     private authService: AuthService,
@@ -208,8 +248,12 @@ export class MainComponent implements OnInit {
           );
           if (parentItemIndex > -1) {
             this.items[parentItemIndex].active = true;
-            this.items[parentItemIndex].expanded =
-              !this.items[parentItemIndex].expanded;
+            this.items[parentItemIndex].expanded = true;
+            this.items.forEach((item, index) => {
+              if (index != parentItemIndex) {
+                item.expanded = false;
+              }
+            });
             const childItemIndex = this.items[
               parentItemIndex
             ]?.childs?.findIndex((y) => y.routerLink == route.url);
@@ -243,11 +287,14 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userName = this.storage.getStringItem('userNameEn');
     this.userType = this.storage.getStringItem('userType');
+    this.userImage = this.storage.getStringItem('userImage');
   }
   panelExpanded(event, currentIndex) {
     this.items.forEach((item, index) => {
       if (currentIndex != index) {
         item.expanded = false;
+      } else {
+        item.expanded = true;
       }
     });
   }
