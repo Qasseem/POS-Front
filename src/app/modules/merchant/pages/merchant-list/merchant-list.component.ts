@@ -35,12 +35,12 @@ export class MerchantListComponent implements OnInit {
     {
       field: 'reference',
       header: 'Ref',
-      width: '100px',
+      width: '50px',
     },
     {
       field: 'merchantId',
       header: 'ID',
-      width: '100px',
+      width: '50px',
     },
 
     {
@@ -189,34 +189,34 @@ export class MerchantListComponent implements OnInit {
     const isBlock = !row.isBlock;
     const action = isBlock ? 'Block' : 'Unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    // this.service
+    //   .confirm(
+    //     `Are you sure you want to ${action} this item?`,
+    //     `${action} Item`,
+    //     okText,
+    //     'No,Cancel'
+    //   )
+    //   .subscribe((response) => {
+    //     if (response) {
     this.service
-      .confirm(
-        `Are you sure you want to ${action} this item?`,
-        `${action} Item`,
-        okText,
-        'No,Cancel'
-      )
+      .Block({ id: row.id, isBlock })
+      .pipe(takeWhile(() => this.alive))
       .subscribe((response) => {
-        if (response) {
-          this.service
-            .Block({ id: row.id, isBlock })
-            .pipe(takeWhile(() => this.alive))
-            .subscribe((response) => {
-              if (response.success) {
-                const message = isBlock
-                  ? 'Blocked successfully'
-                  : 'Unblocked successfully';
-                this.toaster.toaster.clear();
-                this.toaster.showSuccess(message);
-                row.isBlock = isBlock; // Update the row's block status
-                // this.updateActions(row);
-                this.reloadIfUpdated = true;
-                return row;
-              }
-            });
+        if (response.success) {
+          const message = isBlock
+            ? 'Blocked successfully'
+            : 'Unblocked successfully';
+          this.toaster.toaster.clear();
+          this.toaster.showSuccess(message);
+          row.isBlock = isBlock; // Update the row's block status
+          // this.updateActions(row);
+          this.reloadIfUpdated = true;
+          // return row;
         }
       });
-    this.reloadIfUpdated = false;
+    // }
+    // });
+    // this.reloadIfUpdated = false;
   }
 
   goToDetails(row: any): any {

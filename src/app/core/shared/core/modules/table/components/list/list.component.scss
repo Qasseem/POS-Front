@@ -19,6 +19,7 @@
   padding-right: 10px;
   padding-left: 5px;
 }
+
 .list {
   border-radius: 10px;
   padding: 0px 5px 0px 5px;
@@ -85,7 +86,36 @@
     cursor: pointer;
   }
 }
-
+.completed {
+  border-radius: 16px;
+  background-color: #e0f1eb;
+  padding: 0.25rem 1rem;
+  color: #00875a;
+}
+.in-progress {
+  border-radius: 16px;
+  background-color: #fef9ee;
+  padding: 0.25rem 1rem;
+  color: #c59e46;
+}
+.new {
+  border-radius: 16px;
+  background-color: #eff8ff;
+  padding: 0.25rem 1rem;
+  color: #175cd3;
+}
+.blocked {
+  border-radius: 16px;
+  background-color: #f2f4f7;
+  padding: 0.25rem 1rem;
+  color: #344054;
+}
+.active {
+  border-radius: 16px;
+  background-color: #e0f1eb;
+  padding: 0.25rem 1rem;
+  color: #00875a;
+}
 ::ng-deep.swal2-title {
   width: 100%;
 }
@@ -97,14 +127,14 @@
     width: 150px;
   }
 }
-:host
-  p-table
-  ::ng-deep
-  .p-datatable.p-datatable-sm
-  .p-datatable-tbody
-  > tr
-  > td {
-  font-family: "public-sans";
+:host p-table ::ng-deep {
+  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    font-family: "public-sans";
+  }
+  .p-datatable.p-datatable-sm .p-datatable-tbody td,
+  .p-datatable.p-datatable-sm .p-datatable-thead th {
+    text-align: center;
+  }
 }
 
 .alert-header-text {

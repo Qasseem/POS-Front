@@ -7,6 +7,7 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { RegionService } from '../../services/region.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-region-list',
@@ -27,7 +28,7 @@ export class RegionListComponent {
     {
       field: 'id',
       header: 'ID',
-      width: '100px',
+      width: '50px',
     },
 
     {
@@ -82,10 +83,30 @@ export class RegionListComponent {
       isFixed: true,
     },
   ];
+  showEdit = true;
+  showBlock = true;
+  constructor(
+    private router: Router,
+    public service: RegionService,
+    public authService: AuthService
+  ) {}
 
-  constructor(private router: Router, private service: RegionService) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('locations-regions-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('locations-regions-block')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
+    }
+    if (!this.authService.hasPermission('locations-regions-edit')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('locations-regions-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
 
   navigateToAdd() {
     this.router.navigate(['main/locations/region/add']);

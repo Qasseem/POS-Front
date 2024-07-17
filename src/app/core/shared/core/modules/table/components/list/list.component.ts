@@ -17,6 +17,7 @@ import {
   takeUntil,
   finalize,
   map,
+  takeWhile,
 } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { APIURL } from 'src/app/services/api';
@@ -36,6 +37,7 @@ import {
 import { TableOptionsInterface } from '../../models/options.interface';
 import { AppTranslateService } from 'src/app/core/shared/services/translate.service';
 import { TableCoreService } from '../../services/table-core.service';
+import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'oc-list',
@@ -57,6 +59,8 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   @Input() first = 0;
   @Input() noDataText = '';
   @Input() viewCustomPermission: ViewCustomPermission;
+  @Input() service: any;
+  alive = true;
 
   displayBasic = false;
   displayBasicDelete = false;
@@ -89,7 +93,8 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
     private fb: UntypedFormBuilder,
     public lang: AppTranslateService,
     public tableCore: TableCoreService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private toaster: ToastService
   ) {}
   navToFilter() {
     this.tableCore.filterClick$.next(true);
@@ -196,7 +201,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   }
   ngOnInit() {
     this.listActions = [];
-    this.actions.forEach((element) => {
+    this.actions?.forEach((element) => {
       this.listActions.push({
         label: element.name,
         command: () => {
@@ -242,7 +247,12 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       editable: false,
       historyDetails: false,
       viewDetails: true,
+      viewDetailsURL: null,
       export: true,
+      block: false,
+      favourite: false,
+      edit: false,
+      editURL: null,
       ...this.options,
     };
     this.checkConstAction(this.actions);
@@ -413,6 +423,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   updateSelectedColumnsAPI(): void {
     this.filteredArray = [];
     this.selectedColumns.map((col) => this.filteredArray.push(col.field));
+    // console.log(this.selectedColumns);
   }
 
   /**
@@ -587,17 +598,26 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
 
   goToDeatils(rowData) {
     if (this.router.url?.endsWith('all')) {
-      return this.router.navigate(['../details', rowData?.id], {
+      this.router.navigate(['../details', rowData?.id], {
         relativeTo: this.route.parent,
       });
     } else {
       if (!rowData.id && rowData.ticketId) {
         rowData.id = rowData.ticketId;
       }
-      return this.router.navigate(['details', rowData?.id], {
+
+      this.router.navigate([this.options.viewDetailsURL, rowData?.id], {
         relativeTo: this.route.parent,
       });
     }
+  }
+  convertToKebabCase(input: string): string {
+    return input
+      .toLowerCase() // Convert the string to lowercase
+      .replace(/&/g, 'and') // Replace '&' with 'and' if needed
+      .replace(/[^\w\s-]/g, '') // Remove any non-word characters except spaces and hyphens
+      .replace(/\s+/g, '-') // Replace one or more spaces with a hyphen
+      .replace(/-+/g, '-');
   }
 
   navigateToUrl(url, id) {
@@ -628,5 +648,64 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       imageItem: tempFields.find((x) => x.custom == 'image'),
     };
     return item;
+  }
+
+  toggleFavourite(row) {
+    let isFavorite = !row.isFavourite;
+    this.service
+      .Favorite({ id: row?.id, isFavorite: isFavorite })
+      .subscribe((resp) => {
+        if (resp.success) {
+          const message = isFavorite
+            ? 'Add to favorites successfully'
+            : 'Removed from favorites successfully';
+          // this.toaster.toaster.clear();
+          this.toaster.showSuccess(message);
+          row.isFavourite = isFavorite;
+          // return row;
+          this.getTableData();
+        }
+      });
+  }
+  toggleActionBlock(row) {
+    const isBlock = !row.isBlock;
+    const action = isBlock ? 'block' : 'unblock';
+    const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    // this.service
+    //   .confirm(
+    //     `Are you sure you want to ${action} this item?`,
+    //     `${action} Item`,
+    //     okText,
+    //     'No,Cancel'
+    //   )
+    //   .subscribe((response) => {
+    //     if (response) {
+    this.service
+      .Block({ id: row.id, isBlock: isBlock })
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((response) => {
+        if (response.success) {
+          const message = isBlock
+            ? 'Blocked successfully'
+            : 'Unblocked successfully';
+          this.toaster.showSuccess(message);
+          row.isBlock = isBlock; // Update the row's block status
+          // this.updateActions(row);
+        }
+      });
+    //   }
+    // });
+  }
+  goToEdit(rowData) {
+    let id = '';
+    if (rowData.id) {
+      id = rowData.id;
+    } else if (!rowData.id && rowData.userId) {
+      id = rowData.userId;
+    } else if (!rowData.id && rowData.ticketId) {
+      id = rowData.tickedId;
+    }
+    // console.log(rowData, this.options.editURL);
+    this.router.navigate([this.options.editURL + rowData.id]);
   }
 }

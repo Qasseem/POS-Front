@@ -28,35 +28,37 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     this.router.navigate([URL]);
   }
   blockItem(row: any): any {
-    const isBlock = !row.isBlocked;
+    const isBlock = !row.isBlock;
     const action = isBlock ? 'Block' : 'Unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    // this.service
+    //   .confirm(
+    //     `Are you sure you want to ${action} this item?`,
+    //     `${action} Item`,
+    //     okText,
+    //     'No,Cancel'
+    //   )
+    //   .subscribe((response) => {
+    //     if (response) {
     this.service
-      .confirm(
-        `Are you sure you want to ${action} this item?`,
-        `${action} Item`,
-        okText,
-        'No,Cancel'
-      )
-      .subscribe((response) => {
-        if (response) {
-          this.service
-            .Block({ id: row.id, isBlock })
-            .pipe(takeWhile(() => this.alive))
-            .subscribe((response) => {
-              if (response.success) {
-                const message = isBlock
-                  ? 'Blocked successfully'
-                  : 'Unblocked successfully';
-                this.toaster.toaster.clear();
-                this.toaster.showSuccess(message);
-                row.isBlocked = isBlock; // Update the row's block status
-                this.updateActions(row);
-                this.reloadIfUpdated = true;
-              }
-            });
-        }
+      .Block({ id: row.ticketId, isBlock })
+      .pipe(takeWhile(() => this.alive))
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            const message = isBlock
+              ? 'Blocked successfully'
+              : 'Unblocked successfully';
+            this.toaster.toaster.clear();
+            this.toaster.showSuccess(message);
+            row.isBlocked = isBlock; // Update the row's block status
+            this.updateActions(row);
+            this.reloadIfUpdated = true;
+          }
+        },
       });
+    //   }
+    // });
     this.reloadIfUpdated = false;
   }
   updateActions(row: any) {
@@ -99,7 +101,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     },
     {
       field: 'merchantId',
-      header: 'Merchant Id',
+      header: 'Merchant ID',
     },
     {
       field: [
@@ -112,7 +114,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     },
     {
       field: 'terminalId',
-      header: 'Terminal Id',
+      header: 'Terminal ID',
     },
     {
       field: [
@@ -144,12 +146,9 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       header: 'Assignee',
     },
     {
-      field: [
-        { label: 'statusEn', custom: 'default' },
-        { label: 'statusAr', custom: 'default' },
-      ],
+      field: 'statusEn',
       header: 'Status',
-      customCell: 'multiLabel',
+      // customCell: 'multiLabel',
     },
   ];
 

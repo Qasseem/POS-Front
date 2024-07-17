@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { ErrandTypeService } from '../../services/errand-type.service';
 @Component({
   selector: 'oc-categories-errands-types-form',
   templateUrl: './categories-errands-types-form.component.html',
@@ -17,9 +17,9 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
   categoriesLists = [];
   constructor(
     private fb: FormBuilder,
-    private adminActivitiesServices: AdminActivitiesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private service: ErrandTypeService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -49,7 +49,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
   }
 
   getCategoriesErrandType() {
-    this.adminActivitiesServices
+    this.service
       .getCategoriesFixed()
       .pipe(takeWhile(() => this.alive))
       .subscribe((resp) => {
@@ -59,7 +59,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
       });
   }
   getItemDetails() {
-    this.adminActivitiesServices
+    this.service
       .GetCategoriesErrandsTypesDetails(this.id)
       .pipe(takeWhile(() => this.alive))
       .subscribe((resp) => {
@@ -82,7 +82,7 @@ export class CategoriesErrandTypesFormComponent implements OnInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
-    this.adminActivitiesServices
+    this.service
       .AddErrandsType(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({

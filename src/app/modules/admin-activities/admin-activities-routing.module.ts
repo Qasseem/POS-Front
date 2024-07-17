@@ -28,7 +28,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'list/merchant-category-codes/edit/:id',
+        path: 'merchant-category-codes/edit/:id',
         component: MerchantCategoryCodesFormComponent,
         data: {
           type: 'edit',

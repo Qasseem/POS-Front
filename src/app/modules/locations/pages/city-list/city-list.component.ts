@@ -7,6 +7,7 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { CityService } from '../../services/city.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-city-list',
@@ -27,7 +28,7 @@ export class CityListComponent {
     {
       field: 'id',
       header: 'ID',
-      width: '100px',
+      width: '50px',
     },
 
     {
@@ -56,13 +57,13 @@ export class CityListComponent {
   ];
 
   public actions: ActionsInterface[] = [
-    {
-      name: 'Edit',
-      icon: 'pi pi-file-edit',
-      permission: 'viewcustomerpayments',
-      call: (row: any) => this.editItem(row),
-      // customPermission: (row: any) => row.id > 3,
-    },
+    // {
+    //   name: 'Edit',
+    //   icon: 'pi pi-file-edit',
+    //   permission: 'viewcustomerpayments',
+    //   call: (row: any) => this.editItem(row),
+    //   // customPermission: (row: any) => row.id > 3,
+    // },
   ];
 
   filters: SearchInterface[] = [
@@ -82,10 +83,30 @@ export class CityListComponent {
       isFixed: true,
     },
   ];
+  showEdit = true;
+  showBlock = true;
+  constructor(
+    private router: Router,
+    public service: CityService,
+    public authService: AuthService
+  ) {}
 
-  constructor(private router: Router, private service: CityService) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('locations-cities-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('locations-cities-block')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
+    }
+    if (!this.authService.hasPermission('locations-cities-edit')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('locations-cities-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
 
   navigateToAdd() {
     this.router.navigate(['main/locations/city/add']);

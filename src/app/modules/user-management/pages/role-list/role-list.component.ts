@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { APIURL } from 'src/app/services/api';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'oc-role-list',
@@ -30,6 +32,7 @@ export class RoleListComponent implements OnInit {
     {
       field: 'id',
       header: 'ID',
+      width: '50px',
     },
     {
       field: 'nameEn',
@@ -58,9 +61,28 @@ export class RoleListComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private service: TerminalService) {}
+  showEdit = true;
+  showBlock = true;
+  constructor(
+    private router: Router,
+    public service: RoleService,
+    public authService: AuthService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('users-and-permissions-roles-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-roles-block')) {
+      this.showBlock = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-roles-edit')) {
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-roles-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
   navigateToAdd() {
     this.router.navigate(['main/user-management/role/add']);
   }

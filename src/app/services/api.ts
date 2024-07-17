@@ -109,16 +109,19 @@ export const APIURL = {
     getOneMCC: '/AdminActivities/GetMerchantCategoryById',
     exportMCC: '/AdminActivities/ExportMerchantCategory',
     importMCC: '/AdminActivities/ImportMerchantCategory',
+    blockMCC: '/AdminActivities/BlockMerchantCategory',
     getErrandsChannel: '/AdminActivities/GetErrandChannelGrid',
     AddErrandsChannel: '/AdminActivities/SaveErrandChannel',
     getOneErrandsChannel: '/AdminActivities/GetErrandChannelById',
     exportErrandsChannel: '/AdminActivities/ExportErrandChannel',
     importErrandsChannel: '/AdminActivities/ImportErrandChannel',
+    blockErrandsChannel: '/AdminActivities/BlockErrandChannel',
     getPOSType: '/AdminActivities/GetPOSTypeGrid',
     AddPOSType: '/AdminActivities/SavePOSType',
     getOnePOSType: '/AdminActivities/GetPOSTypeById',
     exportPOSType: '/AdminActivities/ExportPOSType',
     importPOSType: '/AdminActivities/ImportPOSType',
+    blockPOSType: '/AdminActivities/BlockPOSType',
   },
 
   ErrandsType: {
@@ -127,6 +130,7 @@ export const APIURL = {
     getOneErrandType: '/ErrandType/GetById',
     exportErrandType: '/ErrandType/ExportErrandType',
     importErrandType: '/ErrandType/ImportErrandType',
+    blockErrandType: '/ErrandType/Block',
   },
 
   Region: {

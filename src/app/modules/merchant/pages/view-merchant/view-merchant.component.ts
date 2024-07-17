@@ -27,7 +27,7 @@ export class ViewMerchantComponent implements OnInit {
   constructor(
     private router: Router,
     private merchantService: MerchantService,
-    private terminalService: TerminalService,
+    public terminalService: TerminalService,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
@@ -102,11 +102,11 @@ export class ViewMerchantComponent implements OnInit {
       icon: 'pi pi-ban',
       call: (row: any) => this.blockItem(row),
     },
-    {
-      name: 'Add to favorite ',
-      icon: 'pi pi-heart',
-      call: (row: any) => this.addToFavorite(row),
-    },
+    // {
+    //   name: 'Add to favorite ',
+    //   icon: 'pi pi-heart',
+    //   call: (row: any) => this.addToFavorite(row),
+    // },
   ];
 
   filters: SearchInterface[] = [
@@ -202,7 +202,7 @@ export class ViewMerchantComponent implements OnInit {
   }
 
   id;
-
+  showFavourite = true;
   ngOnInit() {
     this.id = this.route.snapshot.params.id || null;
     if (this.id) {
@@ -221,7 +221,8 @@ export class ViewMerchantComponent implements OnInit {
       this.actions = this.actions.filter((x) => x.name !== 'Edit');
     }
     if (!this.authService.hasPermission('merchants-all-merchants-favorite')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
+      this.showFavourite = false;
+      // this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
     }
   }
 

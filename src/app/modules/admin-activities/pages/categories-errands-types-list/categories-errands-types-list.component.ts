@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
-import {
-  HTTPMethods,
-  SearchInputTypes,
-} from 'src/app/core/shared/core/modules/table/models/enums';
-import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { ErrandTypeService } from '../../services/errand-type.service';
 
 @Component({
   selector: 'oc-categories-errands-types-list',
@@ -35,7 +31,7 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
     {
       field: 'id',
       header: 'ID',
-      width: '100px',
+      width: '50px',
     },
     {
       field: 'categoryName',
@@ -108,7 +104,8 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private service: AdminActivitiesService
+    public authService: AuthService,
+    public service: ErrandTypeService
   ) {}
 
   ngOnInit() {}

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { PosTypesService } from '../../services/pos-types.service';
 @Component({
   selector: 'oc-pos-type-form',
   templateUrl: './pos-type-form.component.html',
@@ -17,9 +17,9 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
   formType = 'add';
   constructor(
     private fb: FormBuilder,
-    private adminActivitiesServices: AdminActivitiesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private service: PosTypesService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -44,7 +44,7 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
     });
   }
   getItemDetails() {
-    this.adminActivitiesServices
+    this.service
       .GetPOSTypesDetails(this.id)
       .pipe(takeWhile(() => this.alive))
       .subscribe((resp) => {
@@ -67,7 +67,7 @@ export class POSTypeFormComponent implements OnInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
-    this.adminActivitiesServices
+    this.service
       .AddPOSType(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({

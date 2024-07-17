@@ -23,11 +23,17 @@
     [addButtonLabel]="'Add Zone'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [actions]="actions"
-    [options]="{ check: false, viewDetails: false }"
+    [options]="{
+      check: false,
+      viewDetails: false,
+      edit: showEdit,
+      editURL: '/main/locations/zone/edit/',
+      block: showBlock
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Zone'"
     [sampleName]="'ImportZoneTemplate.xlsx'"
+    [service]="service"
   >
   </oc-table>
 </div>

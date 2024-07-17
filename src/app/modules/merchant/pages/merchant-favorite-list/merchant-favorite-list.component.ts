@@ -82,18 +82,18 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
     },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      permission: 'completedata',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Remove From favorites',
-      icon: 'pi pi-heart-fill',
-      permission: 'completedata',
-      call: (row: any) => this.removeFromFavorite(row),
-    },
+    // {
+    //   name: 'Block',
+    //   icon: 'pi pi-ban',
+    //   permission: 'completedata',
+    //   call: (row: any) => this.blockItem(row),
+    // },
+    // {
+    //   name: 'Remove From favorites',
+    //   icon: 'pi pi-heart-fill',
+    //   permission: 'completedata',
+    //   call: (row: any) => this.removeFromFavorite(row),
+    // },
   ];
 
   filters: SearchInterface[] = [
@@ -130,10 +130,11 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private service: MerchantService,
+    public service: MerchantService,
     private authService: AuthService,
     private toaster: ToastService
   ) {}
+  showFavourite = true;
 
   ngOnInit() {
     if (!this.authService.hasPermission('merchants-all-merchants-details')) {
@@ -149,7 +150,8 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
       this.actions = this.actions.filter((x) => x.name !== 'Edit');
     }
     if (!this.authService.hasPermission('merchants-all-merchants-favorite')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
+      // this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
+      this.showFavourite = false;
     }
   }
 

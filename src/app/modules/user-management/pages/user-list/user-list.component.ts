@@ -14,6 +14,7 @@ import { TerminalService } from 'src/app/modules/terminal/services/terminal.serv
 import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 import { UserService } from '../../services/user.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-user-list',
@@ -39,7 +40,7 @@ export class UserListComponent implements OnInit {
     this.router.navigate([URL]);
   }
   toggleBlockItem(row: any): any {
-    const isBlock = !row.isBlocked;
+    const isBlock = !row.isBlock;
     const action = isBlock ? 'block' : 'unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
     this.service
@@ -60,8 +61,8 @@ export class UserListComponent implements OnInit {
                   ? 'Blocked successfully'
                   : 'Unblocked successfully';
                 this.toaster.showSuccess(message);
-                row.isBlocked = isBlock; // Update the row's block status
-                this.updateActions(row);
+                row.isBlock = isBlock; // Update the row's block status
+                // this.updateActions(row);
               }
             });
         }
@@ -261,12 +262,28 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private service: UserService,
+    public service: UserService,
+    public authService: AuthService,
     public dialogService: DialogService,
     public toaster: ToastService
   ) {}
+  showEdit = true;
+  showBlock = true;
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('users-and-permissions-users-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-users-block')) {
+      this.showBlock = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-users-edit')) {
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('users-and-permissions-users-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
   navigateToAdd() {
     this.router.navigate(['main/user-management/user/add']);
   }

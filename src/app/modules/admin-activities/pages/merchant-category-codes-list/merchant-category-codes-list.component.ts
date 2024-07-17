@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
-import { SearchInputTypes } from 'src/app/core/shared/core/modules/table/models/enums';
-import { TableOptionsInterface } from 'src/app/core/shared/core/modules/table/models/options.interface';
-import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { MerchantCategoryService } from '../../services/merchant-category.service';
 
 @Component({
   selector: 'oc-merchant-category-codes-list',
@@ -33,6 +31,7 @@ export class MerchantCategoryCodesListComponent implements OnInit {
     {
       field: 'id',
       header: 'ID',
+      width: '50px',
     },
     {
       field: 'nameEn',
@@ -94,13 +93,40 @@ export class MerchantCategoryCodesListComponent implements OnInit {
   //     isFixed: true,
   //   },
   // ];
-
+  showEdit = true;
   constructor(
     private router: Router,
-    private service: AdminActivitiesService
+    public authService: AuthService,
+    public service: MerchantCategoryService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (
+      !this.authService.hasPermission(
+        'admin-activities-merchant-category-export'
+      )
+    ) {
+      this.tableBtns.showExport = false;
+    }
+    if (
+      !this.authService.hasPermission(
+        'admin-activities-merchant-category-block'
+      )
+    ) {
+      this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (
+      !this.authService.hasPermission('admin-activities-merchant-category-edit')
+    ) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
+      this.showEdit = false;
+    }
+    if (
+      !this.authService.hasPermission('admin-activities-merchant-category-add')
+    ) {
+      this.tableBtns.showImport = false;
+    }
+  }
   navigateToAdd() {
     this.router.navigate([
       'main/admin-activities/list/merchant-category-codes/add',

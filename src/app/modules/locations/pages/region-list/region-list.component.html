@@ -5,13 +5,20 @@
       style="float: left; font-weight: 600; font-family: 'public-sans'"
       >Region</span
     >
-    <p-button (click)="navigateToAdd()" label="Add Region" size="small">
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add Region"
+      size="small"
+      *secured="['locations-cities-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br *ngIf="!authService.hasPermission('locations-cities-add')" />
+
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -23,11 +30,17 @@
     [addButtonLabel]="'Add Region'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [actions]="actions"
-    [options]="{ check: false, viewDetails: false }"
+    [options]="{
+      check: false,
+      viewDetails: false,
+      edit: showEdit,
+      editURL: '/main/locations/region/edit/',
+      block: showBlock
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Region'"
     [sampleName]="'ImportRegionTemplate.xlsx'"
+    [service]="service"
   >
   </oc-table>
 </div>

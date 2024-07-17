@@ -1,13 +1,19 @@
 <div class="p-grid ml-2 m-2">
   <div class="p-col" style="text-align: right">
     <span class="mt-2" style="float: left; font-weight: bolder">Users</span>
-    <p-button (click)="navigateToAdd()" label="Add User" size="small">
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add User"
+      size="small"
+      *secured="['users-and-permissions-users-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br *ngIf="!authService.hasPermission('users-and-permissions-users-add')" />
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -20,10 +26,18 @@
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Users.exportUser"
     [actions]="actions"
-    [options]="{ check: false, viewDetails: false }"
+    [options]="{
+      check: false,
+      viewDetails: false,
+      viewDetailsURL: '/main/user-management/user/details/',
+      edit: showEdit,
+      editURL: '/main/user-management/user/edit/',
+      block: showEdit
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Users'"
     [sampleName]="'ImportTemplateSample.xlsx'"
+    [service]="service"
   >
   </oc-table>
 </div>

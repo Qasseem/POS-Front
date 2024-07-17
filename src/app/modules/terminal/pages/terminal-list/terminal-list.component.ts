@@ -253,7 +253,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
   viewDetails = true;
   constructor(
     private router: Router,
-    private service: TerminalService,
+    public service: TerminalService,
     public toaster: ToastService,
     public authService: AuthService
   ) {}

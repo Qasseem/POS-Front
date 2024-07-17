@@ -7,6 +7,7 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { ZoneService } from '../../services/zone.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-zone-list',
@@ -27,7 +28,7 @@ export class ZoneListComponent {
     {
       field: 'id',
       header: 'ID',
-      width: '100px',
+      width: '50px',
     },
 
     {
@@ -82,10 +83,31 @@ export class ZoneListComponent {
       isFixed: true,
     },
   ];
+  showBlock = true;
+  showEdit = true;
 
-  constructor(private router: Router, private service: ZoneService) {}
+  constructor(
+    private router: Router,
+    public service: ZoneService,
+    public authService: AuthService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (!this.authService.hasPermission('locations-zones-export')) {
+      this.tableBtns.showExport = false;
+    }
+    if (!this.authService.hasPermission('locations-zones-block')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
+    }
+    if (!this.authService.hasPermission('locations-zones-edit')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('locations-zones-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
 
   navigateToAdd() {
     this.router.navigate(['main/locations/zone/add']);

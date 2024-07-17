@@ -3,13 +3,22 @@
     <span class="mt-2" style="float: left; font-weight: bolder"
       >Merchant Category Codes</span
     >
-    <p-button (click)="navigateToAdd()" label="Add MCC" size="small">
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add MCC"
+      size="small"
+      *secured="['admin-activities-merchant-category-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br
+  *ngIf="!authService.hasPermission('admin-activities-merchant-category-add')"
+/>
+
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -22,10 +31,16 @@
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.AdminActivities.exportMCC"
-    [actions]="actions"
-    [options]="{ check: false, viewDetails: false }"
+    [options]="{
+      check: false,
+      viewDetails: false,
+      edit: showEdit,
+      editURL: '/main/admin-activities/merchant-category-codes/edit/',
+      block: true
+    }"
     [uploadHeader]="'Upload Bulk Merchant Category Codes'"
     [sampleName]="'ImportTemplateSample.xlsx'"
+    [service]="service"
   >
   </oc-table>
 </div>

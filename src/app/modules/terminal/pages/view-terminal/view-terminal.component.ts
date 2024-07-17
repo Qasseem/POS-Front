@@ -11,6 +11,7 @@ import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { TicketService } from 'src/app/modules/ticket/services/ticket.service';
 
 @Component({
   selector: 'oc-view-terminal',
@@ -28,6 +29,7 @@ export class ViewTerminalComponent implements OnInit {
   constructor(
     private router: Router,
     private terminalService: TerminalService,
+    public ticketService: TicketService,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {

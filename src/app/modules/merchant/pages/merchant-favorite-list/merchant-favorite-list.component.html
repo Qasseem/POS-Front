@@ -14,9 +14,15 @@
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
-    [options]="{ check: false, viewDetails: viewDetails }"
+    [options]="{
+      check: false,
+      viewDetails: viewDetails,
+      viewDetailsURL: '/main/merchant/details/',
+      favourite: showFavourite
+    }"
     [filters]="filters"
     [reloadIfUpdated]="reloadIfUpdated"
+    [service]="service"
   >
   </oc-table>
 </div>

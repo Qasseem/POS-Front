@@ -35,8 +35,8 @@
           background-image: url("../../../../assets/icons/view-card-header-lg.svg");
         }
         @include breakpoints(up-xxl) {
-          height: 140px;
-          background-image: url("../../../../assets/icons/view-card-header-sm.svg");
+          height: 198px;
+          background-image: url("../../../../assets/icons/view-card-header-lg.svg");
         }
       }
 
@@ -127,6 +127,7 @@
         p-divider ::ng-deep .p-divider {
           width: 96%;
           right: 0.5rem;
+          margin: 0.25rem 0 1rem 0;
           &::before {
             border-top: 1px solid #e5e7eb79;
           }

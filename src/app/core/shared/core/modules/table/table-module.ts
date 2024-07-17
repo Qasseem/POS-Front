@@ -9,6 +9,7 @@ import { TableComponent } from './table.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FormModule } from 'src/app/core/shared/form/form-module';
 import { FileUploadModule } from './components/file-upload/file-upload.module';
+import { IconModule } from 'src/app/modules/shared/inline-svg-icon/icon.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { FileUploadModule } from './components/file-upload/file-upload.module';
     FormModule,
     PrimeNgButtonsModule,
     FileUploadModule,
+    IconModule,
   ],
   declarations: [ListComponent, TableComponent, SearchBarComponent],
   exports: [ListComponent, TableComponent, SearchBarComponent],

@@ -3,13 +3,20 @@
     <span class="mt-2" style="float: left; font-weight: bolder"
       >Errand Channels</span
     >
-    <p-button (click)="navigateToAdd()" label="Add Errand Channel" size="small">
+    <p-button
+      (click)="navigateToAdd()"
+      label="Add Errand Channel"
+      size="small"
+      *secured="['admin-activities-errand-channel-add']"
+    >
       <span class="ml-1 mr-1 add">
         <i class="pi pi-plus add-icon"></i>
       </span>
     </p-button>
   </div>
 </div>
+<br *ngIf="!authService.hasPermission('admin-activities-errand-channel-add')" />
+
 <div class="mt-3">
   <oc-table
     [showSearchBar]="true"
@@ -22,10 +29,16 @@
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.AdminActivities.exportErrandsChannel"
-    [actions]="actions"
-    [options]="{ check: false, viewDetails: false }"
+    [options]="{
+      check: false,
+      viewDetails: false,
+      edit: showEdit,
+      editURL: '/main/admin-activities/errands-channels/edit/',
+      block: true
+    }"
     [uploadHeader]="'Upload Bulk Errand Channel'"
     [sampleName]="'ImportTemplateSample.xlsx'"
+    [service]="service"
   >
   </oc-table>
 </div>

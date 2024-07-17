@@ -52,8 +52,14 @@
             [buttonsExistance]="tableBtns"
             [exportUrl]="url.Ticket.Export"
             [actions]="actions"
-            [options]="{ check: false, viewDetails: viewDetails }"
+            [options]="{
+              check: false,
+              viewDetails: false,
+              edit: true,
+              editURL: '/main/terminal/edit/'
+            }"
             [filters]="filters"
+            [service]="ticketService"
           >
           </oc-table>
         </div>

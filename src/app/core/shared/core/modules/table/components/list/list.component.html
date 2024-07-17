@@ -411,6 +411,11 @@
                   <span
                     style="color: #969696"
                     *ngIf="item.custom === 'default'"
+                    [class]="
+                      item.label == 'statusEn' || item.label == 'statusAr'
+                        ? rowData[item.label]
+                        : ''
+                    "
                   >
                     {{ rowData[item.label] | strLimit : 30 }}
                   </span>
@@ -465,7 +470,14 @@
             {{ rowData[col.field] | strLimit : 50 }}
           </div>
           <ng-template style="font-size: 14px" #default>
-            <span style="white-space: pre">
+            <span
+              style="white-space: pre"
+              [class]="
+                col.field == 'statusEn' || col.field == 'status'
+                  ? convertToKebabCase(rowData[col.field].toLowerCase())
+                  : ''
+              "
+            >
               {{ rowData[col.field] }}
             </span>
           </ng-template>
@@ -493,11 +505,20 @@
         </div>
       </td>
 
-      <td *ngIf="actions">
+      <td
+        *ngIf="
+          actions?.length ||
+          options.historyDetails ||
+          options.details ||
+          options.block ||
+          options.edit ||
+          option.favourite
+        "
+        style="width: 100px"
+      >
         <div class="actions-wrap d-flex">
           <div class="btn-group" dropdown container="body">
             <div
-              appSecured="details"
               *ngIf="options.details"
               class="btn-details"
               [ngClass]="{
@@ -554,6 +575,45 @@
               <i style="font-size: 1.5rem" class="pi pi-eye"></i>
             </button>
             <button
+              *ngIf="options?.edit"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="goToEdit(rowData)"
+            >
+              <!-- <i style="font-size: 1.5rem" class="pi pi-eye"></i> -->
+              <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon>
+            </button>
+            <button
+              *ngIf="options?.favourite"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="toggleFavourite(rowData)"
+            >
+              <i
+                style="font-size: 1.5rem"
+                [class]="
+                  rowData?.isFavourite ? 'pi pi-heart-fill' : 'pi pi-heart'
+                "
+              ></i>
+              <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
+            </button>
+            <button
+              *ngIf="options?.block"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="toggleActionBlock(rowData)"
+            >
+              <i
+                style="font-size: 1.5rem"
+                [class]="rowData?.isBlock ? 'pi pi-ban' : 'pi pi-check'"
+              ></i>
+              <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
+            </button>
+            <button
+              *ngIf="options?.hasMenu"
               type="button"
               pButton
               pRipple

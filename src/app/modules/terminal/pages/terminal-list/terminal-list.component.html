@@ -27,11 +27,17 @@
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Terminal.Export"
     [actions]="actions"
-    [options]="{ check: false, viewDetails: viewDetails }"
+    [options]="{
+      check: false,
+      viewDetails: viewDetails,
+      viewDetailsURL: '/main/terminal/details/',
+      hasMenu: true
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Terminal'"
     [sampleName]="'ImportTerminalSample.xlsx'"
     [reloadIfUpdated]="reloadIfUpdated"
+    [service]="service"
   >
   </oc-table>
 </div>

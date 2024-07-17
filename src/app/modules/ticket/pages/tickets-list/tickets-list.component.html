@@ -26,7 +26,12 @@
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
-    [options]="{ check: false }"
+    [options]="{
+      check: false,
+      hasMenu: true,
+      viewDetails: viewDetails,
+      viewDetailsURL: '/main/ticket/details/'
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Tickets'"
     [sampleName]="'ImportTicketTemplate.xlsx'"

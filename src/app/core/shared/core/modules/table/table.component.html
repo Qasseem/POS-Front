@@ -104,6 +104,7 @@
   </form>
   <div *ngIf="toggle" class="table-wrap">
     <oc-list
+      [service]="service"
       [clientSide]="clientSide"
       [url]="url"
       [columnsI]="columns"

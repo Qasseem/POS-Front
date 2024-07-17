@@ -21,4 +21,7 @@ export class RoleService {
   getServicesByRoleId(id) {
     return this.http.getHeaderReq(APIURL.Role.getRoleServiceDetails, id);
   }
+  Block(data) {
+    return this.http.postReq(APIURL.Role.blockRole, data);
+  }
 }

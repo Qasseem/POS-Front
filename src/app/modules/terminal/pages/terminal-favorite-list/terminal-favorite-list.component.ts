@@ -188,11 +188,11 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
   viewDetails = true;
   constructor(
     private router: Router,
-    private service: TerminalService,
-    private authService: AuthService,
+    public service: TerminalService,
+    public authService: AuthService,
     private toaster: ToastService
   ) {}
-
+  showFavourite = true;
   ngOnInit(): void {
     if (!this.authService.hasPermission('terminals-all-terminals-details')) {
       this.viewDetails = false;
@@ -201,7 +201,8 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       this.tableBtns.showExport = false;
     }
     if (!this.authService.hasPermission('terminals-all-terminals-block')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Block');
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showFavourite = false;
     }
     if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
       this.actions = this.actions.filter((x) => x.name !== 'Edit');

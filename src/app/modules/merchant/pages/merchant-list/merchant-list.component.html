@@ -30,8 +30,13 @@
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [exportUrl]="url.Merchant.Export"
-    [actions]="actions"
-    [options]="{ check: false, viewDetails: viewDetails }"
+    [actions]="actions.length ? actions : null"
+    [options]="{
+      check: false,
+      viewDetails: viewDetails,
+      hasMenu: actions?.length ? true : false,
+      viewDetailsURL: '/main/merchant/details/'
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Merchant'"
     [sampleName]="'ImportMerchantSample.xlsx'"

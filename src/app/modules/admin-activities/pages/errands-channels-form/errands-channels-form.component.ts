@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs';
-import { AdminActivitiesService } from '../../services/admin-activities.service';
+import { ErrandChannelService } from '../../services/errand-channel.service';
 @Component({
   selector: 'oc-errands-channels-form',
   templateUrl: './errands-channels-form.component.html',
@@ -17,9 +17,9 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
   formType = 'add';
   constructor(
     private fb: FormBuilder,
-    private adminActivitiesServices: AdminActivitiesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private service: ErrandChannelService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -44,7 +44,7 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
     });
   }
   getItemDetails() {
-    this.adminActivitiesServices
+    this.service
       .GetErrandsChannelDetails(this.id)
       .pipe(takeWhile(() => this.alive))
       .subscribe((resp) => {
@@ -67,7 +67,7 @@ export class ErrandsChannelsFormComponent implements OnInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
-    this.adminActivitiesServices
+    this.service
       .AddErrandsChannel(this.form.value)
       .pipe(takeWhile(() => this.alive))
       .subscribe({
