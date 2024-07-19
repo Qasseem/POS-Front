@@ -15,8 +15,8 @@ interface ConfirmDialogData {
   providedIn: 'root',
 })
 export class DialogService {
-  private dialogSubject = new Subject<ConfirmDialogData>();
-  private result = new Subject<any>();
+  private dialogSubject = new Subject<any>();
+  private result = new Subject<boolean>();
 
   confirm(
     message: string = 'Are you sure?',
@@ -35,7 +35,7 @@ export class DialogService {
       params: params,
       params2: params2,
     });
-    return this.result;
+    return this.result.asObservable();
   }
 
   Ok() {
@@ -47,10 +47,10 @@ export class DialogService {
   }
 
   get message(): Observable<any> {
-    return this.dialogSubject;
+    return this.dialogSubject.asObservable();
   }
 
   get response(): Observable<any> {
-    return this.result;
+    return this.result.asObservable();
   }
 }
