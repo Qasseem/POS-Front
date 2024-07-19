@@ -133,7 +133,7 @@ export class ViewMerchantComponent implements OnInit {
 
     {
       isMultiple: true,
-      type: SearchInputTypes.choice,
+      type: SearchInputTypes.select,
       field: 'users',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,

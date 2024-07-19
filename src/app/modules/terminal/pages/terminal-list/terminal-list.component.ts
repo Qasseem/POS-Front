@@ -187,7 +187,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
 
     {
       isMultiple: true,
-      type: SearchInputTypes.choice,
+      type: SearchInputTypes.select,
       field: 'users',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
