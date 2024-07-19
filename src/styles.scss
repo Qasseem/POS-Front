@@ -121,6 +121,74 @@ label {
 
 .p-paginator-bottom {
   border-radius: 0px 0px 10px 10px !important;
+  .p-paginator-first,
+  .p-paginator-last {
+    display: none;
+  }
+
+  .p-paginator-pages {
+    button {
+      border-radius: 8px !important;
+    }
+  }
+}
+
+p-confirmDialog {
+  .p-confirm-dialog {
+    width: 400px;
+    height: 200px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+  }
+
+  .p-confirm-dialog-header {
+    font-size: 18px;
+    color: #333;
+    padding: 15px 24px !important;
+  }
+  .p-dialog .p-dialog-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .p-confirm-dialog-content {
+    font-size: 16px;
+    color: rgba(105, 118, 130, 1);
+    padding: 20px;
+    padding-left: 10px;
+  }
+  .p-dialog .p-dialog-footer {
+    padding-right: 10px;
+  }
+  .p-confirm-dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .p-confirm-dialog .pi,
+  .p-button-icon-left {
+    display: none !important;
+  }
+  .p-button-label {
+    font-weight: normal;
+  }
+  .p-button {
+    background-color: white;
+    font-weight: normal;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .p-confirm-dialog-reject {
+    background: white;
+    border: 1px solid rgba(204, 230, 254, 1) !important;
+    color: rgba(0, 128, 249, 1);
+  }
+  .p-confirm-dialog-accept {
+    background: rgba(221, 58, 42, 1) !important;
+    border: none;
+    color: white;
+  }
 }
 .fs-10 {
   font-size: 10px;

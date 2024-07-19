@@ -183,3 +183,21 @@
   color: black;
   border: none;
 }
+.paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pages {
+  display: flex;
+  gap: 5px;
+}
+
+button.active {
+  background-color: #007ad9; /* Adjust to your primary color */
+  color: white;
+}
+::ng-deep p-paginator-bottom p-paginator {
+  border-radius: 8px !important;
+}
