@@ -412,7 +412,9 @@
                     style="color: #969696"
                     *ngIf="item.custom === 'default'"
                     [class]="
-                      item.label == 'statusEn' || item.label == 'statusAr'
+                      item.label == 'statusEn' ||
+                      item.label == 'statusAr' ||
+                      col.field == 'status'
                         ? rowData[item.label]
                         : ''
                     "
@@ -473,7 +475,9 @@
             <span
               style="white-space: pre"
               [class]="
-                col.field == 'statusEn' || col.field == 'status'
+                col.field == 'statusEn' ||
+                col.field == 'status' ||
+                col.field == 'statusAr'
                   ? convertToKebabCase(rowData[col.field].toLowerCase())
                   : ''
               "
@@ -575,7 +579,7 @@
               <i style="font-size: 1.5rem" class="pi pi-eye"></i>
             </button>
             <button
-              *ngIf="options?.edit"
+              *ngIf="options?.edit && checkActions(rowData)"
               style="cursor: pointer; margin-bottom: 7px"
               type="button"
               class="menu-btn mb-0"
@@ -600,7 +604,7 @@
               <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
             </button>
             <button
-              *ngIf="options?.block"
+              *ngIf="options?.block && checkActions(rowData)"
               style="cursor: pointer; margin-bottom: 7px"
               type="button"
               class="menu-btn mb-0"
@@ -613,7 +617,7 @@
               <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
             </button>
             <button
-              *ngIf="options?.hasMenu"
+              *ngIf="options?.hasActionMenu && checkActions(rowData)"
               type="button"
               pButton
               pRipple

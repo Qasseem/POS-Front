@@ -179,6 +179,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
 
       return actionItem;
     });
+
     this.listActions = listActions;
     // console.log(listActions)
   }
@@ -594,6 +595,13 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   }
   filterDate() {
     return true;
+  }
+  checkActions(row) {
+    let show = true;
+    if (row.hasOwnProperty('status') && row.status == 'Completed') show = false;
+    else if (row.hasOwnProperty('statusEn') && row.statusEn == 'Completed')
+      show = false;
+    return show;
   }
 
   goToDeatils(rowData) {
