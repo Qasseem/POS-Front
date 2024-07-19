@@ -92,13 +92,15 @@
   padding: 0.25rem 1rem;
   color: #00875a;
 }
-.in-progress {
+.in-progress,
+.agentonway {
   border-radius: 16px;
   background-color: #fef9ee;
   padding: 0.25rem 1rem;
   color: #c59e46;
 }
-.new {
+.postponed,
+.assigned {
   border-radius: 16px;
   background-color: #eff8ff;
   padding: 0.25rem 1rem;
