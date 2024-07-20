@@ -9,7 +9,6 @@
   "
   [rows]="tableCore.pageOptions.limit"
   [paginator]="true"
-  [rowsPerPageOptions]="[5, 10, 20, 50, 100]"
   [tableStyle]="{ 'min-width': '50rem' }"
   [styleClass]="'p-datatable-sm'"
   [(selection)]="selectedData"
@@ -646,7 +645,7 @@
     </tr>
   </ng-template>
 
-  <ng-template pTemplate="paginatorright" let-state>
+  <!-- <ng-template pTemplate="paginatorright" let-state>
     {{ state.first + 1 }} -
     {{
       state.totalRecords < state.rows * (state.page + 1)
@@ -656,7 +655,7 @@
     {{ "of" | translate }}
     {{ state.totalRecords }}
     {{ "total" | translate }}
-  </ng-template>
+  </ng-template> -->
 
   <ng-template pTemplate="emptymessage" let-columns>
     <tr>

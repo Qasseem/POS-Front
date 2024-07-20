@@ -28,7 +28,9 @@ import { ViewCardComponent } from './view-card/view-card.component';
 import { AccordionModule } from 'primeng/accordion';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmDialogComponent } from 'src/app/modules/shared/confirm-dialog/confirm-dialog.component';
 import { SecuredDirective } from './directives/secured.directive';
+import { ConfirmationService } from 'primeng/api';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -65,7 +67,12 @@ const CORE_MODULES = [TranslateModule];
 const CUSTOM_DIRECTIVES = [PreventKeyseDirective, SecuredDirective];
 
 @NgModule({
-  declarations: [...CUSTOM_DIRECTIVES, LeafletMapComponent, ViewCardComponent],
+  declarations: [
+    ...CUSTOM_DIRECTIVES,
+    LeafletMapComponent,
+    ViewCardComponent,
+    ConfirmDialogComponent,
+  ],
   imports: [
     ...ANGULAR_MODULES,
     ...PRIME_NG_MODULES,
@@ -81,7 +88,8 @@ const CUSTOM_DIRECTIVES = [PreventKeyseDirective, SecuredDirective];
     ...CUSTOM_DIRECTIVES,
     LeafletMapComponent,
     ViewCardComponent,
+    ConfirmDialogComponent,
   ],
-  providers: [],
+  providers: [ConfirmationService],
 })
 export class SharedModule {}
