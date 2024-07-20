@@ -210,7 +210,12 @@ export class MerchantListComponent implements OnInit {
           this.toaster.showSuccess(message);
           row.isBlock = isBlock; // Update the row's block status
           // this.updateActions(row);
-          this.reloadIfUpdated = true;
+          if (row.hasOwnProperty('status')) {
+            row.status = isBlock ? 'Blocked' : response.data.status;
+          }
+          if (row.hasOwnProperty('statusEn')) {
+            row.statusEn = isBlock ? 'Blocked' : response.data.status;
+          }
           // return row;
         }
       });

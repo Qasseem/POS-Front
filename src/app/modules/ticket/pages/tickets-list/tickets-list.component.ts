@@ -51,9 +51,15 @@ export class TicketsListComponent implements OnInit, OnDestroy {
               : 'Unblocked successfully';
             this.toaster.toaster.clear();
             this.toaster.showSuccess(message);
-            row.isBlocked = isBlock; // Update the row's block status
-            this.updateActions(row);
-            this.reloadIfUpdated = true;
+            row.isBlock = isBlock; // Update the row's block status
+            if (row.hasOwnProperty('status')) {
+              row.status = isBlock ? 'Blocked' : response.data.status;
+            }
+            if (row.hasOwnProperty('statusEn')) {
+              row.statusEn = isBlock ? 'Blocked' : response.data.status;
+            }
+            // this.updateActions(row);
+            // this.reloadIfUpdated = true;
           }
         },
       });

@@ -49,37 +49,42 @@ export class TerminalListComponent implements OnInit, OnDestroy {
     const isBlock = !row.isBlock;
     const action = isBlock ? 'Block' : 'Unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    // this.service
+    //   .confirm(
+    //     `Are you sure you want to ${action} this item?`,
+    //     `${action} Item`,
+    //     okText,
+    //     'No,Cancel'
+    //   )
+    //   .subscribe((response) => {
+    //     if (response) {
     this.service
-      .confirm(
-        `Are you sure you want to ${action} this item?`,
-        `${action} Item`,
-        okText,
-        'No,Cancel'
+      .Block({ id: row.id, isBlock })
+      .pipe(
+        takeWhile(() => this.alive),
+        first()
       )
       .subscribe((response) => {
-        if (response) {
-          this.service
-            .Block({ id: row.id, isBlock })
-            .pipe(
-              takeWhile(() => this.alive),
-              first()
-            )
-            .subscribe((response) => {
-              if (response.success) {
-                const message = isBlock
-                  ? 'Blocked successfully'
-                  : 'Unblocked successfully';
-                this.toaster.toaster.clear();
-                this.toaster.showSuccess(message);
-                row.isBlock = isBlock; // Update the row's block status
-                // this.updateActions(row);
-                this.reloadIfUpdated = true;
-                return row;
-              }
-            });
+        if (response.success) {
+          const message = isBlock
+            ? 'Blocked successfully'
+            : 'Unblocked successfully';
+          this.toaster.toaster.clear();
+          this.toaster.showSuccess(message);
+          row.isBlock = isBlock; // Update the row's block status
+          // this.updateActions(row);
+          if (row.hasOwnProperty('status')) {
+            row.status = isBlock ? 'Blocked' : response.data.status;
+          }
+          if (row.hasOwnProperty('statusEn')) {
+            row.statusEn = isBlock ? 'Blocked' : response.data.status;
+          }
+          // return row;
         }
       });
-    this.reloadIfUpdated = false;
+    //     }
+    //   });
+    // this.reloadIfUpdated = false;
   }
 
   goToDetails(row: any): any {

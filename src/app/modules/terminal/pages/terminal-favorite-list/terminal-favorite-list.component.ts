@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ToastService } from 'src/app/core/services/toaster.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
   HTTPMethods,
@@ -10,9 +13,6 @@ import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { takeWhile } from 'rxjs';
-import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'oc-terminal-favorite-list',
@@ -86,16 +86,16 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
     },
-    {
-      name: 'Block',
-      icon: 'pi pi-ban',
-      call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Remove from favorites',
-      icon: 'pi pi-heart-fill',
-      call: (row: any) => this.removeFromFavorite(row),
-    },
+    // {
+    //   name: 'Block',
+    //   icon: 'pi pi-ban',
+    //   call: (row: any) => this.blockItem(row),
+    // },
+    // {
+    //   name: 'Remove from favorites',
+    //   icon: 'pi pi-heart-fill',
+    //   call: (row: any) => this.removeFromFavorite(row),
+    // },
   ];
 
   filters: SearchInterface[] = [
@@ -200,12 +200,8 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
     if (!this.authService.hasPermission('terminals-all-terminals-export')) {
       this.tableBtns.showExport = false;
     }
-    if (!this.authService.hasPermission('terminals-all-terminals-block')) {
-      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+    if (!this.authService.hasPermission('terminals-all-terminals-favorite')) {
       this.showFavourite = false;
-    }
-    if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Edit');
     }
   }
   editItem(row: any): any {
@@ -233,34 +229,34 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
     const isBlock = !row.isBlock;
     const action = isBlock ? 'Block' : 'Unblock';
     const okText = isBlock ? 'Yes, Block' : 'Yes, Unblock';
+    this.service;
+    // .confirm(
+    //   `Are you sure you want to ${action} this item?`,
+    //   `${action} Item`,
+    //   okText,
+    //   'No,Cancel'
+    // )
+    // .subscribe((response) => {
+    //   if (response) {
     this.service
-      .confirm(
-        `Are you sure you want to ${action} this item?`,
-        `${action} Item`,
-        okText,
-        'No,Cancel'
-      )
-      .subscribe((response) => {
-        if (response) {
-          this.service
-            .Block({ id: row.id, isBlock })
-            .pipe(takeWhile(() => this.alive))
-            .subscribe((res) => {
-              if (res.success) {
-                const message = isBlock
-                  ? 'Blocked successfully'
-                  : 'Unblocked successfully';
-                this.toaster.toaster.clear();
-                this.toaster.showSuccess(message);
-                row.isBlock = isBlock; // Update the row's block status
-                // this.updateActions(row);
-                this.reloadIfUpdated = true;
-                return row;
-              }
-            });
+      .Block({ id: row.id, isBlock })
+      .pipe(takeWhile(() => this.alive))
+      .subscribe((res) => {
+        if (res.success) {
+          const message = isBlock
+            ? 'Blocked successfully'
+            : 'Unblocked successfully';
+          this.toaster.toaster.clear();
+          this.toaster.showSuccess(message);
+          row.isBlock = isBlock; // Update the row's block status
+          // this.updateActions(row);
+          this.reloadIfUpdated = true;
+          return row;
         }
       });
-    this.reloadIfUpdated = false;
+    //     }
+    //   });
+    // this.reloadIfUpdated = false;
   }
   goToDetails(row: any): any {
     const id = row.id;

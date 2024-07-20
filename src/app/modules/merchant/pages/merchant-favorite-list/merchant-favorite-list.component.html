@@ -13,9 +13,10 @@
     }"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [actions]="actions"
+    [actions]="actions.length ? actions : null"
     [options]="{
       check: false,
+      hasActionMenu: actions?.length ? true : false,
       viewDetails: viewDetails,
       viewDetailsURL: '/main/merchant/details/',
       favourite: showFavourite

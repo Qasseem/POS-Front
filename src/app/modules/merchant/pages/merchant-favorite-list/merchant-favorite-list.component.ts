@@ -78,7 +78,7 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
     {
       name: 'Edit',
       icon: 'pi pi-file-edit',
-      permission: 'viewcustomerpayments',
+      // permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
       // customPermission: (row: any) => row.id > 3,
     },

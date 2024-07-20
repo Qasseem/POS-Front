@@ -688,6 +688,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
     //   )
     //   .subscribe((response) => {
     //     if (response) {
+
     this.service
       .Block({ id: row.id, isBlock: isBlock })
       .pipe(takeWhile(() => this.alive))
