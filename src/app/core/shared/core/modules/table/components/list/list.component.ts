@@ -698,7 +698,14 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
             : 'Unblocked successfully';
           this.toaster.showSuccess(message);
           row.isBlock = isBlock; // Update the row's block status
+          if (row.hasOwnProperty('status')) {
+            row.status = isBlock ? 'Blocked' : response.data.status;
+          }
+          if (row.hasOwnProperty('statusEn')) {
+            row.statusEn = isBlock ? 'Blocked' : response.data.status;
+          }
           // this.updateActions(row);
+          // this.getTableData();
         }
       });
     //   }

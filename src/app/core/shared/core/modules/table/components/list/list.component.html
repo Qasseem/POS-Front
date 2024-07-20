@@ -617,10 +617,15 @@
               <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
             </button>
             <button
-              *ngIf="options?.hasActionMenu && checkActions(rowData)"
+              *ngIf="options?.hasActionMenu"
               type="button"
               pButton
               pRipple
+              [disabled]="!checkActions(rowData)"
+              [ngStyle]="{
+                cursor: !checkActions(rowData) ? 'not-allowed' : 'pointer',
+                'pointer-events': 'unset'
+              }"
               icon="pi pi-ellipsis-v"
               (click)="
                 menu.toggle($event);
