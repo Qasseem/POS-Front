@@ -1,0 +1,323 @@
+.dashboard-container {
+  padding: 1rem;
+  &--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2.5rem;
+
+    &--title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "public-sans";
+      font-size: 16px;
+      font-weight: 600;
+    }
+    &--filters {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+  &--open-tickets-container {
+    display: flex;
+    flex-direction: column;
+    &--title {
+      padding-bottom: 1rem;
+      font-family: "public-sans";
+      font-size: 16px;
+      font-weight: 600;
+    }
+    &--statistics {
+      &--items {
+        padding: 1rem;
+        background: #fff;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        border-radius: 8px;
+        &--item {
+          height: 64px;
+          width: 20%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 4px;
+          font-family: "public-sans";
+          font-size: 14px;
+          font-weight: 400;
+          gap: 0.5rem;
+          &:first-child {
+            background: #fff;
+            span {
+              &:first-child {
+                color: #0080f9;
+                //styleName: Desktop/Headline/H4-16-SM;
+                font-family: "public-sans";
+                font-size: 16px;
+                font-weight: 600;
+              }
+              &:last-child {
+                color: #798693;
+              }
+            }
+          }
+          &:not(:first-child) {
+            span {
+              &:first-child {
+                font-family: "public-sans";
+                font-size: 16px;
+                font-weight: 600;
+                color: #798693;
+              }
+              &:last-child {
+                font-family: "public-sans";
+                font-size: 14px;
+                font-weight: 400;
+                color: #212529;
+              }
+            }
+            border: 1px solid #cce6fe;
+            background: #cce6fe3d;
+          }
+        }
+      }
+    }
+    &--card-container {
+      flex: 1 0 50%;
+      display: flex;
+      padding: 1.5rem 0;
+      gap: 2rem;
+      &--sla {
+        padding: 1rem;
+        width: 60%;
+        background-color: #fff;
+        border-radius: 8px;
+        &--title {
+          padding-bottom: 2.5rem;
+          font-family: "public-sans";
+          font-size: 12px;
+          font-weight: 600;
+          color: #212529;
+        }
+        &--chart {
+          display: flex;
+          &--container {
+            width: 30%;
+            &--empty {
+              width: 130px;
+              height: 130px;
+              background: lightgray;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              &--inner-circle {
+                width: 75px;
+                height: 75px;
+                background: #fff;
+                border-radius: 50%;
+              }
+            }
+          }
+          &--indicators {
+            width: 60%;
+            &--items {
+              display: flex;
+              flex-direction: column;
+              gap: 1.5rem;
+              &--item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &--label {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  &--icon {
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &--inner-circle {
+                      width: 6px;
+                      height: 6px;
+                      border-radius: 50%;
+                      background-color: #fff;
+                    }
+                  }
+                  &--text {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &--other-cards {
+        // background-color: #fff;
+        border-radius: 8px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        &--top-cards {
+          display: flex;
+          flex: 1 0 50%;
+          align-items: center;
+          gap: 1.5rem;
+          &--active-merchants {
+            height: 160px;
+            width: 304px;
+            border-radius: 16px;
+            background-image: url("../../../assets//iamges/active-merchant-bg.svg"),
+              url("../../../assets//iamges/active-merchants-card-bg.svg");
+            background-position: 100% 100%; /* Adjust positions */
+            background-repeat: no-repeat, no-repeat;
+            background-size: auto, auto;
+            background-color: #00c8ff;
+            // background-size: 120% 100%;
+            // background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            padding-left: 1rem;
+            &--icon {
+              height: 36px;
+              width: 36px;
+              border-radius: 8px;
+              background: #33d3ff;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              oc-icon {
+                ::ng-deep {
+                  svg path {
+                    stroke: #fff;
+                    fill: transparent;
+                  }
+                }
+              }
+            }
+            &--label {
+              span {
+                font-family: "public-sans";
+                font-size: 16px;
+                font-weight: 500;
+                color: rgb(255, 255, 255, 0.75);
+              }
+            }
+            &--count {
+              span {
+                font-family: "public-sans";
+                font-size: 24px;
+                font-weight: 600;
+                color: #fff;
+              }
+            }
+          }
+          &--active-terminals {
+            height: 160px;
+            width: 304px;
+            border-radius: 16px;
+            background-image: url("../../../assets//iamges/active-terminals-bg.svg"),
+              url("../../../assets/iamges/active-terminals-card-bg.svg");
+            background-position: 100% 100%; /* Adjust positions */
+            background-repeat: no-repeat, no-repeat;
+            background-size: auto, auto;
+            background-color: #0080f9;
+            // background-size: 120% 100%;
+            // background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            padding-left: 1rem;
+            &--icon {
+              height: 36px;
+              width: 36px;
+              border-radius: 8px;
+              background: #3399fa;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              oc-icon {
+                ::ng-deep {
+                  svg path {
+                    stroke: #fff;
+                    fill: transparent;
+                  }
+                }
+              }
+            }
+            &--label {
+              span {
+                font-family: "public-sans";
+                font-size: 16px;
+                font-weight: 500;
+                color: rgb(255, 255, 255, 0.75);
+              }
+            }
+            &--count {
+              span {
+                font-family: "public-sans";
+                font-size: 24px;
+                font-weight: 600;
+                color: #fff;
+              }
+            }
+          }
+        }
+        &--bottom-cards {
+          display: flex;
+          padding-top: 1rem;
+          gap: 1.5rem;
+
+          &--card {
+            width: 304px;
+            height: 78px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            gap: 0.75rem;
+            &--icon {
+              height: 36px;
+              width: 36px;
+              background-color: #e6f2fe;
+              border-radius: 8px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+            &--text {
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              &--label {
+                font-family: "public-sans";
+                font-size: 14px;
+                font-weight: 400;
+                color: #798693;
+              }
+              &--count {
+                font-family: "public-sans";
+                font-size: 20px;
+                font-weight: 600;
+                color: #212529;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+:host ::ng-deep p-dropdown .p-dropdown {
+  background: #edeff1;
+}

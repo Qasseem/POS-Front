@@ -21,6 +21,11 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/dashboard',
       active: false,
+      permission: [
+        'dashboard-main-dashboard-open-tickets',
+        'dashboard-main-dashboard-performance',
+        'dashboard-main-dashboard-ticket-statistics',
+      ],
     },
     {
       label: this.translateService.instant('Merchants'),

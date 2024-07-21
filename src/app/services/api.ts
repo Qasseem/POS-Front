@@ -4,6 +4,10 @@ export const APIURL = {
   register: '/Security/RegisterCustomerUser',
   getAllCities: '/City/GetAllCities',
 
+  dashboard: {
+    openTickets: '/Dashboard/OpenTickets',
+  },
+
   customerProfile: {
     customerTypeDropdown: '/CustomerType/GetCustomerTypeDropDown',
     getAllActivities: '/Activity/GetAllActivitiesFromDolphin',

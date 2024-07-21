@@ -31,6 +31,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from 'src/app/modules/shared/confirm-dialog/confirm-dialog.component';
 import { SecuredDirective } from './directives/secured.directive';
 import { ConfirmationService } from 'primeng/api';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ChartModule } from 'primeng/chart';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -52,6 +55,9 @@ const PRIME_NG_MODULES = [
   AccordionModule,
   CheckboxModule,
   ConfirmDialogModule,
+  SelectButtonModule,
+  MultiSelectModule,
+  ChartModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

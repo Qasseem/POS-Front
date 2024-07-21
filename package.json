@@ -25,6 +25,7 @@
     "@asymmetrik/ngx-leaflet-markercluster": "^18.0.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "chart.js": "^4.4.3",
     "leaflet": "^1.9.4",
     "ng-http-loader": "^15.0.0",
     "ng-inline-svg": "^13.1.2",

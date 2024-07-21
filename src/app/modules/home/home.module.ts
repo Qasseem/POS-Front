@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrimeNgContainersModule } from 'src/app/core/shared/primeng/primeng-container-module';
 import { PrimeNgButtonsModule } from 'src/app/core/shared/primeng/primeng-button-module';
 import { PrimeNgInputsModule } from 'src/app/core/shared/primeng/primeng-input-module';
+import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
   {
     path: '',
@@ -19,6 +20,7 @@ const routes: Routes = [
     PrimeNgContainersModule,
     PrimeNgButtonsModule,
     PrimeNgInputsModule,
+    SharedModule,
     RouterModule.forChild(routes),
   ],
   declarations: [HomeComponent],
