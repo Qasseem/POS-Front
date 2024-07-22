@@ -96,6 +96,7 @@
             class="dashboard-container--open-tickets-container--card-container--sla--title"
           >
             <span>SLA</span>
+            <p-divider></p-divider>
           </div>
           <div
             class="dashboard-container--open-tickets-container--card-container--sla--chart"
@@ -104,16 +105,16 @@
               class="dashboard-container--open-tickets-container--card-container--sla--chart--container"
             >
               <p-chart
-                *ngIf="data?.datasets[0]?.data?.length"
+                *ngIf="slaData?.datasets[0]?.data?.length"
                 type="pie"
-                [data]="data"
-                [options]="options"
+                [data]="slaData"
+                [options]="slaOptions"
                 [height]="'127.5'"
                 [width]="'127.5'"
               />
               <div
                 class="dashboard-container--open-tickets-container--card-container--sla--chart--container--empty"
-                *ngIf="!data?.datasets[0]?.data?.length"
+                *ngIf="!slaData?.datasets[0]?.data?.length"
               >
                 <div
                   class="dashboard-container--open-tickets-container--card-container--sla--chart--container--empty--inner-circle"
@@ -351,7 +352,379 @@
         </div>
       </div>
     </div>
-    <div class="dashboard-container--tickets-stats-container"></div>
+    <div
+      class="dashboard-container--tickets-stats-container"
+      *secured="['dashboard-main-dashboard-ticket-statistics']"
+    >
+      <div class="dashboard-container--tickets-stats-container--header">
+        <div
+          class="dashboard-container--tickets-stats-container--header--title"
+        >
+          <span>Ticket Statistics</span>
+        </div>
+        <div
+          class="dashboard-container--tickets-stats-container--header--filter"
+        >
+          <p-dropdown
+            [formControl]="dashboardForm.get('statistics').get('assigneeId')"
+            [options]="users"
+            [optionValue]="'id'"
+            [showClear]="
+              dashboardForm.get('statistics').get('assigneeId').value
+                ? true
+                : false
+            "
+            optionLabel="nameEn"
+            appendTo="body"
+            placeholder="Select Assignee"
+          ></p-dropdown>
+          <p-dropdown
+            [formControl]="dashboardForm.get('statistics').get('categoryId')"
+            [showClear]="
+              dashboardForm.get('statistics').get('categoryId').value
+                ? true
+                : false
+            "
+            [options]="categories"
+            [optionValue]="'id'"
+            optionLabel="nameEn"
+            appendTo="body"
+            placeholder="Select Category"
+          ></p-dropdown>
+          <div>
+            <p-calendar
+              [formControl]="dashboardForm.get('statistics').get('createDate')"
+              selectionMode="range"
+              appendTo="body"
+              [readonlyInput]="true"
+            />
+            <div *ngIf="dashboardForm.get('statistics').hasError('dateRange')">
+              <small class="error-text" style="color: red"
+                >The selected range must not exceed 20 days.</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-container--tickets-stats-container--card-container">
+        <div
+          class="dashboard-container--tickets-stats-container--card-container--status"
+        >
+          <div
+            class="dashboard-container--tickets-stats-container--card-container--status--title"
+          >
+            <span>Tickets Status</span>
+            <p-divider></p-divider>
+          </div>
+          <div
+            class="dashboard-container--tickets-stats-container--card-container--status--chart"
+          >
+            <div
+              class="dashboard-container--tickets-stats-container--card-container--status--chart--container"
+            >
+              <p-chart
+                *ngIf="statusData?.datasets[0]?.data?.length"
+                type="pie"
+                [data]="statusData"
+                [options]="statusOptions"
+                [height]="'127.5'"
+                [width]="'127.5'"
+              />
+              <div
+                class="dashboard-container--tickets-stats-container--card-container--status--chart--container--empty"
+                *ngIf="!statusData?.datasets[0]?.data?.length"
+              >
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--container--empty--inner-circle"
+                ></div>
+              </div>
+            </div>
+            <div
+              class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators"
+            >
+              <div
+                class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items"
+              >
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon"
+                      style="background-color: #0080f9"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--text"
+                    >
+                      Assigned:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedStatus?.assigned
+                          ? ticketStats?.transformedStatus?.assigned
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon"
+                      style="background-color: #f6c657"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--text"
+                    >
+                      On Way:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedStatus?.agentOnWay
+                          ? ticketStats?.transformedStatus?.agentOnWay
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon"
+                      style="background-color: #ff5c00"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--text"
+                    >
+                      In Progress:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedStatus?.inProgress
+                          ? ticketStats?.transformedStatus?.inProgress
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon"
+                      style="background-color: #8d9cb8"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--text"
+                    >
+                      Postponed:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedStatus?.postponed
+                          ? ticketStats?.transformedStatus?.postponed
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon"
+                      style="background-color: #54c737"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--label--text"
+                    >
+                      Done:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--status--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedStatus?.done
+                          ? ticketStats?.transformedStatus?.done
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="dashboard-container--tickets-stats-container--card-container--task"
+        >
+          <div
+            class="dashboard-container--tickets-stats-container--card-container--task--title"
+          >
+            <span>Tickets Tasks</span>
+            <p-divider></p-divider>
+          </div>
+          <div
+            class="dashboard-container--tickets-stats-container--card-container--task--chart"
+          >
+            <div
+              class="dashboard-container--tickets-stats-container--card-container--task--chart--container"
+            >
+              <p-chart
+                *ngIf="taskData?.datasets[0]?.data?.length"
+                type="pie"
+                [data]="taskData"
+                [options]="taskOptions"
+                [height]="'127.5'"
+                [width]="'127.5'"
+              />
+              <div
+                class="dashboard-container--tickets-stats-container--card-container--task--chart--container--empty"
+                *ngIf="!taskData?.datasets[0]?.data?.length"
+              >
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--task--chart--container--empty--inner-circle"
+                ></div>
+              </div>
+            </div>
+            <div
+              class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators"
+            >
+              <div
+                class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items"
+              >
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--icon"
+                      style="background-color: #54c737"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--text"
+                    >
+                      Succeeded:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedTasks?.succeeded
+                          ? ticketStats?.transformedTasks?.succeeded
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+                <div
+                  class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item"
+                >
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label"
+                  >
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--icon"
+                      style="background-color: #e04e3f"
+                    >
+                      <div
+                        class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--icon--inner-circle"
+                      ></div>
+                    </div>
+                    <div
+                      class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--label--text"
+                    >
+                      Failed:
+                    </div>
+                  </div>
+                  <div
+                    class="dashboard-container--tickets-stats-container--card-container--task--chart--indicators--items--item--count"
+                  >
+                    <span
+                      >{{
+                        ticketStats?.transformedTasks?.failed
+                          ? ticketStats?.transformedTasks?.failed
+                          : 0
+                      }}
+                      Tickets</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="dashboard-container--performance-container"></div>
   </form>
 </div>

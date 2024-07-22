@@ -103,6 +103,7 @@
                   style="box-shadow: none; background-color: transparent"
                   class="mt-2 menu-only-item"
                   [ngClass]="item?.active ? 'active-cild' : ''"
+                  *secured="item?.permission"
                   (opened)="panelOpenState = true"
                   (closed)="panelOpenState = false"
                   (click)="navigate(item)"

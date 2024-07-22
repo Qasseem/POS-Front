@@ -11,4 +11,7 @@ export class HomeService {
   getOpenTickets(data) {
     return this.http.postReq(APIURL.dashboard.openTickets, data);
   }
+  getTicketStats(data) {
+    return this.http.postReq(APIURL.dashboard.ticketStats, data);
+  }
 }

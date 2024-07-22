@@ -6,6 +6,7 @@ export const APIURL = {
 
   dashboard: {
     openTickets: '/Dashboard/OpenTickets',
+    ticketStats: '/Dashboard/TicketStatistics',
   },
 
   customerProfile: {

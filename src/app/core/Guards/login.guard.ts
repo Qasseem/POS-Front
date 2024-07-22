@@ -8,7 +8,7 @@ export class LoginGuard {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/main/merchant/list']);
+      this.router.navigate(['/main/dashboard']);
       return false;
     } else {
       return true;

@@ -1,5 +1,6 @@
 .dashboard-container {
   padding: 1rem;
+  background: #fbfbfb;
   &--header {
     display: flex;
     justify-content: space-between;
@@ -37,6 +38,8 @@
         gap: 1rem;
         align-items: center;
         border-radius: 8px;
+        border: 1px solid #eaecf0;
+
         &--item {
           height: 64px;
           width: 20%;
@@ -95,6 +98,7 @@
         width: 60%;
         background-color: #fff;
         border-radius: 8px;
+        border: 1px solid #eaecf0;
         &--title {
           padding-bottom: 2.5rem;
           font-family: "public-sans";
@@ -104,8 +108,11 @@
         }
         &--chart {
           display: flex;
+
           &--container {
             width: 30%;
+            padding-left: 3.5rem;
+
             &--empty {
               width: 130px;
               height: 130px;
@@ -114,6 +121,7 @@
               justify-content: center;
               align-items: center;
               border-radius: 50%;
+
               &--inner-circle {
                 width: 75px;
                 height: 75px;
@@ -317,7 +325,194 @@
       }
     }
   }
+  &--tickets-stats-container {
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    &--header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-bottom: 1rem;
+      &--title {
+        font-family: "public-sans";
+        font-size: 16px;
+        font-weight: 600;
+      }
+      &--filter {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
+    &--card-container {
+      flex: 1 0 50%;
+      display: flex;
+      padding: 1.5rem 0;
+      gap: 2rem;
+      &--status {
+        padding: 1rem;
+        width: 60%;
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid #eaecf0;
+        &--title {
+          padding-bottom: 2.5rem;
+          font-family: "public-sans";
+          font-size: 12px;
+          font-weight: 600;
+          color: #212529;
+        }
+        &--chart {
+          display: flex;
+          align-items: center;
+          &--container {
+            width: 30%;
+            padding-left: 2.5rem;
+
+            &--empty {
+              width: 130px;
+              height: 130px;
+              background: lightgray;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              &--inner-circle {
+                width: 75px;
+                height: 75px;
+                background: #fff;
+                border-radius: 50%;
+              }
+            }
+          }
+          &--indicators {
+            width: 60%;
+            &--items {
+              display: flex;
+              flex-direction: column;
+              gap: 1.5rem;
+              &--item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &--label {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  &--icon {
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &--inner-circle {
+                      width: 6px;
+                      height: 6px;
+                      border-radius: 50%;
+                      background-color: #fff;
+                    }
+                  }
+                  &--text {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      &--task {
+        padding: 1rem;
+        width: 60%;
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid #eaecf0;
+        &--title {
+          padding-bottom: 2.5rem;
+          font-family: "public-sans";
+          font-size: 12px;
+          font-weight: 600;
+          color: #212529;
+        }
+        &--chart {
+          display: flex;
+          align-items: center;
+
+          &--container {
+            width: 30%;
+            padding-left: 2.5rem;
+
+            &--empty {
+              width: 130px;
+              height: 130px;
+              background: lightgray;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              &--inner-circle {
+                width: 75px;
+                height: 75px;
+                background: #fff;
+                border-radius: 50%;
+              }
+            }
+          }
+          &--indicators {
+            width: 60%;
+            &--items {
+              display: flex;
+              flex-direction: column;
+              gap: 1.5rem;
+              &--item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &--label {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  &--icon {
+                    width: 14px;
+                    height: 14px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &--inner-circle {
+                      width: 6px;
+                      height: 6px;
+                      border-radius: 50%;
+                      background-color: #fff;
+                    }
+                  }
+                  &--text {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 :host ::ng-deep p-dropdown .p-dropdown {
   background: #edeff1;
+}
+:host ::ng-deep p-calendar input {
+  background: #edeff1;
+}
+
+:host p-divider ::ng-deep .p-divider {
+  width: 100%;
+  right: 0.5rem;
+  left: 0.1rem;
+  margin: 0.75rem 0rem 1rem 0;
+  &::before {
+    border-top: 1px solid #edeff1;
+  }
 }
