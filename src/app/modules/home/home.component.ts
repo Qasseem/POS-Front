@@ -6,7 +6,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { combineLatest } from 'rxjs';
+import { combineLatest, startWith } from 'rxjs';
 import { TerminalService } from '../terminal/services/terminal.service';
 import { TicketService } from '../ticket/services/ticket.service';
 import { UserService } from '../user-management/services/user.service';
@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
     this.regionValueChange();
     this.getOpenTickets();
     this.getAgentTypes();
+
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
@@ -193,13 +194,48 @@ export class HomeComponent implements OnInit {
           });
       }
     });
+
     combineLatest([
-      this.dashboardForm.get('regionId').valueChanges,
-      this.dashboardForm.get('cityId').valueChanges,
-      this.dashboardForm.get('statistics').get('createDate').valueChanges,
-      this.dashboardForm.get('statistics').get('categoryId').valueChanges,
-      this.dashboardForm.get('statistics').get('assigneeId').valueChanges,
-      this.dashboardForm.get('statistics').get('agentTypeId').valueChanges,
+      this.dashboardForm
+        .get('regionId')
+        .valueChanges.pipe(
+          startWith(this.dashboardForm.get('regionId')!.value)
+        ),
+      this.dashboardForm
+        .get('cityId')
+        .valueChanges.pipe(startWith(this.dashboardForm.get('cityId')!.value)),
+      this.dashboardForm
+        .get('statistics')
+        .get('createDate')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('statistics').get('createDate')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('statistics')
+        .get('categoryId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('statistics').get('categoryId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('statistics')
+        .get('assigneeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('statistics').get('assigneeId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('statistics')
+        .get('agentTypeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('statistics').get('agentTypeId')!.value
+          )
+        ),
     ]).subscribe({
       next: ([
         regionId,
@@ -211,7 +247,9 @@ export class HomeComponent implements OnInit {
       ]) => {
         if (
           this.dashboardForm.get('statistics').valid &&
-          !createDate.includes(null)
+          !createDate.includes(null) &&
+          cityId &&
+          regionId
         ) {
           createDate = createDate.map((x) => {
             x = this.toLocalISOString(x);
@@ -346,6 +384,7 @@ export class HomeComponent implements OnInit {
     });
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
     this.dashboardForm
       .get('statistics')
       .get('createDate')
