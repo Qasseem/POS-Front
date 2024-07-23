@@ -19,4 +19,7 @@ export class ZoneService {
   update(id) {
     return this.http.postReq(APIURL.Zone.Update, id);
   }
+  Block(data) {
+    return this.http.postReq(APIURL.Zone.Block, data);
+  }
 }

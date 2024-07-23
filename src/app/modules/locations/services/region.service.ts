@@ -19,4 +19,7 @@ export class RegionService {
   update(id) {
     return this.http.postReq(APIURL.Region.Update, id);
   }
+  Block(data) {
+    return this.http.postReq(APIURL.Region.Block, data);
+  }
 }

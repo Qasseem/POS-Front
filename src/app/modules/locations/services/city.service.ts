@@ -19,4 +19,7 @@ export class CityService {
   update(id) {
     return this.http.postReq(APIURL.City.Update, id);
   }
+  Block(data) {
+    return this.http.postReq(APIURL.City.Block, data);
+  }
 }

@@ -145,6 +145,7 @@ export const APIURL = {
     Export: '/Region/ExportGrid',
     Import: '/Region/Import',
     GetGrid: '/Region/GetGrid',
+    Block: '/Region/Block',
   },
   City: {
     Add: '/City/Add',
@@ -153,6 +154,7 @@ export const APIURL = {
     Export: '/City/ExportGrid',
     GetGrid: '/City/GetGrid',
     Import: '/City/Import',
+    Block: '/City/Block',
   },
   Zone: {
     Add: '/Zone/Add',
@@ -161,5 +163,6 @@ export const APIURL = {
     Export: '/Zone/ExportGrid',
     GetGrid: '/Zone/GetGrid',
     Import: '/Zone/Import',
+    Block: '/Zone/Block',
   },
 };
