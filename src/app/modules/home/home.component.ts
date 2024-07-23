@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   cities = [];
   categories = [];
   users = [];
+  agents = [];
   dashboardForm: FormGroup;
   openTickets: any;
   ticketStats: any;
@@ -42,10 +43,10 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.getRegions();
-    this.getUsers();
     this.getCategories();
     this.regionValueChange();
     this.getOpenTickets();
+    this.getAgentTypes();
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
@@ -133,19 +134,33 @@ export class HomeComponent implements OnInit {
       },
     };
   }
-  getUsers() {
-    this.userService.getAllUsers().subscribe({
+  getAgentTypes() {
+    this.userService.getAllUsersTypeDropDown().subscribe({
       next: (res) => {
-        this.users = res.data;
+        this.agents = res.data;
       },
     });
   }
+
   getCategories() {
     this.ticketService.getTicketCategory().subscribe({
       next: (res) => {
         this.categories = res.data;
       },
     });
+
+    this.dashboardForm
+      .get('statistics')
+      .get('agentTypeId')
+      .valueChanges.subscribe({
+        next: (agentTypeId) => {
+          this.userService.getUsersByUserType(agentTypeId).subscribe({
+            next: (res) => {
+              this.users = res.data;
+            },
+          });
+        },
+      });
   }
   getOpenTickets() {
     combineLatest([
@@ -158,11 +173,7 @@ export class HomeComponent implements OnInit {
           .subscribe({
             next: (res) => {
               this.openTickets = res.data;
-              if (
-                !this.slaData?.sla.due &&
-                !this.slaData?.sla.overDue &&
-                !this.slaData.sla.notDue
-              ) {
+              if (!this.slaData?.sla?.due && !this.slaData?.sla?.overDue) {
                 this.slaData.datasets[0].data = [];
               } else {
                 this.slaData.datasets[0].data = [];
@@ -174,9 +185,9 @@ export class HomeComponent implements OnInit {
                     ? this.openTickets.sla.overDue
                     : 0
                 );
-                this.slaData.datasets[0].data.push(
-                  this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
-                );
+                // this.slaData.datasets[0].data.push(
+                //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
+                // );
               }
             },
           });
@@ -188,8 +199,16 @@ export class HomeComponent implements OnInit {
       this.dashboardForm.get('statistics').get('createDate').valueChanges,
       this.dashboardForm.get('statistics').get('categoryId').valueChanges,
       this.dashboardForm.get('statistics').get('assigneeId').valueChanges,
+      this.dashboardForm.get('statistics').get('agentTypeId').valueChanges,
     ]).subscribe({
-      next: ([regionId, cityId, createDate, categoryId, assigneeId]) => {
+      next: ([
+        regionId,
+        cityId,
+        createDate,
+        categoryId,
+        assigneeId,
+        agentTypeId,
+      ]) => {
         if (
           this.dashboardForm.get('statistics').valid &&
           !createDate.includes(null)
@@ -205,6 +224,7 @@ export class HomeComponent implements OnInit {
               cityId: cityId,
               categoryId: categoryId,
               assigneeId: assigneeId,
+              agentTypeId: agentTypeId,
             })
             .subscribe({
               next: (res) => {
@@ -313,19 +333,23 @@ export class HomeComponent implements OnInit {
     this.dashboardForm = this.fb.group({
       regionId: this.fb.control(null),
       cityId: this.fb.control(null),
-      statistics: this.fb.group(
-        {
-          assigneeId: this.fb.control(null, [Validators.required]),
-          categoryId: this.fb.control(null, [Validators.required]),
-          createDate: this.fb.control([], [Validators.required]),
-        },
-        { validators: statsValidator() }
-      ),
+      statistics: this.fb.group({
+        agentTypeId: this.fb.control(null, [Validators.required]),
+        assigneeId: this.fb.control(null, [Validators.required]),
+        categoryId: this.fb.control(null, [Validators.required]),
+        createDate: this.fb.control([], [Validators.required]),
+      }),
       performance: this.fb.group({
         assigneeId: this.fb.control(null),
         createDate: this.fb.control([]),
       }),
     });
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    this.dashboardForm
+      .get('statistics')
+      .get('createDate')
+      .patchValue([startOfMonth, now]);
   }
   getRegions() {
     this.terminalService.GetAllRegions().subscribe({

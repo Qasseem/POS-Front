@@ -191,7 +191,7 @@
                     >
                   </div>
                 </div>
-                <div
+                <!-- <div
                   class="dashboard-container--open-tickets-container--card-container--sla--chart--indicators--items--item"
                 >
                   <div
@@ -221,7 +221,7 @@
                       Tickets</span
                     >
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -365,6 +365,19 @@
         <div
           class="dashboard-container--tickets-stats-container--header--filter"
         >
+          <p-dropdown
+            [formControl]="dashboardForm.get('statistics').get('agentTypeId')"
+            [options]="agents"
+            [optionValue]="'id'"
+            [showClear]="
+              dashboardForm.get('statistics').get('agentTypeId').value
+                ? true
+                : false
+            "
+            optionLabel="nameEn"
+            appendTo="body"
+            placeholder="Select Agent Type"
+          ></p-dropdown>
           <p-dropdown
             [formControl]="dashboardForm.get('statistics').get('assigneeId')"
             [options]="users"

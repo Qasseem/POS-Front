@@ -101,14 +101,34 @@ export class CategoriesErrandsTypesListComponent implements OnInit {
   //     isFixed: true,
   //   },
   // ];
-
+  showBlock = true;
+  showEdit = true;
   constructor(
     private router: Router,
     public authService: AuthService,
     public service: ErrandTypeService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (
+      !this.authService.hasPermission('admin-activities-errand-types-export')
+    ) {
+      this.tableBtns.showExport = false;
+    }
+    if (
+      !this.authService.hasPermission('admin-activities-errand-types-block')
+    ) {
+      this.showBlock = false;
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+    }
+    if (!this.authService.hasPermission('admin-activities-errand-types-edit')) {
+      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
+      this.showEdit = false;
+    }
+    if (!this.authService.hasPermission('admin-activities-errand-types-add')) {
+      this.tableBtns.showImport = false;
+    }
+  }
   navigateToAdd() {
     this.router.navigate([
       'main/admin-activities/categories-errands-types/add',

@@ -45,6 +45,11 @@ export class ErrandsChannelsListComponent implements OnInit {
       width: '200px',
     },
     {
+      field: 'status',
+      header: 'Status',
+      width: '200px',
+    },
+    {
       field: [
         { label: 'createdBy', custom: 'normal' },
         { label: 'createdAt', custom: 'defaultDate' },
@@ -97,6 +102,7 @@ export class ErrandsChannelsListComponent implements OnInit {
   //   },
   // ];
   showEdit = true;
+  showBlock = true;
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -112,7 +118,8 @@ export class ErrandsChannelsListComponent implements OnInit {
     if (
       !this.authService.hasPermission('admin-activities-errand-channel-block')
     ) {
-      this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
     }
     if (
       !this.authService.hasPermission('admin-activities-errand-channel-edit')

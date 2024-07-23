@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
       expanded: false,
       routerLink: '/main/dashboard',
       active: false,
-      permission: ['dashboard-main-dashboard-view'],
+      permission: [],
     },
     {
       label: this.translateService.instant('Merchants'),

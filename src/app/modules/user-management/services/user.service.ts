@@ -24,6 +24,9 @@ export class UserService {
   getAllUsers() {
     return this.http.getReq(APIURL.Users.GetAllUsersDropDown);
   }
+  getUsersByUserType(id) {
+    return this.http.getReq(APIURL.Users.getUsersByUserType + id);
+  }
 
   UpdateUser(id) {
     return this.http.postReq(APIURL.Users.updateUser, id);

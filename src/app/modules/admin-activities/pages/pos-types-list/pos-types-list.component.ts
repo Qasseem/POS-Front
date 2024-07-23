@@ -89,6 +89,7 @@ export class POSTypesListComponent implements OnInit {
   //   },
   // ];
   showEdit = true;
+  showBlock = true;
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -100,7 +101,8 @@ export class POSTypesListComponent implements OnInit {
       this.tableBtns.showExport = false;
     }
     if (!this.authService.hasPermission('admin-activities-pos-type-block')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Block');
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
     }
 
     if (!this.authService.hasPermission('admin-activities-pos-type-edit')) {

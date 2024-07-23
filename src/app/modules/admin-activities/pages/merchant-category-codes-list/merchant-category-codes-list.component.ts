@@ -94,6 +94,7 @@ export class MerchantCategoryCodesListComponent implements OnInit {
   //   },
   // ];
   showEdit = true;
+  showBlock = true;
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -113,7 +114,8 @@ export class MerchantCategoryCodesListComponent implements OnInit {
         'admin-activities-merchant-category-block'
       )
     ) {
-      this.actions = this.actions.filter((x) => x.name !== 'Block');
+      // this.actions = this.actions.filter((x) => x.name !== 'Block');
+      this.showBlock = false;
     }
     if (
       !this.authService.hasPermission('admin-activities-merchant-category-edit')
