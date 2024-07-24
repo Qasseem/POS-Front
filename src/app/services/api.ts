@@ -4,9 +4,10 @@ export const APIURL = {
   register: '/Security/RegisterCustomerUser',
   getAllCities: '/City/GetAllCities',
 
-  dashboard: {
+  Dashboard: {
     openTickets: '/Dashboard/OpenTickets',
     ticketStats: '/Dashboard/TicketStatistics',
+    performance: '/Dashboard/Performance',
   },
 
   customerProfile: {
@@ -54,7 +55,9 @@ export const APIURL = {
     GetFavoriteTerminalGrid: '/Terminal/GetFavoriteTerminalGrid',
     ImportTerminals: '/Terminal/ImportTerminals',
     GetAllRegions: '/Terminal/GetAllRegions',
+    GetAllRegionsFilter: '/Terminal/GetAllRegionsFilter',
     GetAllCities: '/Terminal/GetAllCities',
+    GetAllCitiesFilter: '/Terminal/GetAllCitiesFilter',
     GetAllZones: '/Terminal/GetAllZones',
     GetAllErrandChannels: '/Terminal/GetAllErrandChannels',
     GetAllPOSTypes: '/Terminal/GetAllPOSTypes',
@@ -69,6 +72,7 @@ export const APIURL = {
     Block: '/Ticket/Block',
     ImportTickets: '/Ticket/ImportTickets',
     GetTicketCategory: '/Ticket/GetTicketCategory',
+    GetTicketCategoryFilter: '/Ticket/GetTicketCategoryFilter/',
     GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes/',
     GetZoneAgents: '/Ticket/GetZoneAgents/',
     GetTerminalDetails: '/Ticket/GetTerminalDetails/',
@@ -87,6 +91,7 @@ export const APIURL = {
     getUsersGrid: '/User/GetAllUsersGrid',
     getAllManagerDropdown: '/User/GetAllManagerDropDown',
     getAllUsersTypeDropdown: '/User/GetAllUserTypeDropDown',
+    getAllUsersTypeFilter: '/User/GetUserTypeFilterDropDown/',
     getUsersByUserType: '/User/GetUsersByTypeDropDown/',
     checkUsernameExistence: '/User/CheckExistenceUsername',
     geUserById: '/User/GetUser',

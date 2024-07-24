@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
   regions = [];
   cities = [];
   categories = [];
-  users = [];
+  ticketsUsers = [];
+  performanceUsers = [];
   agents = [];
   dashboardForm: FormGroup;
   openTickets: any;
@@ -32,6 +33,12 @@ export class HomeComponent implements OnInit {
   statusOptions: any;
   taskData: any;
   taskOptions: any;
+  totalRecords: number = 0;
+  loading: boolean;
+  currentPage: number;
+  rows: number = 10;
+  agentsData = [];
+
   constructor(
     private terminalService: TerminalService,
     private fb: FormBuilder,
@@ -45,19 +52,19 @@ export class HomeComponent implements OnInit {
     this.getRegions();
     this.getCategories();
     this.regionValueChange();
-    this.getOpenTickets();
+    this.getDashboard();
     this.getAgentTypes();
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
     this.slaData = {
-      labels: ['Due', 'Over Due', 'Not Due'],
+      labels: ['Due', 'Over Due'],
       datasets: [
         {
           data: [],
-          backgroundColor: ['#54C737', '#E04E3F', '#0080F9'],
-          hoverBackgroundColor: ['#54C737', '#E04E3F', '#0080F9'],
+          backgroundColor: ['#54C737', '#E04E3F'],
+          hoverBackgroundColor: ['#54C737', '#E04E3F'],
         },
       ],
     };
@@ -136,7 +143,7 @@ export class HomeComponent implements OnInit {
     };
   }
   getAgentTypes() {
-    this.userService.getAllUsersTypeDropDown().subscribe({
+    this.userService.getAllUsersTypeFilter().subscribe({
       next: (res) => {
         this.agents = res.data;
       },
@@ -144,7 +151,7 @@ export class HomeComponent implements OnInit {
   }
 
   getCategories() {
-    this.ticketService.getTicketCategory().subscribe({
+    this.ticketService.getTicketCategoryFilter().subscribe({
       next: (res) => {
         this.categories = res.data;
       },
@@ -157,24 +164,39 @@ export class HomeComponent implements OnInit {
         next: (agentTypeId) => {
           this.userService.getUsersByUserType(agentTypeId).subscribe({
             next: (res) => {
-              this.users = res.data;
+              this.ticketsUsers = res.data;
+            },
+          });
+        },
+      });
+    this.dashboardForm
+      .get('performance')
+      .get('agentTypeId')
+      .valueChanges.subscribe({
+        next: (agentTypeId) => {
+          this.userService.getUsersByUserType(agentTypeId).subscribe({
+            next: (res) => {
+              this.performanceUsers = res.data;
             },
           });
         },
       });
   }
-  getOpenTickets() {
+  getDashboard() {
     combineLatest([
       this.dashboardForm.get('regionId').valueChanges,
       this.dashboardForm.get('cityId').valueChanges,
     ]).subscribe(([regionId, cityId]) => {
-      if (regionId && cityId) {
+      if (regionId != null && cityId != null) {
         this.homeService
           .getOpenTickets({ regionId: regionId, cityId: cityId })
           .subscribe({
             next: (res) => {
               this.openTickets = res.data;
-              if (!this.slaData?.sla?.due && !this.slaData?.sla?.overDue) {
+              if (
+                !this.openTickets?.sla?.due &&
+                !this.openTickets?.sla?.overDue
+              ) {
                 this.slaData.datasets[0].data = [];
               } else {
                 this.slaData.datasets[0].data = [];
@@ -190,6 +212,7 @@ export class HomeComponent implements OnInit {
                 //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
                 // );
               }
+              this.slaData = { ...this.slaData };
             },
           });
       }
@@ -246,10 +269,12 @@ export class HomeComponent implements OnInit {
         agentTypeId,
       ]) => {
         if (
-          this.dashboardForm.get('statistics').valid &&
           !createDate.includes(null) &&
-          cityId &&
-          regionId
+          regionId !== null &&
+          cityId !== null &&
+          categoryId !== null &&
+          assigneeId !== null &&
+          agentTypeId !== null
         ) {
           createDate = createDate.map((x) => {
             x = this.toLocalISOString(x);
@@ -343,6 +368,99 @@ export class HomeComponent implements OnInit {
         }
       },
     });
+    combineLatest([
+      this.dashboardForm
+        .get('regionId')
+        .valueChanges.pipe(
+          startWith(this.dashboardForm.get('regionId')!.value)
+        ),
+      this.dashboardForm
+        .get('cityId')
+        .valueChanges.pipe(startWith(this.dashboardForm.get('cityId')!.value)),
+      this.dashboardForm
+        .get('performance')
+        .get('createDate')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('createDate')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('assigneeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('assigneeId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('agentTypeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('agentTypeId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('pageSize')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('pageSize')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('pageNumber')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('pageNumber')!.value
+          )
+        ),
+    ]).subscribe({
+      next: ([
+        regionId,
+        cityId,
+        createDate,
+        assigneeId,
+        agentTypeId,
+        pageSize,
+        pageNumber,
+      ]) => {
+        if (
+          !createDate.includes(null) &&
+          regionId != null &&
+          cityId != null &&
+          assigneeId != null &&
+          agentTypeId != null &&
+          pageSize != null &&
+          pageNumber != null
+        ) {
+          createDate = createDate.map((x) => {
+            x = this.toLocalISOString(x);
+            return x;
+          });
+          this.homeService
+            .getPerformance({
+              regionId: regionId,
+              cityId: cityId,
+              createDate: createDate,
+              assigneeId: assigneeId,
+              agentTypeId: agentTypeId,
+              pageSize: pageSize,
+              pageNumber: pageNumber,
+            })
+            .subscribe({
+              next: (res: any) => {
+                if (res.success) {
+                  this.totalRecords = res?.data?.agents?.data.length;
+                  this.agentsData = res.data?.agents?.data;
+                }
+              },
+            });
+        }
+      },
+    });
   }
   toCamelCase(str) {
     return str
@@ -359,11 +477,8 @@ export class HomeComponent implements OnInit {
   regionValueChange() {
     this.dashboardForm.get('regionId').valueChanges.subscribe({
       next: (regionId) => {
-        if (regionId) {
-          this.getCities(regionId);
-        } else {
-          this.dashboardForm.get('cityId').patchValue(null);
-        }
+        this.dashboardForm.get('cityId').patchValue(null);
+        this.getCities(regionId);
       },
     });
   }
@@ -378,8 +493,11 @@ export class HomeComponent implements OnInit {
         createDate: this.fb.control([], [Validators.required]),
       }),
       performance: this.fb.group({
-        assigneeId: this.fb.control(null),
-        createDate: this.fb.control([]),
+        assigneeId: this.fb.control(null, [Validators.required]),
+        agentTypeId: this.fb.control(null, [Validators.required]),
+        createDate: this.fb.control([], [Validators.required]),
+        pageSize: this.fb.control(10),
+        pageNumber: this.fb.control(0),
       }),
     });
     const now = new Date();
@@ -389,17 +507,30 @@ export class HomeComponent implements OnInit {
       .get('statistics')
       .get('createDate')
       .patchValue([startOfMonth, now]);
+    this.dashboardForm
+      .get('performance')
+      .get('createDate')
+      .patchValue([startOfMonth, now]);
   }
   getRegions() {
-    this.terminalService.GetAllRegions().subscribe({
+    this.terminalService.GetAllRegionsFilter().subscribe({
       next: (res) => {
         this.regions = res.data;
       },
     });
   }
+  onPageChange(event) {
+    this.currentPage = event.page;
+    this.rows = event.rows;
+    this.dashboardForm
+      .get('performance')
+      .get('pageNumber')
+      .patchValue(this.currentPage);
+    // this.loadData(this.currentPage, this.rows);
+  }
 
   getCities(regionId) {
-    this.terminalService.GetAllCities(regionId).subscribe({
+    this.terminalService.GetAllCitiesFilter(regionId).subscribe({
       next: (res) => {
         this.cities = res.data;
         // this.cities = this.filterDuplicates(this.cities);
@@ -429,6 +560,7 @@ export class HomeComponent implements OnInit {
     return localISOTime;
   }
 }
+
 export function statsValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     const date = control.get('createDate')?.value;

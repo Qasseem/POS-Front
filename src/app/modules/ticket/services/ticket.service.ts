@@ -23,6 +23,9 @@ export class TicketService {
   getTicketCategory() {
     return this.http.getReq(APIURL.Ticket.GetTicketCategory);
   }
+  getTicketCategoryFilter() {
+    return this.http.getReq(APIURL.Ticket.GetTicketCategoryFilter);
+  }
   getById(id) {
     return this.http.getReq(APIURL.Ticket.GetOne + id);
   }

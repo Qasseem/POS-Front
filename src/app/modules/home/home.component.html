@@ -25,10 +25,7 @@
         ></p-dropdown>
       </div>
     </div>
-    <div
-      class="dashboard-container--open-tickets-container"
-      *secured="['dashboard-main-dashboard-open-tickets']"
-    >
+    <div class="dashboard-container--open-tickets-container">
       <div class="dashboard-container--open-tickets-container--title">
         <span>Open Tickets</span>
       </div>
@@ -109,8 +106,8 @@
                 type="pie"
                 [data]="slaData"
                 [options]="slaOptions"
-                [height]="'127.5'"
-                [width]="'127.5'"
+                [height]="'127.5px'"
+                [width]="'127.5px'"
               />
               <div
                 class="dashboard-container--open-tickets-container--card-container--sla--chart--container--empty"
@@ -380,7 +377,7 @@
           ></p-dropdown>
           <p-dropdown
             [formControl]="dashboardForm.get('statistics').get('assigneeId')"
-            [options]="users"
+            [options]="ticketsUsers"
             [optionValue]="'id'"
             [showClear]="
               dashboardForm.get('statistics').get('assigneeId').value
@@ -440,8 +437,8 @@
                 type="pie"
                 [data]="statusData"
                 [options]="statusOptions"
-                [height]="'127.5'"
-                [width]="'127.5'"
+                [height]="'127.5px'"
+                [width]="'127.5px'"
               />
               <div
                 class="dashboard-container--tickets-stats-container--card-container--status--chart--container--empty"
@@ -648,8 +645,8 @@
                 type="pie"
                 [data]="taskData"
                 [options]="taskOptions"
-                [height]="'127.5'"
-                [width]="'127.5'"
+                [height]="'127.5px'"
+                [width]="'127.5px'"
               />
               <div
                 class="dashboard-container--tickets-stats-container--card-container--task--chart--container--empty"
@@ -738,6 +735,138 @@
         </div>
       </div>
     </div>
-    <div class="dashboard-container--performance-container"></div>
+    <div
+      class="dashboard-container--performance-container"
+      *secured="['dashboard-main-dashboard-performance']"
+    >
+      <div class="dashboard-container--performance-container--header">
+        <div class="dashboard-container--performance-container--header--title">
+          <span>Performance</span>
+        </div>
+        <div class="dashboard-container--performance-container--header--filter">
+          <p-dropdown
+            [formControl]="dashboardForm.get('performance').get('agentTypeId')"
+            [options]="agents"
+            [optionValue]="'id'"
+            [showClear]="
+              dashboardForm.get('performance').get('agentTypeId').value
+                ? true
+                : false
+            "
+            optionLabel="nameEn"
+            appendTo="body"
+            placeholder="Select Agent Type"
+          ></p-dropdown>
+          <p-dropdown
+            [formControl]="dashboardForm.get('performance').get('assigneeId')"
+            [options]="performanceUsers"
+            [optionValue]="'id'"
+            [showClear]="
+              dashboardForm.get('performance').get('assigneeId').value
+                ? true
+                : false
+            "
+            optionLabel="nameEn"
+            appendTo="body"
+            placeholder="Select Assignee"
+          ></p-dropdown>
+          <div>
+            <p-calendar
+              [formControl]="dashboardForm.get('performance').get('createDate')"
+              selectionMode="range"
+              appendTo="body"
+              [readonlyInput]="true"
+            />
+            <div *ngIf="dashboardForm.get('performance').hasError('dateRange')">
+              <small class="error-text" style="color: red"
+                >The selected range must not exceed 20 days.</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-container--performance-container--body">
+        <div class="dashboard-container--performance-container--body--table">
+          <p-table
+            [value]="agentsData"
+            [styleClass]="'p-datatable-sm'"
+            [paginator]="true"
+            [rows]="rows"
+            [totalRecords]="totalRecords"
+            (onPage)="onPageChange($event)"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Agent</th>
+                <th>All Tickets</th>
+                <th>Deployments</th>
+                <th>Cancellation</th>
+                <th>After Sales</th>
+                <th>Succeeded Tasks</th>
+                <th>Failed Tasks</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+              <tr>
+                <td>{{ rowData.agentName }}</td>
+                <td>{{ rowData.allTickets }}</td>
+                <td>{{ rowData.deployments }}</td>
+                <td>{{ rowData.cancellation }}</td>
+                <td>{{ rowData.afterSales }}</td>
+                <td>{{ rowData.succeededTasks }}</td>
+                <td>{{ rowData.failedTasks }}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="7" class="text-center">No records found</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+        <div
+          class="dashboard-container--performance-container--body--achievements"
+        >
+          <div
+            class="dashboard-container--performance-container--body--achievements--title"
+          >
+            <span>Achievements</span>
+          </div>
+          <div
+            class="dashboard-container--performance-container--body--achievements--icon"
+          >
+            <oc-icon
+              [icon]="'achievement'"
+              width="110px"
+              height="110px"
+            ></oc-icon>
+          </div>
+          <div
+            class="dashboard-container--performance-container--body--achievements--text"
+          >
+            <span>150</span>
+            <span>Deployments</span>
+          </div>
+          <div
+            class="dashboard-container--performance-container--body--achievements--text"
+          >
+            <span>150</span>
+            <span>Cancellation</span>
+          </div>
+          <div
+            class="dashboard-container--performance-container--body--achievements--text"
+          >
+            <span>150</span>
+            <span>Visit</span>
+          </div>
+          <div
+            class="dashboard-container--performance-container--body--achievements--text"
+          >
+            <span>150</span>
+            <span>After Sales</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
 </div>

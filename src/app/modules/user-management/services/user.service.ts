@@ -39,6 +39,9 @@ export class UserService {
   getAllUsersTypeDropDown() {
     return this.http.getReq(APIURL.Users.getAllUsersTypeDropdown);
   }
+  getAllUsersTypeFilter() {
+    return this.http.getReq(APIURL.Users.getAllUsersTypeFilter);
+  }
 
   Block(data) {
     return this.http.postReq(APIURL.Users.blockUser, data);

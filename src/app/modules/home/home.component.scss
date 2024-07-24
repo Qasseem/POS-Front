@@ -1,4 +1,5 @@
-.dashboard-container {
+@import "../../../assets/styles/mixins";
+:host .dashboard-container {
   padding: 1rem;
   background: #fbfbfb;
   &--header {
@@ -93,6 +94,7 @@
       display: flex;
       padding: 1.5rem 0;
       gap: 2rem;
+
       &--sla {
         padding: 1rem;
         width: 60%;
@@ -113,6 +115,10 @@
           &--container {
             width: 30%;
             padding-left: 3.5rem;
+            @include breakpoints(up-xl) {
+              width: 35%;
+              padding-left: 1.75rem;
+            }
 
             &--empty {
               width: 130px;
@@ -370,6 +376,10 @@
           &--container {
             width: 30%;
             padding-left: 2.5rem;
+            @include breakpoints(up-xl) {
+              width: 35%;
+              padding-left: 1.5rem;
+            }
 
             &--empty {
               width: 130px;
@@ -444,6 +454,10 @@
           &--container {
             width: 30%;
             padding-left: 2.5rem;
+            @include breakpoints(up-xl) {
+              width: 35%;
+              padding-left: 1.5rem;
+            }
 
             &--empty {
               width: 130px;
@@ -500,6 +514,74 @@
       }
     }
   }
+  &--performance-container {
+    &--header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 1rem 0;
+      &--title {
+        font-family: "public-sans";
+        font-size: 16px;
+        font-weight: 600;
+      }
+      &--filter {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
+    &--body {
+      display: flex;
+      gap: 1rem;
+      &--table {
+        width: 75%;
+      }
+      &--achievements {
+        width: 25%;
+        border-radius: 12px;
+        gap: 2rem;
+        // background: url('../../../assets/iamges/achievement-bg.svg');
+        background-size: auto auto;
+        background-position: 100% 100%; /* Adjust positions */
+        background-repeat: no-repeat;
+        background-color: #0080f9;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        &--title {
+          font-family: "public-sans";
+          font-size: 14px;
+          font-weight: 600;
+          color: #fff;
+        }
+        &--text {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 1rem;
+          span {
+            &:last-child {
+              font-family: "public-sans";
+              font-size: 16px;
+              font-weight: 500;
+              color: rgb(255, 255, 255, 0.75);
+            }
+            &:first-child {
+              font-family: "public-sans";
+              font-size: 24px;
+              font-weight: 600;
+              text-align: center;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 :host ::ng-deep p-dropdown .p-dropdown {
   background: #edeff1;
@@ -515,5 +597,14 @@
   margin: 0.75rem 0rem 1rem 0;
   &::before {
     border-top: 1px solid #edeff1;
+  }
+}
+:host p-table ::ng-deep {
+  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    font-family: "public-sans";
+  }
+  .p-datatable.p-datatable-sm .p-datatable-tbody td,
+  .p-datatable.p-datatable-sm .p-datatable-thead th {
+    text-align: center;
   }
 }

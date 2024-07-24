@@ -246,18 +246,24 @@
           >
             <span
               class="view-container--card--performance-container--item--progress--details--percentage"
-              >42:31%</span
+              >{{
+                details?.totalVisits
+                  ? details?.successVisits / details?.totalVisits
+                  : 0
+              }}%</span
             >
             <div
               class="view-container--card--performance-container--item--progress--details--bar"
             >
-              <p-progressBar [value]="42.31">
+              <p-progressBar
+                [value]="details?.successVisits / details?.totalVisits"
+              >
                 <ng-template pTemplate="content" let-value> </ng-template>
               </p-progressBar>
             </div>
             <span
               class="view-container--card--performance-container--item--progress--details--count"
-              >11</span
+              >{{ details?.totalVisits }}</span
             >
           </div>
         </div>
@@ -276,18 +282,26 @@
           >
             <span
               class="view-container--card--performance-container--item--progress--details--percentage"
-              >81:25%</span
+              >{{
+                details?.totalDeployments
+                  ? details?.successDeployments / details?.totalDeployments
+                  : 0
+              }}%</span
             >
             <div
               class="view-container--card--performance-container--item--progress--details--bar"
             >
-              <p-progressBar [value]="81.25">
+              <p-progressBar
+                [value]="
+                  details?.successDeployments / details?.totalDeployments
+                "
+              >
                 <ng-template pTemplate="content" let-value> </ng-template>
               </p-progressBar>
             </div>
             <span
               class="view-container--card--performance-container--item--progress--details--count"
-              >26</span
+              >{{ details?.totalDeployments }}</span
             >
           </div>
         </div>
@@ -306,18 +320,26 @@
           >
             <span
               class="view-container--card--performance-container--item--progress--details--percentage"
-              >0%</span
+              >{{
+                details?.totalCancellation
+                  ? details?.successCancellation / details?.totalCancellation
+                  : 0
+              }}%</span
             >
             <div
               class="view-container--card--performance-container--item--progress--details--bar"
             >
-              <p-progressBar [value]="0">
+              <p-progressBar
+                [value]="
+                  details?.successCancellation / details?.totalCancellation
+                "
+              >
                 <ng-template pTemplate="content" let-value> </ng-template>
               </p-progressBar>
             </div>
             <span
               class="view-container--card--performance-container--item--progress--details--count"
-              >0</span
+              >{{ details?.totalCancellation }}</span
             >
           </div>
         </div>
@@ -336,18 +358,24 @@
           >
             <span
               class="view-container--card--performance-container--item--progress--details--percentage"
-              >0%</span
+              >{{
+                details?.totolSales
+                  ? details?.successSales / details?.totalSales
+                  : 0
+              }}%</span
             >
             <div
               class="view-container--card--performance-container--item--progress--details--bar"
             >
-              <p-progressBar [value]="0">
+              <p-progressBar
+                [value]="details?.successSales / details?.totalSales"
+              >
                 <ng-template pTemplate="content" let-value> </ng-template>
               </p-progressBar>
             </div>
             <span
               class="view-container--card--performance-container--item--progress--details--count"
-              >0</span
+              >{{ details?.totalSales }}</span
             >
           </div>
         </div>
@@ -380,18 +408,18 @@
               <div
                 class="view-container--card--chart-container--container--details--title"
               >
-                Active terminals
+                Active Terminals
               </div>
               <div
                 class="view-container--card--chart-container--container--details--count"
               >
-                5
+                {{ details?.activeTerminals }}
               </div>
             </div>
           </div>
           <div class="view-container--card--chart-container--duration">
             <!-- <span class="float-right mt-3" style="color: green"> -->
-            2 This month
+            {{ details?.thisMonthTerminals }} This month
             <!-- </span> -->
           </div>
         </div>

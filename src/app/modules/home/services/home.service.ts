@@ -9,9 +9,12 @@ export class HomeService {
   constructor(private http: HttpService) {}
 
   getOpenTickets(data) {
-    return this.http.postReq(APIURL.dashboard.openTickets, data);
+    return this.http.postReq(APIURL.Dashboard.openTickets, data);
   }
   getTicketStats(data) {
-    return this.http.postReq(APIURL.dashboard.ticketStats, data);
+    return this.http.postReq(APIURL.Dashboard.ticketStats, data);
+  }
+  getPerformance(data) {
+    return this.http.postReq(APIURL.Dashboard.performance, data);
   }
 }

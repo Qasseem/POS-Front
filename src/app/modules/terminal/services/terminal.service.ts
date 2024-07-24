@@ -17,7 +17,9 @@ export class TerminalService {
   GetAllCities(parentId) {
     return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
   }
-
+  GetAllCitiesFilter(parentId) {
+    return this.http.getHeaderReq(APIURL.Terminal.GetAllCitiesFilter, parentId);
+  }
   GetAllErrandChannels() {
     return this.http.getReq(APIURL.Terminal.GetAllErrandChannels);
   }
@@ -28,6 +30,9 @@ export class TerminalService {
 
   GetAllRegions() {
     return this.http.getReq(APIURL.Terminal.GetAllRegions);
+  }
+  GetAllRegionsFilter() {
+    return this.http.getReq(APIURL.Terminal.GetAllRegionsFilter);
   }
   GetAllMerchantDropDown() {
     return this.http.getReq(APIURL.Terminal.GetAllMechantDropDown);

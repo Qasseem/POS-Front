@@ -5,7 +5,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { StorageService } from '../services/storage.service';
 @Injectable({
@@ -18,25 +18,25 @@ import { StorageService } from '../services/storage.service';
  */
 export class TokenInterceptor implements HttpInterceptor {
   private token: any;
-  constructor(private storage: StorageService) {}
+  constructor() {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    const storage = inject(StorageService);
     let headerWithToken;
     if (request.url.includes('geocode.arcgis')) {
-      console.log('from geo');
       return next.handle(request);
     } else if (
       request.url.endsWith('UploadFile') ||
       request.url.includes('ImportMerchants')
     ) {
-      this.token = this.token ? this.token : this.storage.getToken();
+      this.token = localStorage.getItem('token');
       headerWithToken = {
         Authorization: 'Bearer ' + this.token,
       };
     } else {
-      this.token = this.token ? this.token : this.storage.getToken();
+      this.token = localStorage.getItem('token');
       headerWithToken = {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + this.token,
@@ -59,7 +59,7 @@ export class TokenInterceptor implements HttpInterceptor {
     request = request.clone({
       setHeaders: headerReq,
     });
-    let cachedData = this.storage.getCachedItem(request.url);
+    let cachedData = storage.getCachedItem(request.url);
     if (cachedData) {
       return of(new HttpResponse({ body: cachedData, status: 200 }));
     }

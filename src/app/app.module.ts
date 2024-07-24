@@ -54,12 +54,12 @@ const appInitializerFn = (configService: ConfigService) => {
     // { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthGuard,
     LoginGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlingInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     ConfigService,
     {
       provide: APP_INITIALIZER,
