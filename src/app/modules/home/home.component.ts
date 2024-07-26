@@ -708,6 +708,10 @@ export class HomeComponent implements OnInit {
   previousPage() {
     if (this.currentPage > 0) {
       this.currentPage--;
+      this.dashboardForm
+        .get('performance')
+        .get('pageNumber')
+        .patchValue(this.currentPage);
     }
   }
 
@@ -718,6 +722,10 @@ export class HomeComponent implements OnInit {
         Math.ceil(this.agentsData?.agents?.data.length / this.rows) - 1
     ) {
       this.currentPage++;
+      this.dashboardForm
+        .get('performance')
+        .get('pageNumber')
+        .patchValue(this.currentPage);
     }
   }
   getCurrentPage() {
