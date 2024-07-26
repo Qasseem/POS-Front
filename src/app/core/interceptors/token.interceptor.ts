@@ -29,7 +29,14 @@ export class TokenInterceptor implements HttpInterceptor {
       return next.handle(request);
     } else if (
       request.url.endsWith('UploadFile') ||
-      request.url.includes('ImportMerchants')
+      request.url.includes('ImportMerchants') ||
+      request.url.includes('ImportTerminals') ||
+      request.url.includes('ImportTickets') ||
+      request.url.includes('ImportMerchantCategory') ||
+      request.url.includes('ImportErrandType') ||
+      request.url.includes('ImportErrandChannel') ||
+      request.url.includes('ImportPOSType') ||
+      request.url.includes('Import')
     ) {
       this.token = localStorage.getItem('token');
       headerWithToken = {

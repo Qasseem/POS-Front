@@ -11,6 +11,8 @@ import { TerminalService } from '../terminal/services/terminal.service';
 import { TicketService } from '../ticket/services/ticket.service';
 import { UserService } from '../user-management/services/user.service';
 import { HomeService } from './services/home.service';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'oc-home',
@@ -528,7 +530,151 @@ export class HomeComponent implements OnInit {
       .patchValue(this.currentPage);
     // this.loadData(this.currentPage, this.rows);
   }
+  camelCaseToNormalString(camelCaseString: string): string {
+    // Step 1: Insert spaces before uppercase letters
+    let result = camelCaseString.replace(/([A-Z])/g, ' $1');
 
+    // Step 2: Capitalize the first letter of each word
+    result = result.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+
+    return result;
+  }
+
+  export() {
+    // const transformedData = this.transformObjectKeys(
+    //   this.agentsData?.agents?.data
+    // );
+    // const header = ["#", "Agent", "All Tickets", "Deployments", "Cancellation","After Sales",];
+    // const dataArray = [header, ...transformedData];
+
+    // // Create the worksheet
+    // const worksheet = XLSX.utils.aoa_to_sheet(dataArray);
+
+    // // Create the workbook with the worksheet
+    // const workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+    // // Write the workbook to a buffer
+    // const excelBuffer: any = XLSX.write(workbook, {
+    //   bookType: 'xlsx',
+    //   type: 'array',
+    // });
+
+    // // Save the buffer as an Excel file
+    // this.saveAsExcelFile(excelBuffer, 'TransformedData');
+    combineLatest([
+      this.dashboardForm
+        .get('regionId')
+        .valueChanges.pipe(
+          startWith(this.dashboardForm.get('regionId')!.value)
+        ),
+      this.dashboardForm
+        .get('cityId')
+        .valueChanges.pipe(startWith(this.dashboardForm.get('cityId')!.value)),
+      this.dashboardForm
+        .get('performance')
+        .get('createDate')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('createDate')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('assigneeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('assigneeId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('agentTypeId')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('agentTypeId')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('pageSize')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('pageSize')!.value
+          )
+        ),
+      this.dashboardForm
+        .get('performance')
+        .get('pageNumber')
+        .valueChanges.pipe(
+          startWith(
+            this.dashboardForm.get('performance').get('pageNumber')!.value
+          )
+        ),
+    ]).subscribe({
+      next: ([
+        regionId,
+        cityId,
+        createDate,
+        assigneeId,
+        agentTypeId,
+        pageSize,
+        pageNumber,
+      ]) => {
+        if (
+          !createDate.includes(null) &&
+          regionId != null &&
+          cityId != null &&
+          assigneeId != null &&
+          agentTypeId != null &&
+          pageSize != null &&
+          pageNumber != null
+        ) {
+          createDate = createDate.map((x) => {
+            x = this.toLocalISOString(x);
+            return x;
+          });
+          this.homeService
+            .exportPerformanceData({
+              regionId: regionId,
+              cityId: cityId,
+              createDate: createDate,
+              assigneeId: assigneeId,
+              agentTypeId: agentTypeId,
+              pageSize: pageSize,
+              pageNumber: pageNumber,
+            })
+            .subscribe({
+              next: (res: any) => {
+                if (res.success) {
+                  window.open(res.data, '_blank');
+                }
+              },
+            });
+        }
+      },
+    });
+  }
+
+  transformObjectKeys(obj: { [key: string]: any }): [number, string, any][] {
+    const transformedObj: [number, string, any][] = [];
+    let index = 1; // Start index from 1
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const normalKey = this.camelCaseToNormalString(key);
+        transformedObj.push([index, normalKey, obj[key]]);
+        index++;
+      }
+    }
+    return transformedObj;
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: 'application/octet-stream' });
+    FileSaver.saveAs(data, `${fileName}_export_${new Date().getTime()}.xlsx`);
+  }
   getCities(regionId) {
     this.terminalService.GetAllCitiesFilter(regionId).subscribe({
       next: (res) => {

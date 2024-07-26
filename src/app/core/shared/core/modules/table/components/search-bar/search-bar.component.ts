@@ -27,6 +27,7 @@ import {
   TableButtonsExistanceInterface,
   TableUrlInterface,
 } from '../../models/table-url.interface';
+import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'oc-search-bar',
@@ -83,7 +84,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
     private tableCoreService: TableCoreService,
     private router: Router,
     private route: ActivatedRoute,
-    private searchFilterService: SearchFilterService
+    private searchFilterService: SearchFilterService,
+    private toaster: ToastService
   ) {
     this.moduleReference = ModulesReferencesEnum[this.router.url.split('/')[2]];
 
@@ -406,7 +408,10 @@ export class SearchBarComponent implements OnInit, OnChanges {
       .subscribe((resp) => {
         if (resp.success) {
           this.visible = false;
-          location.reload();
+          // location.reload();
+          const message = 'Import Completed Successfully';
+          this.toaster.showSuccess(message);
+          this.getListData.next(true);
         }
       });
   }

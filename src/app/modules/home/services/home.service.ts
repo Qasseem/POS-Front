@@ -17,4 +17,7 @@ export class HomeService {
   getPerformance(data) {
     return this.http.postReq(APIURL.Dashboard.performance, data);
   }
+  exportPerformanceData(data) {
+    return this.http.postReq(APIURL.Dashboard.export, data);
+  }
 }

@@ -8,6 +8,7 @@ export const APIURL = {
     openTickets: '/Dashboard/OpenTickets',
     ticketStats: '/Dashboard/TicketStatistics',
     performance: '/Dashboard/Performance',
+    export: '/Dashboard/ExportPerformance',
   },
 
   customerProfile: {
