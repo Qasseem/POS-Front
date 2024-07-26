@@ -788,12 +788,17 @@
       <div class="dashboard-container--performance-container--body">
         <div class="dashboard-container--performance-container--body--table">
           <p-table
-            [value]="agentsData"
+            [value]="agentsData?.agents?.data"
             [styleClass]="'p-datatable-sm'"
             [paginator]="true"
             [rows]="rows"
+            [first]="currentPage"
             [totalRecords]="totalRecords"
             (onPage)="onPageChange($event)"
+            [paginatorfirstpagelinkicon]=""
+            [paginatorlastpagelinkicon]=""
+            [paginatorpreviouspagelinkicon]=""
+            [paginatornextpagelinkicon]=""
           >
             <ng-template pTemplate="header">
               <tr>
@@ -817,9 +822,47 @@
                 <td>{{ rowData.failedTasks }}</td>
               </tr>
             </ng-template>
+            <ng-template pTemplate="paginatorleft">
+              <button
+                pButton
+                type="button"
+                (click)="previousPage()"
+                [disabled]="currentPage === 0"
+                style="
+                  display: flex;
+                  gap: 0.5rem;
+                  background-color: #fff;
+                  color: #344054;
+                  border: 1px solid #d0d5dd;
+                "
+              >
+                <i class="pi pi-arrow-left"></i>
+                Previous
+              </button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+              <button
+                pButton
+                type="button"
+                (click)="nextPage()"
+                style="
+                  display: flex;
+                  gap: 0.5rem;
+                  background-color: #fff;
+                  color: #344054;
+                  border: 1px solid #d0d5dd;
+                "
+                [disabled]="currentPage >= getCurrentPage()"
+              >
+                Next
+                <i class="pi pi-arrow-right"></i>
+              </button>
+            </ng-template>
             <ng-template pTemplate="emptymessage">
               <tr>
-                <td colspan="7" class="text-center">No records found</td>
+                <td colspan="7" class="text-center" style="height: 465px">
+                  No records found
+                </td>
               </tr>
             </ng-template>
           </p-table>
@@ -844,25 +887,31 @@
           <div
             class="dashboard-container--performance-container--body--achievements--text"
           >
-            <span>150</span>
+            <span>{{
+              agentsData?.deployments ? agentsData?.deployments : 0
+            }}</span>
             <span>Deployments</span>
           </div>
           <div
             class="dashboard-container--performance-container--body--achievements--text"
           >
-            <span>150</span>
+            <span>{{
+              agentsData?.cancellation ? agentsData?.cancellation : 0
+            }}</span>
             <span>Cancellation</span>
           </div>
           <div
             class="dashboard-container--performance-container--body--achievements--text"
           >
-            <span>150</span>
+            <span>{{ agentsData?.visits ? agentsData?.visits : 0 }}</span>
             <span>Visit</span>
           </div>
           <div
             class="dashboard-container--performance-container--body--achievements--text"
           >
-            <span>150</span>
+            <span>{{
+              agentsData?.afterSales ? agentsData?.afterSales : 0
+            }}</span>
             <span>After Sales</span>
           </div>
         </div>

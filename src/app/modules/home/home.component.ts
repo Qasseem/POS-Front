@@ -35,9 +35,9 @@ export class HomeComponent implements OnInit {
   taskOptions: any;
   totalRecords: number = 0;
   loading: boolean;
-  currentPage: number;
+  currentPage: number = 0;
   rows: number = 10;
-  agentsData = [];
+  agentsData: any;
 
   constructor(
     private terminalService: TerminalService,
@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.slaOptions = {
-      cutout: '60%',
+      cutout: '65%',
 
       plugins: {
         legend: {
@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.statusOptions = {
-      cutout: '60%',
+      cutout: '65%',
 
       plugins: {
         legend: {
@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.taskOptions = {
-      cutout: '60%',
+      cutout: '65%',
 
       plugins: {
         legend: {
@@ -454,7 +454,7 @@ export class HomeComponent implements OnInit {
               next: (res: any) => {
                 if (res.success) {
                   this.totalRecords = res?.data?.agents?.data.length;
-                  this.agentsData = res.data?.agents?.data;
+                  this.agentsData = res.data;
                 }
               },
             });
@@ -558,6 +558,29 @@ export class HomeComponent implements OnInit {
       date.getTime() - timezoneOffset
     ).toISOString();
     return localISOTime;
+  }
+  previousPage() {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (
+      this.agentsData?.agents?.data.length &&
+      this.currentPage <
+        Math.ceil(this.agentsData?.agents?.data.length / this.rows) - 1
+    ) {
+      this.currentPage++;
+    }
+  }
+  getCurrentPage() {
+    return (
+      Math.ceil(
+        (this.agentsData ? this.agentsData?.agents?.data?.length : 0) /
+          this.rows
+      ) - 1
+    );
   }
 }
 
