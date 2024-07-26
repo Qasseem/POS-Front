@@ -46,7 +46,7 @@
               "node_modules/primeflex/primeflex.css"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["leaflet"]
+            "allowedCommonJsDependencies": ["leaflet","file-saver"]
           },
           "configurations": {
             "production": {
