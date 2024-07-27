@@ -22,4 +22,6 @@ export interface TableOptionsInterface {
   editURL?: string;
   favourite?: boolean;
   block?: boolean;
+  clone?: boolean;
+  cloneURL?: string;
 }

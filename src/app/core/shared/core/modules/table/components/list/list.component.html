@@ -515,7 +515,8 @@
           options.details ||
           options.block ||
           options.edit ||
-          option.favourite
+          option.favourite ||
+          option.clone
         "
         style="width: 100px"
       >
@@ -586,6 +587,15 @@
             >
               <!-- <i style="font-size: 1.5rem" class="pi pi-eye"></i> -->
               <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon>
+            </button>
+            <button
+              *ngIf="options?.clone && checkActions(rowData)"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="goToClone(rowData)"
+            >
+              <i style="font-size: 1.5rem" class="pi pi-clone"></i>
             </button>
             <button
               *ngIf="options?.favourite"

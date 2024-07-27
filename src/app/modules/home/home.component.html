@@ -104,6 +104,7 @@
               <p-chart
                 *ngIf="slaData?.datasets[0]?.data?.length"
                 type="pie"
+                [id]="'sla-chart'"
                 [data]="slaData"
                 [options]="slaOptions"
                 [height]="'127.5px'"
@@ -692,7 +693,7 @@
                           ? ticketStats?.transformedTasks?.succeeded
                           : 0
                       }}
-                      Tickets</span
+                      Tasks</span
                     >
                   </div>
                 </div>
@@ -725,7 +726,7 @@
                           ? ticketStats?.transformedTasks?.failed
                           : 0
                       }}
-                      Tickets</span
+                      Tasks</span
                     >
                   </div>
                 </div>

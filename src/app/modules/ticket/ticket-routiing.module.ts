@@ -16,35 +16,38 @@ const routes: Routes = [
         path: 'add',
         component: TicketFormComponent,
         data: {
-          type: 'add'
-        }
+          type: 'add',
+        },
       },
       {
         path: 'list',
-        component: TicketsListComponent
-
+        component: TicketsListComponent,
       },
       {
         path: 'favorites',
-        component: TicketFavoriteListComponent
-
+        component: TicketFavoriteListComponent,
       },
       {
         path: '',
-        component: TicketsListComponent
-
+        component: TicketsListComponent,
       },
       {
         path: 'edit/:id',
         component: TicketFormComponent,
         data: {
-          type: 'edit'
-        }
+          type: 'edit',
+        },
+      },
+      {
+        path: 'clone/:id',
+        component: TicketFormComponent,
+        data: {
+          type: 'clone',
+        },
       },
       {
         path: 'details/:id',
-        component: ViewTicketComponent
-
+        component: ViewTicketComponent,
       },
       { path: '', redirectTo: '/list', pathMatch: 'full' },
     ],
@@ -53,6 +56,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TicketRoutingModule { }
+export class TicketRoutingModule {}

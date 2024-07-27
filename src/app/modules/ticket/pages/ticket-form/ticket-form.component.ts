@@ -5,6 +5,7 @@ import { TerminalService } from 'src/app/modules/terminal/services/terminal.serv
 import { TicketService } from '../../services/ticket.service';
 import { combineLatest, takeWhile } from 'rxjs';
 import { UserService } from 'src/app/modules/user-management/services/user.service';
+import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'oc-ticket-form',
@@ -42,7 +43,8 @@ export class TicketFormComponent implements OnInit {
     private terminalService: TerminalService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toaster: ToastService
   ) {
     this.formType = this.route.snapshot.data.type;
     this.id = this.route.snapshot.params.id;
@@ -403,13 +405,24 @@ export class TicketFormComponent implements OnInit {
     const formValue = structuredClone(this.ticketForm.getRawValue());
     delete formValue.regionId;
     delete formValue.cityId;
-    if (this.formType == 'add') {
+    if (this.formType == 'add' || this.formType == 'clone') {
       delete formValue.id;
     }
     if (this.ticketForm.valid) {
       this.service.Save(formValue).subscribe({
         next: (res) => {
-          if (res.success) this.backToList();
+          if (res.success) {
+            let message = '';
+            if (this.formType == 'add') {
+              message = 'Ticket Added Successfully';
+            } else if (this.formType == 'edit') {
+              message = 'Ticket Updated Successfully';
+            } else {
+              message = 'Ticket Cloned Successfully';
+            }
+            this.toaster.showSuccess(message);
+            this.backToList();
+          }
         },
       });
     } else {

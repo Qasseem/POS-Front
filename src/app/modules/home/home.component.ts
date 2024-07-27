@@ -13,6 +13,7 @@ import { UserService } from '../user-management/services/user.service';
 import { HomeService } from './services/home.service';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { Chart, ChartType, registerables } from 'chart.js';
 
 @Component({
   selector: 'oc-home',
@@ -47,7 +48,9 @@ export class HomeComponent implements OnInit {
     private homeService: HomeService,
     private userService: UserService,
     private ticketService: TicketService
-  ) {}
+  ) {
+    Chart.register(...registerables);
+  }
 
   ngOnInit() {
     this.initForm();
@@ -72,7 +75,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.slaOptions = {
-      cutout: '65%',
+      cutout: '67.5%',
 
       plugins: {
         legend: {
@@ -80,6 +83,11 @@ export class HomeComponent implements OnInit {
           labels: {
             color: textColor,
           },
+        },
+        centerText: {
+          display: true,
+          text: this.getSlaCenterText(),
+          color: '#000',
         },
       },
     };
@@ -108,7 +116,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.statusOptions = {
-      cutout: '65%',
+      cutout: '67.5%',
 
       plugins: {
         legend: {
@@ -116,6 +124,11 @@ export class HomeComponent implements OnInit {
           labels: {
             color: textColor,
           },
+        },
+        centerText: {
+          display: true,
+          text: this.getStatusCenterText(),
+          color: '#000',
         },
       },
     };
@@ -132,7 +145,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.taskOptions = {
-      cutout: '65%',
+      cutout: '67.5%',
 
       plugins: {
         legend: {
@@ -141,21 +154,185 @@ export class HomeComponent implements OnInit {
             color: textColor,
           },
         },
+        centerText: {
+          display: true,
+          text: this.getTasksCenterText(),
+          color: '#000',
+        },
       },
     };
   }
+
   getAgentTypes() {
     this.userService.getAllUsersTypeFilter().subscribe({
       next: (res) => {
         this.agents = res.data;
+        this.dashboardForm
+          .get('statistics')
+          .get('agentTypeId')
+          .patchValue(this.agents[0].id);
+        this.dashboardForm
+          .get('performance')
+          .get('agentTypeId')
+          .patchValue(this.agents[0].id);
       },
     });
+  }
+  getSlaCenterText() {
+    const total = this.slaData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
+    return `${total}\nAll Tickets`; // Multiline text
+  }
+  getStatusCenterText() {
+    const total = this.statusData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
+    return `${total}\nAll Tickets`; // Multiline text
+  }
+  getTasksCenterText() {
+    const total = this.taskData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
+    return `${total}\nAll Tasks`; // Multiline text
+  }
+  addSlaCenterText() {
+    const centerTextPlugin = {
+      id: 'sla-chart',
+      beforeDraw: (chart: any) => {
+        const centerTextOptions = chart.config.options.plugins.centerText;
+        if (centerTextOptions && centerTextOptions.display) {
+          const ctx = chart.ctx;
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+          const lines = centerTextOptions.text?.split('\n');
+
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = '14px public-sans';
+          ctx.fillStyle = centerTextOptions.color || '#000';
+
+          // Calculate text height to vertically align multiple lines
+          const lineHeight = 20; // This should match the font size
+          const totalHeight = lines.length * lineHeight;
+          const startY = centerY - totalHeight / 2 + lineHeight / 2;
+
+          // Draw each line
+          lines.forEach((line: string, index: number) => {
+            ctx.fillText(line, centerX, startY + index * lineHeight);
+          });
+
+          ctx.restore();
+        }
+      },
+    };
+
+    // Add the plugin to the chart
+    Chart.register(centerTextPlugin);
+  }
+
+  addStatusCenterText() {
+    const centerTextPlugin = {
+      id: 'status-chart',
+      beforeDraw: (chart: any) => {
+        const centerTextOptions = chart.config.options.plugins.centerText;
+        if (centerTextOptions && centerTextOptions.display) {
+          const ctx = chart.ctx;
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+          const lines = centerTextOptions.text.split('\n');
+
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = '14px public-sans';
+          ctx.fillStyle = centerTextOptions.color || '#000';
+
+          // Calculate text height to vertically align multiple lines
+          const lineHeight = 20; // This should match the font size
+          const totalHeight = lines.length * lineHeight;
+          const startY = centerY - totalHeight / 2 + lineHeight / 2;
+
+          // Draw each line
+          lines.forEach((line: string, index: number) => {
+            ctx.fillText(line, centerX, startY + index * lineHeight);
+          });
+
+          ctx.restore();
+        }
+      },
+    };
+
+    // Add the plugin to the chart
+    Chart.register(centerTextPlugin);
+  }
+
+  addTasksCenterText() {
+    const centerTextPlugin = {
+      id: 'sla-chart',
+      beforeDraw: (chart: any) => {
+        const centerTextOptions = chart.config.options.plugins.centerText;
+        if (centerTextOptions && centerTextOptions.display) {
+          const ctx = chart.ctx;
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+          const lines = centerTextOptions.text.split('\n');
+
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = '14px public-sans';
+          ctx.fillStyle = centerTextOptions.color || '#000';
+
+          // Calculate text height to vertically align multiple lines
+          const lineHeight = 20; // This should match the font size
+          const totalHeight = lines.length * lineHeight;
+          const startY = centerY - totalHeight / 2 + lineHeight / 2;
+
+          // Draw each line
+          lines.forEach((line: string, index: number) => {
+            ctx.fillText(line, centerX, startY + index * lineHeight);
+          });
+
+          ctx.restore();
+        }
+      },
+    };
+
+    // Add the plugin to the chart
+    Chart.register(centerTextPlugin);
+  }
+  getSLATotal() {
+    return this.slaData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
+  }
+  getStatusTotal() {
+    return this.statusData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
+  }
+  getTaskTotal() {
+    return this.taskData.datasets[0].data.reduce(
+      (a: number, b: number) => a + b,
+      0
+    );
   }
 
   getCategories() {
     this.ticketService.getTicketCategoryFilter().subscribe({
       next: (res) => {
         this.categories = res.data;
+        this.dashboardForm
+          .get('statistics')
+          .get('categoryId')
+          .patchValue(this.categories[0].id);
       },
     });
 
@@ -167,6 +344,10 @@ export class HomeComponent implements OnInit {
           this.userService.getUsersByUserType(agentTypeId).subscribe({
             next: (res) => {
               this.ticketsUsers = res.data;
+              this.dashboardForm
+                .get('statistics')
+                .get('assigneeId')
+                .patchValue(this.ticketsUsers[0].id);
             },
           });
         },
@@ -179,6 +360,10 @@ export class HomeComponent implements OnInit {
           this.userService.getUsersByUserType(agentTypeId).subscribe({
             next: (res) => {
               this.performanceUsers = res.data;
+              this.dashboardForm
+                .get('performance')
+                .get('assigneeId')
+                .patchValue(this.performanceUsers[0].id);
             },
           });
         },
@@ -213,6 +398,9 @@ export class HomeComponent implements OnInit {
                 // this.slaData.datasets[0].data.push(
                 //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
                 // );
+                this.slaOptions.plugins.centerText.text =
+                  this.getSlaCenterText();
+                this.addSlaCenterText();
               }
               this.slaData = { ...this.slaData };
             },
@@ -343,6 +531,9 @@ export class HomeComponent implements OnInit {
                       ? this.ticketStats.transformedStatus.done
                       : 0
                   );
+                  this.statusOptions.plugins.centerText.text =
+                    this.getStatusCenterText();
+                  this.addStatusCenterText();
                 }
                 this.statusData = { ...this.statusData };
 
@@ -363,6 +554,9 @@ export class HomeComponent implements OnInit {
                       ? this.ticketStats.transformedTasks.failed
                       : 0
                   );
+                  this.taskOptions.plugins.centerText.text =
+                    this.getTasksCenterText();
+                  this.addTasksCenterText();
                 }
                 this.taskData = { ...this.taskData };
               },
@@ -518,6 +712,7 @@ export class HomeComponent implements OnInit {
     this.terminalService.GetAllRegionsFilter().subscribe({
       next: (res) => {
         this.regions = res.data;
+        this.dashboardForm.get('regionId').patchValue(this.regions[0].id);
       },
     });
   }
@@ -679,6 +874,8 @@ export class HomeComponent implements OnInit {
     this.terminalService.GetAllCitiesFilter(regionId).subscribe({
       next: (res) => {
         this.cities = res.data;
+        this.dashboardForm.get('cityId').patchValue(this.cities[0].id);
+
         // this.cities = this.filterDuplicates(this.cities);
       },
     });

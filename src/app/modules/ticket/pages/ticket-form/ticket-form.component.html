@@ -9,7 +9,10 @@
       >
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left"
-        >{{ formType == "add" ? "Add" : "Edit" }} Ticket</span
+        >{{
+          formType == "add" ? "Add" : formType == "edit" ? "Edit" : "Clone"
+        }}
+        Ticket</span
       >
       <p-button
         class="mr-3"
@@ -23,7 +26,9 @@
       <p-button
         (click)="submit()"
         [disabled]="!ticketForm?.valid"
-        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        label="{{
+          formType == 'add' ? 'Add' : formType == 'edit' ? 'Edit' : 'Clone'
+        }}"
         size="small"
       >
       </p-button>

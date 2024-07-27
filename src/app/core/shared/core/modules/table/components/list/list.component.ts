@@ -254,6 +254,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       favourite: false,
       edit: false,
       editURL: null,
+      clone: false,
       ...this.options,
     };
     this.checkConstAction(this.actions);
@@ -719,9 +720,21 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
     } else if (!rowData.id && rowData.userId) {
       id = rowData.userId;
     } else if (!rowData.id && rowData.ticketId) {
-      id = rowData.tickedId;
+      id = rowData.ticketId;
     }
     // console.log(rowData, this.options.editURL);
-    this.router.navigate([this.options.editURL + rowData.id]);
+    this.router.navigate([this.options.editURL + id]);
+  }
+  goToClone(rowData) {
+    let id = '';
+    if (rowData.id) {
+      id = rowData.id;
+    } else if (!rowData.id && rowData.userId) {
+      id = rowData.userId;
+    } else if (!rowData.id && rowData.ticketId) {
+      id = rowData.ticketId;
+    }
+    // console.log(rowData, this.options.editURL);
+    this.router.navigate([this.options.cloneURL + id]);
   }
 }

@@ -124,8 +124,8 @@
             }
 
             &--empty {
-              width: 130px;
-              height: 130px;
+              width: 120px;
+              height: 120px;
               background: lightgray;
               display: flex;
               justify-content: center;
@@ -133,8 +133,8 @@
               border-radius: 50%;
 
               &--inner-circle {
-                width: 85px;
-                height: 85px;
+                width: 82.5px;
+                height: 82.5px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -354,7 +354,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      padding-bottom: 1rem;
+      padding-bottom: 0.5rem;
       &--title {
         font-family: "public-sans";
         font-size: 16px;
@@ -399,16 +399,16 @@
             }
 
             &--empty {
-              width: 130px;
-              height: 130px;
+              width: 120px;
+              height: 120px;
               background: lightgray;
               display: flex;
               justify-content: center;
               align-items: center;
               border-radius: 50%;
               &--inner-circle {
-                width: 85px;
-                height: 85px;
+                width: 90px;
+                height: 90px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -491,16 +491,16 @@
             }
 
             &--empty {
-              width: 130px;
-              height: 130px;
+              width: 120px;
+              height: 120px;
               background: lightgray;
               display: flex;
               justify-content: center;
               align-items: center;
               border-radius: 50%;
               &--inner-circle {
-                width: 85px;
-                height: 85px;
+                width: 90px;
+                height: 90px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -628,12 +628,14 @@
   border-radius: 4px;
   .p-dropdown-label {
     padding: 8px 14px 8px 14px;
+    font-size: 14px;
   }
 }
 :host ::ng-deep p-calendar input {
   background: #edeff1;
   padding: 8px 14px 8px 14px;
   border-radius: 4px;
+  font-size: 14px;
 }
 
 :host p-divider ::ng-deep .p-divider {
@@ -649,6 +651,7 @@
 :host p-table ::ng-deep {
   .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
     font-family: "public-sans";
+    height: 50px;
   }
   .p-datatable.p-datatable-sm .p-datatable-tbody td,
   .p-datatable.p-datatable-sm .p-datatable-thead th {
