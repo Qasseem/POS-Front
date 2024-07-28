@@ -87,7 +87,8 @@ export class HomeComponent implements OnInit {
         centerText: {
           display: true,
           text: this.getSlaCenterText(),
-          color: '#000',
+          countColor: '#212529', // Color for the count
+          textColor: '#798693', // Color for the text "Tickets"
         },
       },
     };
@@ -128,7 +129,8 @@ export class HomeComponent implements OnInit {
         centerText: {
           display: true,
           text: this.getStatusCenterText(),
-          color: '#000',
+          countColor: '#212529', // Color for the count
+          textColor: '#798693', // Color for the text "Tickets"
         },
       },
     };
@@ -157,7 +159,8 @@ export class HomeComponent implements OnInit {
         centerText: {
           display: true,
           text: this.getTasksCenterText(),
-          color: '#000',
+          countColor: '#212529', // Color for the count
+          textColor: '#798693', // Color for the text "Tickets"
         },
       },
     };
@@ -183,48 +186,62 @@ export class HomeComponent implements OnInit {
       (a: number, b: number) => a + b,
       0
     );
-    return `${total}\nAll Tickets`; // Multiline text
+    return {
+      count: total.toString(),
+      text: 'All Tickets',
+    };
   }
   getStatusCenterText() {
-    const total = this.statusData.datasets[0].data.reduce(
+    const total = this.slaData.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
       0
     );
-    return `${total}\nAll Tickets`; // Multiline text
+    return {
+      count: total.toString(),
+      text: 'All Tickets',
+    };
   }
   getTasksCenterText() {
-    const total = this.taskData.datasets[0].data.reduce(
+    const total = this.slaData.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
       0
     );
-    return `${total}\nAll Tasks`; // Multiline text
+    return {
+      count: total.toString(),
+      text: 'All Tasks',
+    }; // Multiline text
   }
+
   addSlaCenterText() {
     const centerTextPlugin = {
-      id: 'sla-chart',
+      id: 'centerText',
       beforeDraw: (chart: any) => {
         const centerTextOptions = chart.config.options.plugins.centerText;
         if (centerTextOptions && centerTextOptions.display) {
           const ctx = chart.ctx;
           const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
           const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-          const lines = centerTextOptions.text?.split('\n');
+          const lines = [
+            centerTextOptions.text.count,
+            centerTextOptions.text.text,
+          ];
 
           ctx.save();
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.font = '14px public-sans';
-          ctx.fillStyle = centerTextOptions.color || '#000';
 
           // Calculate text height to vertically align multiple lines
           const lineHeight = 20; // This should match the font size
           const totalHeight = lines.length * lineHeight;
           const startY = centerY - totalHeight / 2 + lineHeight / 2;
 
-          // Draw each line
-          lines.forEach((line: string, index: number) => {
-            ctx.fillText(line, centerX, startY + index * lineHeight);
-          });
+          // Draw each line with different colors
+          ctx.fillStyle = centerTextOptions.countColor || '#212529';
+          ctx.fillText(lines[0], centerX, startY);
+
+          ctx.fillStyle = centerTextOptions.textColor || '#798693';
+          ctx.fillText(lines[1], centerX, startY + lineHeight);
 
           ctx.restore();
         }
@@ -237,30 +254,34 @@ export class HomeComponent implements OnInit {
 
   addStatusCenterText() {
     const centerTextPlugin = {
-      id: 'status-chart',
+      id: 'centerText',
       beforeDraw: (chart: any) => {
         const centerTextOptions = chart.config.options.plugins.centerText;
         if (centerTextOptions && centerTextOptions.display) {
           const ctx = chart.ctx;
           const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
           const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-          const lines = centerTextOptions.text.split('\n');
+          const lines = [
+            centerTextOptions.text.count,
+            centerTextOptions.text.text,
+          ];
 
           ctx.save();
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.font = '14px public-sans';
-          ctx.fillStyle = centerTextOptions.color || '#000';
 
           // Calculate text height to vertically align multiple lines
-          const lineHeight = 20; // This should match the font size
+          const lineHeight = 30; // This should match the font size
           const totalHeight = lines.length * lineHeight;
           const startY = centerY - totalHeight / 2 + lineHeight / 2;
 
-          // Draw each line
-          lines.forEach((line: string, index: number) => {
-            ctx.fillText(line, centerX, startY + index * lineHeight);
-          });
+          // Draw each line with different colors
+          ctx.fillStyle = centerTextOptions.countColor || '#212529';
+          ctx.fillText(lines[0], centerX, startY);
+
+          ctx.fillStyle = centerTextOptions.textColor || '#798693';
+          ctx.fillText(lines[1], centerX, startY + lineHeight);
 
           ctx.restore();
         }
@@ -273,30 +294,34 @@ export class HomeComponent implements OnInit {
 
   addTasksCenterText() {
     const centerTextPlugin = {
-      id: 'sla-chart',
+      id: 'centerText',
       beforeDraw: (chart: any) => {
         const centerTextOptions = chart.config.options.plugins.centerText;
         if (centerTextOptions && centerTextOptions.display) {
           const ctx = chart.ctx;
           const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
           const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
-          const lines = centerTextOptions.text.split('\n');
+          const lines = [
+            centerTextOptions.text.count,
+            centerTextOptions.text.text,
+          ];
 
           ctx.save();
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.font = '14px public-sans';
-          ctx.fillStyle = centerTextOptions.color || '#000';
 
           // Calculate text height to vertically align multiple lines
-          const lineHeight = 20; // This should match the font size
+          const lineHeight = 30; // This should match the font size
           const totalHeight = lines.length * lineHeight;
           const startY = centerY - totalHeight / 2 + lineHeight / 2;
 
-          // Draw each line
-          lines.forEach((line: string, index: number) => {
-            ctx.fillText(line, centerX, startY + index * lineHeight);
-          });
+          // Draw each line with different colors
+          ctx.fillStyle = centerTextOptions.countColor || '#212529';
+          ctx.fillText(lines[0], centerX, startY);
+
+          ctx.fillStyle = centerTextOptions.textColor || '#798693';
+          ctx.fillText(lines[1], centerX, startY + lineHeight);
 
           ctx.restore();
         }
@@ -398,6 +423,7 @@ export class HomeComponent implements OnInit {
                 // this.slaData.datasets[0].data.push(
                 //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
                 // );
+
                 this.slaOptions.plugins.centerText.text =
                   this.getSlaCenterText();
                 this.addSlaCenterText();
@@ -527,8 +553,8 @@ export class HomeComponent implements OnInit {
                       : 0
                   );
                   this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.done
-                      ? this.ticketStats.transformedStatus.done
+                    this.ticketStats.transformedStatus.completed
+                      ? this.ticketStats.transformedStatus.completed
                       : 0
                   );
                   this.statusOptions.plugins.centerText.text =

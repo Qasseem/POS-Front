@@ -107,8 +107,8 @@
                 [id]="'sla-chart'"
                 [data]="slaData"
                 [options]="slaOptions"
-                [height]="'127.5px'"
-                [width]="'127.5px'"
+                [height]="'150px'"
+                [width]="'150px'"
               />
               <div
                 class="dashboard-container--open-tickets-container--card-container--sla--chart--container--empty"
@@ -438,8 +438,8 @@
                 type="pie"
                 [data]="statusData"
                 [options]="statusOptions"
-                [height]="'127.5px'"
-                [width]="'127.5px'"
+                [height]="'150px'"
+                [width]="'150px'"
               />
               <div
                 class="dashboard-container--tickets-stats-container--card-container--status--chart--container--empty"
@@ -614,8 +614,8 @@
                   >
                     <span
                       >{{
-                        ticketStats?.transformedStatus?.done
-                          ? ticketStats?.transformedStatus?.done
+                        ticketStats?.transformedStatus?.completed
+                          ? ticketStats?.transformedStatus?.completed
                           : 0
                       }}
                       Tickets</span
@@ -646,8 +646,8 @@
                 type="pie"
                 [data]="taskData"
                 [options]="taskOptions"
-                [height]="'127.5px'"
-                [width]="'127.5px'"
+                [height]="'150px'"
+                [width]="'150px'"
               />
               <div
                 class="dashboard-container--tickets-stats-container--card-container--task--chart--container--empty"

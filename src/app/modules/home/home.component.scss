@@ -124,8 +124,8 @@
             }
 
             &--empty {
-              width: 120px;
-              height: 120px;
+              width: 150px;
+              height: 150px;
               background: lightgray;
               display: flex;
               justify-content: center;
@@ -133,8 +133,8 @@
               border-radius: 50%;
 
               &--inner-circle {
-                width: 82.5px;
-                height: 82.5px;
+                width: 80px;
+                height: 80px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -145,7 +145,7 @@
             &--items {
               display: flex;
               flex-direction: column;
-              gap: 1.5rem;
+              gap: 1rem;
               &--item {
                 display: flex;
                 justify-content: space-between;
@@ -399,16 +399,16 @@
             }
 
             &--empty {
-              width: 120px;
-              height: 120px;
+              width: 150px;
+              height: 150px;
               background: lightgray;
               display: flex;
               justify-content: center;
               align-items: center;
               border-radius: 50%;
               &--inner-circle {
-                width: 90px;
-                height: 90px;
+                width: 80px;
+                height: 80px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -419,7 +419,7 @@
             &--items {
               display: flex;
               flex-direction: column;
-              gap: 1.5rem;
+              gap: 1rem;
               &--item {
                 display: flex;
                 justify-content: space-between;
@@ -491,16 +491,16 @@
             }
 
             &--empty {
-              width: 120px;
-              height: 120px;
+              width: 150px;
+              height: 150px;
               background: lightgray;
               display: flex;
               justify-content: center;
               align-items: center;
               border-radius: 50%;
               &--inner-circle {
-                width: 90px;
-                height: 90px;
+                width: 80px;
+                height: 80px;
                 background: #fff;
                 border-radius: 50%;
               }
@@ -511,7 +511,7 @@
             &--items {
               display: flex;
               flex-direction: column;
-              gap: 1.5rem;
+              gap: 1rem;
               &--item {
                 display: flex;
                 justify-content: space-between;

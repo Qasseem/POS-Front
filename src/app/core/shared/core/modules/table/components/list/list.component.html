@@ -630,11 +630,6 @@
               type="button"
               pButton
               pRipple
-              [disabled]="!checkActions(rowData)"
-              [ngStyle]="{
-                cursor: !checkActions(rowData) ? 'not-allowed' : 'pointer',
-                'pointer-events': 'unset'
-              }"
               icon="pi pi-ellipsis-v"
               (click)="
                 menu.toggle($event);

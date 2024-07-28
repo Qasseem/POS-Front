@@ -85,8 +85,10 @@ export class TicketFormComponent implements OnInit {
       });
     }
     this.ticketForm.patchValue(data);
-    this.ticketForm.get('categoryId').disable();
-    this.ticketForm.get('categoryId').updateValueAndValidity();
+    if (this.formType == 'edit') {
+      this.ticketForm.get('categoryId').disable();
+      this.ticketForm.get('categoryId').updateValueAndValidity();
+    }
   }
 
   latLngValueChange() {

@@ -27,6 +27,10 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     const URL = `main/ticket/edit/${row?.ticketId}`;
     this.router.navigate([URL]);
   }
+  cloneItem(row: any): any {
+    const URL = `main/ticket/clone/${row?.ticketId}`;
+    this.router.navigate([URL]);
+  }
   blockItem(row: any): any {
     const isBlock = !row.isBlock;
     const action = isBlock ? 'Block' : 'Unblock';
@@ -169,6 +173,11 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       name: 'Block',
       icon: 'pi pi-ban',
       call: (row: any) => this.blockItem(row),
+    },
+    {
+      name: 'Clone',
+      icon: 'pi pi-clone',
+      call: (row: any) => this.cloneItem(row),
     },
   ];
 

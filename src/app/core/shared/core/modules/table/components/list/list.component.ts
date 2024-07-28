@@ -109,7 +109,23 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       action.call(this.rowData);
     }
   }
+  filterArrayByValue(array: any, valuesToMatch: string[], key: string): any {
+    return array.filter((item) => !valuesToMatch.includes(item[key]));
+  }
   onShow(event, rowData, listActions, actions) {
+    if (rowData.ticketId && rowData.statusEn == 'Completed') {
+      listActions = this.filterArrayByValue(
+        listActions,
+        ['Block', 'Unblock', 'Edit'],
+        'label'
+      );
+
+      actions = this.filterArrayByValue(
+        actions,
+        ['Block', 'Unblock', 'Edit'],
+        'name'
+      );
+    }
     actions = actions.map((actionItem) => {
       // console.log(actionItem,rowData);
       if (actionItem.name === 'Block' && rowData.isBlock) {
