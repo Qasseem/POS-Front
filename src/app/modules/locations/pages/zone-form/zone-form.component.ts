@@ -33,12 +33,7 @@ export class ZoneFormComponent {
   ngOnInit() {
     const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
     const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
-    if (this.formType == 'edit') {
-      this.id = this.route.snapshot.params.id || null;
-      if (this.id) {
-        this.getItemDetails();
-      }
-    }
+
     this.form = this.fb.group({
       nameEn: [
         '',
@@ -54,6 +49,12 @@ export class ZoneFormComponent {
       id: [null],
     });
     this.getRegionCityLists();
+    if (this.formType == 'edit') {
+      this.id = this.route.snapshot.params.id || null;
+      if (this.id) {
+        this.getItemDetails();
+      }
+    }
   }
   getRegionCityLists() {
     const regionControl = this.form.get('regionId');
@@ -69,7 +70,7 @@ export class ZoneFormComponent {
         },
       });
     const cityControl = this.form.get('cityId');
-    regionControl.valueChanges.subscribe({
+    cityControl.valueChanges.subscribe({
       next: (regionId) => {
         if (regionId) {
           this.terminalService
@@ -108,7 +109,7 @@ export class ZoneFormComponent {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
-            this.form.updateValueAndValidity();
+            // this.form.updateValueAndValidity();
           }
         }
       });

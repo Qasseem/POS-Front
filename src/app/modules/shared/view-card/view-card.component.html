@@ -187,8 +187,23 @@
         <div class="view-container--card--location-details-container--details">
           <span
             class="view-container--card--location-details-container--details--text"
-            >{{ details?.address?.ShortLabel }}</span
           >
+            <ng-container [ngSwitch]="cid">
+              <ng-container *ngSwitchCase="'merchant'"
+                >{{ details?.regionEn }} - {{ details?.cityEn }} -
+                {{ details?.zoneEn }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'terminal'">
+                {{ details?.region }} - {{ details?.city }} -
+                {{ details?.zone }}
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'ticket'">
+                {{ details?.regionEn }} - {{ details?.cityEn }} -
+                {{ details?.zoneEn }}
+              </ng-container>
+            </ng-container>
+          </span>
           <div
             class="view-container--card--location-details-container--details--item"
           >
@@ -199,7 +214,7 @@
             >
             <span
               class="view-container--card--location-details-container--details--item--text"
-              >{{ details?.address?.LongLabel }}</span
+              >&nbsp;{{ details?.address?.LongLabel }}</span
             >
           </div>
           <div

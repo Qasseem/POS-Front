@@ -84,4 +84,7 @@ export class TicketService {
   ) {
     return this.dialogService.confirm(msg, title, ok, cancel, params, params2);
   }
+  getAllFeedbacks() {
+    return this.http.getReq(APIURL.Ticket.GetAllFeedbacks);
+  }
 }

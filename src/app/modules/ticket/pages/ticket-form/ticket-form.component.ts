@@ -137,7 +137,8 @@ export class TicketFormComponent implements OnInit {
     this.terminalService
       .GetAddressFromLatLng(resp.latitude, resp.longitude)
       .subscribe((resp: any) => {
-        this.ticketForm.get('address').patchValue(resp?.address.LongLabel);
+        if (this.formType == 'add')
+          this.ticketForm.get('address').patchValue(resp?.address.LongLabel);
       });
   }
   terminalValueChange() {

@@ -26,7 +26,15 @@ export class ViewTicketComponent implements OnInit {
   ngOnInit() {
     if (this.id) {
       this.getViewDetails(this.id);
+      this.getTicketFeedbacks();
     }
+  }
+  getTicketFeedbacks() {
+    this.service.getAllFeedbacks().subscribe({
+      next: (res) => {
+        // console.log(res.data);
+      },
+    });
   }
   getViewDetails(id) {
     this.service.getById(id).subscribe({
@@ -69,5 +77,12 @@ export class ViewTicketComponent implements OnInit {
         // console.error('Download failed', error);
       },
     });
+  }
+  getInitials(name: string): string {
+    if (!name) return null;
+    return name
+      .split(' ')
+      .map((word) => word.charAt(0))
+      .join('');
   }
 }

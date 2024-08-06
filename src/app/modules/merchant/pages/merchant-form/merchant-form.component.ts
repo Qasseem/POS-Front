@@ -47,6 +47,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       categoryId: [null, Validators.required],
       merchantId: [null, Validators.required],
       id: [null],
+      phoneNumber: [null, Validators.required],
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       regionId: [null, Validators.required],
@@ -75,7 +76,8 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
         if (lat && lng) {
           this.terminalService.GetAddressFromLatLng(lat, lng).subscribe({
             next: (res: any) => {
-              this.form.get('address').patchValue(res.address.LongLabel);
+              if (this.formType == 'add')
+                this.form.get('address').patchValue(res.address.LongLabel);
             },
           });
         }
@@ -96,7 +98,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
                 lat: this.form.get('latitude').value,
                 lng: this.form.get('longitude').value,
               };
-              this.form.updateValueAndValidity();
+              // this.form.updateValueAndValidity();
             }
           }
         },
@@ -149,7 +151,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
         next: (resp) => {
           if (resp.success) {
             this.regionsList = resp.data;
-            regionControl.setValue(resp.data[0].id);
+            // regionControl.setValue(resp.data[0].id);
           }
         },
       });
@@ -165,7 +167,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
                 if (resp.success) {
                   this.citiesList = resp.data;
                   this.orignalCities = resp.data;
-                  cityControl.setValue(resp.data[0].id);
+                  // cityControl.setValue(resp.data[0].id);
                 }
               },
             });
@@ -182,7 +184,8 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
               if (resp.success) {
                 this.zonesList = resp.data;
                 this.orignalZones = resp.data;
-                this.form.get('zoneId').setValue(resp.data[0].id);
+                // if(this.zonesList.length)
+                // this.form.get('zoneId').setValue(this.zonesList[0].id);
               }
             });
         }

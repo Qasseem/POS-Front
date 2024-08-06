@@ -34,7 +34,7 @@
   <div class="merchants-form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="grid">
-        <div class="col-8 p-0 inputs-div">
+        <div class="col-9 p-0 inputs-div">
           <div class="p-20 flex flex-wrap">
             <div class="col-4">
               <div class="flex flex-column gap-2">
@@ -198,10 +198,40 @@
                 </div>
               </div>
             </div>
+            <div class="col-4">
+              <div class="flex flex-column gap-2">
+                <label for="userName"
+                  >Phone Number <span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty': f.phoneNumber?.errors?.required
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="phoneNumber"
+                />
+
+                <div
+                  *ngIf="
+                    f.phoneNumber.errors &&
+                    (f.phoneNumber.dirty || f.phoneNumber.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.phoneNumber.errors.required"
+                  >
+                    Phone Number field is required
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="col-4 p-0">
+        <div class="col-3 p-0">
           <div class="location-form p-20">
             <div class="location-text">
               <p class="font-bold fs-11">Location</p>

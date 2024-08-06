@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { combineLatest, takeWhile } from 'rxjs';
 import { TerminalService } from '../../services/terminal.service';
 
 @Component({
@@ -73,6 +73,23 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       address: [null],
       landMark: [null],
       id: [null],
+    });
+    combineLatest([
+      this.terminalForm.get('latitude').valueChanges,
+      this.terminalForm.get('longitude').valueChanges,
+    ]).subscribe({
+      next: ([lat, lng]) => {
+        if (lat && lng) {
+          this.service.GetAddressFromLatLng(lat, lng).subscribe({
+            next: (res: any) => {
+              if (this.formType == 'add')
+                this.terminalForm
+                  .get('address')
+                  .patchValue(res.address.LongLabel);
+            },
+          });
+        }
+      },
     });
   }
 
