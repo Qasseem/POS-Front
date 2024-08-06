@@ -34,7 +34,7 @@ export class TicketFormComponent implements OnInit {
   id;
   errandTypeModel = {
     errandTypeId: null,
-    quantity: 0,
+    quantity: null,
   };
   viewModel;
   constructor(
@@ -111,13 +111,18 @@ export class TicketFormComponent implements OnInit {
           this.service.getZoneAgents(zoneId, categoryId).subscribe({
             next: (res) => {
               this.assignees = res.data;
-              if (this.assignees.length) {
-                this.ticketForm.get('assigneeId').enable();
-                this.ticketForm.get('assigneeId').updateValueAndValidity();
-              } else {
-                this.ticketForm.get('assigneeId').disable();
-                this.ticketForm.get('assigneeId').updateValueAndValidity();
-              }
+              // if (this.assignees.length) {
+              //   this.ticketForm.get('assigneeId').enable();
+              //   this.ticketForm.get('assigneeId').updateValueAndValidity();
+              // } else {
+              this.ticketForm
+                .get('assigneeId')
+                .patchValue(
+                  this.assignees.find((x) => x.isSelected == true).id
+                );
+              this.ticketForm.get('assigneeId').disable();
+              this.ticketForm.get('assigneeId').updateValueAndValidity();
+              // }
             },
           });
         }
