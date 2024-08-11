@@ -151,6 +151,7 @@
               &--text {
                 width: 50%;
                 font-family: "public-sans";
+                font-size: 14px;
               }
             }
           }
@@ -177,6 +178,8 @@
               }
               &--text {
                 width: 50%;
+                color: #212529;
+                font-size: 14px;
               }
               &--container {
                 display: flex;
@@ -205,6 +208,13 @@
             font-size: 14px;
             font-weight: 600;
             padding-bottom: 1rem;
+          }
+          &--title-feedback {
+            font-family: "public-sans";
+            font-size: 14px;
+            font-weight: 600;
+            padding: 1rem 0;
+            color: #212529;
           }
           &--items {
             display: flex;
@@ -262,6 +272,7 @@
             font-weight: 400;
             line-height: 16px;
             color: #798693;
+            padding-bottom: 1rem;
           }
         }
       }
@@ -285,6 +296,169 @@
         font-size: 14px;
         font-weight: 600;
       }
+      &--cards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        &--empty {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          &--text {
+            width: 38%;
+            font-family: "inter";
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            color: #a5acb8;
+          }
+        }
+      }
     }
+  }
+}
+:host p-panel ::ng-deep {
+  .p-panel-header {
+    background: #fff;
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      .title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        .bullet {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 8px;
+          height: 8px;
+          background: #0080f9;
+          border-radius: 50%;
+          & .inner-bullet {
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+          }
+        }
+        .text {
+          font-family: "public-sans";
+          font-size: 14px;
+          font-weight: 600;
+          color: #0080f9;
+        }
+      }
+      .status {
+        font-family: "inter";
+        font-size: 12px;
+        font-weight: 500;
+        border-radius: 16px;
+        padding: 0.25rem 0.5rem;
+        &.success {
+          background: #e0f1eb;
+          color: #00875a;
+        }
+        &.fail {
+          color: #dd3a2a;
+          background: #fcebea;
+        }
+      }
+    }
+  }
+  .upload-control {
+    label {
+      display: block;
+      height: 30px;
+      font-family: "public-sans";
+      font-size: 14px;
+      font-weight: 600;
+      padding-bottom: 1rem;
+      padding-top: 0.5rem;
+      color: #212529;
+    }
+    .upload-container {
+      display: flex;
+      gap: 0.5rem;
+      & .add-image-placeholder {
+        border: 1px solid #cce6fe;
+        border-radius: 8px;
+        height: 56px;
+        width: 56px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .uploaded-images {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        .uploaded-image {
+          border: 1px solid #cce6fe;
+          border-radius: 8px;
+          height: 56px;
+          width: 56px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          .remove-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background-color: #dd3a2a;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+
+            i {
+              color: #fff;
+              font-size: 12px;
+            }
+          }
+          img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+  }
+  .p-panel-content {
+    .input-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 1rem;
+      .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 25%;
+        label {
+          font-family: "public-sans";
+          font-size: 12px;
+          font-weight: 400;
+          color: #798693;
+        }
+        span {
+          font-family: "public-sans";
+          font-size: 14px;
+          font-weight: 400;
+          color: #212529;
+        }
+      }
+    }
+  }
+  .p-panel-header-icon {
+    display: none;
   }
 }

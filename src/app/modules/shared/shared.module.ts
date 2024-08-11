@@ -34,6 +34,7 @@ import { ConfirmationService } from 'primeng/api';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ChartModule } from 'primeng/chart';
+import { PanelModule } from 'primeng/panel';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -58,6 +59,7 @@ const PRIME_NG_MODULES = [
   SelectButtonModule,
   MultiSelectModule,
   ChartModule,
+  PanelModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

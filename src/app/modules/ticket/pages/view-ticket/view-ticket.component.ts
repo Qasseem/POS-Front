@@ -26,20 +26,12 @@ export class ViewTicketComponent implements OnInit {
   ngOnInit() {
     if (this.id) {
       this.getViewDetails(this.id);
-      this.getTicketFeedbacks();
     }
   }
-  getTicketFeedbacks() {
-    this.service.getAllFeedbacks().subscribe({
-      next: (res) => {
-        // console.log(res.data);
-      },
-    });
-  }
+
   getViewDetails(id) {
     this.service.getById(id).subscribe({
       next: (res) => {
-        // console.log(res.data);
         this.details = res.data;
         this.coordinates = {
           lat: this.details.latitude,
