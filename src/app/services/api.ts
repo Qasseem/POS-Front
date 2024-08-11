@@ -72,6 +72,8 @@ export const APIURL = {
     GetGrid: '/Ticket/GetGrid',
     Block: '/Ticket/Block',
     ImportTickets: '/Ticket/ImportTickets',
+    ImportVisitSalesTickets: '/Ticket/ImportVisitAndSales',
+    TicketsChangeStatus: '/Ticket/ImportChangeStatus',
     GetTicketCategory: '/Ticket/GetTicketCategory',
     GetTicketCategoryFilter: '/Ticket/GetTicketCategoryFilter/',
     GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes/',

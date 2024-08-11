@@ -79,6 +79,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
   formHistoryData: any;
   taskListFormData: any;
   fileToUpload: any;
+  public apiUrl = APIURL;
+
   constructor(
     public language: AppTranslateService,
     private tableCoreService: TableCoreService,
@@ -390,7 +392,27 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
   }
 
-  showImportDialog() {
+  showImportDialog(key?: any) {
+    switch (key) {
+      case 'visit': {
+        this.uploadHeader = 'Upload Bulk Cancellation';
+        this.sampleName = 'ImportTicketVisitSalesTemplate.xlsx';
+        this.url.import = this.apiUrl.Ticket.ImportVisitSalesTickets;
+        break;
+      }
+      case 'cancel': {
+        this.uploadHeader = 'Upload Bulk Visit & Sales';
+        this.sampleName = 'ImportTicketCancellationTemplate.xlsx';
+        this.url.import = this.apiUrl.Ticket.ImportTickets;
+
+        break;
+      }
+      case 'status': {
+        this.uploadHeader = 'Change Status';
+        this.sampleName = 'TicketChangeStatusTemplate.xlsx';
+        this.url.import = this.apiUrl.Ticket.TicketsChangeStatus;
+      }
+    }
     this.visible = true;
   }
   visible = false;

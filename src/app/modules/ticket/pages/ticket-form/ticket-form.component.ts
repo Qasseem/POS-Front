@@ -6,6 +6,7 @@ import { TicketService } from '../../services/ticket.service';
 import { combineLatest, takeWhile } from 'rxjs';
 import { UserService } from 'src/app/modules/user-management/services/user.service';
 import { ToastService } from 'src/app/core/services/toaster.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-ticket-form',
@@ -44,7 +45,8 @@ export class TicketFormComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
-    private toaster: ToastService
+    private toaster: ToastService,
+    private authSerivce: AuthService
   ) {
     this.formType = this.route.snapshot.data.type;
     this.id = this.route.snapshot.params.id;
@@ -61,6 +63,13 @@ export class TicketFormComponent implements OnInit {
     this.latLngValueChange();
     if (this.id) {
       this.getTicket(this.id);
+      if (this.authSerivce.hasPermission('tickets-all-tickets-editassignee')) {
+        this.ticketForm.get('assigneeId').enable();
+        this.ticketForm.get('assigneeId').updateValueAndValidity();
+      } else {
+        this.ticketForm.get('assigneeId').disable();
+        this.ticketForm.get('assigneeId').updateValueAndValidity();
+      }
     }
   }
   getTicket(id) {
@@ -115,13 +124,16 @@ export class TicketFormComponent implements OnInit {
               //   this.ticketForm.get('assigneeId').enable();
               //   this.ticketForm.get('assigneeId').updateValueAndValidity();
               // } else {
-              this.ticketForm
-                .get('assigneeId')
-                .patchValue(
-                  this.assignees.find((x) => x.isSelected == true).id
-                );
-              this.ticketForm.get('assigneeId').disable();
-              this.ticketForm.get('assigneeId').updateValueAndValidity();
+              if (this.formType == 'add') {
+                this.ticketForm
+                  .get('assigneeId')
+                  .patchValue(
+                    this.assignees.find((x) => x.isSelected == true).id
+                  );
+                this.ticketForm.get('assigneeId').disable();
+                this.ticketForm.get('assigneeId').updateValueAndValidity();
+              }
+
               // }
             },
           });

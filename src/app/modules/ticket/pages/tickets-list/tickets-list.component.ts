@@ -102,7 +102,10 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     showAdd: true,
     showExport: true,
     showFilter: true,
-    showImport: true,
+    showImport: false,
+    showImportVisit: true,
+    showImportCancellation: true,
+    showChangeStatus: true,
   };
   public columns: ColumnsInterface[] = [
     {
@@ -315,7 +318,9 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       this.actions = this.actions.filter((x) => x.name !== 'Edit');
     }
     if (!this.authService.hasPermission('tickets-all-tickets-add')) {
-      this.tableBtns.showImport = false;
+      this.tableBtns.showImportCancellation = false;
+      this.tableBtns.showImportVisit = false;
+      this.tableBtns.showChangeStatus = false;
     }
     if (!this.authService.hasPermission('tickets-all-tickets-favorite')) {
       this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');

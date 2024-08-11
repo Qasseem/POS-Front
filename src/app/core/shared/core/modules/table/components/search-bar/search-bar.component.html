@@ -62,6 +62,36 @@
         badgeClass="p-badge-contrast"
         outlined="true"
       />
+      <p-button
+        label="Import Cancellation"
+        *ngIf="buttonsExistance?.showImportCancellation"
+        class="float-right ml-3"
+        icon="pi pi-upload"
+        size="small"
+        (click)="showImportDialog('cancel')"
+        badgeClass="p-badge-contrast"
+        outlined="true"
+      />
+      <p-button
+        label="Import Visit & Sales"
+        *ngIf="buttonsExistance?.showImportVisit"
+        class="float-right ml-3"
+        icon="pi pi-upload"
+        size="small"
+        (click)="showImportDialog('visit')"
+        badgeClass="p-badge-contrast"
+        outlined="true"
+      />
+      <p-button
+        label="Change Status"
+        *ngIf="buttonsExistance?.showChangeStatus"
+        class="float-right ml-3"
+        icon="pi pi-upload"
+        size="small"
+        (click)="showImportDialog('status')"
+        badgeClass="p-badge-contrast"
+        outlined="true"
+      />
       <button
         *ngIf="buttonsExistance?.showFilter"
         (click)="op.toggle($event)"
