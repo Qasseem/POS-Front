@@ -508,8 +508,15 @@
                   <div
                     class="uploaded-image"
                     *ngFor="let base64String of panel?.images; let j = index"
+                    [style.cursor]="'pointer'"
+                    (click)="
+                      downloadImage(
+                        base64String?.attachmentUrl,
+                        'Example File ' + (j + 1)
+                      )
+                    "
                   >
-                    <img src="{{ base64String.value }}" alt="" />
+                    <img src="{{ base64String?.attachmentUrl }}" alt="" />
                   </div>
                 </div>
                 <div
