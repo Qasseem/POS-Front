@@ -69,8 +69,7 @@ export class ZoneFormComponent {
           }
         },
       });
-    const cityControl = this.form.get('cityId');
-    cityControl.valueChanges.subscribe({
+    regionControl.valueChanges.subscribe({
       next: (regionId) => {
         if (regionId) {
           this.terminalService
