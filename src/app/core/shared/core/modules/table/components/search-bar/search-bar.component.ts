@@ -395,13 +395,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
   showImportDialog(key?: any) {
     switch (key) {
       case 'visit': {
-        this.uploadHeader = 'Upload Bulk Cancellation';
+        this.uploadHeader = 'Upload Bulk Visit & Sales';
         this.sampleName = 'ImportTicketVisitSalesTemplate.xlsx';
         this.url.import = this.apiUrl.Ticket.ImportVisitSalesTickets;
         break;
       }
       case 'cancel': {
-        this.uploadHeader = 'Upload Bulk Visit & Sales';
+        this.uploadHeader = 'Upload Bulk Cancellation';
         this.sampleName = 'ImportTicketCancellationTemplate.xlsx';
         this.url.import = this.apiUrl.Ticket.ImportTickets;
 
