@@ -114,13 +114,13 @@ export class UserFormComponent {
   }
 
   ngOnInit() {
+    this.GetUsersDropdownValues();
     if (this.formType == 'edit') {
       this.id = this.route.snapshot.params.id || null;
       if (this.id) {
         this.getItemDetails();
       }
     }
-    this.GetUsersDropdownValues();
   }
   GetUsersDropdownValues() {
     this.userService
@@ -166,7 +166,7 @@ export class UserFormComponent {
         next: (resp) => {
           if (resp.success) {
             this.regionsIdsLists = resp.data;
-            regionControl.setValue(resp.data[0].id);
+            // regionControl.setValue(resp.data[0].id);
           }
         },
       });

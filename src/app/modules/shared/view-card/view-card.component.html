@@ -52,7 +52,7 @@
             class="view-container--card--header-container--header--text-label"
           >
             <label for="terminalId">Merchant ID:</label>
-            <span>{{ details?.merchantId }}</span>
+            <span>{{ details?.merchantNumber }}</span>
           </div>
         </div>
       </ng-template>
@@ -79,7 +79,7 @@
             class="view-container--card--header-custom-container--header--text-label"
           >
             <label for="merchantId">Merchant ID:</label>
-            <span>{{ details?.merchantId }}</span>
+            <span>{{ details?.merchantNumber }}</span>
           </div>
         </div>
         <div
@@ -103,7 +103,13 @@
           </div>
           <div class="view-container--card--details--item">
             <div class="color-info">Merchant ID</div>
-            <div class="">{{ details?.id }}</div>
+            <div class="">
+              {{
+                cid == "merchant"
+                  ? details?.merchantId
+                  : details?.merchantNumber
+              }}
+            </div>
           </div>
 
           <div class="view-container--card--details--item">
