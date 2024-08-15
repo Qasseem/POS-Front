@@ -208,8 +208,11 @@
                   class="invalid-feedback"
                 >
                   <div class="fs-10 color-red">
-                    <span *ngIf="f.phoneNumber.invalid">
+                    <span *ngIf="f.phoneNumber?.errors?.['minlength']">
                       Minium length is 11 digits
+                    </span>
+                    <span *ngIf="f.phoneNumber?.errors?.['maxlength']">
+                      Maximum length is 11 digits
                     </span>
                   </div>
                 </div>
