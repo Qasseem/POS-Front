@@ -120,6 +120,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       ],
       header: 'Merchant Name',
       customCell: 'multiLabel',
+      link: '/main/merchant/details/',
       action: (row) => this.goToDetails(row),
     },
     {

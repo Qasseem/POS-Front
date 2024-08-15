@@ -89,6 +89,15 @@ export const APIURL = {
     TicketDeploymentStatus: '/Ticket/DeploymentStatus/',
     TicketStartInstall: '/Ticket/StartInstall',
   },
+  Schedule: {
+    Import: '/Schedule/Import',
+    GetGrid: '/Schedule/GetGrid',
+    GetOne: '/Schedule/GetById',
+    Block: '/Schedule/Block',
+    GetStatus: '/Schedule/GetScheduleStatus',
+    GetRecurrenceType: '/Schedule/GetScheduleRecurrenceType',
+    GetScheduleWeekDays: '/Schedule/GetScheduleDaysOfWeek',
+  },
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',
     getUsersGrid: '/User/GetAllUsersGrid',

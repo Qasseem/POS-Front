@@ -645,8 +645,16 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       .replace(/-+/g, '-');
   }
 
-  navigateToUrl(url, id) {
-    this.router.navigate([url, id]);
+  navigateToUrl(url, row) {
+    let routeId = row.merchantId;
+    if (!row.id && row.ticketId) {
+      routeId = row.merchantNumber;
+    } else if (!row.id && row.terminalId) {
+      routeId = row.merchantNumber;
+    } else {
+      routeId = row.merchantId;
+    }
+    this.router.navigate([url + routeId]);
   }
 
   checkTemplate(fields: Array<any>) {

@@ -5,7 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TicketFormComponent } from './pages/ticket-form/ticket-form.component';
 import { ViewTicketComponent } from './pages/view-ticket/view-ticket.component';
 import { TicketsListComponent } from './pages/tickets-list/tickets-list.component';
-import { TicketFavoriteListComponent } from './pages/ticket-favorite-list/ticket-favorite-list.component';
+import { ScheduledTicketsListComponent } from './pages/scheduled-tickets-list/scheduled-tickets-list.component';
+import { ViewScheduledTicketComponent } from './pages/view-scheduled-ticket/view-scheduled-ticket.component';
 
 const routes: Routes = [
   {
@@ -24,8 +25,8 @@ const routes: Routes = [
         component: TicketsListComponent,
       },
       {
-        path: 'favorites',
-        component: TicketFavoriteListComponent,
+        path: 'scheduled',
+        component: ScheduledTicketsListComponent,
       },
       {
         path: '',
@@ -46,8 +47,8 @@ const routes: Routes = [
         },
       },
       {
-        path: 'details/:id',
-        component: ViewTicketComponent,
+        path: 'scheduled-details/:id',
+        component: ViewScheduledTicketComponent,
       },
       { path: '', redirectTo: '/list', pathMatch: 'full' },
     ],

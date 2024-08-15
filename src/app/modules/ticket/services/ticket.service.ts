@@ -44,33 +44,6 @@ export class TicketService {
     return this.http.getReq(APIURL.Ticket.GetTerminalDetails + terminalId);
   }
 
-  getTicketsByStatus(data) {
-    return this.http.postReq(APIURL.Ticket.GetTicketByStatus, data);
-  }
-
-  goToCustomer(data) {
-    return this.http.postReq(APIURL.Ticket.GoToCustomer, data);
-  }
-
-  startTicket(data) {
-    return this.http.postReq(APIURL.Ticket.TicketStart, data);
-  }
-
-  resumeTicket(data) {
-    return this.http.postReq(APIURL.Ticket.TicketResume, data);
-  }
-
-  posponeTicket(data) {
-    return this.http.postReq(APIURL.Ticket.TicketPostpone, data);
-  }
-
-  getDeploymentStatus(ticketId) {
-    return this.http.getReq(APIURL.Ticket.TicketDeploymentStatus + ticketId);
-  }
-
-  startInstall(data) {
-    return this.http.postReq(APIURL.Ticket.TicketStartInstall, data);
-  }
   Block(data) {
     return this.http.postReq(APIURL.Ticket.Block, data);
   }

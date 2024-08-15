@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit {
     };
   }
   getStatusCenterText() {
-    const total = this.slaData.datasets[0].data.reduce(
+    const total = this.statusData.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
       0
     );
@@ -202,7 +202,7 @@ export class HomeComponent implements OnInit {
     };
   }
   getTasksCenterText() {
-    const total = this.slaData.datasets[0].data.reduce(
+    const total = this.taskData.datasets[0].data.reduce(
       (a: number, b: number) => a + b,
       0
     );

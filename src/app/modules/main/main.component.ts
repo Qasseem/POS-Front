@@ -93,12 +93,13 @@ export class MainComponent implements OnInit {
           active: false,
           permission: ['tickets-all-tickets-view'],
         },
-        // {
-        //   label: this.translateService.instant('Favorite Tickets'),
-        //   expanded: true,
-        //   routerLink: '/main/ticket/favorites',
-        //   active: false,
-        // },
+        {
+          label: this.translateService.instant('Scheduled Tickets'),
+          expanded: true,
+          routerLink: '/main/ticket/scheduled',
+          active: false,
+          permission: [],
+        },
       ],
     },
     {

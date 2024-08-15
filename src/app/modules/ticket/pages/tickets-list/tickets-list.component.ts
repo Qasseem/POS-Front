@@ -122,6 +122,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
         { label: 'merchantAr', custom: 'default' },
       ],
       header: 'Merchant Name',
+      link: '/main/merchant/details/',
       customCell: 'multiLabel',
       action: (row) => this.goToDetails(row),
     },
