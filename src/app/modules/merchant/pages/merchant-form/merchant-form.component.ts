@@ -31,23 +31,17 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {
     this.formType = this.route.snapshot.data.type;
-    const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
-    const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
+    // const arabicLetterPattern = new RegExp(/^[\u0600-\u06FF0-9\s!@#$%^&*()]+$/);
+    // const englishLetterPattern = new RegExp(/^[a-zA-Z0-9\s!@#$%^&*()]+$/);
 
     this.form = this.fb.group({
-      merchantNameEN: [
-        '',
-        [Validators.required, Validators.pattern(englishLetterPattern)],
-      ],
-      merchantNameAR: [
-        '',
-        [Validators.required, Validators.pattern(arabicLetterPattern)],
-      ],
+      merchantNameEN: ['', [Validators.required]],
+      merchantNameAR: ['', [Validators.required]],
       userName: ['', Validators.required],
       categoryId: [null, Validators.required],
       merchantId: [null, Validators.required],
       id: [null],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, Validators.minLength(11)],
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       regionId: [null, Validators.required],
