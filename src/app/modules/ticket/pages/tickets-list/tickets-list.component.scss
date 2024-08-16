@@ -1,0 +1,9 @@
+:host ::ng-deep {
+  p-dropdown .p-dropdown {
+    width: 100%;
+  }
+  label {
+    display: flex;
+    height: 25px;
+  }
+}

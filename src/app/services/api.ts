@@ -76,7 +76,7 @@ export const APIURL = {
     TicketsChangeStatus: '/Ticket/ImportChangeStatus',
     GetTicketCategory: '/Ticket/GetTicketCategory',
     GetTicketCategoryFilter: '/Ticket/GetTicketCategoryFilter/',
-    GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes/',
+    GetCategoryErrandsTypes: '/Ticket/GetCategoryErrandTypes',
     GetZoneAgents: '/Ticket/GetZoneAgents/',
     GetTerminalDetails: '/Ticket/GetTerminalDetails/',
     GetTicketByStatus: '/Ticket/GetTicketByStatus',
@@ -88,6 +88,7 @@ export const APIURL = {
     TicketPostpone: '/Ticket/Postpone',
     TicketDeploymentStatus: '/Ticket/DeploymentStatus/',
     TicketStartInstall: '/Ticket/StartInstall',
+    Schedule: '/Ticket/Schedule',
   },
   Schedule: {
     Import: '/Schedule/Import',

@@ -239,7 +239,7 @@
                 <div
                   class="view-container--cards--details-card--info--container--right--item--text"
                 >
-                  {{ details?.createDate }}
+                  {{ details?.createDate | date : "YYYY-MM-dd HH:mm:ss" }}
                 </div>
               </div>
               <div
@@ -253,7 +253,7 @@
                 <div
                   class="view-container--cards--details-card--info--container--right--item--text"
                 >
-                  {{ details?.dueDate }}
+                  {{ details?.dueDate | date : "YYYY-MM-dd HH:mm:ss" }}
                 </div>
               </div>
             </div>

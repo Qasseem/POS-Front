@@ -134,7 +134,7 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private toaster: ToastService
   ) {}
-  showFavourite = true;
+  showFavourite = false;
 
   ngOnInit() {
     if (!this.authService.hasPermission('merchants-all-merchants-details')) {

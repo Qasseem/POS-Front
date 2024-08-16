@@ -192,9 +192,92 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.taskListFormData) {
         this.filtersForm.patchValue(this.taskListFormData);
       }
+      if (this.hasTwoFields(this.filtersInput, 'category', 'errandType')) {
+        this.filtersForm.get('category').valueChanges.subscribe({
+          next: (val) => {
+            const item = this.filtersInput.find((x) => x.field == 'errandType');
+            if (item) {
+              item.header = val;
+              this.getDDLData(item);
+            }
+          },
+        });
+      }
+      if (this.hasThreeFields(this.filtersInput, 'region', 'city', 'zone')) {
+        this.filtersForm.get('region').valueChanges.subscribe({
+          next: (val) => {
+            const item = this.filtersInput.find((x) => x.field == 'city');
+            if (item) {
+              item.header = val;
+              this.getDDLData(item);
+            }
+          },
+        });
+        this.filtersForm.get('city').valueChanges.subscribe({
+          next: (val) => {
+            const item = this.filtersInput.find((x) => x.field == 'zone');
+            if (item) {
+              item.header = val;
+              this.getDDLData(item);
+            }
+          },
+        });
+      }
     }
   }
+  hasTwoFields(objects: any[], field1: string, field2: string): boolean {
+    // Flags to track if the desired fields are found
+    let foundField1 = false;
+    let foundField2 = false;
 
+    // Iterate over the array and set flags when fields are found
+    for (const obj of objects) {
+      if (obj.field === field1) {
+        foundField1 = true;
+      }
+      if (obj.field === field2) {
+        foundField2 = true;
+      }
+      // Early exit if both fields are found
+      if (foundField1 && foundField2) {
+        return true;
+      }
+    }
+
+    // Return true only if both fields were found
+    return false;
+  }
+  hasThreeFields(
+    objects: any[],
+    field1: string,
+    field2: string,
+    field3: string
+  ): boolean {
+    // Flags to track if the desired fields are found
+    let foundField1 = false;
+    let foundField2 = false;
+    let foundField3 = false;
+
+    // Iterate over the array and set flags when fields are found
+    for (const obj of objects) {
+      if (obj.field === field1) {
+        foundField1 = true;
+      }
+      if (obj.field === field2) {
+        foundField2 = true;
+      }
+      if (obj.field === field3) {
+        foundField3 = true;
+      }
+      // Early exit if both fields are found
+      if (foundField1 && foundField2 && foundField3) {
+        return true;
+      }
+    }
+
+    // Return true only if both fields were found
+    return false;
+  }
   async createControls(ctrl) {
     const formControl = this.createControl(ctrl);
     if (ctrl.type === SearchInputTypes.range) {

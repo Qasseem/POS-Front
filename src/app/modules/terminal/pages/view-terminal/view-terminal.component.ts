@@ -174,7 +174,7 @@ export class ViewTerminalComponent implements OnInit {
         this.coordinates.lng = parseFloat(this.details.longitude);
         this.coordinates.lat = parseFloat(this.details.latitude);
         this.coordinates = { ...this.coordinates };
-        this.handleAddress(resp);
+        // this.handleAddress(resp);
       }
     });
   }

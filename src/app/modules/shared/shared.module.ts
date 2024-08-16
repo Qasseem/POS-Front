@@ -60,6 +60,7 @@ const PRIME_NG_MODULES = [
   MultiSelectModule,
   ChartModule,
   PanelModule,
+  TabViewModule,
 ];
 const CUSTOM_MODULES = [
   PrimeNgButtonsModule,

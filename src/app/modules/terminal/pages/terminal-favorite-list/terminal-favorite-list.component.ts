@@ -193,7 +193,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private toaster: ToastService
   ) {}
-  showFavourite = true;
+  showFavourite = false;
   ngOnInit(): void {
     if (!this.authService.hasPermission('terminals-all-terminals-details')) {
       this.viewDetails = false;

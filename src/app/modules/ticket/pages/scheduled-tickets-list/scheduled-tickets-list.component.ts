@@ -5,14 +5,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastService } from 'src/app/core/services/toaster.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
-  SearchInputTypes,
   HTTPMethods,
+  SearchInputTypes,
 } from 'src/app/core/shared/core/modules/table/models/enums';
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
-import { TicketService } from '../../services/ticket.service';
 import { ScheduleTicketsService } from '../../services/schedule-tickets.service';
 
 @Component({
@@ -161,21 +160,16 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
   ];
 
   public actions: ActionsInterface[] = [
-    {
-      name: 'Edit',
-      icon: 'pi pi-file-edit',
-      call: (row: any) => this.editItem(row),
-      // customPermission: (row: any) => row.id > 3,
-    },
+    // {
+    //   name: 'Edit',
+    //   icon: 'pi pi-file-edit',
+    //   call: (row: any) => this.editItem(row),
+    //   // customPermission: (row: any) => row.id > 3,
+    // },
     {
       name: 'Block',
       icon: 'pi pi-ban',
       call: (row: any) => this.blockItem(row),
-    },
-    {
-      name: 'Clone',
-      icon: 'pi pi-clone',
-      call: (row: any) => this.cloneItem(row),
     },
   ];
 
@@ -185,15 +179,14 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       field: 'createDate',
       isFixed: true,
     },
-
     {
-      type: SearchInputTypes.text,
-      field: 'ticketId',
+      type: SearchInputTypes.date,
+      field: 'startDate',
       isFixed: true,
     },
     {
-      type: SearchInputTypes.text,
-      field: 'terminalId',
+      type: SearchInputTypes.date,
+      field: 'endDate',
       isFixed: true,
     },
     {
@@ -206,6 +199,25 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
+      isMultiple: false,
+      type: SearchInputTypes.select,
+      field: 'category',
+      isFixed: true,
+      url: this.url.Ticket.GetTicketCategory,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'errandType',
+      isFixed: true,
+      url: this.url.Ticket.GetCategoryErrandsTypes,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+      header: '1',
+    },
+    {
       isMultiple: true,
       type: SearchInputTypes.select,
       field: 'status',
@@ -215,44 +227,25 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
-      isMultiple: false,
+      isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'overdue',
-      ddlData: [
-        { nameEn: 'Yes', id: true },
-        { nameEn: 'No', id: false },
-      ],
+      field: 'recurrence',
       isFixed: true,
+      url: this.url.Schedule.GetRecurrenceType,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
     },
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'assignee',
+      field: 'createdBy',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
     {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'posType',
-      isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'errandChannel',
-      isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
-    {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
@@ -261,7 +254,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
@@ -271,7 +264,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       header: '0',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
@@ -280,21 +273,12 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
       header: '0',
     },
-    {
-      isMultiple: true,
-      type: SearchInputTypes.select,
-      field: 'feedback',
-      isFixed: true,
-      url: this.url.Ticket.GetAllFeedbacks,
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-    },
   ];
   viewDetails = true;
   reloadIfUpdated = false;
   constructor(
     private router: Router,
-    private service: ScheduleTicketsService,
+    public service: ScheduleTicketsService,
     public toaster: ToastService,
     public authService: AuthService
   ) {}

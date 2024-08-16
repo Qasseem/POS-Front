@@ -42,6 +42,15 @@
 
   <div *ngIf="buttonsExistance?.showAllButtons" class="mt-3 mr-3">
     <div style="width: 100%" class="float-right">
+      <button
+        *ngIf="buttonsExistance?.showFilter"
+        (click)="op.toggle($event)"
+        class="filter-btn float-right ml-3"
+        style="height: 32px"
+      >
+        <i class="pi pi-filter"></i>
+        Filter
+      </button>
       <p-button
         *ngIf="buttonsExistance?.showExport"
         label="Export"
@@ -92,15 +101,6 @@
         badgeClass="p-badge-contrast"
         outlined="true"
       />
-      <button
-        *ngIf="buttonsExistance?.showFilter"
-        (click)="op.toggle($event)"
-        class="filter-btn float-right"
-        style="height: 32px"
-      >
-        <i class="pi pi-filter"></i>
-        Filter
-      </button>
     </div>
   </div>
 </div>

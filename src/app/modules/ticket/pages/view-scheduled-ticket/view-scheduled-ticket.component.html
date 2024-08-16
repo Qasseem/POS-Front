@@ -1,1 +1,296 @@
-<p>view-scheduled-ticket works!</p>
+<div>
+  <div class="grid font-14 ml-2 m-2 mb-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Ticket</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left">{{ details?.id }}</span>
+    </div>
+  </div>
+  <p-divider class="header-divider" />
+
+  <div class="view-container">
+    <div class="view-container--card">
+      <oc-view-card
+        [details]="details"
+        [formType]="'view'"
+        [coordinates]="coordinates"
+        [cid]="'ticket'"
+      ></oc-view-card>
+    </div>
+    <!-- //////////////// -->
+    <div class="view-container--cards">
+      <div class="view-container--cards--details-card">
+        <div class="view-container--cards--details-card--title">
+          Ticket Details
+        </div>
+        <p-divider></p-divider>
+        <!-- <div class="view-container--cards--details-card--addons">
+          <div class="view-container--cards--details-card--addons--title">Addons</div>
+          <div class="view-container--cards--details-card--addons--items">
+            <div class="view-container--cards--details-card--addons--items--item"></div>
+          </div>
+          <div class="view-container--cards--details-card--addons--empty">
+            No addons !
+          </div>
+          <p-divider></p-divider>
+        </div> -->
+        <div class="view-container--cards--details-card--info">
+          <div class="view-container--cards--details-card--info--users">
+            <div class="view-container--cards--details-card--info--users--item">
+              <div
+                class="view-container--cards--details-card--info--users--item--title"
+              >
+                Requester
+              </div>
+              <div
+                class="view-container--cards--details-card--info--users--item--details"
+              >
+                <div
+                  class="view-container--cards--details-card--info--users--item--details--avatar"
+                >
+                  <p-avatar
+                    [label]="
+                      !details?.creatorImageUrl
+                        ? getInitials(details?.creator)
+                        : ''
+                    "
+                    [image]="
+                      details?.creatorImageUrl ? details?.creatorImageUrl : ''
+                    "
+                    size="medium"
+                    shape="circle"
+                  />
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--users--item--details--info"
+                >
+                  <div
+                    class="view-container--cards--details-card--info--users--item--details--info--name"
+                  >
+                    {{ details?.creator }}
+                  </div>
+                  <div
+                    class="view-container--cards--details-card--info--users--item--details--info--number"
+                  >
+                    <oc-icon
+                      [icon]="'phone'"
+                      width="16px"
+                      height="16px"
+                    ></oc-icon>
+                    {{ details?.phoneNumber }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="view-container--cards--details-card--info--container">
+            <div
+              class="view-container--cards--details-card--info--container--left"
+            >
+              <div
+                class="view-container--cards--details-card--info--container--left--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--label"
+                >
+                  <label for="username">Username</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--text"
+                >
+                  {{ details?.merchantUsername }}
+                </div>
+              </div>
+              <!-- <div
+                class="view-container--cards--details-card--info--container--left--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--label"
+                >
+                  <label for="assignee">Assignee</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--text"
+                >
+                  {{ details?.assignee }}
+                </div>
+              </div> -->
+              <div
+                class="view-container--cards--details-card--info--container--left--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--label"
+                >
+                  <label for="pos-type">POS type</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--text"
+                >
+                  {{ details?.posTypeEn }}
+                </div>
+              </div>
+              <div
+                class="view-container--cards--details-card--info--container--left--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--label"
+                >
+                  <label for="errand-channel">Errand Channel</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--left--item--text"
+                >
+                  {{ details?.errandChannelEn }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="view-container--cards--details-card--info--container--right"
+            >
+              <!-- <div
+                class="view-container--cards--details-card--info--container--right--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--label"
+                >
+                  <label for="created-by">Created By</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--container"
+                >
+                  <div
+                    class="view-container--cards--details-card--info--container--right--item--container--image"
+                  >
+                    <img
+                      src="{{
+                        details?.creatorImageUrl
+                          ? details?.creatorImageUrl
+                          : 'assets/iamges/default-avatar.png'
+                      }}"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class="view-container--cards--details-card--info--container--right--item--container--text"
+                  >
+                    {{ details?.creator }}
+                  </div>
+                </div>
+              </div> -->
+              <div
+                class="view-container--cards--details-card--info--container--right--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--label"
+                >
+                  <label for="created-at">Start Date</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--text"
+                >
+                  {{ details?.startDate | date : "YYYY-MM-dd HH:mm:ss" }}
+                </div>
+              </div>
+              <div
+                class="view-container--cards--details-card--info--container--right--item"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--label"
+                >
+                  <label for="created-at">End Date</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--text"
+                >
+                  {{ details?.endDate | date : "YYYY-MM-dd HH:mm:ss" }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="view-container--cards--details-card--info--attachments">
+          <div
+            class="view-container--cards--details-card--info--attachments--title"
+          >
+            Attached Files
+          </div>
+          <div
+            class="view-container--cards--details-card--info--attachments--items"
+            *ngIf="details?.attachments?.length"
+          >
+            <div
+              class="view-container--cards--details-card--info--attachments--items--item"
+              *ngFor="let item of details?.attachments; let i = index"
+            >
+              <div
+                class="view-container--cards--details-card--info--attachments--items--item--info"
+              >
+                <div
+                  class="view-container--cards--details-card--info--attachments--items-item--info--icon"
+                >
+                  <oc-icon
+                    [icon]="'attachment-icon'"
+                    width="24px"
+                    height="24px"
+                  ></oc-icon>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--attachments--items-item--info--text"
+                >
+                  {{ "Example File " + (i + 1) }}
+                </div>
+              </div>
+              <div
+                class="view-container--cards--details-card--info--attachments--items--item--download"
+                (click)="
+                  downloadImage(item?.attachmentUrl, 'Example File ' + (i + 1))
+                "
+              >
+                <oc-icon
+                  [icon]="'download-icon'"
+                  width="20px"
+                  height="20px"
+                ></oc-icon>
+              </div>
+            </div>
+          </div>
+          <div
+            class="view-container--cards--details-card--info--attachments--items-empty"
+            *ngIf="!details?.attachments?.length"
+          >
+            No Files Uploaded!
+          </div>
+        </div>
+      </div>
+      <div class="view-container--cards--feedback-card">
+        <div class="view-container--cards--feedback-card--title">Tickets</div>
+        <p-divider></p-divider>
+        <div class="view-container--cards--feedback-card--cards">
+          <p-tabView>
+            <p-tabPanel header="AllTickets">
+              <p>Lorem ipsum dolor sit amet...</p>
+            </p-tabPanel>
+            <p-tabPanel header="Completed Tickets">
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium...
+              </p>
+            </p-tabPanel>
+            <p-tabPanel header="Opened Tickets">
+              <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+            </p-tabPanel>
+            <p-tabPanel header="Blocked Tickets">
+              <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

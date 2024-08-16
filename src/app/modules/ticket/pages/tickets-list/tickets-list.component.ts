@@ -10,10 +10,93 @@ import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/s
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { APIURL } from 'src/app/services/api';
-import { takeWhile } from 'rxjs';
+import { Observable, of, startWith, takeWhile } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toaster.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { ScheduleTicketsService } from '../../services/schedule-tickets.service';
 
+export function dayValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    if (value === null || value === undefined) {
+      return null; // Don't validate if there's no value
+    }
+
+    if (value >= 1 && value <= 30) {
+      return null; // Valid value
+    } else {
+      return { dayInvalid: true }; // Invalid value
+    }
+  };
+}
+export function recurrenceValidator(): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    const recurrenceType = control.parent?.get('recurrenceTypeId')?.value;
+    const recurrenceValue = control.value;
+
+    let maxLimit: number;
+
+    switch (recurrenceType) {
+      case 3:
+        maxLimit = 7;
+        break;
+      case 2:
+        maxLimit = 4;
+        break;
+      case 1:
+        maxLimit = 12;
+        break;
+    }
+
+    const minLimit = 1;
+
+    if (recurrenceValue < minLimit || recurrenceValue > maxLimit) {
+      return of({
+        recurrenceError: `Recurrence must be between ${minLimit} and ${maxLimit} ${
+          recurrenceType == 1
+            ? 'months'
+            : recurrenceType == 2
+            ? 'weeks'
+            : 'days'
+        }.`,
+      });
+    }
+
+    return of(null);
+  };
+}
+export function checkDates(
+  startDateField: string,
+  endDateField: string
+): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const startDate = control.get(startDateField)?.value;
+    const endDate = control.get(endDateField)?.value;
+
+    if (!startDate || !endDate) {
+      return null; // If either date is not present, do not validate
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    if (end <= start) {
+      return { endDateBeforeStartDate: true }; // Invalid: End date is before or same as start date
+    }
+
+    return null; // Valid: End date is after start date
+  };
+}
 @Component({
   selector: 'oc-tickets-list',
   templateUrl: './tickets-list.component.html',
@@ -22,6 +105,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class TicketsListComponent implements OnInit, OnDestroy {
   alive = true;
   public url = APIURL;
+  scheduleForm: FormGroup;
+  scheduleDialogVisible = false;
+  selectedScheduleRow: any;
 
   editItem(row: any): any {
     const URL = `main/ticket/edit/${row?.ticketId}`;
@@ -183,6 +269,11 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       icon: 'pi pi-clone',
       call: (row: any) => this.cloneItem(row),
     },
+    {
+      name: 'Schedule',
+      icon: 'pi pi-calendar',
+      call: (row: any) => this.showSchedule(row),
+    },
   ];
 
   filters: SearchInterface[] = [
@@ -258,7 +349,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
@@ -267,7 +358,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
@@ -277,7 +368,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       header: '0',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
@@ -298,12 +389,42 @@ export class TicketsListComponent implements OnInit, OnDestroy {
   ];
   viewDetails = true;
   reloadIfUpdated = false;
+  weekDays: any[];
   constructor(
     private router: Router,
     private service: TicketService,
     public toaster: ToastService,
-    public authService: AuthService
-  ) {}
+    public authService: AuthService,
+    private schedule: ScheduleTicketsService,
+    private fb: FormBuilder
+  ) {
+    this.scheduleForm = this.fb.group(
+      {
+        ticketId: ['', [Validators.required]],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
+        repeatCount: [
+          '',
+          {
+            validators: [Validators.required],
+            asyncValidators: [recurrenceValidator()],
+            updateOn: 'blur', // You can set this to 'change' if you want validation to happen immediately.
+          },
+        ],
+        recurrenceTypeId: [1, [Validators.required]],
+        dayOfWeekId: [null],
+        day: [
+          '1',
+          {
+            validators: [], // Start with no validators
+            updateOn: 'change', // Trigger validation on blur
+          },
+        ],
+      },
+      { validators: checkDates('startDate', 'endDate') }
+    );
+  }
+  recurrenceTypes = [];
 
   ngOnInit() {
     if (!this.authService.hasPermission('tickets-all-tickets-details')) {
@@ -326,11 +447,70 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     if (!this.authService.hasPermission('tickets-all-tickets-favorite')) {
       this.actions = this.actions.filter((x) => x.name !== 'Add to favorites');
     }
+    this.scheduleForm
+      .get('recurrenceTypeId')
+      .valueChanges.pipe(startWith(1))
+      .subscribe((val) => {
+        this.scheduleForm.get('repeatCount').updateValueAndValidity();
+        if (val == 3) {
+          this.scheduleForm.get('day').clearValidators();
+          this.scheduleForm.get('day').updateValueAndValidity();
+          this.scheduleForm.get('dayOfWeekId').clearValidators();
+          this.scheduleForm.get('dayOfWeekId').updateValueAndValidity();
+        } else if (val == 2) {
+          this.scheduleForm.get('day').clearValidators();
+          this.scheduleForm.get('day').updateValueAndValidity();
+          this.scheduleForm
+            .get('dayOfWeekId')
+            .addValidators([Validators.required]);
+          this.scheduleForm.get('dayOfWeekId').updateValueAndValidity();
+        } else if (val == 1) {
+          this.scheduleForm
+            .get('day')
+            .addValidators([Validators.required, dayValidator()]);
+          this.scheduleForm.get('day').updateValueAndValidity();
+          this.scheduleForm.get('dayOfWeekId').clearValidators();
+          this.scheduleForm.get('dayOfWeekId').updateValueAndValidity();
+        }
+      });
+    this.schedule.getScheduleRecurrenceType().subscribe({
+      next: (res) => {
+        this.recurrenceTypes = res.data;
+      },
+    });
+    this.schedule.getScheduleWeekDays().subscribe({
+      next: (res) => {
+        this.weekDays = res.data;
+      },
+    });
   }
   ngOnDestroy(): void {
     this.alive = false;
   }
   navigateToAdd() {
     this.router.navigate(['main/ticket/add']);
+  }
+  showSchedule(row) {
+    this.scheduleDialogVisible = true;
+    this.selectedScheduleRow = row;
+    this.scheduleForm.get('ticketId').patchValue(row.ticketId);
+  }
+  submitDialog(row) {
+    const formValue = this.scheduleForm.value;
+    if (formValue.recurrenceTypeId == 2 || formValue.recurrenceTypeId == 3) {
+      formValue.day = null;
+    }
+    if (this.scheduleForm.valid) {
+      this.service.schedule(this.scheduleForm.value).subscribe({
+        next: (res) => {
+          if (res.success) {
+            this.scheduleDialogVisible = false;
+          }
+        },
+      });
+    } else {
+      this.scheduleForm.errors;
+      this.scheduleForm.markAllAsTouched();
+    }
   }
 }

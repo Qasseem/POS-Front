@@ -38,3 +38,123 @@
   >
   </oc-table>
 </div>
+
+<p-dialog
+  header="Header"
+  [(visible)]="scheduleDialogVisible"
+  [modal]="true"
+  [style]="{ width: '550px', height: '450px' }"
+>
+  <ng-template pTemplate="header">
+    <div
+      class="title"
+      style="font-size: 16px; color: #191b1c; font-weight: 600"
+    >
+      Schedule Ticket
+    </div>
+  </ng-template>
+
+  <div class="schedule-form">
+    <form [formGroup]="scheduleForm">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 1rem;
+          padding-bottom: 0.5rem;
+        "
+      >
+        <div class="input-group" style="width: 50%">
+          <label for="startDate" style="margin-bottom: 7px">Start</label>
+          <p-calendar
+            formControlName="startDate"
+            appendTo="body"
+            [showIcon]="true"
+            [showOnFocus]="false"
+            [iconDisplay]="'input'"
+            inputId="icondisplay"
+          />
+        </div>
+        <div class="input-group" style="width: 20%">
+          <label for="startDate" style="margin-bottom: 2px">Repeat Every</label>
+          <input type="number" pInputText formControlName="repeatCount" />
+        </div>
+        <div class="input-group" style="width: 30%">
+          <label for=""></label>
+          <p-dropdown
+            formControlName="recurrenceTypeId"
+            [options]="recurrenceTypes"
+            optionLabel="nameEn"
+            optionValue="id"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div
+        *ngIf="scheduleForm.get('repeatCount').errors?.recurrenceError"
+        style="color: #ff4c4c"
+      >
+        {{ scheduleForm.get("repeatCount").errors.recurrenceError }}
+      </div>
+      <div
+        class="input-group"
+        style="padding-top: 0.5rem; width: 50%"
+        *ngIf="scheduleForm.get('recurrenceTypeId').value == '1'"
+      >
+        <label for="">Which Day ?</label>
+        <input type="number" pInputText formControlName="day" />
+        <div
+          *ngIf="scheduleForm.get('day').errors?.dayInvalid"
+          style="color: #ff4c4c; font-size: 14px; padding-top: 4px"
+        >
+          Day must be a number between 1 and 30.
+        </div>
+      </div>
+      <div
+        class="input-group"
+        *ngIf="scheduleForm.get('recurrenceTypeId').value == '2'"
+        style="padding: 1rem 0"
+      >
+        <p-selectButton
+          [options]="weekDays"
+          formControlName="dayOfWeekId"
+          [multiple]="false"
+          optionLabel="nameEn"
+          optionValue="id"
+        />
+      </div>
+      <div class="input-group" style="width: 50%; padding-top: 0.5rem">
+        <label for="">End</label>
+        <p-calendar
+          formControlName="endDate"
+          appendTo="body"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          [iconDisplay]="'input'"
+          inputId="icondisplay"
+        />
+      </div>
+      <div
+        *ngIf="scheduleForm.errors?.endDateBeforeStartDate"
+        style="color: #ff4c4c; font-size: 14px; padding-top: 4px"
+      >
+        Start date must be before the End date.
+      </div>
+    </form>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Cancel"
+      [text]="true"
+      severity="primary"
+      (onClick)="scheduleDialogVisible = false"
+    />
+    <p-button
+      label="Save"
+      severity="primary"
+      [disabled]="!scheduleForm.valid"
+      (onClick)="submitDialog(selectedScheduleRow)"
+    />
+  </ng-template>
+</p-dialog>

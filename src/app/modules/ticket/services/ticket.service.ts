@@ -31,7 +31,9 @@ export class TicketService {
   }
 
   getCategoryErrandTypes(categoryId) {
-    return this.http.getReq(APIURL.Ticket.GetCategoryErrandsTypes + categoryId);
+    return this.http.getReq(
+      APIURL.Ticket.GetCategoryErrandsTypes + '/' + categoryId
+    );
   }
 
   getZoneAgents(zoneId, categoryId) {
@@ -59,5 +61,8 @@ export class TicketService {
   }
   getAllFeedbacks() {
     return this.http.getReq(APIURL.Ticket.GetAllFeedbacks);
+  }
+  schedule(data) {
+    return this.http.postReq(APIURL.Ticket.Schedule, data);
   }
 }

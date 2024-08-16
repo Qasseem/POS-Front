@@ -9,7 +9,7 @@ export class ScheduleTicketsService {
   constructor(private http: HttpService) {}
 
   getById(id) {
-    return this.http.getReq(APIURL.Schedule.GetOne + id);
+    return this.http.getReq(APIURL.Schedule.GetOne + '/' + id);
   }
 
   Block(data) {

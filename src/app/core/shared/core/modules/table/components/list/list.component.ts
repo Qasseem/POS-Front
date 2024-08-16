@@ -630,6 +630,9 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       if (!rowData.id && rowData.ticketId) {
         rowData.id = rowData.ticketId;
       }
+      if (!rowData.id && rowData.scheduleId) {
+        rowData.id = rowData.scheduleId;
+      }
 
       this.router.navigate([this.options.viewDetailsURL, rowData?.id], {
         relativeTo: this.route.parent,

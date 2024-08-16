@@ -7,6 +7,7 @@ import { TicketFormComponent } from './pages/ticket-form/ticket-form.component';
 import { TicketsListComponent } from './pages/tickets-list/tickets-list.component';
 import { ViewTicketComponent } from './pages/view-ticket/view-ticket.component';
 import { ScheduledTicketsListComponent } from './pages/scheduled-tickets-list/scheduled-tickets-list.component';
+import { ViewScheduledTicketComponent } from './pages/view-scheduled-ticket/view-scheduled-ticket.component';
 
 @NgModule({
   imports: [CommonModule, TicketRoutingModule, SharedModule],
@@ -16,6 +17,7 @@ import { ScheduledTicketsListComponent } from './pages/scheduled-tickets-list/sc
     TicketsListComponent,
     ViewTicketComponent,
     ScheduledTicketsListComponent,
+    ViewScheduledTicketComponent,
   ],
 })
 export class TicketModule {}

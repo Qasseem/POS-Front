@@ -229,7 +229,7 @@ export class UserListComponent implements OnInit {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
@@ -238,7 +238,7 @@ export class UserListComponent implements OnInit {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
@@ -249,7 +249,7 @@ export class UserListComponent implements OnInit {
     },
 
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
