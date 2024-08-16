@@ -76,9 +76,7 @@
                 </label>
                 <input
                   [ngClass]="{
-                    'ng-invalid ng-dirty':
-                      f.merchantNameEN?.errors?.required ||
-                      f.merchantNameEN?.errors?.pattern
+                    'ng-invalid ng-dirty': f.merchantNameEN?.errors?.required
                   }"
                   type="text"
                   pInputText
@@ -96,9 +94,6 @@
                     <span *ngIf="f.merchantNameEN.errors.required">
                       Merchant Name [EN] field is required
                     </span>
-                    <span *ngIf="f.merchantNameEN.errors.pattern">
-                      Only English letters are allowed.
-                    </span>
                   </div>
                 </div>
               </div>
@@ -111,9 +106,7 @@
                 </label>
                 <input
                   [ngClass]="{
-                    'ng-invalid ng-dirty':
-                      f.merchantNameAR?.errors?.required ||
-                      f.merchantNameAR.errors?.pattern
+                    'ng-invalid ng-dirty': f.merchantNameAR?.errors?.required
                   }"
                   type="text"
                   pInputText
@@ -130,9 +123,6 @@
                   <div class="fs-10 color-red">
                     <span *ngIf="f.merchantNameAR.errors.required">
                       Merchant Name [AR] field is required
-                    </span>
-                    <span *ngIf="f.merchantNameAR.errors.pattern">
-                      Only Arabic letters are allowed.
                     </span>
                   </div>
                 </div>
@@ -200,12 +190,10 @@
             </div>
             <div class="col-4">
               <div class="flex flex-column gap-2">
-                <label for="userName"
-                  >Phone Number <span class="p-error"> * </span>
-                </label>
+                <label for="userName">Phone Number </label>
                 <input
                   [ngClass]="{
-                    'ng-invalid ng-dirty': f.phoneNumber?.errors?.required
+                    'ng-invalid ng-dirty': f.phoneNumber?.errors?.min
                   }"
                   type="text"
                   pInputText
@@ -219,11 +207,13 @@
                   "
                   class="invalid-feedback"
                 >
-                  <div
-                    class="fs-10 color-red"
-                    *ngIf="f.phoneNumber.errors.required"
-                  >
-                    Phone Number field is required
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.phoneNumber?.errors?.['minlength']">
+                      Minium length is 11 digits
+                    </span>
+                    <span *ngIf="f.phoneNumber?.errors?.['maxlength']">
+                      Maximum length is 11 digits
+                    </span>
                   </div>
                 </div>
               </div>
