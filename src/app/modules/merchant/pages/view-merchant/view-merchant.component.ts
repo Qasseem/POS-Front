@@ -24,6 +24,7 @@ export class ViewMerchantComponent implements OnInit {
   coordinates = { lat: null, lng: null };
   address;
   viewDetails = true;
+  merchantId: any;
   constructor(
     private router: Router,
     private merchantService: MerchantService,
@@ -197,10 +198,6 @@ export class ViewMerchantComponent implements OnInit {
     },
   ];
 
-  navigateToAdd() {
-    this.router.navigate(['main/terminal/add']);
-  }
-
   id;
   showFavourite = true;
   ngOnInit() {
@@ -230,8 +227,15 @@ export class ViewMerchantComponent implements OnInit {
     this.merchantService.GetDetails(this.id).subscribe((resp) => {
       if (resp.success) {
         this.details = resp.data;
+        this.id = this.details.id;
         this.handleAddress(resp);
       }
+    });
+  }
+
+  navigateToAdd() {
+    this.router.navigate(['main/terminal/add'], {
+      queryParams: { merchantId: this.id },
     });
   }
   handleAddress(resp: any) {

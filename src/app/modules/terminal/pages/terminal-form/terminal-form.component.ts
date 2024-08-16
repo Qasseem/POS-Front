@@ -128,6 +128,21 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (resp) => {
           if (resp.success) {
             this.allMerchantList = resp.data;
+            this.route.queryParams.subscribe((params) => {
+              if (params.hasOwnProperty('merchantId')) {
+                const merchantId = params['merchantId'];
+                if (merchantId) {
+                  const selectedMerchant = this.allMerchantList.find(
+                    (merchant) => merchant.id == merchantId // Use == for loose comparison to handle different types
+                  );
+                  if (selectedMerchant) {
+                    this.terminalForm
+                      .get('merchantId')
+                      .setValue(selectedMerchant.id);
+                  }
+                }
+              }
+            });
           }
         },
       });
@@ -211,7 +226,14 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   backToList() {
-    this.router.navigate(['main/terminal/list']);
+    this.route.queryParams.subscribe((params) => {
+      if (params.hasOwnProperty('merchantId')) {
+        const merchantId = params['merchantId'];
+        this.router.navigate([`main/merchant/details/${merchantId}`]);
+      } else {
+        this.router.navigate(['main/terminal/list']);
+      }
+    });
   }
 
   print() {}
