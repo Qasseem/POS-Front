@@ -228,7 +228,7 @@ export class ViewMerchantComponent implements OnInit {
       if (resp.success) {
         this.details = resp.data;
         this.id = this.details.id;
-        this.handleAddress(resp);
+        // this.handleAddress(resp);
       }
     });
   }

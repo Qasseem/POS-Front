@@ -15,13 +15,20 @@ export class ScheduleTicketsService {
   Block(data) {
     return this.http.postReq(APIURL.Schedule.Block, data);
   }
+
   getScheduleStatus() {
     return this.http.getReq(APIURL.Schedule.GetStatus);
   }
+
   getScheduleRecurrenceType() {
     return this.http.getReq(APIURL.Schedule.GetRecurrenceType);
   }
+
   getScheduleWeekDays() {
     return this.http.getReq(APIURL.Schedule.GetScheduleWeekDays);
+  }
+
+  getScheduleTickets(body) {
+    return this.http.postReq(APIURL.Schedule.GetScheduleTickets, body);
   }
 }

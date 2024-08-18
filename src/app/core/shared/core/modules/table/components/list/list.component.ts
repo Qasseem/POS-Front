@@ -630,13 +630,16 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
       if (!rowData.id && rowData.ticketId) {
         rowData.id = rowData.ticketId;
       }
+      if (rowData.id && rowData.ticketId) {
+        rowData.id = rowData.ticketId;
+      }
       if (!rowData.id && rowData.scheduleId) {
         rowData.id = rowData.scheduleId;
       }
-
-      this.router.navigate([this.options.viewDetailsURL, rowData?.id], {
-        relativeTo: this.route.parent,
-      });
+      if (this.options.viewDetailsURL?.at(-1) != '/') {
+        this.options.viewDetailsURL = this.options.viewDetailsURL + '/';
+      }
+      this.router.navigate([this.options.viewDetailsURL + rowData?.id]);
     }
   }
   convertToKebabCase(input: string): string {
@@ -651,11 +654,11 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   navigateToUrl(url, row) {
     let routeId = row.merchantId;
     if (!row.id && row.ticketId) {
-      routeId = row.merchantNumber;
-    } else if (!row.id && row.terminalId) {
-      routeId = row.merchantNumber;
-    } else {
       routeId = row.merchantId;
+    } else if (row.id && row.terminalId) {
+      routeId = row.merchantId;
+    } else {
+      routeId = row.id;
     }
     this.router.navigate([url + routeId]);
   }

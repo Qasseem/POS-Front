@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize, take } from 'rxjs';
@@ -237,7 +237,7 @@ export class MainComponent implements OnInit {
     this.translateService.use(this.storage.getLang());
     this.router.events.subscribe({
       next: (route) => {
-        if (route instanceof RouterEvent) {
+        if (route instanceof NavigationEnd) {
           const url = route.url.split('/');
           let parentUrl = '';
           if (url[2] && url[2].includes('list')) {
@@ -249,10 +249,12 @@ export class MainComponent implements OnInit {
             x.routerLink.includes(parentUrl)
           );
           if (parentItemIndex > -1) {
-            this.items[parentItemIndex].active = true;
-            this.items[parentItemIndex].expanded = true;
             this.items.forEach((item, index) => {
-              if (index != parentItemIndex) {
+              if (index == parentItemIndex) {
+                item.active = true;
+                item.expanded = true;
+              } else {
+                item.active = false;
                 item.expanded = false;
               }
             });

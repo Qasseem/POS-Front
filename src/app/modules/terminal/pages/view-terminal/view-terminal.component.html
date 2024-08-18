@@ -54,9 +54,9 @@
             [actions]="actions"
             [options]="{
               check: false,
-              viewDetails: false,
-              edit: true,
-              editURL: '/main/ticket/edit/'
+              viewDetails: true,
+              viewDetailsURL: '/main/ticket/details/',
+              hasActionMenu: actions?.length ? true : false,
             }"
             [filters]="filters"
             [service]="ticketService"

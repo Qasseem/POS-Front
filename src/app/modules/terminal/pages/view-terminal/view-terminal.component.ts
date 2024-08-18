@@ -116,6 +116,12 @@ export class ViewTerminalComponent implements OnInit {
       name: 'Edit',
       icon: 'pi pi-file-edit',
       call: (row: any) => this.editItem(row),
+      // customPermission: (row: any) => row.id > 3,
+    },
+    {
+      name: 'Block',
+      icon: 'pi pi-ban',
+      call: (row: any) => this.blockItem(row),
     },
   ];
 
@@ -128,7 +134,7 @@ export class ViewTerminalComponent implements OnInit {
 
     {
       type: SearchInputTypes.text,
-      field: 'tickedId',
+      field: 'ticketId',
       isFixed: true,
     },
     {
@@ -159,12 +165,12 @@ export class ViewTerminalComponent implements OnInit {
     if (!this.authService.hasPermission('terminals-all-terminals-export')) {
       this.tableBtns.showExport = false;
     }
-    if (!this.authService.hasPermission('terminals-all-terminals-block')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Block');
-    }
-    if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
-      this.actions = this.actions.filter((x) => x.name !== 'Edit');
-    }
+    // if (!this.authService.hasPermission('terminals-all-terminals-block')) {
+    //   this.actions = this.actions.filter((x) => x.name !== 'Block');
+    // }
+    // if (!this.authService.hasPermission('terminals-all-terminals-edit')) {
+    //   this.actions = this.actions.filter((x) => x.name !== 'Edit');
+    // }
   }
 
   getItemDetails() {
@@ -180,8 +186,8 @@ export class ViewTerminalComponent implements OnInit {
   }
   handleAddress(resp: any) {
     this.coordinates = {
-      lat: resp.data.latitude,
-      lng: resp.data.longitude,
+      lat: resp.data?.latitude,
+      lng: resp.data?.longitude,
     };
     this.terminalService
       .GetAddressFromLatLng(resp.data.latitude, resp.data.longitude)

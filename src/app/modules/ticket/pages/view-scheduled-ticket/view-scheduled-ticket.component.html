@@ -272,21 +272,16 @@
         <div class="view-container--cards--feedback-card--title">Tickets</div>
         <p-divider></p-divider>
         <div class="view-container--cards--feedback-card--cards">
-          <p-tabView>
-            <p-tabPanel header="AllTickets">
-              <p>Lorem ipsum dolor sit amet...</p>
-            </p-tabPanel>
-            <p-tabPanel header="Completed Tickets">
-              <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium...
-              </p>
+          <p-tabView (onChange)="tabsChange($event)">
+            <p-tabPanel header="All Tickets">
+              <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
             <p-tabPanel header="Opened Tickets">
-              <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+              <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
-            <p-tabPanel header="Blocked Tickets">
-              <p>At vero eos et accusamus et iusto odio dignissimos...</p>
+
+            <p-tabPanel header="Completed Tickets">
+              <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
           </p-tabView>
         </div>
@@ -294,3 +289,103 @@
     </div>
   </div>
 </div>
+
+<ng-template #scheduleTable>
+  <div class="view-container--cards--feedback-card--table-container">
+    <div class="view-container--cards--feedback-card--table-container--table">
+      <p-table
+        [value]="scheduleTicketData"
+        [styleClass]="'p-datatable-sm'"
+        [paginator]="true"
+        [rows]="rows"
+        [first]="currentPage"
+        [totalRecords]="totalRecords"
+        (onPage)="onPageChange($event)"
+        [paginatorfirstpagelinkicon]=""
+        [paginatorlastpagelinkicon]=""
+        [paginatorpreviouspagelinkicon]=""
+        [paginatornextpagelinkicon]=""
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Ticket ID</th>
+            <th>No. of tasks</th>
+            <th>Succedded Tasks</th>
+            <th>Failed Tasks</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+          <tr>
+            <td>
+              <a (click)="goToTicket(rowData?.ticketId)">{{
+                rowData.ticketId
+              }}</a>
+            </td>
+            <td>{{ rowData.numberOfTasks }}</td>
+            <td>{{ rowData.successTasks }}</td>
+            <td>{{ rowData.failedTasks }}</td>
+            <td>
+              <span [class]="convertToKebabCase(rowData.statusEn)">{{
+                rowData.statusEn
+              }}</span>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+          <button
+            pButton
+            type="button"
+            (click)="previousPage()"
+            [disabled]="currentPage === 0"
+            style="
+              display: flex;
+              gap: 0.5rem;
+              background-color: #fff;
+              color: #344054;
+              border: 1px solid #d0d5dd;
+            "
+          >
+            <i class="pi pi-arrow-left"></i>
+            Previous
+          </button>
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+          <button
+            pButton
+            type="button"
+            (click)="nextPage()"
+            style="
+              display: flex;
+              gap: 0.5rem;
+              background-color: #fff;
+              color: #344054;
+              border: 1px solid #d0d5dd;
+            "
+            [disabled]="currentPage >= getCurrentPage()"
+          >
+            Next
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" class="text-center" style="height: 465px">
+              <div>
+                <img src="assets/iamges/icons/Group5079.svg" alt="drag" />
+
+                <div class="mt-3">
+                  <span
+                    style="font-size: smaller; color: #c3c3c3; font-size: 14px"
+                  >
+                    {{ "table.noDataToDisplay" | translate }}
+                  </span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</ng-template>

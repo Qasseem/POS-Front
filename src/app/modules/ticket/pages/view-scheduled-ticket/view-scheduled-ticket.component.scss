@@ -463,3 +463,60 @@
     display: none;
   }
 }
+.completed {
+  border-radius: 16px;
+  background-color: #e0f1eb;
+  padding: 0.25rem 1rem;
+  color: #00875a;
+}
+.in-progress,
+.agent-on-way {
+  border-radius: 16px;
+  background-color: #fef9ee;
+  padding: 0.25rem 1rem;
+  color: #c59e46;
+}
+.postponed,
+.assigned,
+.upcoming {
+  border-radius: 16px;
+  background-color: #eff8ff;
+  padding: 0.25rem 1rem;
+  color: #175cd3;
+}
+.blocked {
+  border-radius: 16px;
+  background-color: #f2f4f7;
+  padding: 0.25rem 1rem;
+  color: #344054;
+}
+:host ::ng-deep th {
+  color: #667085;
+  font-family: "public-sans";
+  font-size: 12px;
+  font-weight: 500;
+}
+:host ::ng-deep td {
+  height: 52px;
+  a {
+    text-decoration: underline;
+    color: #0080f9;
+    cursor: pointer;
+  }
+  font-family: "inter";
+  font-size: 14px;
+  font-weight: 400;
+}
+:host ::ng-deep .p-table {
+  .p-paginator .p-paginator-first,
+  .p-paginator .p-paginator-prev,
+  .p-paginator .p-paginator-next,
+  .p-paginator .p-paginator-last {
+    display: none;
+  }
+}
+:host ::ng-deep p-tabview {
+  .p-tabview-panels {
+    padding: 0;
+  }
+}

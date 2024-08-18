@@ -98,6 +98,7 @@ export const APIURL = {
     GetStatus: '/Schedule/GetScheduleStatus',
     GetRecurrenceType: '/Schedule/GetScheduleRecurrenceType',
     GetScheduleWeekDays: '/Schedule/GetScheduleDaysOfWeek',
+    GetScheduleTickets: '/Schedule/GetScheduleTickets',
   },
   Users: {
     GetAllUsersDropDown: '/User/GetAllUsersDropDown',

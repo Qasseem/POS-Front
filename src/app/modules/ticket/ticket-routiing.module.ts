@@ -47,6 +47,10 @@ const routes: Routes = [
         },
       },
       {
+        path: 'details/:id',
+        component: ViewTicketComponent,
+      },
+      {
         path: 'scheduled-details/:id',
         component: ViewScheduledTicketComponent,
       },

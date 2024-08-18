@@ -16,7 +16,7 @@ export interface TableOptionsInterface {
   editable?: boolean;
   historyDetails?: boolean;
   viewDetails?: boolean;
-  viewDetailsURL?: boolean;
+  viewDetailsURL?: string;
   hasActionMenu?: boolean;
   edit?: boolean;
   editURL?: string;

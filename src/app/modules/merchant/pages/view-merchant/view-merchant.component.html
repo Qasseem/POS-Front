@@ -58,10 +58,10 @@
             [actions]="actions?.length ? actions : null"
             [options]="{
               check: false,
-              viewDetails: false,
+              viewDetails: true,
               viewDetailsURL: '/main/terminal/details',
               hasActionMenu: actions?.length ? true : false,
-              favourite: showFavourite
+              favourite: false,
             }"
             [filters]="filters"
             [uploadHeader]="'Upload Bulk Terminal'"
