@@ -299,11 +299,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
   // function for create FormControl
   private createControl(ctrl): UntypedFormControl {
     if (ctrl.type === SearchInputTypes.text) return new UntypedFormControl('');
+    else if (ctrl.type === SearchInputTypes.choice && ctrl.isMultiple)
+      return new UntypedFormControl([]);
     else if (ctrl.type === SearchInputTypes.choice && !ctrl.isMultiple)
       return new UntypedFormControl(null);
     // in case of select is single set it`s from value as null object
     else if (ctrl.type === SearchInputTypes.select && !ctrl.isMultiple)
-      return new UntypedFormControl([]);
+      return new UntypedFormControl(null);
     else if (ctrl.type === SearchInputTypes.selectValue)
       return new UntypedFormControl(null);
     else if (
