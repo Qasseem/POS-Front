@@ -264,7 +264,7 @@
             </div>
 
             <div *ngIf="col.customCell === 'date'" style="font-size: 14px">
-              {{ rowData[col.field] | dateFixer | date : "dd-MM-yyyy hh:mm a" }}
+              {{ rowData[col.field] | dateFixer | date : "dd-MM-yyyy" }}
             </div>
             <div
               *ngIf="col.customCell === 'dateWithoutPipe'"
@@ -276,7 +276,7 @@
               *ngIf="col.customCell === 'dateTimeWithoutPipe'"
               style="font-size: 14px"
             >
-              {{ rowData[col.field] | date : "dd-MM-yyyy hh:mm a" }}
+              {{ rowData[col.field] | date : "dd-MM-yyyy" }}
             </div>
             <div
               *ngIf="col.customCell === 'list' && rowData[col.field]?.length"
@@ -427,11 +427,7 @@
                     style="color: #969696"
                     *ngIf="item.custom === 'defaultDate'"
                   >
-                    {{
-                      rowData[item.label]
-                        | dateFixer
-                        | date : "dd-MM-yyyy hh:mm a"
-                    }}
+                    {{ rowData[item.label] | dateFixer | date : "dd-MM-yyyy" }}
                   </span>
 
                   <span

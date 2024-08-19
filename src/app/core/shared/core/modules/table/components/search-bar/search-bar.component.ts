@@ -195,7 +195,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasTwoFields(this.filtersInput, 'category', 'errandType')) {
         this.filtersForm.get('category').valueChanges.subscribe({
           next: (val) => {
-            if (val && !Array.isArray(val)) {
+            if (val) {
               const item = this.filtersInput.find(
                 (x) => x.field == 'errandType'
               );
@@ -210,7 +210,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasThreeFields(this.filtersInput, 'region', 'city', 'zone')) {
         this.filtersForm.get('region').valueChanges.subscribe({
           next: (val) => {
-            if (val && !Array.isArray(val)) {
+            if (val) {
               const item = this.filtersInput.find((x) => x.field == 'city');
               if (item) {
                 item.header = !Array.isArray(val) ? val : '0';

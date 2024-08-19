@@ -249,7 +249,7 @@ export class UserListComponent implements OnInit {
     },
 
     {
-      isMultiple: false,
+      isMultiple: true,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,

@@ -193,7 +193,7 @@
                 <div
                   class="view-container--cards--details-card--info--container--right--item--text"
                 >
-                  {{ details?.startDate | date : "YYYY-MM-dd HH:mm:ss" }}
+                  {{ details?.startDate | date : "YYYY-MM-dd" }}
                 </div>
               </div>
               <div
@@ -207,7 +207,7 @@
                 <div
                   class="view-container--cards--details-card--info--container--right--item--text"
                 >
-                  {{ details?.endDate | date : "YYYY-MM-dd HH:mm:ss" }}
+                  {{ details?.endDate | date : "YYYY-MM-dd" }}
                 </div>
               </div>
             </div>
@@ -273,14 +273,38 @@
         <p-divider></p-divider>
         <div class="view-container--cards--feedback-card--cards">
           <p-tabView (onChange)="tabsChange($event)">
-            <p-tabPanel header="All Tickets">
+            <p-tabPanel header="">
+              <ng-template pTemplate="header"
+                ><div class="header">
+                  <div class="title">All Tickets</div>
+                  <div class="count">
+                    {{ scheduleForm.get("listCount").value }}
+                  </div>
+                </div>
+              </ng-template>
               <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
-            <p-tabPanel header="Opened Tickets">
+            <p-tabPanel>
+              <ng-template pTemplate="header"
+                ><div class="header">
+                  <div class="title">Opened Tickets</div>
+                  <div class="count">
+                    {{ scheduleForm.get("listCount").value }}
+                  </div>
+                </div>
+              </ng-template>
               <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
 
             <p-tabPanel header="Completed Tickets">
+              <ng-template pTemplate="header"
+                ><div class="header">
+                  <div class="title">Completed Tickets</div>
+                  <div class="count">
+                    {{ scheduleForm.get("listCount").value }}
+                  </div>
+                </div>
+              </ng-template>
               <ng-container [ngTemplateOutlet]="scheduleTable"></ng-container>
             </p-tabPanel>
           </p-tabView>

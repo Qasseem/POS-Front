@@ -519,4 +519,47 @@
   .p-tabview-panels {
     padding: 0;
   }
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    .count {
+      background: #e6f2fe;
+      color: #0080f9;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 8px;
+    }
+  }
+  .p-tabview-title {
+    //styleName: Desktop/Body/Md-14-R;
+    font-family: "public-sans";
+    font-size: 14px;
+    font-weight: 400;
+    color: #697682;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    .title {
+      font-family: "public-sans";
+      font-size: 14px;
+      font-weight: 400;
+    }
+    .count {
+      background: #f8f8f8;
+      color: #697682;
+      height: 22px;
+      width: 22px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 8px;
+      font-size: 14px;
+    }
+  }
 }

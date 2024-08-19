@@ -264,7 +264,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       header: '0',
     },
     {
-      isMultiple: false,
+      isMultiple: true,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,

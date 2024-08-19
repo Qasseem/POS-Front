@@ -505,6 +505,8 @@ export class TicketsListComponent implements OnInit, OnDestroy {
         next: (res) => {
           if (res.success) {
             this.scheduleDialogVisible = false;
+            const message = 'Ticket Schedule Created Successfully';
+            this.toaster.showSuccess(message);
           }
         },
       });

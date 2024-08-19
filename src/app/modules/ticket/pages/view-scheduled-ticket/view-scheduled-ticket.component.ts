@@ -31,6 +31,7 @@ export class ViewScheduledTicketComponent implements OnInit {
     this.scheduleForm = this.fb.group({
       pageNumber: [0],
       pageSize: [10],
+      listCount: [''],
       scheduleId: [this.id],
       key: [''],
     });
@@ -42,6 +43,7 @@ export class ViewScheduledTicketComponent implements OnInit {
         this.scheduleTicketData = res.data.data;
         this.scheduleForm.get('pageNumber').patchValue(res.data.pageNumber);
         this.scheduleForm.get('pageSize').patchValue(res.data.pageSize);
+        this.scheduleForm.get('listCount').patchValue(res.data.listCount);
       },
     });
   }
