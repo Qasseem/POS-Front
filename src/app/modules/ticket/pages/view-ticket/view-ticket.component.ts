@@ -37,7 +37,7 @@ export class ViewTicketComponent implements OnInit {
           lat: this.details?.latitude,
           lng: this.details?.longitude,
         };
-        this.handleAddress(res);
+        // this.handleAddress(res);
       },
     });
   }

@@ -201,7 +201,12 @@
     "merchantEn": "Merchant Name",
     "overdue": "Overdue",
     "assignee": "Assignee",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "startDate":"Start Date",
+    "endDate":"End Date",
+    "createdBy":"Created By",
+    "errandType":"Errand Type",
+    "recurrence":"Recurrence"
   },
   "merchants": {
     "blocked-merchant": "Merchant Has been blocked"

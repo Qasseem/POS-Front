@@ -107,6 +107,8 @@ export const APIURL = {
     getAllUsersTypeDropdown: '/User/GetAllUserTypeDropDown',
     getAllUsersTypeFilter: '/User/GetUserTypeFilterDropDown/',
     getUsersByUserType: '/User/GetUsersByTypeDropDown/',
+    getAllServiceAgents: '/User/GetAllServiceAgentsDropDown',
+    getAllSalesAgents: '/User/GetAllSalesAgentsDropDown',
     checkUsernameExistence: '/User/CheckExistenceUsername',
     geUserById: '/User/GetUser',
     deleteUser: '/User/Delete/',

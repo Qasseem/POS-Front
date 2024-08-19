@@ -313,7 +313,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
     },
     {
       isMultiple: false,
-      type: SearchInputTypes.select,
+      type: SearchInputTypes.selectValue,
       field: 'overdue',
       ddlData: [
         { nameEn: 'Yes', id: true },
@@ -368,7 +368,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       header: '0',
     },
     {
-      isMultiple: false,
+      isMultiple: true,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,

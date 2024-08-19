@@ -48,6 +48,7 @@ export enum SearchInputTypes {
   date = 'DATE',
   range = 'RANGE',
   number = 'NUMBER',
+  selectValue = 'SELECTVALUE',
 }
 
 export enum TaskActions {
@@ -570,7 +571,6 @@ export enum SIMCardStatusNamesEnum {
   Status16 = 'Shipped',
   Status17 = 'Lost',
   Status18 = 'Terminated',
-
 }
 
 export enum DeviceStatusNamesEnum {
@@ -647,9 +647,7 @@ export enum ReserviceRemotelyStatusEnum {
   UnderInvoicing = 8,
   TransactionCompleted = 9,
   AddingToServerInprogress = 10,
-  AddedWithIssue = 11
-
-
+  AddedWithIssue = 11,
 }
 export enum SIMCardDeliveryStatusEnum {
   New = 1,

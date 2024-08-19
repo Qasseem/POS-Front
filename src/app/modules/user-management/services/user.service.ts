@@ -42,7 +42,12 @@ export class UserService {
   getAllUsersTypeFilter() {
     return this.http.getReq(APIURL.Users.getAllUsersTypeFilter);
   }
-
+  getAllSalesAgents() {
+    return this.http.getReq(APIURL.Users.getAllSalesAgents);
+  }
+  getAllServiceAgents() {
+    return this.http.getReq(APIURL.Users.getAllServiceAgents);
+  }
   Block(data) {
     return this.http.postReq(APIURL.Users.blockUser, data);
   }

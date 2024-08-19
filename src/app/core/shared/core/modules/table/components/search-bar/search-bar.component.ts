@@ -195,10 +195,14 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasTwoFields(this.filtersInput, 'category', 'errandType')) {
         this.filtersForm.get('category').valueChanges.subscribe({
           next: (val) => {
-            const item = this.filtersInput.find((x) => x.field == 'errandType');
-            if (item) {
-              item.header = val;
-              this.getDDLData(item);
+            if (val && !Array.isArray(val)) {
+              const item = this.filtersInput.find(
+                (x) => x.field == 'errandType'
+              );
+              if (item) {
+                item.header = !Array.isArray(val) ? val : '0';
+                this.getDDLData(item);
+              }
             }
           },
         });
@@ -206,19 +210,23 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasThreeFields(this.filtersInput, 'region', 'city', 'zone')) {
         this.filtersForm.get('region').valueChanges.subscribe({
           next: (val) => {
-            const item = this.filtersInput.find((x) => x.field == 'city');
-            if (item) {
-              item.header = val;
-              this.getDDLData(item);
+            if (val && !Array.isArray(val)) {
+              const item = this.filtersInput.find((x) => x.field == 'city');
+              if (item) {
+                item.header = !Array.isArray(val) ? val : '0';
+                this.getDDLData(item);
+              }
             }
           },
         });
         this.filtersForm.get('city').valueChanges.subscribe({
           next: (val) => {
-            const item = this.filtersInput.find((x) => x.field == 'zone');
-            if (item) {
-              item.header = val;
-              this.getDDLData(item);
+            if (val) {
+              const item = this.filtersInput.find((x) => x.field == 'zone');
+              if (item) {
+                item.header = !Array.isArray(val) ? val : '0';
+                this.getDDLData(item);
+              }
             }
           },
         });
@@ -295,6 +303,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
       return new UntypedFormControl(null);
     // in case of select is single set it`s from value as null object
     else if (ctrl.type === SearchInputTypes.select && !ctrl.isMultiple)
+      return new UntypedFormControl([]);
+    else if (ctrl.type === SearchInputTypes.selectValue)
       return new UntypedFormControl(null);
     else if (
       ctrl.type === SearchInputTypes.range ||
@@ -353,9 +363,11 @@ export class SearchBarComponent implements OnInit, OnChanges {
   //this method used to rest form value to its initials (empty array or empty string)
   resetForm() {
     Object.keys(this.filtersForm.controls).forEach((key) => {
-      if (Array.isArray(this.filtersForm.get(key).value))
+      if (Array.isArray(this.filtersForm.get(key).value)) {
         this.filtersForm.get(key).setValue([]);
-      else this.filtersForm.get(key).setValue('');
+      } else {
+        this.filtersForm.get(key).setValue('');
+      }
     });
     this.formValueDictionary = {};
   }

@@ -222,7 +222,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'status',
       isFixed: true,
-      url: this.url.Ticket.GetAllTicketsStatuses,
+      url: this.url.Schedule.GetStatus,
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },

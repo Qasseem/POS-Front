@@ -194,7 +194,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
     {
       isMultiple: true,
       type: SearchInputTypes.select,
-      field: 'users',
+      field: 'userName',
       isFixed: true,
       url: this.url.Users.GetAllUsersDropDown,
       method: HTTPMethods.getReq,
@@ -224,7 +224,16 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
-      isMultiple: true,
+      isMultiple: false,
+      type: SearchInputTypes.select,
+      field: 'region',
+      isFixed: true,
+      url: this.url.Terminal.GetAllRegions,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
+    {
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
@@ -235,7 +244,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
     },
 
     {
-      isMultiple: true,
+      isMultiple: false,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,

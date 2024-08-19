@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, takeWhile } from 'rxjs';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { MerchantService } from '../../services/merchant.service';
+import { UserService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'oc-merchant-form',
@@ -23,10 +24,13 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
   orignalCities = [];
   formType = 'add';
   coordinates;
+  serviceAgents = [];
+  salesAgents = [];
   constructor(
     private fb: FormBuilder,
     private merchantService: MerchantService,
     private terminalService: TerminalService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -41,6 +45,8 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       categoryId: [null, Validators.required],
       merchantId: [null, Validators.required],
       id: [null],
+      serviceAgentId: [null],
+      salesAgentId: [null],
       phoneNumber: [
         null,
         [
@@ -190,6 +196,16 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
               }
             });
         }
+      },
+    });
+    this.userService.getAllServiceAgents().subscribe({
+      next: (res) => {
+        this.serviceAgents = res.data;
+      },
+    });
+    this.userService.getAllSalesAgents().subscribe({
+      next: (res) => {
+        this.salesAgents = res.data;
       },
     });
   }
