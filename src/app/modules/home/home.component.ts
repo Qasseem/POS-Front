@@ -36,8 +36,8 @@ export class HomeComponent implements OnInit {
   statusOptions: any;
   taskData: any;
   taskOptions: any;
-  totalRecords: number = 0;
   loading: boolean;
+  totalRecords: number = 0;
   currentPage: number = 0;
   rows: number = 10;
   agentsData: any;
@@ -527,7 +527,7 @@ export class HomeComponent implements OnInit {
                   !this.ticketStats.transformedStatus.agentOnWay &&
                   !this.ticketStats.transformedStatus.inProgress &&
                   !this.ticketStats.transformedStatus.postponed &&
-                  !this.ticketStats.transformedStatus.done
+                  !this.ticketStats.transformedStatus.completed
                 ) {
                   this.statusData.datasets[0].data = [];
                 } else {
@@ -675,7 +675,7 @@ export class HomeComponent implements OnInit {
             .subscribe({
               next: (res: any) => {
                 if (res.success) {
-                  this.totalRecords = res?.data?.agents?.data.length;
+                  this.totalRecords = res?.data?.agents?.listCount;
                   this.agentsData = res.data;
                 }
               },
@@ -743,7 +743,7 @@ export class HomeComponent implements OnInit {
     });
   }
   onPageChange(event) {
-    this.currentPage = event.page;
+    this.currentPage = event.first;
     this.rows = event.rows;
     this.dashboardForm
       .get('performance')
@@ -930,7 +930,7 @@ export class HomeComponent implements OnInit {
   }
   previousPage() {
     if (this.currentPage > 0) {
-      this.currentPage--;
+      this.currentPage -= this.rows;
       this.dashboardForm
         .get('performance')
         .get('pageNumber')
@@ -939,25 +939,14 @@ export class HomeComponent implements OnInit {
   }
 
   nextPage() {
-    if (
-      this.agentsData?.agents?.data.length &&
-      this.currentPage <
-        Math.ceil(this.agentsData?.agents?.data.length / this.rows) - 1
-    ) {
-      this.currentPage++;
+    const totalPages = Math.ceil(this.totalRecords / this.rows);
+    if (this.currentPage / this.rows < totalPages - 1) {
+      this.currentPage += this.rows;
       this.dashboardForm
         .get('performance')
         .get('pageNumber')
         .patchValue(this.currentPage);
     }
-  }
-  getCurrentPage() {
-    return (
-      Math.ceil(
-        (this.agentsData ? this.agentsData?.agents?.data?.length : 0) /
-          this.rows
-      ) - 1
-    );
   }
 }
 

@@ -277,8 +277,8 @@
               <ng-template pTemplate="header"
                 ><div class="header">
                   <div class="title">All Tickets</div>
-                  <div class="count">
-                    {{ scheduleForm.get("listCount").value }}
+                  <div class="count" *ngIf="totalRecords">
+                    {{ totalRecords ? totalRecords : 0 }}
                   </div>
                 </div>
               </ng-template>
@@ -288,8 +288,8 @@
               <ng-template pTemplate="header"
                 ><div class="header">
                   <div class="title">Opened Tickets</div>
-                  <div class="count">
-                    {{ scheduleForm.get("listCount").value }}
+                  <div class="count" *ngIf="totalOpenedRecords">
+                    {{ totalOpenedRecords ? totalOpenedRecords : 0 }}
                   </div>
                 </div>
               </ng-template>
@@ -300,8 +300,8 @@
               <ng-template pTemplate="header"
                 ><div class="header">
                   <div class="title">Completed Tickets</div>
-                  <div class="count">
-                    {{ scheduleForm.get("listCount").value }}
+                  <div class="count" *ngIf="totalCompletedRecords">
+                    {{ totalCompletedRecords ? totalCompletedRecords : 0 }}
                   </div>
                 </div>
               </ng-template>
@@ -324,7 +324,8 @@
         [rows]="rows"
         [first]="currentPage"
         [totalRecords]="totalRecords"
-        (onPage)="onPageChange($event)"
+        [lazy]="true"
+        (onLazyLoad)="onPageChange($event)"
         [paginatorfirstpagelinkicon]=""
         [paginatorlastpagelinkicon]=""
         [paginatorpreviouspagelinkicon]=""
@@ -386,7 +387,7 @@
               color: #344054;
               border: 1px solid #d0d5dd;
             "
-            [disabled]="currentPage >= getCurrentPage()"
+            [disabled]="currentPage + rows >= totalRecords"
           >
             Next
             <i class="pi pi-arrow-right"></i>

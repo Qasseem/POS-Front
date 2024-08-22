@@ -507,12 +507,34 @@
   font-size: 14px;
   font-weight: 400;
 }
-:host ::ng-deep .p-table {
+:host p-table ::ng-deep {
+  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+    font-family: "public-sans";
+    height: 50px;
+  }
+  .p-datatable.p-datatable-sm .p-datatable-tbody td,
+  .p-datatable.p-datatable-sm .p-datatable-thead th {
+    text-align: center;
+    font-family: "inter-medium";
+    font-size: 12px;
+    font-weight: 500;
+    color: #667085;
+  }
   .p-paginator .p-paginator-first,
   .p-paginator .p-paginator-prev,
   .p-paginator .p-paginator-next,
   .p-paginator .p-paginator-last {
     display: none;
+  }
+
+  button {
+    &:focus {
+      outline: none;
+      box-shadow: unset;
+    }
+    &:hover {
+      background: #d0d5dd !important;
+    }
   }
 }
 :host ::ng-deep p-tabview {
@@ -562,4 +584,7 @@
       font-size: 14px;
     }
   }
+}
+:host ::ng-deep .p-paginator-bottom {
+  border-radius: 0px 0px 10px 10px !important;
 }

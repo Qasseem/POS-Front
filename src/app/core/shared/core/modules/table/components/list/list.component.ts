@@ -84,6 +84,9 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
 
   listActions = [];
   rowData;
+  totalRecords: number = 0;
+  currentPage: number = 0;
+  rows: number = 10;
   setRow(rowData) {
     this.rowData = rowData;
   }
@@ -329,7 +332,9 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
             .getAllData(this.url.getAll, merchantParams)
             .pipe(
               take(1),
-              map(() => (this.data = this.tableCore.tableData)),
+              map(() => {
+                this.data = this.tableCore.tableData;
+              }),
               finalize(() => (this.firstInit = true))
             )
             .subscribe();
@@ -341,7 +346,9 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
             .getAllData(this.url.getAll, terminalParams)
             .pipe(
               take(1),
-              map(() => (this.data = this.tableCore.tableData)),
+              map(() => {
+                this.data = this.tableCore.tableData;
+              }),
               finalize(() => (this.firstInit = true))
             )
             .subscribe();
@@ -537,6 +544,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
    * @memberof TableComponent
    */
   setPage(pageInfo: any): void {
+    this.first = pageInfo.first;
     this.tableCore.pageOptions.offset = pageInfo.first / pageInfo.rows;
     this.tableCore.pageOptions.limit = pageInfo.rows;
     if (this.firstInit) this.getTableData();
@@ -766,5 +774,33 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
     }
     // console.log(rowData, this.options.editURL);
     this.router.navigate([this.options.cloneURL + id]);
+  }
+
+  previousPage() {
+    const pageIndex = this.first / this.tableCore.pageOptions.limit;
+
+    if (pageIndex > 0) {
+      this.tableCore.pageOptions.offset = pageIndex;
+      this.first -= this.rows;
+      this.getTableData();
+    }
+  }
+
+  nextPage() {
+    const pageIndex = this.first / this.tableCore.pageOptions.limit;
+    const totalPages = Math.ceil(
+      this.tableCore.pageOptions.count / this.tableCore.pageOptions.limit
+    );
+
+    if (pageIndex < totalPages - 1) {
+      this.tableCore.pageOptions.offset = pageIndex;
+      this.first += this.rows;
+      this.getTableData();
+    }
+  }
+
+  updateCurrentPage() {
+    this.currentPage =
+      Math.floor(this.first / this.tableCore.pageOptions.limit) + 1;
   }
 }

@@ -19,6 +19,8 @@ export class ViewScheduledTicketComponent implements OnInit {
   scheduleTicketData: any = [];
   scheduleForm: FormGroup;
   totalRecords;
+  totalOpenedRecords;
+  totalCompletedRecords;
   constructor(
     private service: ScheduleTicketsService,
     private route: ActivatedRoute,
@@ -44,6 +46,25 @@ export class ViewScheduledTicketComponent implements OnInit {
         this.scheduleForm.get('pageNumber').patchValue(res.data.pageNumber);
         this.scheduleForm.get('pageSize').patchValue(res.data.pageSize);
         this.scheduleForm.get('listCount').patchValue(res.data.listCount);
+        if (this.scheduleForm.get('key').value) {
+          switch (this.scheduleForm.get('key').value) {
+            case 'completed': {
+              this.totalCompletedRecords = res.data.listCount;
+              this.totalRecords = 0;
+              this.totalOpenedRecords = 0;
+              break;
+            }
+            case 'opened': {
+              this.totalOpenedRecords = res.data.listCount;
+              this.totalCompletedRecords = 0;
+              this.totalRecords = 0;
+            }
+          }
+        } else {
+          this.totalRecords = res.data.listCount;
+          this.totalOpenedRecords = 0;
+          this.totalCompletedRecords = 0;
+        }
       },
     });
   }
@@ -64,7 +85,7 @@ export class ViewScheduledTicketComponent implements OnInit {
     }
   }
   onPageChange(event) {
-    this.currentPage = event.page;
+    this.currentPage = event.first;
     this.rows = event.rows;
     this.scheduleForm.get('pageNumber').patchValue(this.currentPage);
     // this.loadData(this.currentPage, this.rows);
@@ -133,27 +154,22 @@ export class ViewScheduledTicketComponent implements OnInit {
   }
   previousPage() {
     if (this.currentPage > 0) {
-      this.currentPage--;
-      this.scheduleTicketData.get('pageNumber').patchValue(this.currentPage);
+      this.currentPage -= this.rows;
+      this.scheduleForm
+        .get('performance')
+        .get('pageNumber')
+        .patchValue(this.currentPage);
     }
   }
 
   nextPage() {
-    if (
-      this.scheduleTicketData?.length &&
-      this.currentPage <
-        Math.ceil(this.scheduleTicketData?.length / this.rows) - 1
-    ) {
-      this.currentPage++;
-      this.scheduleTicketData.get('pageNumber').patchValue(this.currentPage);
+    const totalPages = Math.ceil(this.totalRecords / this.rows);
+    if (this.currentPage / this.rows < totalPages - 1) {
+      this.currentPage += this.rows;
+      this.scheduleForm
+        .get('performance')
+        .get('pageNumber')
+        .patchValue(this.currentPage);
     }
-  }
-  getCurrentPage() {
-    return (
-      Math.ceil(
-        (this.scheduleTicketData ? this.scheduleTicketData?.length : 0) /
-          this.rows
-      ) - 1
-    );
   }
 }

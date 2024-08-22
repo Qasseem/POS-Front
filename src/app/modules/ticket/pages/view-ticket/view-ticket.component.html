@@ -256,6 +256,21 @@
                   {{ details?.dueDate | date : "YYYY-MM-dd" }}
                 </div>
               </div>
+              <div
+                class="view-container--cards--details-card--info--container--right--item"
+                *ngIf="details?.postponeDate"
+              >
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--label"
+                >
+                  <label for="created-at">Postponed At</label>
+                </div>
+                <div
+                  class="view-container--cards--details-card--info--container--right--item--text"
+                >
+                  {{ details?.postponeDate | date : "YYYY-MM-dd" }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
