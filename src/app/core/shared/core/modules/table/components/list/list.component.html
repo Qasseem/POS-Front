@@ -662,7 +662,7 @@
       pButton
       type="button"
       (click)="previousPage()"
-      [disabled]="tableCore?.pageOptions.offset === 0"
+      [disabled]="first == 0"
       style="
         display: flex;
         gap: 0.5rem;
