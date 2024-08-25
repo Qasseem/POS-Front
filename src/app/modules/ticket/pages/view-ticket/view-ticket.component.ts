@@ -56,6 +56,7 @@ export class ViewTicketComponent implements OnInit {
     this.router.navigate(['/main/ticket/list']);
   }
   downloadImage(url, filename) {
+    if (url.includes('missing')) return;
     this.http.get(url, { responseType: 'blob' }).subscribe({
       next: (blob: Blob) => {
         const link = document.createElement('a');

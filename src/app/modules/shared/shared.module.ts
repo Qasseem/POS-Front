@@ -35,6 +35,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ChartModule } from 'primeng/chart';
 import { PanelModule } from 'primeng/panel';
+import { HideMissingDirective } from './directives/hide-missing.directive';
 const ANGULAR_MODULES = [
   CommonModule,
   FormModule,
@@ -73,7 +74,11 @@ const CUSTOM_MODULES = [
 ];
 
 const CORE_MODULES = [TranslateModule];
-const CUSTOM_DIRECTIVES = [PreventKeyseDirective, SecuredDirective];
+const CUSTOM_DIRECTIVES = [
+  PreventKeyseDirective,
+  SecuredDirective,
+  HideMissingDirective,
+];
 
 @NgModule({
   declarations: [

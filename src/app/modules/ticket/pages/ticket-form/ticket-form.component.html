@@ -319,7 +319,15 @@
                       >
                         <i class="pi pi-times"></i>
                       </div>
-                      <img src="{{ base64String.value }}" alt="" />
+                      <img
+                        [src]="
+                          base64String.value ? base64String.value : img.src
+                        "
+                        alt=""
+                        #img
+                        hideMissing
+                        [errorIconURL]="'assets/iamges/missing-image.svg'"
+                      />
                     </div>
                   </div>
                 </div>

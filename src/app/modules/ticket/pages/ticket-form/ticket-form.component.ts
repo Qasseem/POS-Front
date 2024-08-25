@@ -106,7 +106,7 @@ export class TicketFormComponent implements OnInit {
       this.ticketForm.get('longitude').valueChanges,
     ]).subscribe({
       next: ([lat, lng]) => {
-        if (lat && lng) this.handleAddress({ latitude: lat, longitude: lng });
+        // if (lat && lng) this.handleAddress({ latitude: lat, longitude: lng });
       },
     });
   }
@@ -149,8 +149,8 @@ export class TicketFormComponent implements OnInit {
     this.terminalService
       .GetAddressFromLatLng(resp.latitude, resp.longitude)
       .subscribe((resp: any) => {
-        if (this.formType == 'add')
-          this.ticketForm.get('address').patchValue(resp?.address.LongLabel);
+        // if (this.formType == 'add')
+        // this.ticketForm.get('address').patchValue(resp?.address.LongLabel);
       });
   }
   terminalValueChange() {
@@ -177,6 +177,7 @@ export class TicketFormComponent implements OnInit {
                   lng: this.ticketForm.get('latitude').value,
                 };
                 this.coordinates = { ...this.coordinates };
+                this.ticketForm.get('address').patchValue(this.details.address);
                 this.ticketForm
                   .get('phoneNumber')
                   .patchValue(this.details.phoneNumber);

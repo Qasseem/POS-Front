@@ -49,8 +49,11 @@
                     [src]="
                       form.get('imageBase64String').value
                         ? form.get('imageBase64String').value
-                        : 'assets/default-profile.png'
+                        : img.src
                     "
+                    #img
+                    hideMissing
+                    [errorIconURL]="'assets/iamges/default-avatar.svg'"
                     class="profile-image"
                   />
                   <input
@@ -60,7 +63,7 @@
                     accept="image/*"
                     hidden
                   />
-                  <div
+                  <!-- <div
                     class="icon-overlay"
                     *ngIf="!form.get('imageBase64String').value"
                   >
@@ -69,7 +72,7 @@
                       [width]="'25px'"
                       [height]="'25px'"
                     ></oc-icon>
-                  </div>
+                  </div> -->
                   <div class="upload-icon-container">
                     <oc-icon
                       [icon]="'plus-icon'"
@@ -284,7 +287,17 @@
                           hidden
                         />
                       </div>
-                      <div *ngIf="fileName" class="file-info">
+                      <div
+                        *ngIf="fileName"
+                        class="file-info"
+                        style="cursor: pointer"
+                        (click)="
+                          downloadImage(
+                            form.get('nationalIdBase64String').value,
+                            'National ID File'
+                          )
+                        "
+                      >
                         <oc-icon
                           [icon]="'files-icon'"
                           [width]="'25px'"
@@ -380,9 +393,7 @@
                 </div>
                 <div class="col-6">
                   <div class="flex flex-column gap-2">
-                    <label for="managerId"
-                      >Manager <span class="p-error"> * </span>
-                    </label>
+                    <label for="managerId">Manager </label>
 
                     <p-dropdown
                       [options]="managerIdsLists"
@@ -488,7 +499,10 @@
               <div class="col-4">
                 <div class="flex flex-column gap-2">
                   <label for="zoneId"
-                    >Zone <span class="p-error"> * </span>
+                    >Zone
+                    <span class="p-error" *ngIf="f.zoneId?.errors?.required">
+                      *
+                    </span>
                   </label>
                   <p-multiSelect
                     [options]="zonesLists"

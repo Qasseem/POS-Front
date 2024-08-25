@@ -81,6 +81,13 @@
             <label for="merchantId">Merchant ID:</label>
             <span>{{ details?.merchantNumber }}</span>
           </div>
+          <div
+            class="view-container--card--header-custom-container--header--text-label"
+            *ngIf="details?.categoryNameEn != 'Deployment'"
+          >
+            <label for="merchantId">Terminal ID:</label>
+            <span>{{ details?.terminalId ? details?.terminalId : "-" }}</span>
+          </div>
         </div>
         <div
           class="view-container--card--header-custom-container--header--card-divider"
@@ -478,7 +485,7 @@
               <div
                 class="view-container--card--chart-container--container--details--count"
               >
-                2
+                {{ details?.activeTickets }}
               </div>
             </div>
           </div>
@@ -501,7 +508,7 @@
               <div
                 class="view-container--card--chart-container--container--details--count"
               >
-                0
+                {{ detials?.agentVisits }}
               </div>
             </div>
           </div>

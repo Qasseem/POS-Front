@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeWhile } from 'rxjs';
+import { startWith, takeWhile } from 'rxjs';
 import { PasswordMatchValidator } from 'src/app/core/validators/password-strength.validator';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'oc-user-form',
@@ -36,7 +37,8 @@ export class UserFormComponent {
     private userService: UserService,
     private terminalService: TerminalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private http: HttpClient
   ) {
     this.formType = this.route.snapshot.data.type;
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,4}$/i;
@@ -121,6 +123,20 @@ export class UserFormComponent {
         this.getItemDetails();
       }
     }
+    this.form
+      .get('userType')
+      .valueChanges.pipe(startWith(null))
+      .subscribe({
+        next: (val) => {
+          if (val == 2) {
+            this.form.get('zoneId').clearValidators();
+            this.form.get('zoneId').updateValueAndValidity();
+          } else {
+            this.form.get('zoneId').addValidators([Validators.required]);
+            this.form.get('zoneId').updateValueAndValidity();
+          }
+        },
+      });
   }
   GetUsersDropdownValues() {
     this.userService
@@ -228,6 +244,22 @@ export class UserFormComponent {
       );
     }
   }
+  downloadImage(url, filename) {
+    if (url.includes('missing')) return;
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: (blob: Blob) => {
+        const link = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        link.href = objectUrl;
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(objectUrl);
+      },
+      error: (error) => {
+        // console.error('Download failed', error);
+      },
+    });
+  }
 
   getItemDetails() {
     this.userService
@@ -245,7 +277,10 @@ export class UserFormComponent {
               }
               // this.profileImage = resp.data.imageUrl;
               this.form.get('imageBase64String').patchValue(resp.data.imageUrl);
-              this.fileName = resp.data.nationalIdUrl;
+              this.fileName = 'National ID File';
+              this.form
+                .get('nationalIdBase64String')
+                .patchValue(resp.data.nationalIdUrl);
               this.form.get('password').clearValidators();
               this.form.get('password').updateValueAndValidity();
               this.form.get('confirmPassword').clearValidators();

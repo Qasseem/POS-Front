@@ -524,14 +524,18 @@
                     class="uploaded-image"
                     *ngFor="let base64String of panel?.images; let j = index"
                     [style.cursor]="'pointer'"
-                    (click)="
-                      downloadImage(
-                        base64String?.attachmentUrl,
-                        'Example File ' + (j + 1)
-                      )
-                    "
+                    (click)="downloadImage(img.src, 'Example File ' + (j + 1))"
                   >
-                    <img src="{{ base64String?.attachmentUrl }}" alt="" />
+                    <img
+                      #img
+                      src="{{ base64String?.attachmentUrl }}"
+                      [pTooltip]="
+                        img?.src?.includes('missing') ? 'Missing Image' : ''
+                      "
+                      alt=""
+                      hideMissing
+                      [errorIconURL]="'assets/iamges/missing-image.svg'"
+                    />
                   </div>
                 </div>
                 <div
