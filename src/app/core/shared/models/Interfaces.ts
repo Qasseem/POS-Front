@@ -33,6 +33,8 @@ export interface ColumnsInterface {
   };
   hideTooltop?: boolean;
   styleObj?: {};
+  customDefaultCell?: boolean;
+  customDefaultCellLimit?: number;
   // searchEnabled?: boolean;
   // cssClass?: any;
   // cellTemplate?: TemplateRef<any>;

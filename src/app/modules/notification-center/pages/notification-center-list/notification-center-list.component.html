@@ -1,0 +1,35 @@
+<div class="p-grid ml-2 m-2">
+  <div class="p-col" style="text-align: right">
+    <span class="mt-2" style="float: left; font-weight: bolder"
+      >Notification Center</span
+    >
+    <p-button
+      (click)="navigateToAdd()"
+      label="Push Notification"
+      size="small"
+      *secured="['notification-notification-add']"
+    >
+      <span class="mr-2 add">
+        <i class="pi pi-plus add-icon"></i>
+      </span>
+    </p-button>
+  </div>
+</div>
+<br *ngIf="!authService.hasPermission('notification-notification-add')" />
+<div class="mt-3">
+  <oc-table
+    [showSearchBar]="true"
+    [url]="{
+        getAll: url.Notification.GetGrid,
+      }"
+    [addButtonLabel]="'Add POS Type'"
+    [columns]="columns"
+    [buttonsExistance]="tableBtns"
+    [options]="{
+        check: false,
+        viewDetails: false,
+      }"
+    [service]="service"
+  >
+  </oc-table>
+</div>

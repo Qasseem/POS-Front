@@ -468,6 +468,7 @@
           </div>
           <ng-template style="font-size: 14px" #default>
             <span
+              *ngIf="!col?.customDefaultCell"
               style="white-space: pre"
               [class]="
                 col.field == 'statusEn' ||
@@ -478,6 +479,26 @@
               "
             >
               {{ rowData[col.field] }}
+            </span>
+            <span
+              *ngIf="col?.customDefaultCell"
+              style="white-space: pre"
+              [class]="
+                col.field == 'statusEn' ||
+                col.field == 'status' ||
+                col.field == 'statusAr'
+                  ? convertToKebabCase(rowData[col.field].toLowerCase())
+                  : ''
+              "
+            >
+              {{
+                rowData[col.field].length > 100
+                  ? (rowData[col.field]
+                    | strLimit : col?.customDefaultCellLimit)
+                  : rowData[col.field].length > 50
+                  ? (rowData[col.field] | strLimit : 25)
+                  : rowData[col.field]
+              }}
             </span>
           </ng-template>
         </div>

@@ -208,6 +208,14 @@ export class MainComponent implements OnInit {
         },
       ],
     },
+    {
+      label: this.translateService.instant('Notification Center'),
+      icon: 'notification',
+      expanded: false,
+      routerLink: '/main/notification-center/list',
+      active: false,
+      permission: ['notification-notification-view'],
+    },
   ];
 
   listActions = [

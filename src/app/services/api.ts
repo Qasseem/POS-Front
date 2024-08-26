@@ -187,4 +187,8 @@ export const APIURL = {
     Import: '/Zone/Import',
     Block: '/Zone/Block',
   },
+  Notification: {
+    Add: '/Notification/Add',
+    GetGrid: '/Notification/GetNotificationGrid',
+  },
 };

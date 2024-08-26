@@ -56,6 +56,14 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'notification-center',
+        loadChildren: () =>
+          import('../notification-center/notification-center.module').then(
+            (m) => m.NotificationCenterModule
+          ),
+        canActivate: [AuthGuard],
+      },
     ],
   },
   {
