@@ -492,11 +492,10 @@
               "
             >
               {{
-                rowData[col.field].length > 100
-                  ? (rowData[col.field]
-                    | strLimit : col?.customDefaultCellLimit)
-                  : rowData[col.field].length > 50
-                  ? (rowData[col.field] | strLimit : 25)
+                rowData[col.field].length > 80
+                  ? (rowData[col.field] | strLimit : 30)
+                  : rowData[col.field].length > 40
+                  ? (rowData[col.field] | strLimit : 15)
                   : rowData[col.field]
               }}
             </span>

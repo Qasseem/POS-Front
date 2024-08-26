@@ -6,6 +6,7 @@ import { PosTypesService } from 'src/app/modules/admin-activities/services/pos-t
 import { NotificationCenterService } from '../../services/notification-center.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { UserService } from 'src/app/modules/user-management/services/user.service';
+import { ToastService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'app-notfication-center-form',
@@ -27,7 +28,8 @@ export class NotficationCenterFormComponent implements OnInit {
     private route: ActivatedRoute,
     private service: NotificationCenterService,
     private terminalService: TerminalService,
-    private userService: UserService
+    private userService: UserService,
+    private toaster: ToastService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -112,6 +114,8 @@ export class NotficationCenterFormComponent implements OnInit {
       .subscribe({
         next: (resp) => {
           if (resp.success) {
+            let message = 'Notification Pushed Successfully';
+            this.toaster.showSuccess(message);
             this.backToList();
           }
         },

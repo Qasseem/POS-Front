@@ -37,14 +37,12 @@ export class NotificationCenterListComponent implements OnInit {
       field: 'title',
       header: 'Title',
       customDefaultCell: true,
-      customDefaultCellLimit: 100,
     },
     {
       field: 'message',
       header: 'Message',
       width: '150px',
       customDefaultCell: true,
-      customDefaultCellLimit: 100,
     },
     {
       field: 'count',
