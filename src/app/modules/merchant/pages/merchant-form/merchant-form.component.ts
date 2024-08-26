@@ -53,7 +53,7 @@ export class MerchantFormComponent implements OnInit, OnDestroy {
       regionId: [null, Validators.required],
       cityId: [null, Validators.required],
       zoneId: [null, Validators.required],
-      address: [null, Validators.required],
+      address: [null],
       landMark: [null],
     });
   }

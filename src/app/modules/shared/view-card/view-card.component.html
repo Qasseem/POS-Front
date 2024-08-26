@@ -86,7 +86,9 @@
             *ngIf="details?.categoryNameEn != 'Deployment'"
           >
             <label for="merchantId">Terminal ID:</label>
-            <span>{{ details?.terminalId ? details?.terminalId : "-" }}</span>
+            <span>{{
+              details?.terminalNumber ? details?.terminalNumber : "-"
+            }}</span>
           </div>
         </div>
         <div
@@ -508,7 +510,7 @@
               <div
                 class="view-container--card--chart-container--container--details--count"
               >
-                {{ detials?.agentVisits }}
+                {{ details?.agentVisits }}
               </div>
             </div>
           </div>
