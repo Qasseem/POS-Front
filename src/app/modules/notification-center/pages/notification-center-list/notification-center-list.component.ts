@@ -55,7 +55,7 @@ export class NotificationCenterListComponent implements OnInit {
     {
       field: [
         { label: 'createdBy', custom: 'normal' },
-        { label: 'createdAt', custom: 'defaultDate' },
+        { label: 'createDate', custom: 'defaultDate' },
       ],
       header: 'Created by',
       customCell: 'multiLabel',
