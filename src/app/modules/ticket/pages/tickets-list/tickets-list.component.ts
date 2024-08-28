@@ -312,6 +312,15 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       propValueName: 'id',
     },
     {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'category',
+      isFixed: true,
+      url: this.url.Ticket.GetTicketCategory,
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
+    {
       isMultiple: false,
       type: SearchInputTypes.selectValue,
       field: 'overdue',
