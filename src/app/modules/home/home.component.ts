@@ -14,6 +14,7 @@ import { HomeService } from './services/home.service';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { Chart, ChartType, registerables } from 'chart.js';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-home',
@@ -47,7 +48,8 @@ export class HomeComponent implements OnInit {
     private fb: FormBuilder,
     private homeService: HomeService,
     private userService: UserService,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private auth: AuthService
   ) {
     Chart.register(...registerables);
   }
@@ -400,37 +402,38 @@ export class HomeComponent implements OnInit {
       this.dashboardForm.get('cityId').valueChanges,
     ]).subscribe(([regionId, cityId]) => {
       if (regionId != null && cityId != null) {
-        this.homeService
-          .getOpenTickets({ regionId: regionId, cityId: cityId })
-          .subscribe({
-            next: (res) => {
-              this.openTickets = res.data;
-              if (
-                !this.openTickets?.sla?.due &&
-                !this.openTickets?.sla?.overDue
-              ) {
-                this.slaData.datasets[0].data = [];
-              } else {
-                this.slaData.datasets[0].data = [];
-                this.slaData.datasets[0].data.push(
-                  this.openTickets.sla.due ? this.openTickets.sla.due : 0
-                );
-                this.slaData.datasets[0].data.push(
-                  this.openTickets.sla.overDue
-                    ? this.openTickets.sla.overDue
-                    : 0
-                );
-                // this.slaData.datasets[0].data.push(
-                //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
-                // );
+        if (this.auth.hasPermission(''))
+          this.homeService
+            .getOpenTickets({ regionId: regionId, cityId: cityId })
+            .subscribe({
+              next: (res) => {
+                this.openTickets = res.data;
+                if (
+                  !this.openTickets?.sla?.due &&
+                  !this.openTickets?.sla?.overDue
+                ) {
+                  this.slaData.datasets[0].data = [];
+                } else {
+                  this.slaData.datasets[0].data = [];
+                  this.slaData.datasets[0].data.push(
+                    this.openTickets.sla.due ? this.openTickets.sla.due : 0
+                  );
+                  this.slaData.datasets[0].data.push(
+                    this.openTickets.sla.overDue
+                      ? this.openTickets.sla.overDue
+                      : 0
+                  );
+                  // this.slaData.datasets[0].data.push(
+                  //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
+                  // );
 
-                this.slaOptions.plugins.centerText.text =
-                  this.getSlaCenterText();
-                this.addSlaCenterText();
-              }
-              this.slaData = { ...this.slaData };
-            },
-          });
+                  this.slaOptions.plugins.centerText.text =
+                    this.getSlaCenterText();
+                  this.addSlaCenterText();
+                }
+                this.slaData = { ...this.slaData };
+              },
+            });
       }
     });
 
@@ -496,97 +499,103 @@ export class HomeComponent implements OnInit {
             x = this.toLocalISOString(x);
             return x;
           });
-          this.homeService
-            .getTicketStats({
-              createDate: createDate,
-              regionId: regionId,
-              cityId: cityId,
-              categoryId: categoryId,
-              assigneeId: assigneeId,
-              agentTypeId: agentTypeId,
-            })
-            .subscribe({
-              next: (res) => {
-                this.ticketStats = res.data;
-                this.ticketStats.transformedStatus = res.data.status.reduce(
-                  (acc, item) => {
-                    acc[this.toCamelCase(item.nameEn)] = item.count;
-                    return acc;
-                  },
-                  {}
-                );
-                this.ticketStats.transformedTasks = res.data.tasks.reduce(
-                  (acc, item) => {
-                    acc[this.toCamelCase(item.nameEn)] = item.count;
-                    return acc;
-                  },
-                  {}
-                );
-                if (
-                  !this.ticketStats.transformedStatus.assigned &&
-                  !this.ticketStats.transformedStatus.agentOnWay &&
-                  !this.ticketStats.transformedStatus.inProgress &&
-                  !this.ticketStats.transformedStatus.postponed &&
-                  !this.ticketStats.transformedStatus.completed
-                ) {
-                  this.statusData.datasets[0].data = [];
-                } else {
-                  this.statusData.datasets[0].data = [];
-                  this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.assigned
-                      ? this.ticketStats.transformedStatus.assigned
-                      : 0
+          if (
+            this.auth.hasPermission(
+              'dashboard-main-dashboard-ticket-statistics'
+            )
+          ) {
+            this.homeService
+              .getTicketStats({
+                createDate: createDate,
+                regionId: regionId,
+                cityId: cityId,
+                categoryId: categoryId,
+                assigneeId: assigneeId,
+                agentTypeId: agentTypeId,
+              })
+              .subscribe({
+                next: (res) => {
+                  this.ticketStats = res.data;
+                  this.ticketStats.transformedStatus = res.data.status.reduce(
+                    (acc, item) => {
+                      acc[this.toCamelCase(item.nameEn)] = item.count;
+                      return acc;
+                    },
+                    {}
                   );
-                  this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.agentOnWay
-                      ? this.ticketStats.transformedStatus.agentOnWay
-                      : 0
+                  this.ticketStats.transformedTasks = res.data.tasks.reduce(
+                    (acc, item) => {
+                      acc[this.toCamelCase(item.nameEn)] = item.count;
+                      return acc;
+                    },
+                    {}
                   );
-                  this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.inProgress
-                      ? this.ticketStats.transformedStatus.inProgress
-                      : 0
-                  );
-                  this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.postponed
-                      ? this.ticketStats.transformedStatus.postponed
-                      : 0
-                  );
-                  this.statusData.datasets[0].data.push(
-                    this.ticketStats.transformedStatus.completed
-                      ? this.ticketStats.transformedStatus.completed
-                      : 0
-                  );
-                  this.statusOptions.plugins.centerText.text =
-                    this.getStatusCenterText();
-                  this.addStatusCenterText();
-                }
-                this.statusData = { ...this.statusData };
+                  if (
+                    !this.ticketStats.transformedStatus.assigned &&
+                    !this.ticketStats.transformedStatus.agentOnWay &&
+                    !this.ticketStats.transformedStatus.inProgress &&
+                    !this.ticketStats.transformedStatus.postponed &&
+                    !this.ticketStats.transformedStatus.completed
+                  ) {
+                    this.statusData.datasets[0].data = [];
+                  } else {
+                    this.statusData.datasets[0].data = [];
+                    this.statusData.datasets[0].data.push(
+                      this.ticketStats.transformedStatus.assigned
+                        ? this.ticketStats.transformedStatus.assigned
+                        : 0
+                    );
+                    this.statusData.datasets[0].data.push(
+                      this.ticketStats.transformedStatus.agentOnWay
+                        ? this.ticketStats.transformedStatus.agentOnWay
+                        : 0
+                    );
+                    this.statusData.datasets[0].data.push(
+                      this.ticketStats.transformedStatus.inProgress
+                        ? this.ticketStats.transformedStatus.inProgress
+                        : 0
+                    );
+                    this.statusData.datasets[0].data.push(
+                      this.ticketStats.transformedStatus.postponed
+                        ? this.ticketStats.transformedStatus.postponed
+                        : 0
+                    );
+                    this.statusData.datasets[0].data.push(
+                      this.ticketStats.transformedStatus.completed
+                        ? this.ticketStats.transformedStatus.completed
+                        : 0
+                    );
+                    this.statusOptions.plugins.centerText.text =
+                      this.getStatusCenterText();
+                    this.addStatusCenterText();
+                  }
+                  this.statusData = { ...this.statusData };
 
-                if (
-                  !this.ticketStats.transformedTasks.succeeded &&
-                  !this.ticketStats.transformedTasks.failed
-                ) {
-                  this.taskData.datasets[0].data = [];
-                } else {
-                  this.taskData.datasets[0].data = [];
-                  this.taskData.datasets[0].data.push(
-                    this.ticketStats.transformedTasks.succeeded
-                      ? this.ticketStats.transformedTasks.succeeded
-                      : 0
-                  );
-                  this.taskData.datasets[0].data.push(
-                    this.ticketStats.transformedTasks.failed
-                      ? this.ticketStats.transformedTasks.failed
-                      : 0
-                  );
-                  this.taskOptions.plugins.centerText.text =
-                    this.getTasksCenterText();
-                  this.addTasksCenterText();
-                }
-                this.taskData = { ...this.taskData };
-              },
-            });
+                  if (
+                    !this.ticketStats.transformedTasks.succeeded &&
+                    !this.ticketStats.transformedTasks.failed
+                  ) {
+                    this.taskData.datasets[0].data = [];
+                  } else {
+                    this.taskData.datasets[0].data = [];
+                    this.taskData.datasets[0].data.push(
+                      this.ticketStats.transformedTasks.succeeded
+                        ? this.ticketStats.transformedTasks.succeeded
+                        : 0
+                    );
+                    this.taskData.datasets[0].data.push(
+                      this.ticketStats.transformedTasks.failed
+                        ? this.ticketStats.transformedTasks.failed
+                        : 0
+                    );
+                    this.taskOptions.plugins.centerText.text =
+                      this.getTasksCenterText();
+                    this.addTasksCenterText();
+                  }
+                  this.taskData = { ...this.taskData };
+                },
+              });
+          }
         }
       },
     });
@@ -662,24 +671,26 @@ export class HomeComponent implements OnInit {
             x = this.toLocalISOString(x);
             return x;
           });
-          this.homeService
-            .getPerformance({
-              regionId: regionId,
-              cityId: cityId,
-              createDate: createDate,
-              assigneeId: assigneeId,
-              agentTypeId: agentTypeId,
-              pageSize: pageSize,
-              pageNumber: pageNumber,
-            })
-            .subscribe({
-              next: (res: any) => {
-                if (res.success) {
-                  this.totalRecords = res?.data?.agents?.listCount;
-                  this.agentsData = res.data;
-                }
-              },
-            });
+          if (this.auth.hasPermission('dashboard-main-dashboard-performance')) {
+            this.homeService
+              .getPerformance({
+                regionId: regionId,
+                cityId: cityId,
+                createDate: createDate,
+                assigneeId: assigneeId,
+                agentTypeId: agentTypeId,
+                pageSize: pageSize,
+                pageNumber: pageNumber,
+              })
+              .subscribe({
+                next: (res: any) => {
+                  if (res.success) {
+                    this.totalRecords = res?.data?.agents?.listCount;
+                    this.agentsData = res.data;
+                  }
+                },
+              });
+          }
         }
       },
     });
