@@ -402,38 +402,37 @@ export class HomeComponent implements OnInit {
       this.dashboardForm.get('cityId').valueChanges,
     ]).subscribe(([regionId, cityId]) => {
       if (regionId != null && cityId != null) {
-        if (this.auth.hasPermission(''))
-          this.homeService
-            .getOpenTickets({ regionId: regionId, cityId: cityId })
-            .subscribe({
-              next: (res) => {
-                this.openTickets = res.data;
-                if (
-                  !this.openTickets?.sla?.due &&
-                  !this.openTickets?.sla?.overDue
-                ) {
-                  this.slaData.datasets[0].data = [];
-                } else {
-                  this.slaData.datasets[0].data = [];
-                  this.slaData.datasets[0].data.push(
-                    this.openTickets.sla.due ? this.openTickets.sla.due : 0
-                  );
-                  this.slaData.datasets[0].data.push(
-                    this.openTickets.sla.overDue
-                      ? this.openTickets.sla.overDue
-                      : 0
-                  );
-                  // this.slaData.datasets[0].data.push(
-                  //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
-                  // );
+        this.homeService
+          .getOpenTickets({ regionId: regionId, cityId: cityId })
+          .subscribe({
+            next: (res) => {
+              this.openTickets = res.data;
+              if (
+                !this.openTickets?.sla?.due &&
+                !this.openTickets?.sla?.overDue
+              ) {
+                this.slaData.datasets[0].data = [];
+              } else {
+                this.slaData.datasets[0].data = [];
+                this.slaData.datasets[0].data.push(
+                  this.openTickets.sla.due ? this.openTickets.sla.due : 0
+                );
+                this.slaData.datasets[0].data.push(
+                  this.openTickets.sla.overDue
+                    ? this.openTickets.sla.overDue
+                    : 0
+                );
+                // this.slaData.datasets[0].data.push(
+                //   this.openTickets.sla.notDue ? this.openTickets.sla.notDue : 0
+                // );
 
-                  this.slaOptions.plugins.centerText.text =
-                    this.getSlaCenterText();
-                  this.addSlaCenterText();
-                }
-                this.slaData = { ...this.slaData };
-              },
-            });
+                this.slaOptions.plugins.centerText.text =
+                  this.getSlaCenterText();
+                this.addSlaCenterText();
+              }
+              this.slaData = { ...this.slaData };
+            },
+          });
       }
     });
 
