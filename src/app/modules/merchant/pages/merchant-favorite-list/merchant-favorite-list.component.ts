@@ -38,7 +38,7 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
       width: '100px',
     },
     {
-      field: 'id',
+      field: 'merchantId',
       header: 'ID',
       width: '100px',
     },

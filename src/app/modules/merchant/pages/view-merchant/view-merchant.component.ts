@@ -228,6 +228,10 @@ export class ViewMerchantComponent implements OnInit {
       if (resp.success) {
         this.details = resp.data;
         this.id = this.details.id;
+        this.coordinates = {
+          lat: resp.data.latitude,
+          lng: resp.data.longitude,
+        };
         // this.handleAddress(resp);
       }
     });
@@ -239,10 +243,6 @@ export class ViewMerchantComponent implements OnInit {
     });
   }
   handleAddress(resp: any) {
-    this.coordinates = {
-      lat: resp.data.latitude,
-      lng: resp.data.longitude,
-    };
     this.terminalService
       .GetAddressFromLatLng(resp.data.latitude, resp.data.longitude)
       .subscribe((resp: any) => {

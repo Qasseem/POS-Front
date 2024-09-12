@@ -41,7 +41,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       header: 'Terminal Id',
     },
     {
-      field: 'merchantId',
+      field: 'merchantNumber',
       header: 'Merchant Id',
     },
     {
