@@ -199,7 +199,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       header: 'Ticket ID',
     },
     {
-      field: 'merchantId',
+      field: 'merchantNumber',
       header: 'Merchant ID',
     },
     {
@@ -301,6 +301,8 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       url: this.url.Terminal.GetAllMechantDropDown,
       method: HTTPMethods.getReq,
       propValueName: 'id',
+      filter: true,
+      filterBy: 'id,name',
     },
     {
       isMultiple: true,

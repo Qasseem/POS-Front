@@ -25,4 +25,6 @@ export interface SearchInterface {
   pickerType?: string;
   serverSide?: boolean;
   pageSize?: Number;
+  filter?: boolean;
+  filterBy?: string;
 }

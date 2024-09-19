@@ -61,6 +61,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
   };
   @Input() taskSearchHistoryObj = {};
   @Input() sampleName = '';
+  @Input() hasCustomFilter: boolean = false;
   filtersForm: UntypedFormGroup;
   filterControls;
   unPinnedControls;
@@ -533,5 +534,13 @@ export class SearchBarComponent implements OnInit, OnChanges {
           this.getListData.next(true);
         }
       });
+  }
+
+  customFilter(value: any, filter: string): boolean {
+    const bindValue = 'id'; // The property you want to filter by
+    const searchTerm = filter.toLowerCase();
+
+    // Filter logic based on the bindValue
+    return value[bindValue]?.toString().toLowerCase().includes(searchTerm);
   }
 }

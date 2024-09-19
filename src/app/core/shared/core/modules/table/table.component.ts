@@ -68,6 +68,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() uploadHeader = 'Upload';
   @Input() sampleName = '';
   @Input() service: any;
+  @Input() customFilter: boolean = false;
 
   first = 0;
 
