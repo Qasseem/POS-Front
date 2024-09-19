@@ -145,6 +145,8 @@ export class ViewTerminalComponent implements OnInit {
       url: this.url.Terminal.GetAllMechantDropDown,
       method: HTTPMethods.getReq,
       propValueName: 'id',
+      filter: true,
+      filterBy: 'id,name',
     },
   ];
 
