@@ -13,8 +13,6 @@ export class InactivityService {
   private userInactive: Subject<any> = new Subject();
 
   constructor(private router: Router, private _authService: AuthService) {
-    console.log('this.initialize');
-
     this.initialize();
   }
 
