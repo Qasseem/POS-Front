@@ -14,4 +14,5 @@ export const RegexPatterns = {
   customerPhone: /^(\+9665\d{8}|\+968\d{8})$/,
   crNumber: /^[1-9][0-9]*$/,
   noStartOrEndSpacesString: /^\S.*[^\s]$/,
+  password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
 };

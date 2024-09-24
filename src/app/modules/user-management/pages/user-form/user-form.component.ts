@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { startWith, takeWhile } from 'rxjs';
 import { PasswordMatchValidator } from 'src/app/core/validators/password-strength.validator';
 import { HttpClient } from '@angular/common/http';
+import { RegexPatterns } from 'src/app/core/shared/core/patterns/regex-patterns';
 
 @Component({
   selector: 'oc-user-form',
@@ -78,13 +79,20 @@ export class UserFormComponent {
           '',
           [
             Validators.required,
-            Validators.minLength(6),
-            Validators.pattern(passwordPattern),
+            Validators.minLength(8),
+            Validators.pattern(RegexPatterns.password),
           ],
         ],
-        confirmPassword: ['', Validators.required],
-      },
-      { validators: PasswordMatchValidator('password', 'confirmPassword') }
+        confirmPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(RegexPatterns.password),
+          ],
+        ],
+      }
+      // { validators: PasswordMatchValidator('password', 'confirmPassword') }
     );
   }
   onFileSelectedNationalId(event: any) {

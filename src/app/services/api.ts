@@ -3,7 +3,7 @@ export const APIURL = {
   menuLinks: '/Security/Menu',
   register: '/Security/RegisterCustomerUser',
   getAllCities: '/City/GetAllCities',
-
+  logout: '/Security/Logout',
   Dashboard: {
     openTickets: '/Dashboard/OpenTickets',
     ticketStats: '/Dashboard/TicketStatistics',

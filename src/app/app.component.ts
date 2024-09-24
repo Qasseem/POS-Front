@@ -1,21 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppTranslateService } from './core/shared/services/translate.service';
 import { Spinkit } from 'ng-http-loader';
 import { StorageService } from './core/services/storage.service';
 import { AuthService } from './core/services/auth.service';
+import { InactivityService } from './services/inactivity.service';
 
 @Component({
   selector: 'oc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  ngOnInit() {
+    // this.inactivityService.initialize();
+  }
   public spinkit = Spinkit;
   title = 'My Afaqy Customers';
   constructor(
     private appTranslateService: AppTranslateService,
     private storage: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private inactivityService: InactivityService
   ) {
     this.appTranslateService.changeLangage(this.storage.getLang());
     if (!!this.storage.getToken()) {

@@ -31,10 +31,10 @@
               class="p-error"
             >
               <div *ngIf="email.hasError('required')">
-                {{ "Validation.required" | translate }}
+                -{{ "Validation.required" | translate }}
               </div>
               <div *ngIf="email.hasError('pattern')">
-                {{ "Validation.mailFormat" | translate }}
+                -{{ "Validation.mailFormat" | translate }}
               </div>
             </div>
           </div>
@@ -53,13 +53,13 @@
             ></p-password>
             <div
               *ngIf="password.invalid && (password.dirty || password.touched)"
-              class="p-error"
+              class="p-error mt-1"
             >
               <div *ngIf="password.hasError('required')">
-                {{ "Validation.required" | translate }}
+                -{{ "Validation.required" | translate }}
               </div>
-              <div *ngIf="password.hasError('minlength')">
-                {{ "Validation.stringLenght6" | translate }}
+              <div *ngIf="password?.errors?.pattern">
+                -{{ "Validation.passwordPatternMessage" | translate }}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { StorageService } from 'src/app/core/services/storage.service';
+import { RegexPatterns } from 'src/app/core/shared/core/patterns/regex-patterns';
 import { AppTranslateService } from 'src/app/core/shared/services/translate.service';
 
 @Component({
@@ -29,7 +30,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(RegexPatterns.password),
+        ],
+      ],
       keepMe: [null],
     });
   }

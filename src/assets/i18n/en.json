@@ -152,12 +152,13 @@
   },
   "Validation": {
     "stringLenght6": "Must be at least 6 characters long.",
+    "stringLenght8": "Must be at least 8 characters long.",
     "stringLenght3": "Must be at least 3 characters long.",
     "stringLenght20": "Maximum length is 20 Characters.",
     "required": "Required",
     "mailFormat": "Must be match E-Mail format.",
     "passwordMatch": "Password does not match",
-    "": "",
+    "passwordPatternMessage": "Password must min 8 digits including characters and special characters",
     "": "",
     "": "",
     "": "",
@@ -202,11 +203,11 @@
     "overdue": "Overdue",
     "assignee": "Assignee",
     "feedback": "Feedback",
-    "startDate":"Start Date",
-    "endDate":"End Date",
-    "createdBy":"Created By",
-    "errandType":"Errand Type",
-    "recurrence":"Recurrence"
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "createdBy": "Created By",
+    "errandType": "Errand Type",
+    "recurrence": "Recurrence"
   },
   "merchants": {
     "blocked-merchant": "Merchant Has been blocked"

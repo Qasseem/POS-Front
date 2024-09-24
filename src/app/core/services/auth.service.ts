@@ -40,4 +40,7 @@ export class AuthService {
       this.storgeService.getStringItem('permissions')
     )?.includes(permission);
   }
+  logout(logoutData) {
+    return this.http.postReq(APIURL.logout, logoutData);
+  }
 }
