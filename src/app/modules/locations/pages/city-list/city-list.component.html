@@ -23,9 +23,9 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.City.GetGrid,
-      export: url.City.Export,
-      import: url.City.Import
+    getAll: '/City/GetGrid',
+    export: '/City/ExportGrid',
+    import: '/City/Import',
     }"
     [addButtonLabel]="'Add City'"
     [columns]="columns"

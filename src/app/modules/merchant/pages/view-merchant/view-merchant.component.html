@@ -45,23 +45,23 @@
           <oc-table
             [showSearchBar]="true"
             [url]="{
-              getAll: url.Terminal.GetGrid,
+              getAll: '/Terminal/GetTerminalGrid',
               refId: id,
               refScope: 'merchantId',
-              export: url.Terminal.Export,
-              import: url.Terminal.ImportTerminals
+              export: '/Terminal/ExportLeadGrid',
+              import: '/Terminal/ImportTerminals'
             }"
             [addButtonLabel]="'Add Terminal'"
             [columns]="columns"
             [buttonsExistance]="tableBtns"
-            [exportUrl]="url.Terminal.Export"
+            [exportUrl]="'/Terminal/ExportLeadGrid'"
             [actions]="actions?.length ? actions : null"
             [options]="{
               check: false,
               viewDetails: true,
               viewDetailsURL: '/main/terminal/details',
               hasActionMenu: actions?.length ? true : false,
-              favourite: false,
+              favourite: false
             }"
             [filters]="filters"
             [uploadHeader]="'Upload Bulk Terminal'"

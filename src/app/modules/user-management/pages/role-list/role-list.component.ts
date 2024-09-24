@@ -4,8 +4,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
-import { APIURL } from 'src/app/services/api';
 import { RoleService } from '../../services/role.service';
 
 @Component({
@@ -14,8 +12,6 @@ import { RoleService } from '../../services/role.service';
   styleUrl: './role-list.component.scss',
 })
 export class RoleListComponent implements OnInit {
-  public url = APIURL;
-
   editItem(row: any): any {
     const URL = `main/user-management/role/edit/${row?.id}`;
     this.router.navigate([URL]);

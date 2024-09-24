@@ -18,14 +18,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.AdminActivities.getPOSType,
-      export: url.AdminActivities.exportPOSType,
-      import: url.AdminActivities.importPOSType
+      getAll: '/AdminActivities/GetPOSTypeGrid',
+      export: '/AdminActivities/ExportPOSType',
+      import: '/AdminActivities/ImportPOSType'
     }"
     [addButtonLabel]="'Add POS Type'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.AdminActivities.exportPOSType"
+    [exportUrl]="'/AdminActivities/ExportPOSType'"
     [options]="{
       check: false,
       viewDetails: false,

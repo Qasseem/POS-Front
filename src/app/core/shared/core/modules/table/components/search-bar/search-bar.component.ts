@@ -12,7 +12,6 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take } from 'rxjs/operators';
-import { APIURL } from 'src/app/services/api';
 
 import { SearchFilterService } from './services/search-filter.service';
 import { SearchInterface } from '../../models/search-interface';
@@ -80,7 +79,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
   formHistoryData: any;
   taskListFormData: any;
   fileToUpload: any;
-  public apiUrl = APIURL;
 
   constructor(
     public language: AppTranslateService,
@@ -94,7 +92,6 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
     // create a empty FormGroup
     this.filtersForm = new UntypedFormGroup({});
-    this.apis = APIURL;
   }
 
   //this method is for task module history search
@@ -495,20 +492,19 @@ export class SearchBarComponent implements OnInit, OnChanges {
       case 'visit': {
         this.uploadHeader = 'Upload Bulk Visit & Sales';
         this.sampleName = 'ImportTicketVisitSalesTemplate.xlsx';
-        this.url.import = this.apiUrl.Ticket.ImportVisitSalesTickets;
+        this.url.import = '/Ticket/ImportVisitAndSales';
         break;
       }
       case 'cancel': {
         this.uploadHeader = 'Upload Bulk Cancellation';
         this.sampleName = 'ImportTicketCancellationTemplate.xlsx';
-        this.url.import = this.apiUrl.Ticket.ImportTickets;
-
+        this.url.import = '/Ticket/ImportTickets';
         break;
       }
       case 'status': {
         this.uploadHeader = 'Change Status';
         this.sampleName = 'TicketChangeStatusTemplate.xlsx';
-        this.url.import = this.apiUrl.Ticket.TicketsChangeStatus;
+        this.url.import = '/Ticket/ImportChangeStatus';
       }
     }
     this.visible = true;

@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { MerchantCategoryService } from '../../services/merchant-category.service';
 
 @Component({
@@ -13,8 +12,6 @@ import { MerchantCategoryService } from '../../services/merchant-category.servic
   styleUrls: ['./merchant-category-codes-list.component.scss'],
 })
 export class MerchantCategoryCodesListComponent implements OnInit {
-  public url = APIURL;
-
   editItem(row: any): any {
     const URL = `main/admin-activities/list/merchant-category-codes/edit/${row?.id}`;
     this.router.navigate([URL]);

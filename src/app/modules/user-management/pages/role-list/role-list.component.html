@@ -20,12 +20,12 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Role.getAll,
+      getAll: '/Role/GetAllRolesGrid'
     }"
     [addButtonLabel]="'Add Role'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Terminal.Export"
+    [exportUrl]="'/Terminal/ExportLeadGrid'"
     [options]="{
       check: false,
       viewDetails: false,

@@ -5,7 +5,6 @@ import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
 import { PosTypesService } from 'src/app/modules/admin-activities/services/pos-types.service';
-import { APIURL } from 'src/app/services/api';
 
 @Component({
   selector: 'app-notification-center-list',
@@ -13,8 +12,6 @@ import { APIURL } from 'src/app/services/api';
   styleUrl: './notification-center-list.component.scss',
 })
 export class NotificationCenterListComponent implements OnInit {
-  public url = APIURL;
-
   editItem(row: any): any {
     const URL = `main/admin-activities/pos-types/edit/${row?.id}`;
     this.router.navigate([URL]);

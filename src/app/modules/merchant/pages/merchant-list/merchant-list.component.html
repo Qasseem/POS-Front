@@ -22,14 +22,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Merchant.GetGrid,
-      export: url.Merchant.Export,
-      import: url.Merchant.ImportMerchants
+      getAll: '/Merchant/GetMerchantGrid',
+      export: '/Merchant/ExportLeadGrid',
+      import: '/Merchant/ImportMerchants'
     }"
     [addButtonLabel]="'Add Merchant'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Merchant.Export"
+    [exportUrl]="'/Merchant/ExportLeadGrid'"
     [actions]="actions.length ? actions : null"
     [options]="{
       check: false,

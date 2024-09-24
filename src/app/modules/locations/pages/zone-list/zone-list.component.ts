@@ -5,7 +5,6 @@ import { SearchInputTypes } from 'src/app/core/shared/core/modules/table/models/
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { ZoneService } from '../../services/zone.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -15,8 +14,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrl: './zone-list.component.scss',
 })
 export class ZoneListComponent {
-  public url = APIURL;
-
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,

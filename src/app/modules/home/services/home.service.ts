@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +8,15 @@ export class HomeService {
   constructor(private http: HttpService) {}
 
   getOpenTickets(data) {
-    return this.http.postReq(APIURL.Dashboard.openTickets, data);
+    return this.http.postReq('/Dashboard/OpenTickets', data);
   }
   getTicketStats(data) {
-    return this.http.postReq(APIURL.Dashboard.ticketStats, data);
+    return this.http.postReq('/Dashboard/TicketStatistics', data);
   }
   getPerformance(data) {
-    return this.http.postReq(APIURL.Dashboard.performance, data);
+    return this.http.postReq('/Dashboard/Performance', data);
   }
   exportPerformanceData(data) {
-    return this.http.postReq(APIURL.Dashboard.export, data);
+    return this.http.postReq('/Dashboard/ExportPerformance', data);
   }
 }

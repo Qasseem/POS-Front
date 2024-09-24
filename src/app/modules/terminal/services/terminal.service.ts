@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
@@ -15,45 +14,51 @@ export class TerminalService {
   ) {}
 
   GetAllCities(parentId) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
+    return this.http.getHeaderReq('/Terminal/GetAllCities', parentId);
   }
+
   GetAllCitiesFilter(parentId) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetAllCitiesFilter, parentId);
+    return this.http.getHeaderReq('/Terminal/GetAllCitiesFilter', parentId);
   }
+
   GetAllErrandChannels() {
-    return this.http.getReq(APIURL.Terminal.GetAllErrandChannels);
+    return this.http.getReq('/Terminal/GetAllErrandChannels');
   }
 
   GetAllPOSTypes() {
-    return this.http.getReq(APIURL.Terminal.GetAllPOSTypes);
+    return this.http.getReq('/Terminal/GetAllPOSTypes');
   }
 
   GetAllRegions() {
-    return this.http.getReq(APIURL.Terminal.GetAllRegions);
+    return this.http.getReq('/Terminal/GetAllRegions');
   }
+
   GetAllRegionsFilter() {
-    return this.http.getReq(APIURL.Terminal.GetAllRegionsFilter);
+    return this.http.getReq('/Terminal/GetAllRegionsFilter');
   }
+
   GetAllMerchantDropDown() {
-    return this.http.getReq(APIURL.Terminal.GetAllMechantDropDown);
+    return this.http.getReq('/Terminal/GetAllMechantDropDown');
   }
+
   GetAllZones(parentId) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetAllZones, parentId);
+    return this.http.getHeaderReq('/Terminal/GetAllZones', parentId);
   }
 
   Add(data) {
-    return this.http.postReq(APIURL.Terminal.Add, data);
+    return this.http.postReq('/Terminal/SaveTerminal', data);
   }
+
   GetDetails(id) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetOne, id);
+    return this.http.getHeaderReq('/Terminal/GetTerminalById', id);
   }
 
   Favorite(data) {
-    return this.http.postReq(APIURL.Terminal.Favorite, data);
+    return this.http.postReq('/Terminal/AddFavorite', data);
   }
 
   Block(data) {
-    return this.http.postReq(APIURL.Terminal.Block, data);
+    return this.http.postReq('/Terminal/Block', data);
   }
 
   GetAddressFromLatLng(lat, lng) {
@@ -67,9 +72,10 @@ export class TerminalService {
 
   GetAllTerminalsByMerchantId(merchantId) {
     return this.http.getReq(
-      APIURL.Terminal.GetAllTerminalsByMerchantId + merchantId
+      '/Terminal/GetAllTerminalByMerchantId/' + merchantId
     );
   }
+
   confirm(
     msg: string = 'messages.block-item-content',
     title: string = 'messages.block-item-title',

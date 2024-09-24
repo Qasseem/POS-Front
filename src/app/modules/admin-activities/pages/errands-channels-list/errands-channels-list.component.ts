@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { ErrandChannelService } from '../../services/errand-channel.service';
 
 @Component({
@@ -13,8 +12,6 @@ import { ErrandChannelService } from '../../services/errand-channel.service';
   styleUrls: ['./errands-channels-list.component.scss'],
 })
 export class ErrandsChannelsListComponent implements OnInit {
-  public url = APIURL;
-
   editItem(row: any): any {
     const URL = `main/admin-activities/errands-channels/edit/${row?.id}`;
     this.router.navigate([URL]);

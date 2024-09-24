@@ -23,14 +23,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.AdminActivities.getMCC,
-      export: url.AdminActivities.exportMCC,
-      import: url.AdminActivities.importMCC
+      getAll: '/AdminActivities/GetMerchantCategoryGrid',
+      export: '/AdminActivities/ExportMerchantCategory',
+      import: '/AdminActivities/ImportMerchantCategory'
     }"
     [addButtonLabel]="'Add MCC'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.AdminActivities.exportMCC"
+    [exportUrl]="'/AdminActivities/ExportMerchantCategory'"
     [options]="{
       check: false,
       viewDetails: false,

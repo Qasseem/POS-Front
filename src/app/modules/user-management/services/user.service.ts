@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
@@ -10,46 +9,55 @@ export class UserService {
   constructor(private http: HttpService, public dialogService: DialogService) {}
 
   Save(data) {
-    return this.http.postReq(APIURL.Users.addUser, data);
+    return this.http.postReq('/User/AddUser', data);
   }
+
   GetDetails(id) {
-    return this.http.getHeaderReq(APIURL.Users.geUserById, id);
+    return this.http.getHeaderReq('/User/GetUser', id);
   }
+
   getAllRolesDropdown() {
-    return this.http.getReq(APIURL.Role.getAllRolesDropdown);
+    return this.http.getReq('/Role/GetAllRolesDropDown');
   }
+
   getAllManagersDropdown() {
-    return this.http.getReq(APIURL.Users.getAllManagerDropdown);
+    return this.http.getReq('/User/GetAllManagerDropDown');
   }
+
   getAllUsers() {
-    return this.http.getReq(APIURL.Users.GetAllUsersDropDown);
+    return this.http.getReq('/User/GetAllUsersDropDown');
   }
+
   getUsersByUserType(id) {
-    return this.http.getReq(APIURL.Users.getUsersByUserType + id);
+    return this.http.getReq('/User/GetUsersByTypeDropDown/' + id);
   }
 
   UpdateUser(id) {
-    return this.http.postReq(APIURL.Users.updateUser, id);
+    return this.http.postReq('/User/UpdateUser', id);
   }
 
   UserChangePassword(data) {
-    return this.http.postReq(APIURL.Users.changePassword, data);
+    return this.http.postReq('/User/ChangePassword', data);
   }
 
   getAllUsersTypeDropDown() {
-    return this.http.getReq(APIURL.Users.getAllUsersTypeDropdown);
+    return this.http.getReq('/User/GetAllUserTypeDropDown');
   }
+
   getAllUsersTypeFilter() {
-    return this.http.getReq(APIURL.Users.getAllUsersTypeFilter);
+    return this.http.getReq('/User/GetUserTypeFilterDropDown/');
   }
+
   getAllSalesAgents() {
-    return this.http.getReq(APIURL.Users.getAllSalesAgents);
+    return this.http.getReq('/User/GetAllSalesAgentsDropDown');
   }
+
   getAllServiceAgents() {
-    return this.http.getReq(APIURL.Users.getAllServiceAgents);
+    return this.http.getReq('/User/GetAllServiceAgentsDropDown');
   }
+
   Block(data) {
-    return this.http.postReq(APIURL.Users.blockUser, data);
+    return this.http.postReq('/User/Block', data);
   }
 
   confirm(

@@ -8,7 +8,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { MerchantService } from '../../services/merchant.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { takeWhile } from 'rxjs';
@@ -21,7 +20,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./merchant-list.component.scss'],
 })
 export class MerchantListComponent implements OnInit {
-  public url = APIURL;
   alive: boolean = true;
   reloadIfUpdated = false;
   public tableBtns: TableButtonsExistanceInterface = {
@@ -118,7 +116,7 @@ export class MerchantListComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'category',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
+      url: '/Merchant/GetAllMerchantCategories',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },

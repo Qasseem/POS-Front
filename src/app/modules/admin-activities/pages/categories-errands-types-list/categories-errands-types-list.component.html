@@ -21,14 +21,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.ErrandsType.getErrandsType,
-      export: url.ErrandsType.exportErrandType,
-      import: url.ErrandsType.importErrandType
+      getAll: '/ErrandType/GetErrandTypeGrid',
+      export: '/ErrandType/ExportErrandType',
+      import: '/ErrandType/ImportErrandType'
     }"
     [addButtonLabel]="'Add Category'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.ErrandsType.exportErrandType"
+    [exportUrl]="'/ErrandType/ExportErrandType'"
     [options]="{
       check: false,
       viewDetails: false,

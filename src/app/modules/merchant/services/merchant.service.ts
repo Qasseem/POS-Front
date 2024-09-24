@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
@@ -8,35 +7,36 @@ import { DialogService } from 'src/app/services/dialog.service';
 })
 export class MerchantService {
   constructor(private http: HttpService, public dialogService: DialogService) {}
-
   GetAllCities(parentId) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetAllCities, parentId);
+    return this.http.getHeaderReq('/Terminal/GetAllCities', parentId);
   }
 
   GetAllRegions() {
-    return this.http.getReq(APIURL.Terminal.GetAllRegions);
+    return this.http.getReq('/Terminal/GetAllRegions');
   }
 
   GetAllZones(parentId) {
-    return this.http.getHeaderReq(APIURL.Terminal.GetAllZones, parentId);
+    return this.http.getHeaderReq('/Terminal/GetAllZones', parentId);
   }
 
   GetAllMerchantCategories() {
-    return this.http.getReq(APIURL.Merchant.GetAllMerchantCategories);
+    return this.http.getReq('/Merchant/GetAllMerchantCategories');
   }
+
   Save(data) {
-    return this.http.postReq(APIURL.Merchant.Add, data);
+    return this.http.postReq('/Merchant/SaveMerchant', data);
   }
+
   GetDetails(id) {
-    return this.http.getHeaderReq(APIURL.Merchant.GetOne, id);
+    return this.http.getHeaderReq('/Merchant/GetMerchantById', id);
   }
 
   Favorite(data) {
-    return this.http.postReq(APIURL.Merchant.Favorite, data);
+    return this.http.postReq('/Merchant/AddFavorite', data);
   }
 
   Block(data) {
-    return this.http.postReq(APIURL.Merchant.Block, data);
+    return this.http.postReq('/Merchant/Block', data);
   }
 
   confirm(

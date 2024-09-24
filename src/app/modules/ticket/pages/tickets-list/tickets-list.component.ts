@@ -9,7 +9,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { Observable, of, startWith, takeWhile } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toaster.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -104,7 +103,6 @@ export function checkDates(
 })
 export class TicketsListComponent implements OnInit, OnDestroy {
   alive = true;
-  public url = APIURL;
   scheduleForm: FormGroup;
   scheduleDialogVisible = false;
   selectedScheduleRow: any;
@@ -298,7 +296,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMechantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
@@ -309,7 +307,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'status',
       isFixed: true,
-      url: this.url.Ticket.GetAllTicketsStatuses,
+      url: '/Ticket/GetAllTicketsStatuses',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -318,7 +316,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'category',
       isFixed: true,
-      url: this.url.Ticket.GetTicketCategory,
+      url: '/Ticket/GetTicketCategory',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -337,7 +335,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'assignee',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      url: '/User/GetAllUsersDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -346,7 +344,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'posType',
       isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
+      url: '/Terminal/GetAllPOSTypes',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -355,7 +353,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'errandChannel',
       isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
+      url: '/Terminal/GetAllErrandChannels',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -364,7 +362,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
-      url: this.url.Terminal.GetAllRegions,
+      url: '/Terminal/GetAllRegions',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -373,7 +371,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
@@ -383,7 +381,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
@@ -393,7 +391,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'feedback',
       isFixed: true,
-      url: this.url.Ticket.GetAllFeedbacks,
+      url: '/Ticket/GetAllFeedbacks',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },

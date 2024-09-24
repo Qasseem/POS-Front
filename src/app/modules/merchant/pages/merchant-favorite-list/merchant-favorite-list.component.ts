@@ -8,7 +8,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { MerchantService } from '../../services/merchant.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastService } from 'src/app/core/services/toaster.service';
@@ -20,7 +19,6 @@ import { takeWhile } from 'rxjs';
   styleUrls: ['./merchant-favorite-list.component.scss'],
 })
 export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
-  public url = APIURL;
   alive = false;
   viewDetails = true;
   reloadIfUpdated = false;
@@ -117,7 +115,7 @@ export class MerchantFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'category',
       isFixed: true,
-      url: this.url.Merchant.GetAllMerchantCategories,
+      url: '/Merchant/GetAllMerchantCategories',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },

@@ -3,7 +3,6 @@ import { HttpService } from 'src/app/core/http/http.service';
 import { map, take } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BlockItemInterface } from '../models/block.interface';
-import { APIURL } from 'src/app/services/api';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
@@ -146,13 +145,13 @@ export class TableCoreService {
   }
 
   pinFilter(filterParams): Observable<any> {
-    return this.http.postReq(APIURL.searchFilters.pinFilter, filterParams);
+    return this.http.postReq('', filterParams);
   }
   unPinFilter(filterParams): Observable<any> {
-    return this.http.postReq(APIURL.searchFilters.unPinFilter, filterParams);
+    return this.http.postReq('', filterParams);
   }
   restoreFilters(moduleId): Observable<any> {
-    return this.http.postReq(APIURL.searchFilters.restoreFilters, { moduleId });
+    return this.http.postReq('', { moduleId });
   }
 
   getSearchHistory(options) {

@@ -11,7 +11,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
 
 @Component({
@@ -20,7 +19,6 @@ import { TerminalService } from '../../services/terminal.service';
   styleUrl: './terminal-favorite-list.component.scss',
 })
 export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
-  public url = APIURL;
   reloadIfUpdated = false;
   alive = false;
 
@@ -116,7 +114,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMerchantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
@@ -128,7 +126,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'users',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      url: '/Users/GetAllUsersDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -142,7 +140,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'posType',
       isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
+      url: '/Terminal/GetAllPOSTypes',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -151,7 +149,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'errandChannel',
       isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
+      url: '/Terminal/GetAllErrandChannels',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -160,7 +158,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
@@ -171,7 +169,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',

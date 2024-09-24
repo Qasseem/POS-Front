@@ -7,7 +7,6 @@ import {
 } from 'src/app/core/shared/core/modules/table/models/enums';
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { MerchantService } from '../../services/merchant.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
@@ -32,7 +31,6 @@ export class ViewMerchantComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
-  public url = APIURL;
 
   addToFavorite(row: any): any {
     this.terminalService.Favorite({ id: row?.id }).subscribe((resp) => {
@@ -127,7 +125,7 @@ export class ViewMerchantComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMechantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
@@ -139,7 +137,7 @@ export class ViewMerchantComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'users',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      url: '/Users/GetAllUsersDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -153,7 +151,7 @@ export class ViewMerchantComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'posType',
       isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
+      url: '/Terminal/GetAllPOSTypes',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -162,7 +160,7 @@ export class ViewMerchantComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'errandChannel',
       isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
+      url: '/Terminal/GetAllErrandChannels',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -171,18 +169,17 @@ export class ViewMerchantComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
     },
-
     {
       isMultiple: true,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',

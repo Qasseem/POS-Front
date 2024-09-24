@@ -10,18 +10,18 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Schedule.GetGrid,
-      import: url.Schedule.Import
+      getAll: '/Schedule/GetGrid',
+      import: '/Schedule/Import'
     }"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
     [options]="{
-        check: false,
-        hasActionMenu: true,
-        viewDetails: viewDetails,
-        viewDetailsURL: '/main/ticket/scheduled-details/',
-      }"
+      check: false,
+      hasActionMenu: true,
+      viewDetails: viewDetails,
+      viewDetailsURL: '/main/ticket/scheduled-details/',
+    }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Cancellation'"
     [sampleName]="'ImportScheduleTicketSample.xlsx'"

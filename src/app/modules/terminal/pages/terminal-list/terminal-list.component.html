@@ -18,14 +18,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Terminal.GetGrid,
-      export: url.Terminal.Export,
-      import: url.Terminal.ImportTerminals
+      getAll: '/Terminal/GetTerminalGrid',
+      export: '/Terminal/Export',
+      import: '/Terminal/ImportTerminals'
     }"
     [addButtonLabel]="'Add Terminal'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Terminal.Export"
+    [exportUrl]="'/Terminal/Export'"
     [actions]="actions"
     [options]="{
       check: false,

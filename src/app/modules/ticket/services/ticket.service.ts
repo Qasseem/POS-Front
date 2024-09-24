@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 
 @Injectable({
@@ -15,40 +14,40 @@ export class TicketService {
   // Favorite(data) {
   //   return this.http.postReq(APIURL.Terminal.Favorite, data);
   // }
-
   Save(data) {
-    return this.http.postReq(APIURL.Ticket.Save, data);
+    return this.http.postReq('/Ticket/Save', data);
   }
 
   getTicketCategory() {
-    return this.http.getReq(APIURL.Ticket.GetTicketCategory);
+    return this.http.getReq('/Ticket/GetTicketCategory');
   }
+
   getTicketCategoryFilter() {
-    return this.http.getReq(APIURL.Ticket.GetTicketCategoryFilter);
+    return this.http.getReq('/Ticket/GetTicketCategoryFilter/');
   }
+
   getById(id) {
-    return this.http.getReq(APIURL.Ticket.GetOne + id);
+    return this.http.getReq('/Ticket/GetById/' + id);
   }
 
   getCategoryErrandTypes(categoryId) {
-    return this.http.getReq(
-      APIURL.Ticket.GetCategoryErrandsTypes + '/' + categoryId
-    );
+    return this.http.getReq('/Ticket/GetCategoryErrandTypes/' + categoryId);
   }
 
   getZoneAgents(zoneId, categoryId) {
     return this.http.getReq(
-      APIURL.Ticket.GetZoneAgents + zoneId + '/' + categoryId
+      '/Ticket/GetZoneAgents/' + zoneId + '/' + categoryId
     );
   }
 
   getTerminalDetails(terminalId) {
-    return this.http.getReq(APIURL.Ticket.GetTerminalDetails + terminalId);
+    return this.http.getReq('/Ticket/GetTerminalDetails/' + terminalId);
   }
 
   Block(data) {
-    return this.http.postReq(APIURL.Ticket.Block, data);
+    return this.http.postReq('/Ticket/Block', data);
   }
+
   confirm(
     msg: string = 'messages.block-item-content',
     title: string = 'messages.block-item-title',
@@ -60,9 +59,10 @@ export class TicketService {
     return this.dialogService.confirm(msg, title, ok, cancel, params, params2);
   }
   getAllFeedbacks() {
-    return this.http.getReq(APIURL.Ticket.GetAllFeedbacks);
+    return this.http.getReq('/Ticket/GetAllFeedbacks');
   }
+
   schedule(data) {
-    return this.http.postReq(APIURL.Ticket.Schedule, data);
+    return this.http.postReq('/Ticket/Schedule', data);
   }
 }

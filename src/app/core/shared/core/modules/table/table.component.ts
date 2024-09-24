@@ -19,7 +19,6 @@ import {
   TableButtonsExistanceInterface,
   TableUrlInterface,
 } from './models/table-url.interface';
-import { APIURL } from 'src/app/services/api';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {
   debounceTime,
@@ -72,7 +71,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
   first = 0;
 
-  apis: any;
   globalSearch: UntypedFormGroup;
   isCollapsed: boolean;
   toggle: boolean = true;
@@ -89,7 +87,6 @@ export class TableComponent implements OnInit, OnDestroy {
     private tableCore: TableCoreService
   ) {
     //set componentFirstEntry var to true to mark this component as a first load.
-    this.apis = APIURL;
     this.isCollapsed = true;
   }
   ngOnChanges() {

@@ -5,7 +5,6 @@ import { SearchInputTypes } from 'src/app/core/shared/core/modules/table/models/
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { CityService } from '../../services/city.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -15,8 +14,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrl: './city-list.component.scss',
 })
 export class CityListComponent {
-  public url = APIURL;
-
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,

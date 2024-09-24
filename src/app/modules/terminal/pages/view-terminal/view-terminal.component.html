@@ -42,21 +42,21 @@
           <oc-table
             [showSearchBar]="true"
             [url]="{
-              getAll: url.Ticket.GetGrid,
+              getAll: '/Ticket/GetGrid',
               refScope: 'terminalId',
               refId: id,
-              export: url.Ticket.Export,
+              export: '/Ticket/Export'
             }"
             [addButtonLabel]="'Add Ticket'"
             [columns]="columns"
             [buttonsExistance]="tableBtns"
-            [exportUrl]="url.Ticket.Export"
+            [exportUrl]="'/Ticket/Export'"
             [actions]="actions"
             [options]="{
               check: false,
               viewDetails: true,
               viewDetailsURL: '/main/ticket/details/',
-              hasActionMenu: actions?.length ? true : false,
+              hasActionMenu: actions?.length ? true : false
             }"
             [filters]="filters"
             [service]="ticketService"

@@ -11,7 +11,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { ScheduleTicketsService } from '../../services/schedule-tickets.service';
 
 @Component({
@@ -21,7 +20,6 @@ import { ScheduleTicketsService } from '../../services/schedule-tickets.service'
 })
 export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
   alive = true;
-  public url = APIURL;
 
   editItem(row: any): any {
     const URL = `main/ticket/edit/${row?.ticketId}`;
@@ -194,7 +192,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMechantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -203,7 +201,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'category',
       isFixed: true,
-      url: this.url.Ticket.GetTicketCategory,
+      url: '/Ticket/GetTicketCategory',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -212,7 +210,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'errandType',
       isFixed: true,
-      url: this.url.Ticket.GetCategoryErrandsTypes,
+      url: '/Ticket/GetCategoryErrandTypes',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '1',
@@ -222,7 +220,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'status',
       isFixed: true,
-      url: this.url.Schedule.GetStatus,
+      url: '/Schedule/GetScheduleStatus',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -231,7 +229,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'recurrence',
       isFixed: true,
-      url: this.url.Schedule.GetRecurrenceType,
+      url: '/Schedule/GetScheduleRecurrenceType',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -240,7 +238,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'createdBy',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      url: '/User/GetAllUsersDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -249,7 +247,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
-      url: this.url.Terminal.GetAllRegions,
+      url: '/Terminal/GetAllRegions',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -258,7 +256,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
@@ -268,7 +266,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',

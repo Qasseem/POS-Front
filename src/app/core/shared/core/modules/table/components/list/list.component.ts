@@ -20,7 +20,6 @@ import {
   takeWhile,
 } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { APIURL } from 'src/app/services/api';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -233,7 +232,6 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
     this.fullRoute = this.router.url?.split('/');
     this.activatedRoute =
       '/' + this.fullRoute[1] + '/' + this.fullRoute[2] + '/details/';
-    this.apis = APIURL;
     this.navigateTo = this.route.snapshot.data.navigateTo;
     this.moduleName = this.route.snapshot.data.moduleName;
 

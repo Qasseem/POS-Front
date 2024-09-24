@@ -16,9 +16,9 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Zone.GetGrid,
-      export: url.Zone.Export,
-      import: url.Zone.Import
+      getAll: '/Zone/GetGrid',
+      export: '/Zone/ExportGrid',
+      import: '/Zone/Import'
     }"
     [addButtonLabel]="'Add Zone'"
     [columns]="columns"

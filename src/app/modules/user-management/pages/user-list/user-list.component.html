@@ -18,13 +18,13 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Users.getUsersGrid,
-      export: url.Users.exportUser,
-    }"
+    getAll: '/User/GetAllUsersGrid',
+    export: '/User/ExportUser',
+  }"
     [addButtonLabel]="'Add Users'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.Users.exportUser"
+    [exportUrl]="'/User/ExportUser'"
     [actions]="actions"
     [options]="{
       check: false,

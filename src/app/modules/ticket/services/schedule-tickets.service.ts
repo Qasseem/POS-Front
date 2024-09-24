@@ -1,34 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScheduleTicketsService {
   constructor(private http: HttpService) {}
-
   getById(id) {
-    return this.http.getReq(APIURL.Schedule.GetOne + '/' + id);
+    return this.http.getReq('/Schedule/GetById/' + id);
   }
 
   Block(data) {
-    return this.http.postReq(APIURL.Schedule.Block, data);
+    return this.http.postReq('/Schedule/Block', data);
   }
 
   getScheduleStatus() {
-    return this.http.getReq(APIURL.Schedule.GetStatus);
+    return this.http.getReq('/Schedule/GetScheduleStatus');
   }
 
   getScheduleRecurrenceType() {
-    return this.http.getReq(APIURL.Schedule.GetRecurrenceType);
+    return this.http.getReq('/Schedule/GetScheduleRecurrenceType');
   }
 
   getScheduleWeekDays() {
-    return this.http.getReq(APIURL.Schedule.GetScheduleWeekDays);
+    return this.http.getReq('/Schedule/GetScheduleDaysOfWeek');
   }
 
   getScheduleTickets(body) {
-    return this.http.postReq(APIURL.Schedule.GetScheduleTickets, body);
+    return this.http.postReq('/Schedule/GetScheduleTickets', body);
   }
 }

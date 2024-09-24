@@ -18,20 +18,20 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.Ticket.GetGrid,
-      export: url.Ticket.Export,
-      import: url.Ticket.ImportTickets
+      getAll: '/Ticket/GetGrid',
+      export: '/Ticket/ExportGrid',
+      import: '/Ticket/ImportTickets'
     }"
     [addButtonLabel]="'Add Ticket'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
     [actions]="actions"
     [options]="{
-      check: false,
-      hasActionMenu: true,
-      viewDetails: viewDetails,
-      viewDetailsURL: '/main/ticket/details/',
-    }"
+    check: false,
+    hasActionMenu: true,
+    viewDetails: viewDetails,
+    viewDetailsURL: '/main/ticket/details/',
+  }"
     [filters]="filters"
     [uploadHeader]="'Upload Bulk Cancellation'"
     [sampleName]="'ImportTicketCancellationTemplate.xlsx'"

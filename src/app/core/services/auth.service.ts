@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http/http.service';
-import { APIURL } from 'src/app/services/api';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -19,17 +18,17 @@ export class AuthService {
   ) {}
 
   login(loginData) {
-    return this.http.postReq(APIURL.login, loginData);
+    return this.http.postReq('/Security/Login', loginData);
   }
   register(registerData) {
-    return this.http.postReq(APIURL.register, registerData);
+    return this.http.postReq('/Security/RegisterCustomerUser', registerData);
   }
   getMenuLinks() {
-    return this.http.getReq(APIURL.menuLinks);
+    return this.http.getReq('/Security/Menu');
   }
 
   forgotPassword(data) {
-    return this.http.postReq(APIURL.forgotPassword, data);
+    return this.http.postReq('/CustomerSecurity/ForgotPassword', data);
   }
   isAuthenticated() {
     return !!this.storgeService.getToken();
@@ -41,6 +40,6 @@ export class AuthService {
     )?.includes(permission);
   }
   logout(logoutData) {
-    return this.http.postReq(APIURL.logout, logoutData);
+    return this.http.postReq('/Security/Logout', logoutData);
   }
 }

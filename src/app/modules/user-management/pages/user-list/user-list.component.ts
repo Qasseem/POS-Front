@@ -10,8 +10,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
-import { APIURL } from 'src/app/services/api';
 import { DialogService } from 'src/app/services/dialog.service';
 import { UserService } from '../../services/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -27,8 +25,6 @@ export class UserListComponent implements OnInit {
     { id: 'active', name: 'Active' },
     { id: 'blocked', name: 'Blocked' },
   ];
-
-  public url = APIURL;
 
   editItem(row: any): any {
     const URL = `main/user-management/user/edit/${row?.id}`;
@@ -197,7 +193,7 @@ export class UserListComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'userType',
       isFixed: true,
-      url: this.url.Users.getAllUsersTypeDropdown,
+      url: '/User/GetAllUserTypeDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -206,25 +202,16 @@ export class UserListComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'role',
       isFixed: true,
-      url: this.url.Role.getAllRolesDropdown,
+      url: '/Role/GetAllRolesDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
-    // {
-    //   isMultiple: true,
-    //   type: SearchInputTypes.select,
-    //   field: 'status',
-    //   isFixed: true,
-    //   url: this.statusList,
-    //   method: HTTPMethods.getReq,
-    //   propValueName: 'id',
-    // },
     {
       isMultiple: true,
       type: SearchInputTypes.select,
       field: 'manager',
       isFixed: true,
-      url: this.url.Users.getAllManagerDropdown,
+      url: '/User/GetAllManagerDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -233,7 +220,7 @@ export class UserListComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
-      url: this.url.Terminal.GetAllRegions,
+      url: '/Terminal/GetAllRegions',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -242,18 +229,17 @@ export class UserListComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
     },
-
     {
       isMultiple: true,
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',

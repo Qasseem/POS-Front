@@ -21,14 +21,14 @@
   <oc-table
     [showSearchBar]="true"
     [url]="{
-      getAll: url.AdminActivities.getErrandsChannel,
-      export: url.AdminActivities.exportErrandsChannel,
-      import: url.AdminActivities.importErrandsChannel
+      getAll: '/AdminActivities/GetErrandChannelGrid',
+      export: '/AdminActivities/ExportErrandChannel',
+      import: '/AdminActivities/ImportErrandChannel'
     }"
     [addButtonLabel]="'Add Errand Channel'"
     [columns]="columns"
     [buttonsExistance]="tableBtns"
-    [exportUrl]="url.AdminActivities.exportErrandsChannel"
+    [exportUrl]="'/AdminActivities/ExportErrandChannel'"
     [options]="{
       check: false,
       viewDetails: false,

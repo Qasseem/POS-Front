@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
 import {
   HTTPMethods,
@@ -21,7 +20,6 @@ import { TicketService } from 'src/app/modules/ticket/services/ticket.service';
 export class ViewTerminalComponent implements OnInit {
   details: any;
   address: any;
-  public url = APIURL;
   formType = 'view';
   coordinates = { lat: null, lng: null };
 
@@ -142,7 +140,7 @@ export class ViewTerminalComponent implements OnInit {
       type: SearchInputTypes.select,
       field: 'merchantEn',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMerchantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,

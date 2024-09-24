@@ -8,7 +8,6 @@ import {
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { APIURL } from 'src/app/services/api';
 import { TerminalService } from '../../services/terminal.service';
 import { first, shareReplay, take, takeWhile } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toaster.service';
@@ -39,7 +38,6 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       });
     this.reloadIfUpdated = false;
   }
-  public url = APIURL;
 
   editItem(row: any): any {
     const URL = `main/terminal/edit/${row?.id}`;
@@ -186,7 +184,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: this.url.Terminal.GetAllMechantDropDown,
+      url: '/Terminal/GetAllMerchantDropDown', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
@@ -198,7 +196,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'userName',
       isFixed: true,
-      url: this.url.Users.GetAllUsersDropDown,
+      url: '/Users/GetAllUsersDropDown', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -212,7 +210,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'posType',
       isFixed: true,
-      url: this.url.Terminal.GetAllPOSTypes,
+      url: '/Terminal/GetAllPOSTypes', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -221,7 +219,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'errandChannel',
       isFixed: true,
-      url: this.url.Terminal.GetAllErrandChannels,
+      url: '/Terminal/GetAllErrandChannels', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -230,7 +228,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'region',
       isFixed: true,
-      url: this.url.Terminal.GetAllRegions,
+      url: '/Terminal/GetAllRegions', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -239,7 +237,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,
-      url: this.url.Terminal.GetAllCities,
+      url: '/Terminal/GetAllCities', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',
@@ -250,7 +248,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'zone',
       isFixed: true,
-      url: this.url.Terminal.GetAllZones,
+      url: '/Terminal/GetAllZones', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
       header: '0',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,19 +8,22 @@ export class RoleService {
   constructor(private http: HttpService) {}
 
   Update(id) {
-    return this.http.postReq(APIURL.Role.updateRole, id);
+    return this.http.postReq('/Role/UpdateRole', id);
   }
+
   Add(data) {
-    return this.http.postReq(APIURL.Role.addRole, data);
+    return this.http.postReq('/Role/AddRole', data);
   }
+
   GetDetails(id) {
-    return this.http.getHeaderReq(APIURL.Role.getRoleById, id);
+    return this.http.getHeaderReq('/Role/GetRole', id);
   }
 
   getServicesByRoleId(id) {
-    return this.http.getHeaderReq(APIURL.Role.getRoleServiceDetails, id);
+    return this.http.getHeaderReq('/Role/GetRoleServiceDetails', id);
   }
+
   Block(data) {
-    return this.http.postReq(APIURL.Role.blockRole, data);
+    return this.http.postReq('/Role/Block', data);
   }
 }

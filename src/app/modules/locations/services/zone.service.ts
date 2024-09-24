@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
-import { APIURL } from 'src/app/services/api';
 
 @Injectable({
   providedIn: 'root',
@@ -9,17 +8,18 @@ export class ZoneService {
   constructor(private http: HttpService) {}
 
   addZone(data) {
-    return this.http.postReq(APIURL.Zone.Add, data);
+    return this.http.postReq('/Zone/Add', data);
   }
 
   getDetailsById(id) {
-    return this.http.getHeaderReq(APIURL.Zone.GetOne, id);
+    return this.http.getHeaderReq('/Zone/GetById', id);
   }
 
   update(id) {
-    return this.http.postReq(APIURL.Zone.Update, id);
+    return this.http.postReq('/Zone/Update', id);
   }
+
   Block(data) {
-    return this.http.postReq(APIURL.Zone.Block, data);
+    return this.http.postReq('/Zone/Block', data);
   }
 }
