@@ -307,7 +307,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'status',
       isFixed: true,
-      url: '/Ticket/GetAllTicketsStatuses',
+      url: '/Ticket/GetAllTicketStatus',
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
