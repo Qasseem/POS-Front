@@ -120,7 +120,7 @@ export class TerminalFavoriteListComponent implements OnInit, OnDestroy {
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
-      filterBy: 'id,name',
+      filterBy: 'merchantNumber,name',
     },
 
     {

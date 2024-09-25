@@ -302,7 +302,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
-      filterBy: 'id,name',
+      filterBy: 'merchantNumber,name',
     },
     {
       isMultiple: true,
