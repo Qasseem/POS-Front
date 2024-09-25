@@ -195,6 +195,7 @@ export class ScheduledTicketsListComponent implements OnInit, OnDestroy {
       url: '/Terminal/GetAllMechantDropDown',
       method: HTTPMethods.getReq,
       propValueName: 'id',
+      filterBy: 'merchantNumber,name',
     },
     {
       isMultiple: false,

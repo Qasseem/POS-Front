@@ -129,7 +129,7 @@ export class ViewMerchantComponent implements OnInit {
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
-      filterBy: 'id,name',
+      filterBy: 'merchantNumber,name',
     },
 
     {
