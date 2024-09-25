@@ -20,9 +20,9 @@ export class RoleListComponent implements OnInit {
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
     showAdd: true,
-    showExport: true,
+    showExport: false,
     showFilter: false,
-    showImport: true,
+    showImport: false,
   };
   public columns: ColumnsInterface[] = [
     {
