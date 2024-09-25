@@ -156,6 +156,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
         SearchInputTypes.select
       ) {
         resp.data.forEach((item) => {
+          item.searchKey =
+            (item?.id ?? '') + (item.nameEn ?? '') + (item?.nameAr ?? '');
           item?.code ? (item.code = item.code.trim()) : '';
         });
 
@@ -163,6 +165,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
           resp.data;
       } else {
         resp.data?.data?.forEach((item) => {
+          item.searchKey = item.searchKey =
+            (item?.id ?? '') + (item.nameEn ?? '') + (item?.nameAr ?? '');
           item?.code ? (item.code = item.code.trim()) : '';
         });
         this.filtersInput.find((x) => x.field == item.field).ddlData =

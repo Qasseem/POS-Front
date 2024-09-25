@@ -254,7 +254,7 @@
                     appendTo="body"
                     (onChange)="getSelectedData($event, ctrl.field)"
                     placeholder="Select"
-                    [filterBy]="ctrl?.filter ? ctrl.filterBy : 'id'"
+                    [filterBy]="'searchKey'"
                   />
                   <!-- <ic-ddl-client
                     *ngIf="!ctrl.serverSide"
