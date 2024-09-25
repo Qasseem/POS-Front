@@ -184,7 +184,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'merchant',
       isFixed: true,
-      url: '/Terminal/GetAllMerchantDropDown', // Replaced with direct URL
+      url: '/Terminal/GetAllMechantDropDown', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
       filter: true,
@@ -196,7 +196,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'userName',
       isFixed: true,
-      url: '/Users/GetAllUsersDropDown', // Replaced with direct URL
+      url: '/User/GetAllUsersDropDown', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
