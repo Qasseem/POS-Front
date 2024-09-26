@@ -18,7 +18,7 @@ export class RegionListComponent {
     showAllButtons: true,
     showAdd: true,
     showExport: true,
-    showFilter: true,
+    showFilter: false,
     showImport: true,
   };
   public columns: ColumnsInterface[] = [
