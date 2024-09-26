@@ -157,7 +157,10 @@ export class SearchBarComponent implements OnInit, OnChanges {
       ) {
         resp.data.forEach((item) => {
           item.searchKey =
-            (item?.id ?? '') + (item.nameEn ?? '') + (item?.nameAr ?? '');
+            (item?.id ?? '') +
+            (item.nameEn ?? '') +
+            (item?.nameAr ?? '') +
+            (item?.merchantId ?? '');
           item?.code ? (item.code = item.code.trim()) : '';
         });
 
@@ -166,7 +169,10 @@ export class SearchBarComponent implements OnInit, OnChanges {
       } else {
         resp.data?.data?.forEach((item) => {
           item.searchKey = item.searchKey =
-            (item?.id ?? '') + (item.nameEn ?? '') + (item?.nameAr ?? '');
+            (item?.id ?? '') +
+            (item.nameEn ?? '') +
+            (item?.nameAr ?? '') +
+            (item?.merchantId ?? '');
           item?.code ? (item.code = item.code.trim()) : '';
         });
         this.filtersInput.find((x) => x.field == item.field).ddlData =
