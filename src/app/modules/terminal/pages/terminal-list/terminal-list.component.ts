@@ -196,7 +196,7 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.select,
       field: 'userName',
       isFixed: true,
-      url: '/User/GetAllUsersDropDown', // Replaced with direct URL
+      url: '/Terminal/GetAllMechantUserNamesDropDown', // Replaced with direct URL
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
@@ -263,6 +263,15 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       type: SearchInputTypes.text,
       field: 'landmark',
       isFixed: true,
+    },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'createdBy',
+      isFixed: true,
+      url: '/User/GetAllUsersDropDown', // Replaced with direct URL
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
     },
   ];
   viewDetails = true;

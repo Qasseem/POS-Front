@@ -125,6 +125,15 @@ export class MerchantListComponent implements OnInit {
       field: 'createDate',
       isFixed: true,
     },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'createdBy',
+      isFixed: true,
+      url: '/User/GetAllUsersDropDown', // Replaced with direct URL
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
   ];
   viewDetails = true;
 

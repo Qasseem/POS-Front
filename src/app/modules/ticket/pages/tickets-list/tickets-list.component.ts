@@ -395,6 +395,15 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       method: HTTPMethods.getReq,
       propValueName: 'id',
     },
+    {
+      isMultiple: true,
+      type: SearchInputTypes.select,
+      field: 'createdBy',
+      isFixed: true,
+      url: '/User/GetAllUsersDropDown', // Replaced with direct URL
+      method: HTTPMethods.getReq,
+      propValueName: 'id',
+    },
   ];
   viewDetails = true;
   reloadIfUpdated = false;
