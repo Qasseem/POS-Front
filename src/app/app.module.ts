@@ -59,7 +59,7 @@ const appInitializerFn = (configService: ConfigService) => {
           clientId: '2769fbf9-b084-4a78-a7dc-99761e46af03',
           authority:
             'https://login.microsoftonline.com/1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
-          redirectUri: 'http://localhost:4200',
+          redirectUri: 'https://uat.softwaves.co',
         },
         cache: {
           cacheLocation: BrowserCacheLocation.LocalStorage,
@@ -80,7 +80,7 @@ const appInitializerFn = (configService: ConfigService) => {
         protectedResourceMap: new Map([
           ['https://graph.microsoft.com/v1.0/me', ['user.read']],
           ['https://api.myapplication.com/users/*', ['customscope.read']],
-          ['http://localhost:4200/about/', null],
+          ['https://uat.softwaves.co/', null],
         ]),
       }
     ),

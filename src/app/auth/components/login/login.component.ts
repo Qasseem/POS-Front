@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
     });
 
     this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
-      console.log(resp, accounts);
+      console.warn(resp, accounts);
 
       this.msalSerivce.instance.setActiveAccount(resp.account);
     });
