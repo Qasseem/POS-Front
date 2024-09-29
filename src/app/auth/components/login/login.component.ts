@@ -16,6 +16,7 @@ import { AppTranslateService } from 'src/app/core/shared/services/translate.serv
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  showPopup = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,13 +56,43 @@ export class LoginComponent implements OnInit {
         this.msalSerivce.instance.setActiveAccount(account);
       }
     });
+    if (this.showPopup) {
+      this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
+        console.warn(resp, accounts);
+        this.storage.setItem('token', resp.accessToken);
+        console.warn(this.storage.getToken());
+        console.warn(localStorage.getItem('token'));
 
-    this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
-      console.warn(resp, accounts);
+        const url = '/main/dashboard';
 
-      this.msalSerivce.instance.setActiveAccount(resp.account);
-    });
+        // this.permissions.syncRolesPermissions();
+        this.router.navigate([url]);
+        this.msalSerivce.instance.setActiveAccount(resp.account);
+      });
+    } else {
+      this.msalSerivce.loginRedirect().subscribe(() => {});
+
+      try {
+        this.msalSerivce
+          .acquireTokenSilent({
+            scopes: ['user.read'], // Adjust the scope as needed
+          })
+          .subscribe((resp: AuthenticationResult) => {
+            console.warn(resp, accounts);
+            this.storage.setItem('token', resp.accessToken);
+            const url = '/main/dashboard';
+            // this.permissions.syncRolesPermissions();
+            this.router.navigate([url]);
+            this.msalSerivce.instance.setActiveAccount(resp.account);
+          });
+
+        // Get the email
+      } catch (error) {
+        // Handle token acquisition error
+      }
+    }
   }
+
   logOut() {
     this.msalSerivce.logout();
   }

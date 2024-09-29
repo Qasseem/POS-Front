@@ -74,6 +74,9 @@ const appInitializerFn = (configService: ConfigService) => {
       }),
       {
         interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+        authRequest: {
+          scopes: ['api://6406f022-b88d-43da-8e1f-2dc9f5579717/access_as_user'],
+        },
       },
       {
         interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration

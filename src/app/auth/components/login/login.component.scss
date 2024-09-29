@@ -57,3 +57,25 @@ p-password {
   padding: 10px;
   position: relative;
 }
+
+.button-div {
+  margin-top: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px; /* Fixed height */
+  background-color: #007bff; /* Button color */
+  color: white; /* Text color */
+  cursor: pointer; /* Change cursor to pointer */
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  transition: background-color 0.3s;
+}
+.button-div:hover {
+  background-color: #0056b3; /* Darker on hover */
+}
+.button-div img {
+  margin-right: 10px; /* Space between image and text */
+  height: 40px; /* Image height */
+}

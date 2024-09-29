@@ -15,7 +15,7 @@
           </span>
         </div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="p-field">
+          <!-- <div class="p-field">
             <label class="color-info" for="username">{{
               "Register.email" | translate
             }}</label>
@@ -37,9 +37,9 @@
                 -{{ "Validation.mailFormat" | translate }}
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="p-field">
+          <!-- <div class="p-field">
             <label class="color-info" for="password">{{
               "Register.password" | translate
             }}</label>
@@ -62,28 +62,36 @@
                 -{{ "Validation.passwordPatternMessage" | translate }}
               </div>
             </div>
-          </div>
-          <div class="mt-4 mb-4">
+          </div> -->
+          <!-- <div class="mt-4 mb-4">
             <p-checkbox
               formControlName="keepMe"
               value="Keep me sign-in"
               inputId="ny"
             />
             <label for="ny" class="ml-2 mr-2">Keep me sign-in</label>
-          </div>
+          </div> -->
           <!-- <div style="margin-bottom: 150px">
             <span (click)="goToForgotPage()" class="forget-password">{{
               "Register.forgotPassword" | translate
             }}</span>
           </div> -->
-          <button
+          <!-- <button
             class="p-field save-btn mt-6"
             type="submit"
             pButton
             size="small"
             [label]="'Register.login' | translate"
             [disabled]="!loginForm.valid"
-          ></button>
+          ></button> -->
+
+          <div class="button-div" (click)="logIn()">
+            <img
+              src="../../../../assets/iamges/images/microsoft-logo.png"
+              alt="Button Image"
+            />
+            <span>Login With Microsoft</span>
+          </div>
         </form>
       </div>
     </div>
@@ -101,11 +109,3 @@
     </div>
   </div>
 </div>
-
-<div>
-  <button class="btn" (click)="logIn()">Login</button>
-
-  <button class="btn" (click)="logOut()">LogOut</button>
-</div>
-
-<div>{{ isLoogedIn() }}</div>

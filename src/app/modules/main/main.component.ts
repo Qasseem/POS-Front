@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize, take } from 'rxjs';
@@ -239,7 +240,8 @@ export class MainComponent implements OnInit {
     private router: Router,
     public storage: StorageService,
     private appTranslateService: AppTranslateService,
-    private loading: NgxSpinnerService
+    private loading: NgxSpinnerService,
+    private msalSerivce: MsalService
   ) {
     this.translateService.setDefaultLang(this.storage.getLang());
     this.translateService.use(this.storage.getLang());
@@ -332,6 +334,7 @@ export class MainComponent implements OnInit {
 
   logOut(): void {
     this.loading.show();
+    this.msalSerivce.logout();
     this.storage
       .clearStorage()
       .pipe(
