@@ -28,21 +28,15 @@ export class LoginComponent implements OnInit {
   ) {
     this.appTranslateService.changeLangage('en');
     this.storage.setItem('lang', 'en');
-    msalSerivce.initialize().subscribe((res) => {
-      console.log(res);
-    });
+    msalSerivce.initialize().subscribe((res) => {});
   }
   isLoogedIn() {
     return this.msalSerivce.instance.getActiveAccount() != null;
   }
   killSession() {
     this.msalSerivce.logoutRedirect().subscribe({
-      next: (result) => {
-        console.log('Logged out successfully');
-      },
-      error: (error) => {
-        console.error(error);
-      },
+      next: (result) => {},
+      error: (error) => {},
     });
   }
   logIn() {
@@ -61,13 +55,7 @@ export class LoginComponent implements OnInit {
       }
     });
 
-    console.log(
-      'get active account',
-      this.msalSerivce.instance.getActiveAccount()
-    );
-
     this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
-      console.log(resp);
       this.msalSerivce.instance.setActiveAccount(resp.account);
     });
   }
