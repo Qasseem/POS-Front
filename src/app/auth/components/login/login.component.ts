@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
+import { AuthenticationResult, EventType } from '@azure/msal-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { StorageService } from 'src/app/core/services/storage.service';
@@ -21,12 +23,57 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private storage: StorageService,
     private router: Router,
+    private msalSerivce: MsalService,
     private appTranslateService: AppTranslateService
   ) {
     this.appTranslateService.changeLangage('en');
     this.storage.setItem('lang', 'en');
+    msalSerivce.initialize().subscribe((res) => {
+      console.log(res);
+    });
   }
+  isLoogedIn() {
+    return this.msalSerivce.instance.getActiveAccount() != null;
+  }
+  killSession() {
+    this.msalSerivce.logoutRedirect().subscribe({
+      next: (result) => {
+        console.log('Logged out successfully');
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+  logIn() {
+    // this.killSession();
+    let accounts = this.msalSerivce.instance.getAllAccounts();
+    if (accounts.length > 0) {
+      this.msalSerivce.instance.setActiveAccount(accounts[0]);
+    }
 
+    this.msalSerivce.instance.addEventCallback((event) => {
+      // set active account after redirect
+      if (event.eventType === EventType.LOGIN_SUCCESS && event.payload) {
+        const payload = event.payload as AuthenticationResult;
+        const account = payload.account;
+        this.msalSerivce.instance.setActiveAccount(account);
+      }
+    });
+
+    console.log(
+      'get active account',
+      this.msalSerivce.instance.getActiveAccount()
+    );
+
+    this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
+      console.log(resp);
+      this.msalSerivce.instance.setActiveAccount(resp.account);
+    });
+  }
+  logOut() {
+    this.msalSerivce.logout();
+  }
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],

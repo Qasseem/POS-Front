@@ -20,6 +20,18 @@ import { LoginGuard } from './core/guards/login.guard';
 import { ErrorHandlingInterceptor } from './core/interceptors/error-handling.interceptor';
 import { TokenInterceptor } from './core/interceptors/token.interceptor';
 import { RouterModule } from '@angular/router';
+import {
+  MsalModule,
+  MsalInterceptor,
+  MsalService,
+  MsalGuard,
+  MsalBroadcastService,
+} from '@azure/msal-angular';
+import {
+  PublicClientApplication,
+  InteractionType,
+  BrowserCacheLocation,
+} from '@azure/msal-browser';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,6 +52,39 @@ const appInitializerFn = (configService: ConfigService) => {
     AppRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot(),
+    MsalModule.forRoot(
+      new PublicClientApplication({
+        // MSAL Configuration
+        auth: {
+          clientId: '2769fbf9-b084-4a78-a7dc-99761e46af03',
+          authority:
+            'https://login.microsoftonline.com/1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
+          redirectUri: 'http://localhost:4200',
+        },
+        cache: {
+          cacheLocation: BrowserCacheLocation.LocalStorage,
+          storeAuthStateInCookie: true, // set to true for IE 11
+        },
+        system: {
+          loggerOptions: {
+            loggerCallback: () => {},
+            piiLoggingEnabled: false,
+          },
+        },
+      }),
+      {
+        interactionType: InteractionType.Redirect, // MSAL Guard Configuration
+      },
+      {
+        interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
+        protectedResourceMap: new Map([
+          ['https://graph.microsoft.com/v1.0/me', ['user.read']],
+          ['https://api.myapplication.com/users/*', ['customscope.read']],
+          ['http://localhost:4200/about/', null],
+        ]),
+      }
+    ),
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -68,6 +113,14 @@ const appInitializerFn = (configService: ConfigService) => {
       deps: [ConfigService],
     },
     provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true,
+    },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
   ],
   bootstrap: [AppComponent],
 })
