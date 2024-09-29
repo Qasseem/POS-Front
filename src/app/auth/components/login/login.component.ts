@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   logIn() {
     // this.killSession();
     let accounts = this.msalSerivce.instance.getAllAccounts();
+
     if (accounts.length > 0) {
       this.msalSerivce.instance.setActiveAccount(accounts[0]);
     }
@@ -56,6 +57,8 @@ export class LoginComponent implements OnInit {
     });
 
     this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
+      console.log(resp, accounts);
+
       this.msalSerivce.instance.setActiveAccount(resp.account);
     });
   }
