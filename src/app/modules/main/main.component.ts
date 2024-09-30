@@ -243,6 +243,7 @@ export class MainComponent implements OnInit {
     private loading: NgxSpinnerService,
     private msalSerivce: MsalService
   ) {
+    // this.getSideMenuData();
     this.translateService.setDefaultLang(this.storage.getLang());
     this.translateService.use(this.storage.getLang());
     this.router.events.subscribe({
@@ -281,6 +282,33 @@ export class MainComponent implements OnInit {
               });
             }
           }
+        }
+      },
+    });
+  }
+  getSideMenuData() {
+    this.authService.getMenuLinks().subscribe({
+      next: (res) => {
+        if (res.success) {
+          let permissions = [];
+          res.data.forEach((permission) => {
+            permission.pages.forEach((page) => {
+              const pagePermissions = page.frontEndNames.split(',');
+              pagePermissions.forEach((x) => {
+                x = this.storage.convertToKebabCase(
+                  permission.nameEn + ' ' + page.nameEn + ' ' + x
+                );
+                permissions.push(x);
+              });
+            });
+          });
+          permissions = Array.from(new Set([...permissions]));
+          permissions = this.storage.sortAlphabetically(permissions);
+          // permissions = permissions.filter(
+          //   (x) => x == 'merchants-all-merchants-block'
+          // );
+          // console.log(permissions,'appComponent');
+          this.storage.setItem('permissions', JSON.stringify(permissions));
         }
       },
     });

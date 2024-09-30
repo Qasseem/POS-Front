@@ -26,12 +26,19 @@ import {
   MsalService,
   MsalGuard,
   MsalBroadcastService,
+  MsalInterceptorConfiguration,
+  MsalGuardConfiguration,
+  MSAL_INSTANCE,
+  MSAL_GUARD_CONFIG,
+  MSAL_INTERCEPTOR_CONFIG,
 } from '@azure/msal-angular';
 import {
   PublicClientApplication,
   InteractionType,
   BrowserCacheLocation,
+  LogLevel,
 } from '@azure/msal-browser';
+import { environment } from 'src/environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -43,6 +50,56 @@ const appInitializerFn = (configService: ConfigService) => {
   };
 };
 
+export function loggerCallback(logLevel: LogLevel, message: string) {
+  console.log(message);
+}
+
+export function MSALInstanceFactory(): PublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: environment.adConfig.clientId,
+      authority: `https://login.microsoftonline.com/${environment.adConfig.tenantId}`,
+      knownAuthorities: [`login.microsoftonline.com`],
+      redirectUri: 'http://localhost:4200',
+      postLogoutRedirectUri: 'http://localhost:4200',
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+    },
+    system: {
+      allowNativeBroker: false, // Disables WAM Broker
+      loggerOptions: {
+        loggerCallback,
+        logLevel: LogLevel.Info,
+        piiLoggingEnabled: false,
+      },
+    },
+  });
+}
+
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  //have this set if more microservice used or requires different scope for different controllers
+  protectedResourceMap.set(
+    environment.adConfig.apiEndpointUrl, // This is for all controllers
+    environment.adConfig.scopeUrls
+  );
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap,
+  };
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: [...environment.adConfig.scopeUrls],
+    },
+    loginFailedRoute: '/login-failed',
+  };
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -52,41 +109,6 @@ const appInitializerFn = (configService: ConfigService) => {
     AppRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    MsalModule.forRoot(
-      new PublicClientApplication({
-        // MSAL Configuration
-        auth: {
-          clientId: '2769fbf9-b084-4a78-a7dc-99761e46af03',
-          authority:
-            'https://login.microsoftonline.com/1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
-          redirectUri: 'https://uat.softwaves.co',
-        },
-        cache: {
-          cacheLocation: BrowserCacheLocation.LocalStorage,
-          storeAuthStateInCookie: true, // set to true for IE 11
-        },
-        system: {
-          loggerOptions: {
-            loggerCallback: () => {},
-            piiLoggingEnabled: false,
-          },
-        },
-      }),
-      {
-        interactionType: InteractionType.Redirect, // MSAL Guard Configuration
-        authRequest: {
-          scopes: ['api://6406f022-b88d-43da-8e1f-2dc9f5579717/access_as_user'],
-        },
-      },
-      {
-        interactionType: InteractionType.Redirect, // MSAL Interceptor Configuration
-        protectedResourceMap: new Map([
-          ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-          ['https://api.myapplication.com/users/*', ['customscope.read']],
-          ['https://uat.softwaves.co/', null],
-        ]),
-      }
-    ),
 
     TranslateModule.forRoot({
       loader: {
@@ -120,6 +142,23 @@ const appInitializerFn = (configService: ConfigService) => {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
       multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true,
+    },
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory,
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory,
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory,
     },
     MsalService,
     MsalGuard,
