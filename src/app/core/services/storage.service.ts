@@ -124,14 +124,14 @@ export class StorageService {
   }
 
   public setLoginData(resp) {
-    this.setItem('token', resp.data.token);
+    // this.setItem('token', resp.data.token);
     this.setItem('lang', 'en');
     this.setItem('userNameEn', resp.data.nameEn);
     this.setItem('userNameAr', resp.data.nameAr);
     this.setItem('userId', resp.data.userId);
     this.setItem('userType', resp.data.userType);
-    this.setItem('employeeId', resp.data.employeeId);
-    this.setItem('userImage', resp.data.imagePath);
+    // this.setItem('employeeId', resp.data.employeeId);
+    // this.setItem('userImage', resp.data.imagePath);
     let permissions = [];
     resp.data.permissions.forEach((permission) => {
       permission.pages.forEach((page) => {

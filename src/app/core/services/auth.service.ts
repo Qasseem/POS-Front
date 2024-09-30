@@ -30,7 +30,7 @@ export class AuthService {
     return this.http.postReq('/Security/RegisterCustomerUser', registerData);
   }
   getMenuLinks() {
-    return this.http.getReq('/Security/Menu');
+    return this.http.getReq('/Security/GetUserInfo');
   }
 
   forgotPassword(data) {
@@ -53,28 +53,7 @@ export class AuthService {
     await this.getMenuLinks().subscribe({
       next: (res) => {
         if (res.success) {
-          let permissions = [];
-          res.data.forEach((permission) => {
-            permission.pages.forEach((page) => {
-              const pagePermissions = page.frontEndNames.split(',');
-              pagePermissions.forEach((x) => {
-                x = this.storgeService.convertToKebabCase(
-                  permission.nameEn + ' ' + page.nameEn + ' ' + x
-                );
-                permissions.push(x);
-              });
-            });
-          });
-          permissions = Array.from(new Set([...permissions]));
-          permissions = this.storgeService.sortAlphabetically(permissions);
-          // permissions = permissions.filter(
-          //   (x) => x == 'merchants-all-merchants-block'
-          // );
-          // console.log(permissions,'appComponent');
-          this.storgeService.setItem(
-            'permissions',
-            JSON.stringify(permissions)
-          );
+          this.storgeService.setLoginData(res);
         }
       },
     });
