@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 import { AuthService } from '../core/services/auth.service';
 import { MsalService } from '@azure/msal-angular';
+import { StorageService } from '../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class InactivityService {
   constructor(
     private router: Router,
     private _authService: AuthService,
-    private msalSerivce: MsalService
+    private msalSerivce: MsalService,
+    public storage: StorageService
   ) {
     this.initialize();
   }
@@ -53,15 +55,6 @@ export class InactivityService {
 
   // Log the user out and redirect to login page
   logoutUser() {
-    this.msalSerivce.logout();
-    ////TODO call api to remove the token for this user
-    this._authService.logout({}).subscribe((res: any) => {
-      if (res.success) {
-        //Type logic if needed
-        localStorage.removeItem('token'); // Example token removal
-        this.router.navigate(['/auth/login']); // Navigate to login page
-      }
-    });
-    // Clear user session or token
+    this._authService.logOut();
   }
 }

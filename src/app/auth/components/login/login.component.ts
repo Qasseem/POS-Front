@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       error: (error) => {},
     });
   }
-  logIn() {
+  async logIn() {
     // this.killSession();
     let accounts = this.msalSerivce.instance.getAllAccounts();
 
@@ -57,36 +57,21 @@ export class LoginComponent implements OnInit {
       }
     });
     if (this.showPopup) {
-      this.msalSerivce.loginPopup().subscribe((resp: AuthenticationResult) => {
-        console.warn(resp, accounts);
-        this.storage.setItem('token', resp.accessToken);
-        console.warn(this.storage.getToken());
-        console.warn(localStorage.getItem('token'));
-        this.authService.getMenuItems();
-        const url = '/main/dashboard';
-        // this.permissions.syncRolesPermissions();
-        this.router.navigate([url]);
-        this.msalSerivce.instance.setActiveAccount(resp.account);
+      this.msalSerivce.instance.clearCache().then(() => {
+        this.msalSerivce
+          .loginPopup()
+          .subscribe(async (resp: AuthenticationResult) => {
+            this.storage.setItem('token', resp.accessToken);
+            await this.authService.getMenuItems();
+
+            const url = '/main/dashboard';
+            // this.permissions.syncRolesPermissions();
+            this.msalSerivce.instance.setActiveAccount(resp.account);
+            setTimeout(() => {
+              this.router.navigate([url]);
+            }, 2000);
+          });
       });
-    } else {
-      // this.msalSerivce.loginRedirect().subscribe(() => {});
-      // try {
-      //   this.msalSerivce
-      //     .acquireTokenSilent({
-      //       scopes: ['user.read'], // Adjust the scope as needed
-      //     })
-      //     .subscribe((resp: AuthenticationResult) => {
-      //       console.warn(resp, accounts);
-      //       this.storage.setItem('token', resp.accessToken);
-      //       const url = '/main/dashboard';
-      //       // this.permissions.syncRolesPermissions();
-      //       this.router.navigate([url]);
-      //       this.msalSerivce.instance.setActiveAccount(resp.account);
-      //     });
-      //   // Get the email
-      // } catch (error) {
-      //   // Handle token acquisition error
-      // }
     }
   }
 

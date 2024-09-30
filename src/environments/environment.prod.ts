@@ -4,30 +4,28 @@
 
 import { EnvironmentConfiguration } from '../app/models/environment-configuration';
 
-const serverUrl = 'https://lsc-expensetracker-api.azurewebsites.net/api';
+const serverUrl = 'https://uatbe.softwaves.co';
 
 // The list of file replacements can be found in `angular.json`.
 export const environment: EnvironmentConfiguration = {
-  env_name: 'prod',
+  env_name: 'dev',
   production: true,
   apiUrl: serverUrl,
   apiEndpoints: {
     userProfile: 'user-profiles',
   },
   adConfig: {
-    tenantId: '',
-    clientId: '2b9d74de-7aad-402c-b912-b653574516ee',
-    readScopeUrl:
-      'https://karthiktechworld.onmicrosoft.com/expensetracker/api/Expense.Read',
-    writeScopeUrl:
-      'https://karthiktechworld.onmicrosoft.com/expensetracker/api/Expense.Write',
+    clientId: 'b66930e8-db93-498e-a9c4-9642c14a4085',
+    readScopeUrl: 'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Read',
+    writeScopeUrl: 'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Write',
     scopeUrls: [
-      'https://karthiktechworld.onmicrosoft.com/expensetracker/api/Expense.Read',
-      'https://karthiktechworld.onmicrosoft.com/expensetracker/api/Expense.Write',
+      'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Read',
+      'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Write',
     ],
-    apiEndpointUrl: 'https://lsc-expensetracker-api.azurewebsites.net/api',
+    apiEndpointUrl: 'https://uatbe.softwaves.co',
+    tenantId: '1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
   },
-  cacheTimeInMinutes: 30,
+  cacheTimeInMinutes: 15,
 };
 
 /*

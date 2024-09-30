@@ -25,7 +25,7 @@ export const environment: EnvironmentConfiguration = {
     apiEndpointUrl: 'https://uatbe.softwaves.co',
     tenantId: '1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
   },
-  cacheTimeInMinutes: 30,
+  cacheTimeInMinutes: 15,
 };
 
 /*

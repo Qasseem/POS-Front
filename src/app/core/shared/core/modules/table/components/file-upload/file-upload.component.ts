@@ -33,7 +33,6 @@ export class FileUploadComponent implements OnInit {
     if (files.length) {
       this.fileName = files[0].name;
     }
-    console.log(files[0].name);
     this.filesSelectedEvent.emit(files);
     // Handle selected files here
   }

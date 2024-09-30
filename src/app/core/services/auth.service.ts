@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '../http/http.service';
 import { StorageService } from './storage.service';
+import { finalize, take } from 'rxjs';
+import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +15,12 @@ import { StorageService } from './storage.service';
  */
 export class AuthService {
   items: any[] = [];
+  storage: any;
   constructor(
     private http: HttpService,
-    private storgeService: StorageService
+    private storgeService: StorageService,
+    private msalSerivce: MsalService,
+    private router: Router
   ) {}
 
   login(loginData) {
@@ -39,12 +45,12 @@ export class AuthService {
       this.storgeService.getStringItem('permissions')
     )?.includes(permission);
   }
-  logout(logoutData) {
-    return this.http.postReq('/Security/Logout', logoutData);
-  }
+  // logout(logoutData) {
+  //   return this.http.postReq('/Security/Logout', logoutData);
+  // }
 
-  getMenuItems() {
-    this.getMenuLinks().subscribe({
+  async getMenuItems() {
+    await this.getMenuLinks().subscribe({
       next: (res) => {
         if (res.success) {
           let permissions = [];
@@ -72,5 +78,16 @@ export class AuthService {
         }
       },
     });
+  }
+
+  logOut(): void {
+    this.storgeService
+      .clearStorage()
+      .pipe(
+        take(1),
+        finalize(() => {})
+      )
+      .subscribe(() => this.router.navigate(['/auth/login']));
+    this.msalSerivce.logout();
   }
 }

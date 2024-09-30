@@ -333,15 +333,17 @@ export class MainComponent implements OnInit {
   }
 
   logOut(): void {
-    this.loading.show();
-    this.msalSerivce.logout();
-    this.storage
-      .clearStorage()
-      .pipe(
-        take(1),
-        finalize(() => this.loading.hide())
-      )
-      .subscribe(() => this.router.navigate(['/auth/login']));
+    // this.loading.show();
+    // this.msalSerivce.logout();
+    // this.storage
+    //   .clearStorage()
+    //   .pipe(
+    //     take(1),
+    //     finalize(() => this.loading.hide())
+    //   )
+    //   .subscribe(() => this.router.navigate(['/auth/login']));
+
+    this.authService.logOut();
   }
   setAllPropsByNameInArray(arr, propName, value) {
     arr.forEach((obj) => {
