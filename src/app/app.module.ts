@@ -50,9 +50,7 @@ const appInitializerFn = (configService: ConfigService) => {
   };
 };
 
-export function loggerCallback(logLevel: LogLevel, message: string) {
-  console.log(message);
-}
+export function loggerCallback(logLevel: LogLevel, message: string) {}
 
 export function MSALInstanceFactory(): PublicClientApplication {
   return new PublicClientApplication({
