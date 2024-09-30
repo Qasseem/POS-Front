@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/http/http.service';
 import { BehaviorSubject } from 'rxjs';
-import { APIURL } from '../api';
 import { take, finalize, map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -42,7 +41,7 @@ export class PermissionsService {
     this.loading.show();
     this.clearData();
     this.http
-      .getReq(APIURL.menuLinks)
+      .getReq('/Security/Menu')
       .pipe(
         take(1),
         map((resp: any) => {

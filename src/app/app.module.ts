@@ -50,7 +50,9 @@ const appInitializerFn = (configService: ConfigService) => {
   };
 };
 
-export function loggerCallback(logLevel: LogLevel, message: string) {}
+export function loggerCallback(logLevel: LogLevel, message: string) {
+  // console.log(message);
+}
 
 export function MSALInstanceFactory(): PublicClientApplication {
   return new PublicClientApplication({
@@ -63,6 +65,7 @@ export function MSALInstanceFactory(): PublicClientApplication {
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: false,
     },
     system: {
       allowNativeBroker: false, // Disables WAM Broker
@@ -136,11 +139,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       deps: [ConfigService],
     },
     provideAnimationsAsync(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true,
-    },
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,

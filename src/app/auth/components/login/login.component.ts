@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
         this.storage.setItem('token', resp.accessToken);
         console.warn(this.storage.getToken());
         console.warn(localStorage.getItem('token'));
+        this.authService.getMenuItems();
         const url = '/main/dashboard';
         // this.permissions.syncRolesPermissions();
         this.router.navigate([url]);

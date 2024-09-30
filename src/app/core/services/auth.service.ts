@@ -42,4 +42,35 @@ export class AuthService {
   logout(logoutData) {
     return this.http.postReq('/Security/Logout', logoutData);
   }
+
+  getMenuItems() {
+    this.getMenuLinks().subscribe({
+      next: (res) => {
+        if (res.success) {
+          let permissions = [];
+          res.data.forEach((permission) => {
+            permission.pages.forEach((page) => {
+              const pagePermissions = page.frontEndNames.split(',');
+              pagePermissions.forEach((x) => {
+                x = this.storgeService.convertToKebabCase(
+                  permission.nameEn + ' ' + page.nameEn + ' ' + x
+                );
+                permissions.push(x);
+              });
+            });
+          });
+          permissions = Array.from(new Set([...permissions]));
+          permissions = this.storgeService.sortAlphabetically(permissions);
+          // permissions = permissions.filter(
+          //   (x) => x == 'merchants-all-merchants-block'
+          // );
+          // console.log(permissions,'appComponent');
+          this.storgeService.setItem(
+            'permissions',
+            JSON.stringify(permissions)
+          );
+        }
+      },
+    });
+  }
 }

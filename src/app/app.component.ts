@@ -3,7 +3,11 @@ import { AppTranslateService } from './core/shared/services/translate.service';
 import { Spinkit } from 'ng-http-loader';
 import { StorageService } from './core/services/storage.service';
 import { AuthService } from './core/services/auth.service';
-import { InactivityService } from './services/inactivity.service';
+import { MsalService } from '@azure/msal-angular';
+
+import { SpinnerVisibilityService } from 'ng-http-loader';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'oc-root',
@@ -13,43 +17,45 @@ import { InactivityService } from './services/inactivity.service';
 export class AppComponent implements OnInit {
   ngOnInit() {
     // this.inactivityService.initialize();
+    this.isIframe = window !== window.parent && !window.opener;
   }
   public spinkit = Spinkit;
+  loginDisplay = false;
   title = 'My Afaqy Customers';
+  isIframe = false;
   constructor(
     private appTranslateService: AppTranslateService,
     private storage: StorageService,
     private authService: AuthService,
-    private inactivityService: InactivityService
+    private msalSerivce: MsalService,
+    private spinner: SpinnerVisibilityService
   ) {
+    // this.spinner.hide();
+    this.getSilentToken();
     this.appTranslateService.changeLangage(this.storage.getLang());
-    if (!!this.storage.getToken()) {
-      this.authService.getMenuLinks().subscribe({
-        next: (res) => {
-          // console.log(res.data);
-          if (res.success) {
-            let permissions = [];
-            res.data.forEach((permission) => {
-              permission.pages.forEach((page) => {
-                const pagePermissions = page.frontEndNames.split(',');
-                pagePermissions.forEach((x) => {
-                  x = this.storage.convertToKebabCase(
-                    permission.nameEn + ' ' + page.nameEn + ' ' + x
-                  );
-                  permissions.push(x);
-                });
-              });
-            });
-            permissions = Array.from(new Set([...permissions]));
-            permissions = this.storage.sortAlphabetically(permissions);
-            // permissions = permissions.filter(
-            //   (x) => x == 'merchants-all-merchants-block'
-            // );
-            // console.log(permissions,'appComponent');
-            this.storage.setItem('permissions', JSON.stringify(permissions));
-          }
-        },
-      });
-    }
+  }
+
+  getMenuItems() {
+    this.authService.getMenuItems();
+  }
+
+  getSilentToken() {
+    this.msalSerivce.instance.initialize().then(() => {
+      const tokenRequest = {
+        scopes: [...environment.adConfig.scopeUrls],
+        account: this.msalSerivce.instance.getAllAccounts()[0],
+      };
+
+      this.msalSerivce.instance
+        .acquireTokenSilent(tokenRequest)
+        .then((response) => {
+          // Use the access token
+          this.getMenuItems();
+        })
+        .catch((error) => {
+          // Handle token acquisition error
+          this.msalSerivce.instance.acquireTokenPopup(tokenRequest);
+        });
+    });
   }
 }
