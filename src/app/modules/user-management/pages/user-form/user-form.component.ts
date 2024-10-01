@@ -4,9 +4,7 @@ import { UserService } from '../../services/user.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { startWith, takeWhile } from 'rxjs';
-import { PasswordMatchValidator } from 'src/app/core/validators/password-strength.validator';
 import { HttpClient } from '@angular/common/http';
-import { RegexPatterns } from 'src/app/core/shared/core/patterns/regex-patterns';
 
 @Component({
   selector: 'oc-user-form',
@@ -46,7 +44,6 @@ export class UserFormComponent {
     const phoneNumberValidation = /^01\d{9}$/;
     const namePattern =
       /^[A-Za-z0-9!@#\$%\^\&*\)\(+=._-]+[A-Za-z0-9!@#\$%\^\&*\)\(+=._-]*[A-Za-z0-9!@#\$%\^\&*\)\(+=._-]+$/;
-    const passwordPattern = /^[A-Za-z0-9!@#\$%\^\&*\)\(+=._-]+$/;
 
     this.form = this.fb.group(
       {
@@ -75,22 +72,22 @@ export class UserFormComponent {
         regionId: [null, Validators.required],
         cityId: [null, Validators.required],
         zoneId: [null, Validators.required],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern(RegexPatterns.password),
-          ],
-        ],
-        confirmPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.pattern(RegexPatterns.password),
-          ],
-        ],
+        // password: [
+        //   '',
+        //   [
+        //     Validators.required,
+        //     Validators.minLength(8),
+        //     Validators.pattern(RegexPatterns.password),
+        //   ],
+        // ],
+        // confirmPassword: [
+        //   '',
+        //   [
+        //     Validators.required,
+        //     Validators.minLength(8),
+        //     Validators.pattern(RegexPatterns.password),
+        //   ],
+        // ],
       }
       // { validators: PasswordMatchValidator('password', 'confirmPassword') }
     );
@@ -289,10 +286,10 @@ export class UserFormComponent {
               this.form
                 .get('nationalIdBase64String')
                 .patchValue(resp.data.nationalIdUrl);
-              this.form.get('password').clearValidators();
-              this.form.get('password').updateValueAndValidity();
-              this.form.get('confirmPassword').clearValidators();
-              this.form.get('confirmPassword').updateValueAndValidity();
+              // this.form.get('password').clearValidators();
+              // this.form.get('password').updateValueAndValidity();
+              // this.form.get('confirmPassword').clearValidators();
+              // this.form.get('confirmPassword').updateValueAndValidity();
               // this.form.updateValueAndValidity();
             }
           }
