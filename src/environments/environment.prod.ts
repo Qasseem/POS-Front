@@ -4,7 +4,7 @@
 
 import { EnvironmentConfiguration } from '../app/models/environment-configuration';
 
-const serverUrl = 'https://uatbe.softwaves.co';
+const serverUrl = 'https://oc.paymob.com';
 
 // The list of file replacements can be found in `angular.json`.
 export const environment: EnvironmentConfiguration = {
@@ -15,15 +15,15 @@ export const environment: EnvironmentConfiguration = {
     userProfile: 'user-profiles',
   },
   adConfig: {
-    clientId: 'b66930e8-db93-498e-a9c4-9642c14a4085',
-    readScopeUrl: 'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Read',
-    writeScopeUrl: 'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Write',
+    clientId: 'e98fd670-bf08-40af-a1cd-d4bf15b532cf',
+    readScopeUrl: 'api://568ad5cb-038a-4157-a918-2a57dc508a72/Read',
+    writeScopeUrl: 'api://568ad5cb-038a-4157-a918-2a57dc508a72/Write',
     scopeUrls: [
-      'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Read',
-      'api://8155e346-1c03-4281-9510-b64cac9e0e8c/Write',
+      'api://568ad5cb-038a-4157-a918-2a57dc508a72/Read',
+      'api://568ad5cb-038a-4157-a918-2a57dc508a72/Write',
     ],
-    apiEndpointUrl: 'https://uatbe.softwaves.co',
-    tenantId: '1bf381f3-ed19-4473-97a5-5da0aeba5b6f',
+    apiEndpointUrl: 'https://oc.paymob.com',
+    tenantId: '96bf2027-97ea-4dfc-8f5b-7121b770f292',
   },
   cacheTimeInMinutes: 15,
 };
