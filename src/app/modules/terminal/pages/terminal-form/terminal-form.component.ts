@@ -52,7 +52,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
           Validators.required,
           Validators.minLength(1),
           Validators.maxLength(30),
-          Validators.pattern(/^\d{5,30}$/),
+          Validators.pattern(/^\d{1,30}$/),
         ],
       ],
       phoneNumber: [
