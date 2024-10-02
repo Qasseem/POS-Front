@@ -4,7 +4,7 @@
 
 import { EnvironmentConfiguration } from '../app/models/environment-configuration';
 
-const serverUrl = 'https://uatbe.softwaves.co';
+const serverUrl = 'https://oc.paymob.com';
 
 // The list of file replacements can be found in `angular.json`.
 export const environment: EnvironmentConfiguration = {
