@@ -127,6 +127,14 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: (resp) => {
           if (resp.success) {
+            resp.data.data.forEach((item) => {
+              item.searchKey =
+                (item?.id ?? '') +
+                (item.nameEn ?? '') +
+                (item?.nameAr ?? '') +
+                (item?.merchantId ?? '');
+            });
+
             this.allMerchantList = resp.data;
             this.route.queryParams.subscribe((params) => {
               if (params.hasOwnProperty('merchantId')) {
