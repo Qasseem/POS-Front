@@ -281,6 +281,14 @@ export class TicketFormComponent implements OnInit {
     });
     this.terminalService.GetAllMerchantDropDown().subscribe({
       next: (res) => {
+        res.data.forEach((item) => {
+          item.searchKey =
+            (item?.id ?? '') +
+            (item.nameEn ?? '') +
+            (item?.nameAr ?? '') +
+            (item?.merchantId ?? '');
+        });
+
         this.merchants = res.data;
       },
     });
