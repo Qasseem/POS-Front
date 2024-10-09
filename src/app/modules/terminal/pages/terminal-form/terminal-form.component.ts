@@ -127,7 +127,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: (resp) => {
           if (resp.success) {
-            resp.data.data.forEach((item) => {
+            resp.data.forEach((item) => {
               item.searchKey =
                 (item?.id ?? '') +
                 (item.nameEn ?? '') +
