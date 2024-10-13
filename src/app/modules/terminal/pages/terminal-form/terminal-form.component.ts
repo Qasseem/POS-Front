@@ -121,39 +121,39 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       });
 
-    this.service
-      .GetAllMerchantDropDown()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            resp.data.forEach((item) => {
-              item.searchKey =
-                (item?.id ?? '') +
-                (item.nameEn ?? '') +
-                (item?.nameAr ?? '') +
-                (item?.merchantId ?? '');
-            });
+    // this.service
+    //   .GetAllMerchantDropDown()
+    //   .pipe(takeWhile(() => this.alive))
+    //   .subscribe({
+    //     next: (resp) => {
+    //       if (resp.success) {
+    //         resp.data.forEach((item) => {
+    //           item.searchKey =
+    //             (item?.id ?? '') +
+    //             (item.nameEn ?? '') +
+    //             (item?.nameAr ?? '') +
+    //             (item?.merchantId ?? '');
+    //         });
 
-            this.allMerchantList = resp.data;
-            this.route.queryParams.subscribe((params) => {
-              if (params.hasOwnProperty('merchantId')) {
-                const merchantId = params['merchantId'];
-                if (merchantId) {
-                  const selectedMerchant = this.allMerchantList.find(
-                    (merchant) => merchant.id == merchantId // Use == for loose comparison to handle different types
-                  );
-                  if (selectedMerchant) {
-                    this.terminalForm
-                      .get('merchantId')
-                      .setValue(selectedMerchant.id);
-                  }
-                }
-              }
-            });
-          }
-        },
-      });
+    //         this.allMerchantList = resp.data;
+    //         this.route.queryParams.subscribe((params) => {
+    //           if (params.hasOwnProperty('merchantId')) {
+    //             const merchantId = params['merchantId'];
+    //             if (merchantId) {
+    //               const selectedMerchant = this.allMerchantList.find(
+    //                 (merchant) => merchant.id == merchantId // Use == for loose comparison to handle different types
+    //               );
+    //               if (selectedMerchant) {
+    //                 this.terminalForm
+    //                   .get('merchantId')
+    //                   .setValue(selectedMerchant.id);
+    //               }
+    //             }
+    //           }
+    //         });
+    //       }
+    //     },
+    //   });
 
     this.service
       .GetAllErrandChannels()

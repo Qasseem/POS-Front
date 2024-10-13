@@ -40,33 +40,15 @@
             </div>
             <div class="form flex flex-wrap pt-12">
               <div class="col-4">
-                <div class="flex flex-column gap-2">
-                  <label for="merchantId"
-                    >Merchant <span class="p-error"> * </span></label
-                  >
-                  <p-dropdown
-                    [options]="allMerchantList"
-                    formControlName="merchantId"
-                    [optionValue]="'id'"
-                    optionLabel="nameEn"
-                    [filterBy]="'searchKey'"
-                    filter="true"
-                  />
-                  <div
-                    *ngIf="
-                      f.regionId.errors &&
-                      (f.regionId.dirty || f.regionId.touched)
-                    "
-                    class="invalid-feedback"
-                  >
-                    <div
-                      class="fs-10 color-red"
-                      *ngIf="f.merchantId?.errors?.required"
-                    >
-                      Merchant field is required
-                    </div>
-                  </div>
-                </div>
+                <oc-ddl
+                  [url]="'/Terminal/GetAllMechantDropDown'"
+                  [form]="terminalForm"
+                  [isMultiple]="false"
+                  [controlName]="'merchantId'"
+                  [showArabicName]="false"
+                  [ddlHeader]="'Merchant'"
+                >
+                </oc-ddl>
               </div>
 
               <div class="col-4">
