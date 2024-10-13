@@ -409,14 +409,14 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (Array.isArray(event?.value)) {
         event?.value.map((item) => {
           this.language.currentLanguage() === 'en'
-            ? (propValue += item.nameEn + ', ')
+            ? (propValue += item?.nameEn + ', ')
             : (propValue += item.nameAr + +', ');
         });
         propValue = propValue.slice(0, -2);
       } else {
         this.language.currentLanguage() === 'en'
-          ? (propValue = event?.value.nameEn)
-          : (propValue = event?.value.nameAr);
+          ? (propValue = event?.value?.nameEn)
+          : (propValue = event?.value?.nameAr);
       }
       this.formValueDictionary[ctrlName] = propValue ? propValue : event.value;
     }

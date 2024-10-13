@@ -121,15 +121,13 @@ export class ViewMerchantComponent implements OnInit {
       isFixed: true,
     },
     {
-      isMultiple: true,
-      type: SearchInputTypes.select,
+      type: SearchInputTypes.choice,
       field: 'merchant',
       isFixed: true,
       url: '/Terminal/GetAllMechantDropDown',
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-      filter: true,
-      filterBy: 'merchantNumber,name',
+      isMultiple: true,
+      serverSide: true,
+      method: HTTPMethods.postReq,
     },
 
     {

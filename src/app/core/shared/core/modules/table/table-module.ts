@@ -10,6 +10,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { FormModule } from 'src/app/core/shared/form/form-module';
 import { FileUploadModule } from './components/file-upload/file-upload.module';
 import { IconModule } from 'src/app/modules/shared/inline-svg-icon/icon.module';
+import { OcDdlComponent } from '../../../components/oc-ddl/oc-ddl.component';
 
 @NgModule({
   imports: [
@@ -20,9 +21,10 @@ import { IconModule } from 'src/app/modules/shared/inline-svg-icon/icon.module';
     FormModule,
     PrimeNgButtonsModule,
     FileUploadModule,
+    OcDdlComponent,
     IconModule,
   ],
   declarations: [ListComponent, TableComponent, SearchBarComponent],
-  exports: [ListComponent, TableComponent, SearchBarComponent],
+  exports: [ListComponent, TableComponent, SearchBarComponent, OcDdlComponent],
 })
 export class PrimeTableModule {}

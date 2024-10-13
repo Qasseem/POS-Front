@@ -180,25 +180,22 @@ export class TerminalListComponent implements OnInit, OnDestroy {
       isFixed: true,
     },
     {
-      isMultiple: true,
-      type: SearchInputTypes.select,
+      type: SearchInputTypes.choice,
       field: 'merchant',
       isFixed: true,
-      url: '/Terminal/GetAllMechantDropDown', // Replaced with direct URL
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
-      filter: true,
-      filterBy: 'merchantNumber,name',
+      url: '/Terminal/GetAllMechantDropDown',
+      isMultiple: true,
+      serverSide: true,
+      method: HTTPMethods.postReq,
     },
-
     {
       isMultiple: true,
-      type: SearchInputTypes.select,
+      type: SearchInputTypes.choice,
       field: 'userName',
       isFixed: true,
+      serverSide: true,
       url: '/Terminal/GetAllMechantUserNamesDropDown', // Replaced with direct URL
-      method: HTTPMethods.getReq,
-      propValueName: 'id',
+      method: HTTPMethods.postReq,
     },
     {
       type: SearchInputTypes.text,
