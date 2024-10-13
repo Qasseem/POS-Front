@@ -159,33 +159,18 @@
             <p-divider></p-divider>
             <div class="details">
               <div class="control">
-                <label>Merchant <span class="p-error"> * </span></label>
-                <p-dropdown
-                  [options]="merchants"
-                  [optionLabel]="'nameEn'"
-                  [optionValue]="'id'"
-                  filter="true"
-                  [showClear]="true"
-                  [autoOptionFocus]="false"
-                  formControlName="merchantId"
-                  placeholder="Select Merchant"
-                  [filterBy]="'searchKey'"
-                ></p-dropdown>
-                <div
-                  *ngIf="
-                    ticketForm.get('merchantId')?.errors &&
-                    (ticketForm.get('merchantId').dirty ||
-                      ticketForm.get('merchantId').touched)
-                  "
-                  class="invalid-feedback"
+                <oc-ddl
+                  [url]="'/Terminal/GetAllMechantDropDown'"
+                  [form]="ticketForm"
+                  [isMultiple]="false"
+                  [controlName]="'merchantId'"
+                  [showArabicName]="false"
+                  [ddlHeader]="'Merchant'"
+                  [requiredMessage]="'Merchant field is required'"
                 >
-                  <div class="fs-10 color-red">
-                    <span *ngIf="ticketForm.get('merchantId')?.errors.required">
-                      Merchant field is required
-                    </span>
-                  </div>
-                </div>
+                </oc-ddl>
               </div>
+
               <div class="control">
                 <label>
                   Terminal
