@@ -48,6 +48,7 @@
                   [showArabicName]="false"
                   [ddlHeader]="'Merchant'"
                   [requiredMessage]="'Merchant field is required'"
+                  (dataChange)="merchantChanged($event)"
                 >
                 </oc-ddl>
               </div>

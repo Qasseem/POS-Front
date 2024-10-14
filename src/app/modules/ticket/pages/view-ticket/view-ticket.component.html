@@ -27,18 +27,12 @@
       <div class="view-container--cards--details-card">
         <div class="view-container--cards--details-card--title">
           Ticket Details
+          <span class="ml-3" [ngStyle]="statusStyleObj">{{
+            details?.statusEn
+          }}</span>
         </div>
         <p-divider></p-divider>
-        <!-- <div class="view-container--cards--details-card--addons">
-        <div class="view-container--cards--details-card--addons--title">Addons</div>
-        <div class="view-container--cards--details-card--addons--items">
-          <div class="view-container--cards--details-card--addons--items--item"></div>
-        </div>
-        <div class="view-container--cards--details-card--addons--empty">
-          No addons !
-        </div>
-        <p-divider></p-divider>
-      </div> -->
+
         <div class="view-container--cards--details-card--info">
           <div class="view-container--cards--details-card--info--users">
             <div class="view-container--cards--details-card--info--users--item">
@@ -128,7 +122,7 @@
                       width="16px"
                       height="16px"
                     ></oc-icon>
-                    {{ details?.terminalPhone }}
+                    {{ details?.assigneeContact }}
                   </div>
                 </div>
               </div>
