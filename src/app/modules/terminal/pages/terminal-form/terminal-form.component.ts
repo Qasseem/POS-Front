@@ -71,6 +71,9 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.terminalForm.controls.landMark.setValue(
       this.merchanDetailstData.landMark
     );
+    this.terminalForm.controls.phoneNumber.setValue(
+      this.merchanDetailstData.phoneNumber
+    );
 
     disableMerchantDdl ? this.terminalForm.controls.merchantId.disable() : '';
     if (
