@@ -274,8 +274,6 @@ export class TicketFormComponent implements OnInit {
     this.ticketForm.get('categoryId').valueChanges.subscribe({
       next: (categoryId) => {
         if (categoryId) {
-          if (this.formType == 'add')
-            this.ticketForm.get('terminalId').patchValue(null);
           this.service.getCategoryErrandTypes(categoryId).subscribe({
             next: (res) => {
               this.errandTypes = res.data;
@@ -293,7 +291,9 @@ export class TicketFormComponent implements OnInit {
             this.ticketForm
               .get('terminalId')
               .addValidators([Validators.required]);
-            this.ticketForm.get('terminalId').enable();
+            if (!this.terminalId) {
+              this.ticketForm.get('terminalId').enable();
+            }
             this.ticketForm.get('terminalId').updateValueAndValidity();
           }
         }
