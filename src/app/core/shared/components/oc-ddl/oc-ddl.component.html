@@ -1,0 +1,159 @@
+<div #auto class="dolphen-name-wrap name-ar">
+  <div *ngIf="ddlHeader" style="margin-bottom: 5px; margin-top: -2px">
+    <span style="color: #798693; font-size: 12px">
+      {{ ddlHeader }}
+      <span *ngIf="isRequired || showAsterisk" style="color: red">*</span>
+    </span>
+  </div>
+  <div class="ng-select-wrap form-group custome-placeholder mb-0">
+    <div
+      [ngClass]="{
+        'icon-select': !hideBorder,
+        hideIcon: hideBorder,
+        'icon-selectAr': isLangArabic
+      }"
+    ></div>
+    <ng-select
+      [appendTo]="relativeTo"
+      [attr.test_id]="test_id"
+      #myselect
+      [formControl]="form.get(controlName)"
+      class="mt-0 text-left"
+      [items]="itemsData"
+      [bindLabel]="nameEn"
+      [bindValue]="id"
+      [placeholder]="placeholder"
+      [searchable]="isSearchable"
+      [multiple]="isMultiple"
+      [closeOnSelect]="isMultiple ? false : true"
+      [virtualScroll]="isVirtualScroll"
+      (scrollToEnd)="onScrollToEnd()"
+      [typeahead]="InputSearch$"
+      [hideSelected]="isHideSelected"
+      (focusout)="focusout()"
+      (change)="itemSelected($event)"
+      (remove)="remove()"
+      (clear)="clear()"
+      [clearOnBackspace]="false"
+      [ngClass]="{
+        hideBorder: hideBorder,
+        resize: resizeHeight,
+        valueAr: isLangArabic
+      }"
+      [dropdownPosition]="dropdownPosition"
+    >
+      <ng-template ng-header-tmp>
+        <small class="form-text text-muted">
+          {{ "dropdowns.loaded" | translate }}
+          {{ itemsData.length }} - {{ itemsSearchNo }}
+          {{ name | translate }}
+        </small>
+        <div *ngIf="showSelectAll">
+          <button
+            type="button"
+            class="btn btn-link"
+            [attr.test_id]="'SelectAll_Button'"
+            (click)="onSelectAll(itemsData)"
+          >
+            Select All
+          </button>
+          <button
+            type="button"
+            [attr.test_id]="'ClearAll_Button'"
+            class="btn btn-link"
+            (click)="onClearAll()"
+          >
+            Clear All
+          </button>
+        </div>
+      </ng-template>
+      <ng-template
+        *ngIf="isMultiple && !resizeHeight"
+        ng-multi-label-tmp
+        let-items="items"
+        let-clear="clear"
+      >
+        <div
+          class="ng-value"
+          *ngFor="let item of items | slice : 0 : multipleSelectCount"
+        >
+          <span class="ng-value-label"> {{ item[nameEn] }}</span>
+          <span
+            class="ng-value-icon right"
+            (click)="clear(item)"
+            aria-hidden="true"
+            >×</span
+          >
+        </div>
+        <div class="ng-value" *ngIf="items.length > multipleSelectCount">
+          <span class="ng-value-label"
+            >{{ items.length - multipleSelectCount }} more...</span
+          >
+        </div>
+      </ng-template>
+      <ng-template *ngIf="showAvatar" ng-label-tmp let-item="item">
+        <div>
+          <span class="user">
+            <span style="padding-left: 3px; font-size: small">
+              {{ getAvatar(item.nameEn) }}
+            </span>
+            <i
+              [ngClass]="item?.isActve ? 'text-success' : 'text-secondary'"
+              style="float: right; margin-top: 12px; margin-right: -4px"
+              class="fas fa-circle fa-xs"
+            ></i>
+          </span>
+          <span style="margin-left: 5px">
+            {{ item.nameEn }}
+          </span>
+        </div>
+      </ng-template>
+      <ng-template
+        ng-option-tmp
+        let-item="item"
+        let-index="index"
+        let-search="searchTerm"
+      >
+        <div class="itemDpContiner">
+          <div class="card-body">
+            <div class="card-text">
+              <div>
+                <span *ngIf="showAvatar" class="user">
+                  <span style="padding-left: 3px; font-size: small">
+                    {{ getAvatar(item[nameEn]) }}
+                  </span>
+                  <i
+                    [ngClass]="
+                      item?.isActve ? 'text-success' : 'text-secondary'
+                    "
+                    style="float: right; margin-top: 15px; margin-right: -6px"
+                    class="fas fa-circle fa-xs"
+                  ></i>
+                </span>
+                <span style="margin-left: 5px">
+                  {{ item[nameEn] }}
+                </span>
+              </div>
+              <div
+                *ngIf="showArabicName"
+                [ngClass]="{ 'avatar-padding': showAvatar }"
+                style="color: #969696; font-size: 14px"
+              >
+                {{ item[nameAr] }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-select>
+  </div>
+  <div
+    class="fs-10 color-red mt-2"
+    *ngIf="
+      form.get(controlName)?.errors?.required &&
+      (form.get(controlName)?.dirty || form.get(controlName)?.touched)
+    "
+  >
+    {{ requiredMessage }}
+  </div>
+</div>

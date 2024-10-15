@@ -279,19 +279,19 @@ export class TicketFormComponent implements OnInit {
         this.categories = res.data;
       },
     });
-    this.terminalService.GetAllMerchantDropDown().subscribe({
-      next: (res) => {
-        res.data.forEach((item) => {
-          item.searchKey =
-            (item?.id ?? '') +
-            (item.nameEn ?? '') +
-            (item?.nameAr ?? '') +
-            (item?.merchantId ?? '');
-        });
+    // this.terminalService.GetAllMerchantDropDown().subscribe({
+    //   next: (res) => {
+    //     res.data.forEach((item) => {
+    //       item.searchKey =
+    //         (item?.id ?? '') +
+    //         (item.nameEn ?? '') +
+    //         (item?.nameAr ?? '') +
+    //         (item?.merchantId ?? '');
+    //     });
 
-        this.merchants = res.data;
-      },
-    });
+    //     this.merchants = res.data;
+    //   },
+    // });
     this.terminalService.GetAllErrandChannels().subscribe({
       next: (res) => {
         this.errandChannels = res.data;

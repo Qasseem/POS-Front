@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, takeWhile } from 'rxjs';
+import { combineLatest, take, takeWhile } from 'rxjs';
 import { TerminalService } from '../../services/terminal.service';
+import { MerchantService } from 'src/app/modules/merchant/services/merchant.service';
 
 @Component({
   selector: 'oc-terminal-form',
@@ -26,14 +27,71 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   orignalCities = [];
   formType = 'add';
   coordinates = { lng: null, lat: null };
+  merchantId: any;
+  merchanDetailstData: any;
 
   constructor(
     private fb: FormBuilder,
     private service: TerminalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private merchantService: MerchantService
   ) {
     this.formType = this.route.snapshot.data.type;
+  }
+  getMerchantData(disableMerchantDdl = false) {
+    if (this.merchantId && !this.id) {
+      this.merchantService
+        .GetDetails(this.merchantId)
+        .pipe(take(1))
+        .subscribe((resp) => {
+          if (resp.success) {
+            this.merchanDetailstData = resp.data;
+            this.fillMerchantFormData(disableMerchantDdl);
+          }
+        });
+    }
+  }
+  fillMerchantFormData(disableMerchantDdl = false) {
+    this.terminalForm.controls.merchantId.setValue(this.merchanDetailstData.id);
+    this.terminalForm.controls.latitude.setValue(
+      this.merchanDetailstData.latitude
+    );
+    this.terminalForm.controls.longitude.setValue(
+      this.merchanDetailstData.longitude
+    );
+    this.terminalForm.controls.regionId.setValue(
+      this.merchanDetailstData.regionId
+    );
+    this.terminalForm.controls.cityId.setValue(this.merchanDetailstData.cityId);
+    this.terminalForm.controls.zoneId.setValue(this.merchanDetailstData.zoneId);
+    this.terminalForm.controls.address.setValue(
+      this.merchanDetailstData.address
+    );
+    this.terminalForm.controls.landMark.setValue(
+      this.merchanDetailstData.landMark
+    );
+    this.terminalForm.controls.phoneNumber.setValue(
+      this.merchanDetailstData.phoneNumber
+    );
+
+    disableMerchantDdl ? this.terminalForm.controls.merchantId.disable() : '';
+    if (
+      this.merchanDetailstData.longitude &&
+      this.merchanDetailstData.latitude
+    ) {
+      this.coordinates.lng = parseFloat(this.merchanDetailstData.longitude);
+      this.coordinates.lat = parseFloat(this.merchanDetailstData.latitude);
+      this.coordinates = { ...this.coordinates };
+    }
+    this.terminalForm.updateValueAndValidity();
+  }
+
+  merchantChanged(event) {
+    if (event?.id) {
+      this.merchantId = event?.id;
+      this.getMerchantData();
+    }
   }
 
   ngOnInit() {
@@ -91,6 +149,11 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       },
     });
+
+    this.route.queryParams.pipe(take(1)).subscribe((params) => {
+      this.merchantId = params['merchantId'];
+    });
+    this.getMerchantData(true);
   }
 
   ngAfterViewInit(): void {
@@ -121,39 +184,39 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       });
 
-    this.service
-      .GetAllMerchantDropDown()
-      .pipe(takeWhile(() => this.alive))
-      .subscribe({
-        next: (resp) => {
-          if (resp.success) {
-            resp.data.forEach((item) => {
-              item.searchKey =
-                (item?.id ?? '') +
-                (item.nameEn ?? '') +
-                (item?.nameAr ?? '') +
-                (item?.merchantId ?? '');
-            });
+    // this.service
+    //   .GetAllMerchantDropDown()
+    //   .pipe(takeWhile(() => this.alive))
+    //   .subscribe({
+    //     next: (resp) => {
+    //       if (resp.success) {
+    //         resp.data.forEach((item) => {
+    //           item.searchKey =
+    //             (item?.id ?? '') +
+    //             (item.nameEn ?? '') +
+    //             (item?.nameAr ?? '') +
+    //             (item?.merchantId ?? '');
+    //         });
 
-            this.allMerchantList = resp.data;
-            this.route.queryParams.subscribe((params) => {
-              if (params.hasOwnProperty('merchantId')) {
-                const merchantId = params['merchantId'];
-                if (merchantId) {
-                  const selectedMerchant = this.allMerchantList.find(
-                    (merchant) => merchant.id == merchantId // Use == for loose comparison to handle different types
-                  );
-                  if (selectedMerchant) {
-                    this.terminalForm
-                      .get('merchantId')
-                      .setValue(selectedMerchant.id);
-                  }
-                }
-              }
-            });
-          }
-        },
-      });
+    //         this.allMerchantList = resp.data;
+    //         this.route.queryParams.subscribe((params) => {
+    //           if (params.hasOwnProperty('merchantId')) {
+    //             const merchantId = params['merchantId'];
+    //             if (merchantId) {
+    //               const selectedMerchant = this.allMerchantList.find(
+    //                 (merchant) => merchant.id == merchantId // Use == for loose comparison to handle different types
+    //               );
+    //               if (selectedMerchant) {
+    //                 this.terminalForm
+    //                   .get('merchantId')
+    //                   .setValue(selectedMerchant.id);
+    //               }
+    //             }
+    //           }
+    //         });
+    //       }
+    //     },
+    //   });
 
     this.service
       .GetAllErrandChannels()
