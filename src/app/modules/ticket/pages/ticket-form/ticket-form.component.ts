@@ -74,6 +74,8 @@ export class TicketFormComponent implements OnInit {
       this.ticketForm.controls.merchantId.setValue(
         this.terminalData.merchantId
       );
+      this.ticketForm.controls.terminalId.disable();
+      this.ticketForm.controls.merchantId.disable();
       this.ticketForm.updateValueAndValidity();
     }
   }
