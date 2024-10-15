@@ -21,6 +21,13 @@ const routes: Routes = [
         },
       },
       {
+        path: 'add/:terminalId',
+        component: TicketFormComponent,
+        data: {
+          type: 'add',
+        },
+      },
+      {
         path: 'list',
         component: TicketsListComponent,
       },
