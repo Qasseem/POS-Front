@@ -41,3 +41,10 @@ export enum TicketStatusEnum {
   Postponed = 5,
   Completed = 6,
 }
+
+export enum ServiceCategoryEnum {
+  Deployment = 1,
+  Visit = 2,
+  Cancellation = 3,
+  AfterSales = 4,
+}
