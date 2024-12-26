@@ -215,6 +215,11 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       header: 'Terminal ID',
     },
     {
+      field: 'createdDate',
+      header: 'Created At',
+      customCell: 'date',
+    },
+    {
       field: [
         { label: 'categoryNameEn', custom: 'default' },
         { label: 'categoryNameAr', custom: 'default' },
