@@ -7,6 +7,7 @@ import { ViewTicketComponent } from './pages/view-ticket/view-ticket.component';
 import { TicketsListComponent } from './pages/tickets-list/tickets-list.component';
 import { ScheduledTicketsListComponent } from './pages/scheduled-tickets-list/scheduled-tickets-list.component';
 import { ViewScheduledTicketComponent } from './pages/view-scheduled-ticket/view-scheduled-ticket.component';
+import { HistoryLogComponent } from '../shared/components/history-log/history-log.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
       {
         path: 'details/:id',
         component: ViewTicketComponent,
+      },
+      {
+        path: 'history/:id/:type',
+        component: HistoryLogComponent,
       },
       {
         path: 'scheduled-details/:id',

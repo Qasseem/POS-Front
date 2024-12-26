@@ -277,6 +277,11 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       icon: 'pi pi-calendar',
       call: (row: any) => this.showSchedule(row),
     },
+    {
+      name: 'History',
+      icon: 'pi pi-history',
+      call: (row: any) => this.navigateToHistory(row),
+    },
   ];
 
   filters: SearchInterface[] = [
@@ -535,5 +540,9 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       this.scheduleForm.errors;
       this.scheduleForm.markAllAsTouched();
     }
+  }
+  navigateToHistory(row) {
+    let id = row?.ticketId;
+    this.router.navigate([`main/ticket/history/${id}/${'Tickets'}`]);
   }
 }
