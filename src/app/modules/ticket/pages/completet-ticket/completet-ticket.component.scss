@@ -1,0 +1,271 @@
+.header-left {
+  float: left;
+  font-weight: bolder;
+}
+
+.ticket-form {
+  padding: 20px;
+  background-color: white;
+  border-radius: 9px;
+  margin: 20px;
+}
+
+.summary {
+  border-radius: 15px;
+  border: 3px solid #f8f8f8;
+  padding: 10px;
+}
+.section {
+  height: 80%;
+  width: 7px;
+  border-radius: 3px;
+}
+
+.ring {
+  width: 25px;
+  height: 25px;
+  border: 5px solid red;
+  border-radius: 50%;
+  background-color: transparent;
+}
+.all-right {
+  align-items: end;
+  float: right;
+  margin: auto;
+}
+
+.save-btn {
+  background-color: #0080f9;
+  color: white;
+  border-radius: 5px;
+  width: 200px;
+  height: 35px;
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.header-divider {
+  margin: 12px 12px 12px 20px;
+  border-color: rgba(237, 239, 241, 0.2);
+}
+
+.upload-image {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+.userType-field {
+  padding: 0.5rem;
+  margin-bottom: 10px;
+  .radio-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  label {
+    color: rgba(121, 134, 147, 1);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+}
+.details-text {
+  border-bottom: 1px solid rgba(237, 239, 241, 1);
+  margin-bottom: 12px;
+  p {
+    margin-top: 0px;
+  }
+}
+.p-20 {
+  padding: 20px;
+}
+
+.upload-container {
+  position: relative;
+  .upload-label {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .upload-box {
+    background-color: #e3f2fd;
+    border: 2px dashed #bbdefb;
+    padding: 20px;
+    display: flex;
+    // flex-direction: column;
+    text-align: left;
+    border-radius: 5px;
+    .upload-text {
+      color: rgba(25, 27, 28, 1);
+      font-weight: 600;
+    }
+
+    .upload-icon {
+      display: block;
+      margin: 0 auto 10px;
+      font-size: 24px;
+      color: #1e88e5;
+    }
+
+    .upload-box span {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .browse-file {
+      color: #1e88e5;
+      background: none;
+      padding: 0px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
+.upload-icon-container {
+  position: absolute;
+  bottom: 14px;
+  right: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.isManager {
+  padding-left: 12px;
+  color: rgba(76, 85, 95, 1);
+  font-weight: 400;
+}
+.mt-20 {
+  margin-top: 20px;
+}
+.pt-0 {
+  padding-top: 0px;
+}
+.ml-3 {
+  margin-left: 5px;
+}
+.profile-image-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.profile-image-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px dashed #89c2ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e8f4ff;
+  cursor: pointer;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.icon-overlay {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  font-size: 50px;
+  color: rgba(0, 0, 0, 0.1); /* Adjust the color and opacity as needed */
+}
+.upload-container {
+  border: 1px dashed #d9d9d9;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: #5b5b5b;
+}
+
+.upload-container:hover {
+  border-color: #409eff;
+  color: #409eff;
+}
+
+.upload-label {
+  display: block;
+}
+
+.upload-content {
+  display: flex;
+  // flex-direction: column;
+  align-items: center;
+}
+
+.browse-file {
+  color: #409eff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.file-info {
+  border: 1px solid rgba(237, 239, 241, 1);
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.file-upload-text {
+  text-align: left;
+  padding-left: 5px;
+}
+.file-info-text {
+  padding-left: 4px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.file-header {
+  padding: 10px;
+  background-color: #e6f2fe;
+  border-radius: 10px;
+}
+.image-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+}
+.small-rounded-button {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50px; /* Fully rounded edges */
+  padding: 3px 5px; /* Adjust button size */
+  font-size: 11px; /* Small text size */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 18px;
+  margin-top: -0.5rem;
+  margin-left: -0.4rem;
+}
+
+.small-rounded-button:hover {
+  background-color: darkred; /* Darker red on hover */
+}
+
+.delete-button {
+  margin-left: auto;
+  color: red;
+  cursor: pointer;
+  margin-right: 15px;
+}

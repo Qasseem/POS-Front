@@ -8,6 +8,7 @@ import { TicketsListComponent } from './pages/tickets-list/tickets-list.componen
 import { ScheduledTicketsListComponent } from './pages/scheduled-tickets-list/scheduled-tickets-list.component';
 import { ViewScheduledTicketComponent } from './pages/view-scheduled-ticket/view-scheduled-ticket.component';
 import { HistoryLogComponent } from '../shared/components/history-log/history-log.component';
+import { CompletetTicketComponent } from './pages/completet-ticket/completet-ticket.component';
 
 const routes: Routes = [
   {
@@ -65,6 +66,10 @@ const routes: Routes = [
       {
         path: 'scheduled-details/:id',
         component: ViewScheduledTicketComponent,
+      },
+      {
+        path: 'complete/:id',
+        component: CompletetTicketComponent,
       },
       { path: '', redirectTo: '/list', pathMatch: 'full' },
     ],

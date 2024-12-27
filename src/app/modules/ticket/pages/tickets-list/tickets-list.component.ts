@@ -5,6 +5,7 @@ import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/
 import {
   SearchInputTypes,
   HTTPMethods,
+  TicketStatusEnum,
 } from 'src/app/core/shared/core/modules/table/models/enums';
 import { SearchInterface } from 'src/app/core/shared/core/modules/table/models/search-interface';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
@@ -102,6 +103,10 @@ export function checkDates(
   styleUrls: ['./tickets-list.component.scss'],
 })
 export class TicketsListComponent implements OnInit, OnDestroy {
+  navigateToComplete(row: any): any {
+    let id = row?.ticketId;
+    this.router.navigate([`main/ticket/complete/${id}`]);
+  }
   alive = true;
   scheduleForm: FormGroup;
   scheduleDialogVisible = false;
@@ -281,6 +286,15 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       name: 'History',
       icon: 'pi pi-history',
       call: (row: any) => this.navigateToHistory(row),
+    },
+    {
+      name: 'Complete',
+      icon: 'pi pi-list-check',
+      customPermission: (row: any) =>
+        row.statusId == TicketStatusEnum.InProgress ||
+        row.statusId == TicketStatusEnum.Assigned,
+      permission: 'complete',
+      call: (row: any) => this.navigateToComplete(row),
     },
   ];
 
