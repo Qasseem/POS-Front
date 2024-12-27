@@ -34,6 +34,9 @@ export class TicketService {
     return this.http.getReq('/Ticket/GetCategoryErrandTypes/' + categoryId);
   }
 
+  GetErrandTypeDropDown() {
+    return this.http.postReq('/ErrandType/GetErrandTypeDropDown', null);
+  }
   getZoneAgents(zoneId, categoryId) {
     return this.http.getReq(
       '/Ticket/GetZoneAgents/' + zoneId + '/' + categoryId
