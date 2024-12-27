@@ -126,6 +126,8 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       regionId: [null, Validators.required],
+      latitudeInput: [null],
+      longitudeInput: [null],
       cityId: [null, Validators.required],
       zoneId: [null, Validators.required],
       address: [null],
@@ -319,9 +321,7 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }
   }
-  formatLngLat(string) {
-    return string !== null ? parseFloat(string).toFixed(6).toString() : '-';
-  }
+
   cityChanged(event) {
     this.terminalForm.controls.zoneId.setValue(null);
     this.zonesList = this.orignalZones;
@@ -331,5 +331,17 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
+  }
+  pinLocation() {
+    let lng = this.terminalForm?.get('longitudeInput').value;
+    let lat = this.terminalForm?.get('latitudeInput').value;
+
+    this.terminalForm?.get('latitude').setValue(lat);
+    this.terminalForm?.get('longitude').setValue(lng);
+
+    this.coordinates = {
+      lat: lat,
+      lng: lng,
+    };
   }
 }
