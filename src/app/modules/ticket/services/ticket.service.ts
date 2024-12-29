@@ -50,10 +50,8 @@ export class TicketService {
   GetErrandTypeDropDown() {
     return this.http.postReq('/ErrandType/GetErrandTypeDropDown', null);
   }
-  getZoneAgents(zoneId, categoryId) {
-    return this.http.getReq(
-      '/Ticket/GetZoneAgents/' + zoneId + '/' + categoryId
-    );
+  getZoneAgents(data) {
+    return this.http.postReq('/Ticket/V2/GetZoneAgents ', data);
   }
 
   getTerminalDetails(terminalId) {

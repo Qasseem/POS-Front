@@ -27,6 +27,8 @@ export class CompletetTicketComponent implements OnInit {
   images = [];
   failReasons = [];
   selectedItem: any;
+  isAllTasksStatusesDone: any;
+  showChart: boolean;
   constructor(
     private fb: FormBuilder,
     private service: TicketService,
@@ -49,39 +51,18 @@ export class CompletetTicketComponent implements OnInit {
   }
   getTicketDetails(id: any) {
     if (id) {
+      this.showChart = false;
       this.service.getDeploymentStatus(id).subscribe((res) => {
         if (res.success) {
           this.details = res.data;
+          this.checkForNotCompleteTasks();
+          this.setChartData();
         }
       });
     }
   }
 
-  ngOnInit() {
-    const documentStyle = getComputedStyle(document.documentElement);
-    const textColor = documentStyle.getPropertyValue('--text-color');
-
-    this.data = {
-      datasets: [
-        {
-          data: [540, 325, 702],
-          backgroundColor: ['#E3E7EE', 'green', 'red'],
-          hoverBackgroundColor: ['#E3E7EE', 'green', 'red'],
-        },
-      ],
-    };
-
-    this.options = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: textColor,
-          },
-        },
-      },
-    };
-  }
+  ngOnInit() {}
   buildForm() {
     this.form = this.fb.group({
       ticketId: ['', Validators.required],
@@ -117,6 +98,38 @@ export class CompletetTicketComponent implements OnInit {
           this.visible = false;
         }
       });
+  }
+  setChartData() {
+    var data = [
+      this.details?.pending,
+      this.details?.success,
+      this.details?.failed,
+    ];
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+
+    this.data = {
+      datasets: [
+        {
+          data: [...data],
+          backgroundColor: ['#E3E7EE', 'green', 'red'],
+          hoverBackgroundColor: ['#E3E7EE', 'green', 'red'],
+        },
+      ],
+    };
+
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: textColor,
+          },
+        },
+      },
+    };
+
+    this.showChart = true;
   }
 
   statusChange(event) {}
@@ -164,13 +177,17 @@ export class CompletetTicketComponent implements OnInit {
   }
   openCompleteTaskPopup(item) {
     this.selectedItem = item;
+    this.form.reset();
+    this.form.controls.statusId.setValue(1);
     this.visible = true;
   }
-  submit() {
-    let isAllTasksStatusesDone = this.details.tasks.every(
+  checkForNotCompleteTasks() {
+    this.isAllTasksStatusesDone = this.details.tasks.every(
       (x) => x.statusId != 0
     );
-    if (!isAllTasksStatusesDone) {
+  }
+  submit() {
+    if (!this.isAllTasksStatusesDone) {
       this.toaster.showError('Please complete all tasks first');
       return;
     }

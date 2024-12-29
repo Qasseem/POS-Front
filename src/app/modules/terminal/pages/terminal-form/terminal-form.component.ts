@@ -289,6 +289,9 @@ export class TerminalFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.id) {
       delete obj.id;
     }
+    if (this.merchantId) {
+      obj.merchantId = this.merchantId;
+    }
     this.service
       .Add(this.terminalForm.value)
       .pipe(takeWhile(() => this.alive))

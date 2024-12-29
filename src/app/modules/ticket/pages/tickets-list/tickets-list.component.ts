@@ -292,6 +292,7 @@ export class TicketsListComponent implements OnInit, OnDestroy {
       icon: 'pi pi-list-check',
       customPermission: (row: any) =>
         row.statusId == TicketStatusEnum.InProgress ||
+        row.statusId == TicketStatusEnum.AgentOnWay ||
         row.statusId == TicketStatusEnum.Assigned,
       permission: 'complete',
       call: (row: any) => this.navigateToComplete(row),
