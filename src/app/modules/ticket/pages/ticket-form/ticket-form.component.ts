@@ -150,7 +150,6 @@ export class TicketFormComponent implements OnInit {
     }
     let categoryId = this.ticketForm.get('categoryId').value;
     let zoneId = this.ticketForm.get('zoneId').value;
-
     if (categoryId && zoneId && errandTypeIds.length) {
       this.service
         .getZoneAgents({
@@ -226,6 +225,7 @@ export class TicketFormComponent implements OnInit {
                   .get('posTypeId')
                   .patchValue(this.details.posTypeId);
                 this.handleAddress(this.details);
+                this.zoneValueChange();
               }
             },
           });

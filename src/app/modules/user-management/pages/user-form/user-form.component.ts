@@ -7,6 +7,7 @@ import { startWith, takeWhile } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TicketService } from 'src/app/modules/ticket/services/ticket.service';
 import { ToastService } from 'src/app/core/services/toaster.service';
+import { UserTypeEnum } from 'src/app/core/shared/core/modules/table/models/enums';
 
 @Component({
   selector: 'oc-user-form',
@@ -35,6 +36,7 @@ export class UserFormComponent {
   categories = [];
   errandTypes = [];
   serviceTypeData = [];
+  hideLocationAndServiceTypeAction: boolean;
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -78,7 +80,7 @@ export class UserFormComponent {
         regionId: [null, Validators.required],
         cityId: [null, Validators.required],
         zoneId: [null, Validators.required],
-        agentErrandTypes: this.fb.array([], Validators.required),
+        agentErrandTypes: this.fb.array([]),
         // password: [
         //   '',
         //   [
@@ -436,5 +438,33 @@ export class UserFormComponent {
           this.errandTypes.filter((x) => x.categoryId === item.categoryId);
       });
     }
+  }
+
+  userTypeChanged(event) {
+    if (event?.value == UserTypeEnum.SysytemUser) {
+      this.hideLocationAndServiceTypeAction = true;
+      this.form.get('cityId').clearValidators();
+      this.form.get('cityId').updateValueAndValidity();
+      this.form.get('zoneId').clearValidators();
+      this.form.get('zoneId').updateValueAndValidity();
+      this.form.get('regionId').clearValidators();
+      this.form.get('regionId').updateValueAndValidity();
+      this.clearagentErrandTypesItems();
+    } else {
+      this.hideLocationAndServiceTypeAction = false;
+      this.form.controls.cityId.setValidators([Validators.required]);
+      this.form.controls.zoneId.setValidators([Validators.required]);
+      this.form.controls.regionId.setValidators([Validators.required]);
+      let items = this.form.get('agentErrandTypes') as FormArray;
+      if (!items.length) {
+        this.addErrandType();
+      }
+    }
+    this.form.updateValueAndValidity();
+  }
+
+  clearagentErrandTypesItems() {
+    let items = this.form.get('agentErrandTypes') as FormArray;
+    items.clear();
   }
 }

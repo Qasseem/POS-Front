@@ -359,6 +359,7 @@
                     formControlName="userType"
                     [label]="userType.nameEn"
                     [inputId]="userType?.inputId"
+                    (onClick)="userTypeChanged($event)"
                   >
                   </p-radioButton>
                 </div>
@@ -432,7 +433,10 @@
               </div>
             </div>
           </div>
-          <div class="col-12 p-20 mt-20 inputs-div">
+          <div
+            *ngIf="!hideLocationAndServiceTypeAction"
+            class="col-12 p-20 mt-20 inputs-div"
+          >
             <div class="details-text">
               <p class="font-bold fs-11">Location</p>
             </div>
@@ -528,7 +532,10 @@
             </div>
           </div>
 
-          <div class="col-12 p-20 mt-20 inputs-div">
+          <div
+            *ngIf="!hideLocationAndServiceTypeAction"
+            class="col-12 p-20 mt-20 inputs-div"
+          >
             <div class="details-text">
               <p class="font-bold fs-11">Service Type</p>
             </div>
