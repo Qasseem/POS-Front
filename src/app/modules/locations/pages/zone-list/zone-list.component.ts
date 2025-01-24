@@ -77,7 +77,7 @@ export class ZoneListComponent {
       propValueName: 'id',
     },
     {
-      isMultiple: false,
+      isMultiple: true,
       type: SearchInputTypes.select,
       field: 'city',
       isFixed: true,

@@ -108,9 +108,22 @@ export class TicketFormComponent implements OnInit {
       next: (res) => {
         this.viewModel = res.data;
         this.patchForm(res.data);
+        if (res.data?.categoryId == ServiceCategoryEnum.Deployment) {
+          this.zoneValueChange();
+        }
       },
     });
   }
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Patches the form with the given data.
+   * If the given data contains an errandType array, loops through it and calls addErrandType
+   * If the given data contains an attachments array, loops through it, creates a form control for each attachment and adds it to the attachmentsBase64 form array
+   * Patches the form with the given data
+   * If the formType is 'edit', disables the categoryId form control
+   * @param data The data to patch the form with
+   */
+  /******  5399026f-3f8c-41da-ba2d-399cac55dfd1  *******/
   patchForm(data) {
     if (data.errandType.length) {
       data.errandType.forEach((x) => {

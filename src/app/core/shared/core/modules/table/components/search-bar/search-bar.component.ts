@@ -218,6 +218,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasThreeFields(this.filtersInput, 'region', 'city', 'zone')) {
         this.filtersForm.get('region').valueChanges.subscribe({
           next: (val) => {
+            this.filtersForm.get('city').setValue(null);
             if (val) {
               const item = this.filtersInput.find((x) => x.field == 'city');
               if (item) {
@@ -227,17 +228,22 @@ export class SearchBarComponent implements OnInit, OnChanges {
             }
           },
         });
-        this.filtersForm.get('city').valueChanges.subscribe({
-          next: (val) => {
-            if (val) {
-              const item = this.filtersInput.find((x) => x.field == 'zone');
-              if (item) {
-                item.header = !Array.isArray(val) ? val : '0';
-                this.getDDLData(item);
+        let isZoneHidden = this.filtersInput.find(
+          (x) => x.field == 'zone'
+        )?.hidden;
+        if (!isZoneHidden) {
+          this.filtersForm.get('city').valueChanges.subscribe({
+            next: (val) => {
+              if (val) {
+                const item = this.filtersInput.find((x) => x.field == 'zone');
+                if (item) {
+                  item.header = !Array.isArray(val) ? val : '0';
+                  this.getDDLData(item);
+                }
               }
-            }
-          },
-        });
+            },
+          });
+        }
       }
     }
   }
