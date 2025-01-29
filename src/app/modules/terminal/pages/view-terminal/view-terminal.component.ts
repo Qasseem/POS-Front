@@ -149,7 +149,7 @@ export class ViewTerminalComponent implements OnInit {
   ];
 
   navigateToAdd() {
-    this.router.navigate(['main/ticket/add']);
+    this.router.navigate(['main/ticket/add', this.id]);
   }
 
   id;

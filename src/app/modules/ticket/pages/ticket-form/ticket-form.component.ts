@@ -3,10 +3,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { TicketService } from '../../services/ticket.service';
-import { combineLatest, takeWhile } from 'rxjs';
+import { combineLatest, take, takeWhile } from 'rxjs';
 import { UserService } from 'src/app/modules/user-management/services/user.service';
 import { ToastService } from 'src/app/core/services/toaster.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { ServiceCategoryEnum } from 'src/app/core/shared/core/modules/table/models/enums';
 
 @Component({
   selector: 'oc-ticket-form',
@@ -38,6 +39,8 @@ export class TicketFormComponent implements OnInit {
     quantity: null,
   };
   viewModel;
+  terminalId: any;
+  terminalData: any;
   constructor(
     private fb: FormBuilder,
     private service: TicketService,
@@ -50,6 +53,31 @@ export class TicketFormComponent implements OnInit {
   ) {
     this.formType = this.route.snapshot.data.type;
     this.id = this.route.snapshot.params.id;
+  }
+  getTerminalDetails() {
+    if (this.terminalId) {
+      this.terminalService
+        .GetDetails(this.terminalId)
+        .pipe(take(1))
+        .subscribe((resp) => {
+          if (resp.success) {
+            this.terminalData = resp.data;
+            this.fillFormWithTerminalDetails();
+          }
+        });
+    }
+  }
+  fillFormWithTerminalDetails() {
+    if (this.terminalData) {
+      this.ticketForm.controls.categoryId.setValue(ServiceCategoryEnum.Visit); //For visit
+      this.ticketForm.controls.terminalId.setValue(this.terminalData.id);
+      this.ticketForm.controls.merchantId.setValue(
+        this.terminalData.merchantId
+      );
+      this.ticketForm.controls.terminalId.disable();
+      this.ticketForm.controls.merchantId.disable();
+      this.ticketForm.updateValueAndValidity();
+    }
   }
 
   ngOnInit() {
@@ -71,15 +99,31 @@ export class TicketFormComponent implements OnInit {
         this.ticketForm.get('assigneeId').updateValueAndValidity();
       }
     }
+
+    this.terminalId = this.route.snapshot.params.terminalId;
+    this.getTerminalDetails();
   }
   getTicket(id) {
     this.service.getById(id).subscribe({
       next: (res) => {
         this.viewModel = res.data;
         this.patchForm(res.data);
+        if (res.data?.categoryId == ServiceCategoryEnum.Deployment) {
+          this.zoneValueChange();
+        }
       },
     });
   }
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Patches the form with the given data.
+   * If the given data contains an errandType array, loops through it and calls addErrandType
+   * If the given data contains an attachments array, loops through it, creates a form control for each attachment and adds it to the attachmentsBase64 form array
+   * Patches the form with the given data
+   * If the formType is 'edit', disables the categoryId form control
+   * @param data The data to patch the form with
+   */
+  /******  5399026f-3f8c-41da-ba2d-399cac55dfd1  *******/
   patchForm(data) {
     if (data.errandType.length) {
       data.errandType.forEach((x) => {
@@ -111,19 +155,26 @@ export class TicketFormComponent implements OnInit {
     });
   }
   zoneValueChange() {
-    combineLatest([
-      this.ticketForm.get('categoryId').valueChanges,
-      this.ticketForm.get('zoneId').valueChanges,
-    ]).subscribe({
-      next: ([categoryId, zoneId]) => {
-        if (categoryId && zoneId) {
-          this.service.getZoneAgents(zoneId, categoryId).subscribe({
-            next: (res) => {
+    let errandTypeIds = [];
+    let errandChannel = this.ticketForm.get('errandTypes').value;
+
+    if (errandChannel) {
+      errandTypeIds = errandChannel.map((x) => x.errandTypeId);
+    }
+    let categoryId = this.ticketForm.get('categoryId').value;
+    let zoneId = this.ticketForm.get('zoneId').value;
+    if (categoryId && zoneId && errandTypeIds.length) {
+      this.service
+        .getZoneAgents({
+          zoneId,
+          categoryId,
+          errandTypeIds: errandTypeIds,
+        })
+        .subscribe({
+          next: (res) => {
+            if (res.data?.length > 0) {
               this.assignees = res.data;
-              // if (this.assignees.length) {
-              //   this.ticketForm.get('assigneeId').enable();
-              //   this.ticketForm.get('assigneeId').updateValueAndValidity();
-              // } else {
+
               if (this.formType == 'add') {
                 this.ticketForm
                   .get('assigneeId')
@@ -133,13 +184,12 @@ export class TicketFormComponent implements OnInit {
                 this.ticketForm.get('assigneeId').disable();
                 this.ticketForm.get('assigneeId').updateValueAndValidity();
               }
+            }
 
-              // }
-            },
-          });
-        }
-      },
-    });
+            // }
+          },
+        });
+    }
   }
   handleAddress(resp: any) {
     this.coordinates = {
@@ -188,6 +238,7 @@ export class TicketFormComponent implements OnInit {
                   .get('posTypeId')
                   .patchValue(this.details.posTypeId);
                 this.handleAddress(this.details);
+                this.zoneValueChange();
               }
             },
           });
@@ -237,14 +288,15 @@ export class TicketFormComponent implements OnInit {
         .get('quantity')
         .updateValueAndValidity();
     }
+
+    this.zoneValueChange();
+
     // this.ticketForm.get('')
   }
   categoryValueChange() {
     this.ticketForm.get('categoryId').valueChanges.subscribe({
       next: (categoryId) => {
         if (categoryId) {
-          if (this.formType == 'add')
-            this.ticketForm.get('terminalId').patchValue(null);
           this.service.getCategoryErrandTypes(categoryId).subscribe({
             next: (res) => {
               this.errandTypes = res.data;
@@ -262,7 +314,9 @@ export class TicketFormComponent implements OnInit {
             this.ticketForm
               .get('terminalId')
               .addValidators([Validators.required]);
-            this.ticketForm.get('terminalId').enable();
+            if (!this.terminalId) {
+              this.ticketForm.get('terminalId').enable();
+            }
             this.ticketForm.get('terminalId').updateValueAndValidity();
           }
         }
@@ -277,21 +331,27 @@ export class TicketFormComponent implements OnInit {
           item.inputId = `category-${item.nameEn}`;
         });
         this.categories = res.data;
+        //check if comes from Terminal view to remove development category
+        if (this.terminalId) {
+          this.categories = this.categories.filter(
+            (x) => x?.id != ServiceCategoryEnum.Deployment
+          );
+        }
       },
     });
-    this.terminalService.GetAllMerchantDropDown().subscribe({
-      next: (res) => {
-        res.data.forEach((item) => {
-          item.searchKey =
-            (item?.id ?? '') +
-            (item.nameEn ?? '') +
-            (item?.nameAr ?? '') +
-            (item?.merchantId ?? '');
-        });
+    // this.terminalService.GetAllMerchantDropDown().subscribe({
+    //   next: (res) => {
+    //     res.data.forEach((item) => {
+    //       item.searchKey =
+    //         (item?.id ?? '') +
+    //         (item.nameEn ?? '') +
+    //         (item?.nameAr ?? '') +
+    //         (item?.merchantId ?? '');
+    //     });
 
-        this.merchants = res.data;
-      },
-    });
+    //     this.merchants = res.data;
+    //   },
+    // });
     this.terminalService.GetAllErrandChannels().subscribe({
       next: (res) => {
         this.errandChannels = res.data;
@@ -337,8 +397,10 @@ export class TicketFormComponent implements OnInit {
       errandChannelId: [null, Validators.required],
       regionId: [null, Validators.required],
       cityId: [null, Validators.required],
-      latitude: [null, Validators.required],
-      longitude: [null, Validators.required],
+      latitude: [null],
+      longitude: [null],
+      latitudeInput: [null],
+      longitudeInput: [null],
       address: [null, Validators.required],
       landMark: [null],
       attachmentsBase64: this.fb.array([]),
@@ -362,6 +424,7 @@ export class TicketFormComponent implements OnInit {
   }
   removeErrandType(index) {
     (this.ticketForm.get('errandTypes') as FormArray).removeAt(index);
+    this.zoneValueChange();
   }
   cityChanged(event) {
     this.ticketForm.controls.zoneId.setValue(null);
@@ -465,5 +528,21 @@ export class TicketFormComponent implements OnInit {
   }
   removeImage(index) {
     (this.ticketForm.get('attachmentsBase64') as FormArray).removeAt(index);
+  }
+
+  pinLocation() {
+    let lng = this.ticketForm?.get('longitudeInput').value;
+    let lat = this.ticketForm?.get('latitudeInput').value;
+
+    this.ticketForm?.get('latitude').setValue(lat);
+    this.ticketForm?.get('longitude').setValue(lng);
+
+    this.coordinates = {
+      lat: lat,
+      lng: lng,
+    };
+  }
+  get f() {
+    return this.ticketForm.controls;
   }
 }

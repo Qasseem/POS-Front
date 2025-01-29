@@ -218,6 +218,7 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (this.hasThreeFields(this.filtersInput, 'region', 'city', 'zone')) {
         this.filtersForm.get('region').valueChanges.subscribe({
           next: (val) => {
+            this.filtersForm.get('city').setValue(null);
             if (val) {
               const item = this.filtersInput.find((x) => x.field == 'city');
               if (item) {
@@ -227,17 +228,22 @@ export class SearchBarComponent implements OnInit, OnChanges {
             }
           },
         });
-        this.filtersForm.get('city').valueChanges.subscribe({
-          next: (val) => {
-            if (val) {
-              const item = this.filtersInput.find((x) => x.field == 'zone');
-              if (item) {
-                item.header = !Array.isArray(val) ? val : '0';
-                this.getDDLData(item);
+        let isZoneHidden = this.filtersInput.find(
+          (x) => x.field == 'zone'
+        )?.hidden;
+        if (!isZoneHidden) {
+          this.filtersForm.get('city').valueChanges.subscribe({
+            next: (val) => {
+              if (val) {
+                const item = this.filtersInput.find((x) => x.field == 'zone');
+                if (item) {
+                  item.header = !Array.isArray(val) ? val : '0';
+                  this.getDDLData(item);
+                }
               }
-            }
-          },
-        });
+            },
+          });
+        }
       }
     }
   }
@@ -409,14 +415,14 @@ export class SearchBarComponent implements OnInit, OnChanges {
       if (Array.isArray(event?.value)) {
         event?.value.map((item) => {
           this.language.currentLanguage() === 'en'
-            ? (propValue += item.nameEn + ', ')
+            ? (propValue += item?.nameEn + ', ')
             : (propValue += item.nameAr + +', ');
         });
         propValue = propValue.slice(0, -2);
       } else {
         this.language.currentLanguage() === 'en'
-          ? (propValue = event?.value.nameEn)
-          : (propValue = event?.value.nameAr);
+          ? (propValue = event?.value?.nameEn)
+          : (propValue = event?.value?.nameAr);
       }
       this.formValueDictionary[ctrlName] = propValue ? propValue : event.value;
     }
@@ -494,6 +500,12 @@ export class SearchBarComponent implements OnInit, OnChanges {
   export() {
     if (this.url.export) {
       this.tableCoreService.exportTable(this.url.export).subscribe();
+    }
+  }
+
+  exportDetails() {
+    if (this.url.exportDetails) {
+      this.tableCoreService.exportTable(this.url?.exportDetails).subscribe();
     }
   }
 

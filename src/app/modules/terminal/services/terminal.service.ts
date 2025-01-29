@@ -37,10 +37,6 @@ export class TerminalService {
     return this.http.getReq('/Terminal/GetAllRegionsFilter');
   }
 
-  GetAllMerchantDropDown() {
-    return this.http.getReq('/Terminal/GetAllMechantDropDown');
-  }
-
   GetAllZones(parentId) {
     return this.http.getHeaderReq('/Terminal/GetAllZones', parentId);
   }

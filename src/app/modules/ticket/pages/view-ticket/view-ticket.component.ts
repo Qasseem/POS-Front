@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TicketService } from '../../services/ticket.service';
 import { TerminalService } from 'src/app/modules/terminal/services/terminal.service';
 import { HttpClient } from '@angular/common/http';
+import { TicketStatusEnum } from 'src/app/core/shared/core/modules/table/models/enums';
 
 @Component({
   selector: 'oc-view-ticket',
@@ -13,6 +14,7 @@ export class ViewTicketComponent implements OnInit {
   coordinates;
   details;
   id;
+  statusStyleObj;
   constructor(
     private service: TicketService,
     private route: ActivatedRoute,
@@ -37,9 +39,44 @@ export class ViewTicketComponent implements OnInit {
           lat: this.details?.latitude,
           lng: this.details?.longitude,
         };
+        this.setStatusTagStyle();
         // this.handleAddress(res);
       },
     });
+  }
+  setStatusTagStyle() {
+    const statusStyle: { [key: string]: string } = {
+      'border-radius': '16px',
+      padding: '0.25rem 1rem',
+      'font-weight': 'normal',
+    };
+
+    switch (this.details?.statusId) {
+      case TicketStatusEnum.Assigned:
+        statusStyle['background-color'] = '#eff8ff';
+        statusStyle.color = '#175cd3';
+        break;
+      case TicketStatusEnum.AgentOnWay:
+      case TicketStatusEnum.InProgress:
+        statusStyle['background-color'] = '#fef9ee';
+        statusStyle.color = '#c59e46';
+        break;
+      case TicketStatusEnum.Blocked:
+        statusStyle['background-color'] = '#f2f4f7';
+        statusStyle.color = '#344054';
+        break;
+      case TicketStatusEnum.Postponed:
+        statusStyle['background-color'] = '#eff8ff';
+        statusStyle.color = '#175cd3';
+        break;
+      case TicketStatusEnum.Completed:
+        statusStyle['background-color'] = '#e0f1eb';
+        statusStyle.color = '#00875a';
+        break;
+      default:
+    }
+
+    this.statusStyleObj = statusStyle;
   }
   handleAddress(resp: any) {
     this.coordinates = {
