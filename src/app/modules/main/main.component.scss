@@ -468,6 +468,15 @@
       }
     }
   }
+  &.inventory {
+    i {
+      svg {
+        path {
+          stroke: #2053a6;
+        }
+      }
+    }
+  }
   &.users-management {
     i {
       svg {
