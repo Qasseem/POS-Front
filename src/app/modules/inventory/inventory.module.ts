@@ -13,6 +13,8 @@ import { TransferCustodyFormComponent } from './pages/transfer-custody-form/tran
 import { TransferCustodyListComponent } from './pages/transfer-custody-list/transfer-custody-list.component';
 import { ModelTypesFormComponent } from './pages/model-types-form/model-types-form.component';
 import { ModelTypesListComponent } from './pages/model-types-list/model-types-list.component';
+import { WarehousesFormComponent } from './pages/warehouses-form/warehouses-form.component';
+import { WarehousesListComponent } from './pages/warehouses-list/warehouses-list.component';
 
 @NgModule({
   imports: [CommonModule, InventoryRoutingModule, SharedModule],
@@ -28,6 +30,8 @@ import { ModelTypesListComponent } from './pages/model-types-list/model-types-li
     TransferCustodyListComponent,
     ModelTypesFormComponent,
     ModelTypesListComponent,
+    WarehousesFormComponent,
+    WarehousesListComponent,
   ],
 })
 export class InventoryModule {}

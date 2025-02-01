@@ -1,1 +1,77 @@
 <p>transfer-custody-form works!</p>
+<div [formGroup]="form">
+  <div class="p-grid ml-2 m-2">
+    <div class="p-col" style="text-align: right">
+      <span
+        (click)="backToList()"
+        class="mt-2 ml-3 header-left"
+        style="color: #0080f9; cursor: pointer"
+        >Inventory</span
+      >
+      <span class="mt-2 ml-2 mr-2 header-left">></span>
+      <span class="mt-2 header-left"
+        >{{ formType == "add" ? "Add" : "Edit" }} Transfer Custody</span
+      >
+      <p-button
+        class="mr-3 cancel-button"
+        label="Cancel"
+        [text]="true"
+        (click)="backToList()"
+        size="small"
+      />
+
+      <p-button
+        (click)="submit()"
+        [disabled]="!form?.valid"
+        label="{{ formType == 'add' ? 'Add' : 'Save' }}"
+        size="small"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <hr class="header-divider" />
+
+  <div class="add-form">
+    <form [formGroup]="form">
+      <div class="grid d-flex inputs-div">
+        <div class="col-12 p-0">
+          <div class="p-20 flex flex-wrap">
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="nameEn"
+                  >Name EN<span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.nameEn?.errors?.required || f.nameEn?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="nameEn"
+                />
+
+                <div
+                  *ngIf="
+                    f.nameEn.errors && (f.nameEn.dirty || f.nameEn.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.nameEn.errors.required">
+                      Name EN field is required
+                    </span>
+                    <span *ngIf="f.nameEn.errors.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
