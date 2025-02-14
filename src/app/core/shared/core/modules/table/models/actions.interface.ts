@@ -10,6 +10,8 @@ export interface ActionsInterface {
   call?: (row?: {}) => any;
   actionName?: string;
   showAction?: boolean;
+  type?: ActionsTypeEnum;
+  uploadFileData?: UploadFileInterface;
 }
 
 export interface ViewCustomPermission {
@@ -18,3 +20,15 @@ export interface ViewCustomPermission {
 
 export interface ActionListInterface extends Array<ActionsInterface> {}
 export interface ViewCustomPermission {}
+
+export enum ActionsTypeEnum {
+  File = 'file',
+  Link = 'link',
+  Button = 'button',
+}
+
+export interface UploadFileInterface {
+  header: string;
+  templateName: string;
+  url: string;
+}

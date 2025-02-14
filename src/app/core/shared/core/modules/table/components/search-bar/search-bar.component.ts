@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -28,7 +29,10 @@ import {
   TableUrlInterface,
 } from '../../models/table-url.interface';
 import { ToastService } from 'src/app/core/services/toaster.service';
-import { ActionsInterface } from '../../models/actions.interface';
+import {
+  ActionsInterface,
+  ActionsTypeEnum,
+} from '../../models/actions.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -84,6 +88,16 @@ export class SearchBarComponent implements OnInit, OnChanges, AfterViewInit {
   formHistoryData: any;
   taskListFormData: any;
   fileToUpload: any;
+
+  clickedAction: ActionsInterface;
+
+  openFileDialog(action: ActionsInterface) {
+    this.clickedAction = action;
+    this.uploadHeader = action.uploadFileData.header;
+    this.sampleName = action.uploadFileData.templateName;
+    this.url.import = action.uploadFileData.url;
+    this.visible = true;
+  }
 
   constructor(
     public language: AppTranslateService,
@@ -577,7 +591,11 @@ export class SearchBarComponent implements OnInit, OnChanges, AfterViewInit {
     return value[bindValue]?.toString().toLowerCase().includes(searchTerm);
   }
 
-  actionClicked(action) {
-    action.call();
+  actionClicked(action: ActionsInterface) {
+    if (action.type == ActionsTypeEnum.File) {
+      this.openFileDialog(action);
+    } else {
+      action.call();
+    }
   }
 }

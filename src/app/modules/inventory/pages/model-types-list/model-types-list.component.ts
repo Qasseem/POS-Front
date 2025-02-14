@@ -4,7 +4,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ModeltypesService } from '../../services/modeltypes.service';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
-import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
+import {
+  ActionsInterface,
+  ActionsTypeEnum,
+} from 'src/app/core/shared/core/modules/table/models/actions.interface';
 
 @Component({
   selector: 'app-model-types-list',
@@ -12,6 +15,7 @@ import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/
   styleUrls: ['./model-types-list.component.css'],
 })
 export class ModelTypesListComponent implements OnInit {
+  bulkAdd(row: any): any {}
   constructor(
     private router: Router,
     public authService: AuthService,
@@ -85,6 +89,22 @@ export class ModelTypesListComponent implements OnInit {
       icon: 'pi pi-file-edit',
       permission: 'viewcustomerpayments',
       call: (row: any) => this.editItem(row),
+      // customPermission: (row: any) => row.id > 3,
+    },
+  ];
+
+  public gridActionsList: ActionsInterface[] = [
+    {
+      name: 'Bulk Add',
+      icon: 'pi pi-file-plus',
+      permission: 'inventory-model-types-add',
+      call: (row: any) => this.bulkAdd(row),
+      type: ActionsTypeEnum.File,
+      uploadFileData: {
+        url: '/modeltype/import',
+        header: 'Upload Bulk Model Types',
+        templateName: 'Import Model Type Template.xlsx',
+      },
       // customPermission: (row: any) => row.id > 3,
     },
   ];

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { ActionsInterface } from 'src/app/core/shared/core/modules/table/models/actions.interface';
+import {
+  ActionsInterface,
+  ActionsTypeEnum,
+} from 'src/app/core/shared/core/modules/table/models/actions.interface';
 import {
   HTTPMethods,
   SearchInputTypes,
@@ -88,14 +91,18 @@ export class WarehousesListComponent implements OnInit {
     {
       name: 'Bulk Add',
       icon: 'pi pi-file-plus',
-      permission: 'inventory-warehouses-block',
+      permission: 'inventory-warehouses-add',
       call: (row: any) => this.bulkAdd(row),
+      type: ActionsTypeEnum.File,
+      uploadFileData: {
+        url: '/warehouse/import',
+        header: 'Upload Bulk Warehouses',
+        templateName: 'Import Warehouse Template.xlsx',
+      },
       // customPermission: (row: any) => row.id > 3,
     },
   ];
-  bulkAdd(row: any): any {
-    throw new Error('Method not implemented.');
-  }
+  bulkAdd(row: any): any {}
   showBlock = true;
   showEdit = true;
 }
