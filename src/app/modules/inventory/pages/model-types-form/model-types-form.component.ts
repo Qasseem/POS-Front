@@ -14,6 +14,7 @@ export class ModelTypesFormComponent implements OnInit {
   details: any;
   id;
   formType = 'add';
+  categoriesList = [];
   constructor(
     private fb: FormBuilder,
     private service: ModeltypesService,
@@ -31,10 +32,22 @@ export class ModelTypesFormComponent implements OnInit {
       }
     }
     this.form = this.fb.group({
-      nameEn: ['', [Validators.required]],
-
+      name: ['', [Validators.required]],
+      categoryId: [[], [Validators.required]],
       id: [null],
     });
+    this.getCategoryDropDown();
+  }
+
+  getCategoryDropDown() {
+    this.service
+      .getCategoryDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.categoriesList = resp.data;
+        }
+      });
   }
 
   getItemDetails() {
@@ -46,6 +59,7 @@ export class ModelTypesFormComponent implements OnInit {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
+            this.form.controls['name'].setValue(this.details?.modelTypeName);
             this.form.updateValueAndValidity();
           }
         }
