@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WarehousesService } from '../../services/warehouses.service';
 import { take } from 'rxjs';
+import { UserService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'app-warehouses-form',
@@ -14,13 +15,26 @@ export class WarehousesFormComponent implements OnInit {
   details: any;
   id;
   formType = 'add';
+  usersList = [];
   constructor(
     private fb: FormBuilder,
     private service: WarehousesService,
     private router: Router,
+    private userSerivice: UserService,
     private route: ActivatedRoute
   ) {
     this.formType = this.route.snapshot.data.type;
+    this.getUsers();
+  }
+  getUsers() {
+    this.userSerivice
+      .getAllSystemUserDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.usersList = resp.data;
+        }
+      });
   }
 
   ngOnInit() {
@@ -31,8 +45,8 @@ export class WarehousesFormComponent implements OnInit {
       }
     }
     this.form = this.fb.group({
-      nameEn: ['', [Validators.required]],
-
+      name: ['', [Validators.required]],
+      managerIds: [[], [Validators.required]],
       id: [null],
     });
   }
@@ -46,6 +60,7 @@ export class WarehousesFormComponent implements OnInit {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
+            this.form.controls['name'].setValue(this.details.warehouseName);
             this.form.updateValueAndValidity();
           }
         }
