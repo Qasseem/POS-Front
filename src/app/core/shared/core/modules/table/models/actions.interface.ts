@@ -9,12 +9,12 @@ export interface ActionsInterface {
   isDetails?: boolean;
   call?: (row?: {}) => any;
   actionName?: string;
+  showAction?: boolean;
 }
 
 export interface ViewCustomPermission {
   customPermission?: (row?: {}) => boolean;
 }
 
-export interface ActionListInterface extends Array<ActionsInterface> { }
-export interface ViewCustomPermission { }
-
+export interface ActionListInterface extends Array<ActionsInterface> {}
+export interface ViewCustomPermission {}

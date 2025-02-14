@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -27,13 +28,15 @@ import {
   TableUrlInterface,
 } from '../../models/table-url.interface';
 import { ToastService } from 'src/app/core/services/toaster.service';
+import { ActionsInterface } from '../../models/actions.interface';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'oc-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.sass'],
 })
-export class SearchBarComponent implements OnInit, OnChanges {
+export class SearchBarComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild('op') mySearchDialog: any;
   apis: any;
   InputSearch$ = new Subject<string>();
@@ -61,6 +64,8 @@ export class SearchBarComponent implements OnInit, OnChanges {
   @Input() taskSearchHistoryObj = {};
   @Input() sampleName = '';
   @Input() hasCustomFilter: boolean = false;
+  @Input() gridActionsList: ActionsInterface[] = [];
+
   filtersForm: UntypedFormGroup;
   filterControls;
   unPinnedControls;
@@ -86,13 +91,15 @@ export class SearchBarComponent implements OnInit, OnChanges {
     private router: Router,
     private route: ActivatedRoute,
     private searchFilterService: SearchFilterService,
-    private toaster: ToastService
+    private toaster: ToastService,
+    public authService: AuthService
   ) {
     this.moduleReference = ModulesReferencesEnum[this.router.url.split('/')[2]];
 
     // create a empty FormGroup
     this.filtersForm = new UntypedFormGroup({});
   }
+  ngAfterViewInit(): void {}
 
   //this method is for task module history search
   ngOnChanges(changes: SimpleChanges): void {
@@ -132,6 +139,14 @@ export class SearchBarComponent implements OnInit, OnChanges {
     }
 
     this.searchOnType();
+    this.checkActionPermissions();
+  }
+  checkActionPermissions() {
+    if (this.gridActionsList.length > 0) {
+      this.gridActionsList.forEach((action) => {
+        action.showAction = this.authService.hasPermission(action.permission);
+      });
+    }
   }
   getDDLData(item) {
     let targetedApi;
@@ -560,5 +575,9 @@ export class SearchBarComponent implements OnInit, OnChanges {
 
     // Filter logic based on the bindValue
     return value[bindValue]?.toString().toLowerCase().includes(searchTerm);
+  }
+
+  actionClicked(action) {
+    action.call();
   }
 }

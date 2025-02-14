@@ -84,16 +84,18 @@ export class WarehousesListComponent implements OnInit {
     },
   ];
 
-  public actions: ActionsInterface[] = [
+  public gridActionsList: ActionsInterface[] = [
     {
-      name: 'Edit',
-      icon: 'pi pi-file-edit',
-      permission: 'viewcustomerpayments',
-      call: (row: any) => this.editItem(row),
+      name: 'Bulk Add',
+      icon: 'pi pi-file-plus',
+      permission: 'inventory-warehouses-block',
+      call: (row: any) => this.bulkAdd(row),
       // customPermission: (row: any) => row.id > 3,
     },
   ];
-
+  bulkAdd(row: any): any {
+    throw new Error('Method not implemented.');
+  }
   showBlock = true;
   showEdit = true;
 }
