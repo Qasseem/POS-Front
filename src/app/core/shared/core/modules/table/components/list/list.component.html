@@ -633,7 +633,7 @@
               style="cursor: pointer; margin-bottom: 7px"
               type="button"
               class="menu-btn mb-0"
-              (click)="toggleActionBlock(rowData)"
+              (click)="ShowBlockDialog(rowData)"
             >
               <i
                 style="font-size: 1.5rem"
@@ -765,4 +765,8 @@
       tableCore?.pageOptions?.count != -1 ? tableCore?.pageOptions?.count : 0
     }}</span
   >
+</div>
+
+<div class="card flex justify-content-center">
+  <p-confirmDialog> </p-confirmDialog>
 </div>
