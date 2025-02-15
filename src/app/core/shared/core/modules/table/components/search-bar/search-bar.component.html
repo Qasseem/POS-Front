@@ -45,13 +45,13 @@
       <div
         *ngIf="gridActionsList.length"
         class="float-right ml-3 actions-dialog"
-        (click)="op.toggle($event)"
+        (click)="opActions.toggle($event)"
         style="user-select: none; caret-color: transparent"
       >
         <i class="pi pi-ellipsis-v" style="color: #708090"></i>
       </div>
       <!-- <p-button class="float-right ml-3" (onClick)="op.toggle($event)" /> -->
-      <p-overlayPanel #op>
+      <p-overlayPanel #opActions>
         <div class="flex flex-column gap-3 w-10rem">
           <div
             class="action-container"

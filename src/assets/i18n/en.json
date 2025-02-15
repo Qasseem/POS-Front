@@ -207,7 +207,18 @@
     "endDate": "End Date",
     "createdBy": "Created By",
     "errandType": "Errand Type",
-    "recurrence": "Recurrence"
+    "recurrence": "Recurrence",
+
+    "deviceId": "Device ID",
+    "modelType": "Model Type",
+    "condition": "Device Condition",
+    "serialNumber": "Device Serial",
+    "imei": "Device IMEI",
+    "simSerial": "SIM Serial",
+    "merchantId": "Merchant ID",
+    "warehouse": "Warehouse",
+    "warehouseManager": "Warehouse Manager",
+    "agent": "Agent"
   },
   "merchants": {
     "blocked-merchant": "Merchant Has been blocked"

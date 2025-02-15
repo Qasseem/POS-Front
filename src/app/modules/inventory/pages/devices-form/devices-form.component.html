@@ -5,7 +5,7 @@
         (click)="backToList()"
         class="mt-2 ml-3 header-left"
         style="color: #0080f9; cursor: pointer"
-        >Inventory</span
+        >Devices</span
       >
       <span class="mt-2 ml-2 mr-2 header-left">></span>
       <span class="mt-2 header-left"
@@ -38,32 +38,281 @@
           <div class="p-20 flex flex-wrap">
             <div class="col-6">
               <div class="flex flex-column gap-2">
-                <label for="nameEn"
-                  >Name EN<span class="p-error"> * </span>
+                <label for="modelCategoryId"
+                  >Model Category <span class="p-error"> * </span>
+                </label>
+                <p-dropdown
+                  [options]="modelCategories"
+                  (ngModelChange)="onChangeModelCategory($event)"
+                  formControlName="modelCategoryId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                  filter="true"
+                />
+                <div
+                  *ngIf="
+                    f.modelCategoryId.errors &&
+                    (f.modelCategoryId.dirty || f.modelCategoryId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.modelCategoryId.errors.required"
+                  >
+                    Model Category field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="shipmentId"
+                  >Shipment ID<span class="p-error"> * </span>
                 </label>
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      f.nameEn?.errors?.required || f.nameEn?.errors?.pattern
+                      f.shipmentId?.errors?.required ||
+                      f.shipmentId?.errors?.pattern
                   }"
                   type="text"
                   pInputText
-                  formControlName="nameEn"
+                  formControlName="shipmentId"
                 />
 
                 <div
                   *ngIf="
-                    f.nameEn.errors && (f.nameEn.dirty || f.nameEn.touched)
+                    f.shipmentId.errors &&
+                    (f.shipmentId.dirty || f.shipmentId.touched)
                   "
                   class="invalid-feedback"
                 >
                   <div class="fs-10 color-red">
-                    <span *ngIf="f.nameEn.errors.required">
-                      Name EN field is required
+                    <span *ngIf="f.shipmentId.errors.required">
+                      Shipment ID field is required
                     </span>
-                    <span *ngIf="f.nameEn.errors.pattern">
+                    <span *ngIf="f.shipmentId.errors.pattern">
                       Only English letters are allowed.
                     </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="modelTypeId"
+                  >Model Type <span class="p-error"> * </span>
+                </label>
+                <p-dropdown
+                  [options]="modelTypes"
+                  formControlName="modelTypeId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                  filter="true"
+                />
+                <div
+                  *ngIf="
+                    f.modelTypeId.errors &&
+                    (f.modelTypeId.dirty || f.modelTypeId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.modelTypeId.errors.required"
+                  >
+                    Model Type field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="serialNumber"
+                  >Device Serial<span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.serialNumber?.errors?.required ||
+                      f.serialNumber?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="serialNumber"
+                />
+
+                <div
+                  *ngIf="
+                    f.serialNumber.errors &&
+                    (f.serialNumber.dirty || f.serialNumber.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.serialNumber.errors.required">
+                      Device Serial field is required
+                    </span>
+                    <span *ngIf="f.serialNumber.errors.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="conditionId"
+                  >Device Condition <span class="p-error"> * </span>
+                </label>
+                <p-dropdown
+                  [options]="deviceConditionList"
+                  formControlName="conditionId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                  filter="true"
+                />
+                <div
+                  *ngIf="
+                    f.conditionId.errors &&
+                    (f.conditionId.dirty || f.conditionId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.conditionId.errors.required"
+                  >
+                    Device Condition field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="imei"
+                  >Device IMEI<span class="p-error"> * </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.imei?.errors?.required || f.imei?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="imei"
+                />
+
+                <div
+                  *ngIf="f.imei.errors && (f.imei.dirty || f.imei.touched)"
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.imei.errors.required">
+                      Device IMEI field is required
+                    </span>
+                    <span *ngIf="f.imei.errors.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="errandChannelId"
+                  >Errand Channel <span class="p-error"> * </span>
+                </label>
+                <p-dropdown
+                  [options]="errandChanelsList"
+                  formControlName="errandChannelId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                  filter="true"
+                />
+                <div
+                  *ngIf="
+                    f.errandChannelId.errors &&
+                    (f.errandChannelId.dirty || f.errandChannelId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.errandChannelId.errors.required"
+                  >
+                    Errand Channel field is required
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="simSerial"
+                  >Sim Serial<span class="p-error"> </span>
+                </label>
+                <input
+                  [ngClass]="{
+                    'ng-invalid ng-dirty':
+                      f.simSerial?.errors?.required ||
+                      f.simSerial?.errors?.pattern
+                  }"
+                  type="text"
+                  pInputText
+                  formControlName="simSerial"
+                />
+
+                <div
+                  *ngIf="
+                    f.simSerial.errors &&
+                    (f.simSerial.dirty || f.simSerial.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div class="fs-10 color-red">
+                    <span *ngIf="f.simSerial.errors.required">
+                      Sim Serial field is required
+                    </span>
+                    <span *ngIf="f.simSerial.errors.pattern">
+                      Only English letters are allowed.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="flex flex-column gap-2">
+                <label for="warehouseId"
+                  >Warehouse <span class="p-error"> * </span>
+                </label>
+                <p-dropdown
+                  [options]="warehousesList"
+                  formControlName="warehouseId"
+                  [optionValue]="'id'"
+                  optionLabel="nameEn"
+                  filter="true"
+                />
+                <div
+                  *ngIf="
+                    f.warehouseId.errors &&
+                    (f.warehouseId.dirty || f.warehouseId.touched)
+                  "
+                  class="invalid-feedback"
+                >
+                  <div
+                    class="fs-10 color-red"
+                    *ngIf="f.warehouseId.errors.required"
+                  >
+                    Warehouse field is required
                   </div>
                 </div>
               </div>

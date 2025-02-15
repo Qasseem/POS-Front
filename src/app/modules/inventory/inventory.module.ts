@@ -15,6 +15,7 @@ import { ModelTypesFormComponent } from './pages/model-types-form/model-types-fo
 import { ModelTypesListComponent } from './pages/model-types-list/model-types-list.component';
 import { WarehousesFormComponent } from './pages/warehouses-form/warehouses-form.component';
 import { WarehousesListComponent } from './pages/warehouses-list/warehouses-list.component';
+import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
 
 @NgModule({
   imports: [CommonModule, InventoryRoutingModule, SharedModule],
@@ -32,6 +33,7 @@ import { WarehousesListComponent } from './pages/warehouses-list/warehouses-list
     ModelTypesListComponent,
     WarehousesFormComponent,
     WarehousesListComponent,
+    DevicesDetailsComponent,
   ],
 })
 export class InventoryModule {}
