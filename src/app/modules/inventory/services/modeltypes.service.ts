@@ -26,4 +26,11 @@ export class ModeltypesService {
   getCategoryDropDown() {
     return this.http.getReq(this.controllerName + 'GetCategoryDropDown');
   }
+
+  getModelTypeDropDown(id) {
+    return this.http.getHeaderReq(
+      this.controllerName + 'GetModelTypeDropDown',
+      id
+    );
+  }
 }

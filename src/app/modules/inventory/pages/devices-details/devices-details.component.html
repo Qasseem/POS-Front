@@ -1,0 +1,131 @@
+<div>
+  <div class="m-3" style="width: 100%">
+    <span (click)="backToList()" style="cursor: pointer"> Device Details </span>
+    <span class="mr-4 status"> new </span>
+  </div>
+  <hr class="header-divider" />
+</div>
+<div class="add-form container-card">
+  <div>
+    <div class="grid">
+      <div *ngFor="let item of [1, 2, 3, 4]" class="col-3">
+        <div class="card-container">
+          <div class="m-2 label-primary">Owner</div>
+          <div class="grid">
+            <div class="col-3 center-container">
+              <p-avatar
+                icon="pi pi-user"
+                styleClass="mr-2"
+                size="large"
+                [style]="{ 'background-color': '#E6F2FE', color: '#0080F9' }"
+                shape="circle"
+              />
+            </div>
+            <div class="col-9 pl-0">
+              <div>Name</div>
+              <div class="label-primary mt-2">
+                <span class="pi pi-phone"></span> dasd
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid mt-3">
+      <div class="col-4">
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Device ID</div>
+          <div class="col-6">{{ details?.id }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Device Type</div>
+          <div class="col-6">{{ details?.id }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">IMEI</div>
+          <div class="col-6">{{ details?.imei }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Device Serial</div>
+          <div class="col-6">{{ details?.serialNumber }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">SIM Serial</div>
+          <div class="col-6">{{ details?.simCardSerial }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Status</div>
+          <div class="col-6">{{ details?.statusName }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Errand Channel</div>
+          <div class="col-6">{{ details?.errandChannel }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Warehouse</div>
+          <div class="col-6">{{ details?.warehouse }}</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Merchant Name</div>
+          <div class="col-6">{{ details?.merchantId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Merchant ID</div>
+          <div class="col-6">{{ details?.merchantId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Terminal ID</div>
+          <div class="col-6">{{ details?.terminalId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Ticket ID</div>
+          <div class="col-6">{{ details?.ticketId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Region</div>
+          <div class="col-6">{{ details?.region }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">City</div>
+          <div class="col-6">{{ details?.city }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Zone</div>
+          <div class="col-6">{{ details?.zone }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Address</div>
+          <div class="col-6">{{ details?.id }}</div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Model Category</div>
+          <div class="col-6">{{ details?.categoryId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Shipment ID</div>
+          <div class="col-6">{{ details?.shipmentId }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Device Condition</div>
+          <div class="col-6">{{ details?.conditionName }}</div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Created At</div>
+          <div class="col-6">
+            {{ details?.createDate | date : "YYYY-MM-dd HH:mm" }}
+          </div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col-6 label-primary">Installed At</div>
+          <div class="col-6">{{ details?.id }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

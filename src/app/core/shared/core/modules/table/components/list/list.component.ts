@@ -111,7 +111,11 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   callAction(name) {
     let action = this.actions.find((x) => x.name == name);
     if (action) {
-      action.call(this.rowData);
+      if (action?.name == 'Block' || action?.name == 'Unblock') {
+        this.ShowBlockDialog(this.rowData);
+      } else {
+        action.call(this.rowData);
+      }
     }
   }
   filterArrayByValue(array: any, valuesToMatch: string[], key: string): any {
