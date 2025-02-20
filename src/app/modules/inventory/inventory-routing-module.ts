@@ -16,6 +16,7 @@ import { TransferCustodyListComponent } from './pages/transfer-custody-list/tran
 import { TransferCustodyFormComponent } from './pages/transfer-custody-form/transfer-custody-form.component';
 import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
 import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-serial-warehouse/items-without-serial-warehouse.component';
+import { SimcardsDetailsComponent } from './pages/simcards-details/simcards-details.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
         data: {
           type: 'edit',
         },
+      },
+      {
+        path: 'simcards/details/:id',
+        component: SimcardsDetailsComponent,
       },
       //WareHouse--------------------------------
       {

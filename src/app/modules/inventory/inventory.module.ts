@@ -17,6 +17,7 @@ import { WarehousesFormComponent } from './pages/warehouses-form/warehouses-form
 import { WarehousesListComponent } from './pages/warehouses-list/warehouses-list.component';
 import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
 import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-serial-warehouse/items-without-serial-warehouse.component';
+import { SimcardsDetailsComponent } from './pages/simcards-details/simcards-details.component';
 
 @NgModule({
   imports: [CommonModule, InventoryRoutingModule, SharedModule],
@@ -36,6 +37,7 @@ import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-seri
     WarehousesListComponent,
     DevicesDetailsComponent,
     ItemsWithoutSerialWarehouseComponent,
+    SimcardsDetailsComponent,
   ],
 })
 export class InventoryModule {}

@@ -5,7 +5,7 @@ import { HttpService } from 'src/app/core/http/http.service';
   providedIn: 'root',
 })
 export class SimcardsService {
-  controllerName = '/Device';
+  controllerName = '/Simcard';
   constructor(private http: HttpService) {}
   add(data) {
     return this.http.postReq(this.controllerName + '/Add', data);
@@ -21,5 +21,15 @@ export class SimcardsService {
 
   Block(data) {
     return this.http.postReq(this.controllerName + '/Block', data);
+  }
+  getProviderDropDown() {
+    return this.http.getReq(this.controllerName + '/GetProviderDropDown');
+  }
+
+  getStatusDropDown() {
+    return this.http.getReq(this.controllerName + '/GetStatusDropDown');
+  }
+  getTypeDropDown(id) {
+    return this.http.getHeaderReq(this.controllerName + '/GetTypeDropDown', id);
   }
 }

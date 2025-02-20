@@ -279,7 +279,7 @@ export class DevicesListComponent implements OnInit {
       call: (row: any) => this.bulkAdd(row),
       type: ActionsTypeEnum.File,
       uploadFileData: {
-        url: '/warehouse/import',
+        url: '/Device/import',
         header: 'Upload Bulk Warehouses',
         templateName: 'Import Add Device Template.xlsx',
       },
@@ -291,7 +291,7 @@ export class DevicesListComponent implements OnInit {
       call: (row: any) => this.bulkAdd(row),
       type: ActionsTypeEnum.File,
       uploadFileData: {
-        url: '/warehouse/importToUpdate',
+        url: '/Device/importToUpdate',
         header: 'Update Bulk Devices',
         templateName: 'Import Update Device Template.xlsx',
       },
