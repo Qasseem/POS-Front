@@ -15,6 +15,7 @@ import { ModelTypesFormComponent } from './pages/model-types-form/model-types-fo
 import { TransferCustodyListComponent } from './pages/transfer-custody-list/transfer-custody-list.component';
 import { TransferCustodyFormComponent } from './pages/transfer-custody-form/transfer-custody-form.component';
 import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
+import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-serial-warehouse/items-without-serial-warehouse.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,13 @@ const routes: Routes = [
       {
         path: 'itemswithoutserial/edit/:id',
         component: ItemsWithoutSerialFormComponent,
+        data: {
+          type: 'edit',
+        },
+      },
+      {
+        path: 'itemswithoutserial/warehouse/:id',
+        component: ItemsWithoutSerialWarehouseComponent,
         data: {
           type: 'edit',
         },
