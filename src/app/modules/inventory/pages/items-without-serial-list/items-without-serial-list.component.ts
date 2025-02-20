@@ -163,24 +163,24 @@ export class ItemsWithoutSerialListComponent implements OnInit {
       call: (row: any) => this.editItem(row),
       customPermission: (row: any) => this.showEdit,
     },
-    {
-      name: 'Adjust QTY',
-      icon: 'pi pi-objects-column',
-      call: (row: any) => this.adjustStock(row),
-      customPermission: (row: any) => this.showAdjustStock,
-    },
-    {
-      name: 'Warehouse QTY',
-      icon: 'pi pi-warehouse',
-      call: (row: any) => this.adjustWarehouseStock(row),
-      customPermission: (row: any) => this.showWarehouseStock,
-    },
-    {
-      name: 'Employee QTY',
-      icon: 'pi pi-users',
-      call: (row: any) => this.adjustEmployeeStock(row),
-      customPermission: (row: any) => this.showEmployeeStock,
-    },
+    // {
+    //   name: 'Adjust QTY',
+    //   icon: 'pi pi-objects-column',
+    //   call: (row: any) => this.adjustStock(row),
+    //   customPermission: (row: any) => this.showAdjustStock,
+    // },
+    // {
+    //   name: 'Warehouse QTY',
+    //   icon: 'pi pi-warehouse',
+    //   call: (row: any) => this.adjustWarehouseStock(row),
+    //   customPermission: (row: any) => this.showWarehouseStock,
+    // },
+    // {
+    //   name: 'Employee QTY',
+    //   icon: 'pi pi-users',
+    //   call: (row: any) => this.adjustEmployeeStock(row),
+    //   customPermission: (row: any) => this.showEmployeeStock,
+    // },
   ];
   public gridActionsList: ActionsInterface[] = [
     {

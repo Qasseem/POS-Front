@@ -280,7 +280,7 @@ export class DevicesListComponent implements OnInit {
       type: ActionsTypeEnum.File,
       uploadFileData: {
         url: '/Device/import',
-        header: 'Upload Bulk Warehouses',
+        header: 'Upload Bulk Devices',
         templateName: 'Import Add Device Template.xlsx',
       },
     },

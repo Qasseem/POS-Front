@@ -42,7 +42,7 @@ export class DevicesDetailsComponent implements OnInit {
     this.detailsSections = [
       [
         { type: '', label: 'Device ID', value: this.details?.id },
-        { type: '', label: 'Device Type', value: this.details?.deviceType },
+        { type: '', label: 'Model Type', value: this.details?.modelTypeName },
         { type: '', label: 'IMEI', value: this.details?.imei },
         { type: '', label: 'Device Serial', value: this.details?.serialNumber },
         { type: '', label: 'SIM Serial', value: this.details?.simCardSerial },

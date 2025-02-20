@@ -26,4 +26,10 @@ export class ItemsWithoutSerialService {
   getCategoryDropDown() {
     return this.http.getReq('/ItemWithoutSerial/GetCategoryDropDown');
   }
+  adjustWarehouseStock(data) {
+    return this.http.postReq(
+      this.controllerName + '/AdjustWarehouseStock',
+      data
+    );
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { WarehousesService } from '../../services/warehouses.service';
 import { TableButtonsExistanceInterface } from 'src/app/core/shared/core/modules/table/models/table-url.interface';
@@ -8,6 +8,7 @@ import {
   ActionsInterface,
   ActionsTypeEnum,
 } from 'src/app/core/shared/core/modules/table/models/actions.interface';
+import { ItemsWithoutSerialService } from '../../services/items-without-serial.service';
 
 @Component({
   selector: 'app-items-without-serial-warehouse',
@@ -15,89 +16,97 @@ import {
   styleUrls: ['./items-without-serial-warehouse.component.css'],
 })
 export class ItemsWithoutSerialWarehouseComponent implements OnInit {
+  id;
+  quantity;
+  shipmentId;
+  showStockDialog = false;
+  row: any;
   constructor(
     private router: Router,
     public authService: AuthService,
-    public service: WarehousesService
-  ) {}
+    private route: ActivatedRoute,
+    public service: ItemsWithoutSerialService
+  ) {
+    this.id = this.route.snapshot.params.id || null;
+  }
 
   ngOnInit() {
-    if (!this.authService.hasPermission('inventory-warehouses-export')) {
-      this.tableBtns.showExport = false;
-    }
-    if (!this.authService.hasPermission('inventory-warehouses-block')) {
-      // this.actions = this.actions.filter((x) => x.name !== 'Block');
-      this.showBlock = false;
-    }
-    if (!this.authService.hasPermission('inventory-warehouses-edit')) {
-      // this.actions = this.actions.filter((x) => x.name !== 'Edit');
-      this.showEdit = false;
-    }
-    if (!this.authService.hasPermission('inventory-warehouses-add')) {
-      this.tableBtns.showImport = false;
-    }
+    this.showEdit = this.authService.hasPermission(
+      'inventory-items-without-serial-edit'
+    );
   }
 
   navigateToAdd() {
     this.router.navigate(['main/inventory/warehouses/add']);
   }
 
-  editItem(row: any): any {
-    const URL = `main/inventory/warehouses/edit/${row?.id}`;
-    this.router.navigate([URL]);
-  }
-
   public tableBtns: TableButtonsExistanceInterface = {
     showAllButtons: true,
-    showAdd: true,
-    showExport: true,
+    showAdd: false,
+    showExport: false,
     showFilter: false,
     showImport: false,
   };
   public columns: ColumnsInterface[] = [
     {
-      field: 'id',
+      field: 'itemId',
       header: 'ID',
       width: '50px',
     },
 
     {
-      field: 'warehouseName',
+      field: 'itemName',
+      header: 'Item Name',
+      width: '200px',
+    },
+    {
+      field: 'itemType',
+      header: 'Item Type',
+      width: '200px',
+    },
+    {
+      field: 'warehouse',
       header: 'Waehouse Name',
       width: '200px',
     },
     {
-      field: 'managersName',
-      header: 'Warehouse Managers',
-      width: '200px',
-    },
-    {
-      field: [
-        { label: 'createdBy', custom: 'normal' },
-        { label: 'createdAt', custom: 'defaultDate' },
-      ],
-      header: 'Created by',
-      customCell: 'multiLabel',
+      field: 'quantity',
+      header: 'QTY',
       width: '200px',
     },
   ];
 
-  public gridActionsList: ActionsInterface[] = [
+  public actions: ActionsInterface[] = [
     {
-      name: 'Bulk Add',
-      icon: 'pi pi-file-plus',
-      permission: 'inventory-warehouses-add',
-      call: (row: any) => this.bulkAdd(row),
-      type: ActionsTypeEnum.File,
-      uploadFileData: {
-        url: '/warehouse/import',
-        header: 'Upload Bulk Warehouses',
-        templateName: 'Import Warehouse Template.xlsx',
-      },
-      // customPermission: (row: any) => row.id > 3,
+      name: 'Edit',
+      icon: 'pi pi-file-edit',
+      call: (row: any) => this.adjustStock(row),
+      customPermission: (row: any) => this.showEdit,
     },
   ];
-  bulkAdd(row: any): any {}
-  showBlock = true;
+
+  backToList() {
+    this.router.navigate(['main/inventory/itemswithoutserial/list']);
+  }
+  adjustStock(row: any): any {
+    this.row = row;
+    this.quantity = +this.row.quantity;
+    this.showStockDialog = true;
+  }
+
+  adjustQty() {
+    this.service
+      .adjustWarehouseStock({
+        itemId: +this.id,
+        quantity: +this.quantity,
+        warehouseId: +this.row.warehouseId,
+      })
+      .subscribe((res) => {
+        if (res.success) {
+          this.row.quantity = +this.quantity;
+          this.showStockDialog = false;
+        }
+      });
+  }
   showEdit = true;
 }

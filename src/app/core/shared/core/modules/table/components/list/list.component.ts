@@ -359,6 +359,20 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
             .subscribe();
           break;
         }
+        default: {
+          const params = { id: parseInt(this.url.refId) };
+          this.tableCore
+            .getAllData(this.url.getAll, params)
+            .pipe(
+              take(1),
+              map(() => {
+                this.data = this.tableCore.tableData;
+              }),
+              finalize(() => (this.firstInit = true))
+            )
+            .subscribe();
+          break;
+        }
       }
     }
   }
