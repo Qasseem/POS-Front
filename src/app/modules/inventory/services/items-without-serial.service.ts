@@ -5,7 +5,7 @@ import { HttpService } from 'src/app/core/http/http.service';
   providedIn: 'root',
 })
 export class ItemsWithoutSerialService {
-  controllerName = '/Device';
+  controllerName = '/ItemWithoutSerial';
   constructor(private http: HttpService) {}
   add(data) {
     return this.http.postReq(this.controllerName + '/Add', data);
@@ -21,5 +21,15 @@ export class ItemsWithoutSerialService {
 
   Block(data) {
     return this.http.postReq(this.controllerName + '/Block', data);
+  }
+
+  getCategoryDropDown() {
+    return this.http.getReq('/ItemWithoutSerial/GetCategoryDropDown');
+  }
+  adjustWarehouseStock(data) {
+    return this.http.postReq(
+      this.controllerName + '/AdjustWarehouseStock',
+      data
+    );
   }
 }

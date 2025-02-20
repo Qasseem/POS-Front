@@ -218,7 +218,14 @@
     "merchantId": "Merchant ID",
     "warehouse": "Warehouse",
     "warehouseManager": "Warehouse Manager",
-    "agent": "Agent"
+    "agent": "Agent",
+    "itemId": "itemId",
+    "itemName": "Item Name",
+    "itemTypeIds": "Item Type",
+    "types": "SIM type",
+    "providers": "Provider",
+    "qouta": "Qouta",
+    "": ""
   },
   "merchants": {
     "blocked-merchant": "Merchant Has been blocked"

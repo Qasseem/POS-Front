@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemsWithoutSerialService } from '../../services/items-without-serial.service';
 import { take } from 'rxjs';
+import { UserService } from 'src/app/modules/user-management/services/user.service';
 
 @Component({
   selector: 'app-items-without-serial-form',
@@ -14,13 +15,26 @@ export class ItemsWithoutSerialFormComponent implements OnInit {
   details: any;
   id;
   formType = 'add';
+  itemCategories = [];
   constructor(
     private fb: FormBuilder,
     private service: ItemsWithoutSerialService,
     private router: Router,
+    private userSerivice: UserService,
     private route: ActivatedRoute
   ) {
     this.formType = this.route.snapshot.data.type;
+    this.getUsers();
+  }
+  getUsers() {
+    this.service
+      .getCategoryDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.itemCategories = resp.data;
+        }
+      });
   }
 
   ngOnInit() {
@@ -31,8 +45,8 @@ export class ItemsWithoutSerialFormComponent implements OnInit {
       }
     }
     this.form = this.fb.group({
-      nameEn: ['', [Validators.required]],
-
+      name: ['', [Validators.required]],
+      categoryId: [[], [Validators.required]],
       id: [null],
     });
   }
@@ -46,6 +60,7 @@ export class ItemsWithoutSerialFormComponent implements OnInit {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
+            this.form.controls['name'].setValue(this.details.categoryName);
             this.form.updateValueAndValidity();
           }
         }

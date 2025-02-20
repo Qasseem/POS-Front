@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { DevicesService } from '../../services/devices.service';
+import { SimcardsService } from '../../services/simcards.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-devices-details',
-  templateUrl: './devices-details.component.html',
-  styleUrls: ['./devices-details.component.css'],
+  selector: 'app-simcards-details',
+  templateUrl: './simcards-details.component.html',
+  styleUrls: ['./simcards-details.component.css'],
 })
-export class DevicesDetailsComponent implements OnInit {
+export class SimcardsDetailsComponent implements OnInit {
   id;
   details;
   cards = [];
   detailsSections: { type: string; label: string; value: any }[][];
 
   constructor(
-    private service: DevicesService,
+    private service: SimcardsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -41,18 +41,19 @@ export class DevicesDetailsComponent implements OnInit {
   prepareFiledsData() {
     this.detailsSections = [
       [
-        { type: '', label: 'Device ID', value: this.details?.id },
-        { type: '', label: 'Model Type', value: this.details?.modelTypeName },
-        { type: '', label: 'IMEI', value: this.details?.imei },
-        { type: '', label: 'Device Serial', value: this.details?.serialNumber },
-        { type: '', label: 'SIM Serial', value: this.details?.simCardSerial },
-        { type: '', label: 'Status', value: this.details?.statusName },
+        { type: '', label: 'SIM ID', value: this.details?.id },
+        { type: '', label: 'SIM Serial', value: this.details?.serialNumber },
+        { type: '', label: 'SIM IMEI', value: this.details?.imei },
+        { type: '', label: 'SIM Type', value: this.details?.typeName },
+        { type: '', label: 'Provider', value: this.details?.providerName },
+        { type: '', label: 'Qouta', value: this.details?.qouta },
+        { type: '', label: 'Status', value: this.details?.deviceTypeName },
+        { type: '', label: 'Device Type', value: this.details?.statusName },
         {
           type: '',
           label: 'Errand Channel',
           value: this.details?.errandChannel,
         },
-        { type: '', label: 'Warehouse', value: this.details?.warehouse },
       ],
       [
         { type: '', label: 'Merchant Name', value: this.details?.merchantName },
@@ -65,19 +66,13 @@ export class DevicesDetailsComponent implements OnInit {
         { type: '', label: 'Address', value: this.details?.address },
       ],
       [
-        { type: '', label: 'Model Category', value: this.details?.category },
-        { type: '', label: 'Shipment ID', value: this.details?.shipmentId },
-        {
-          type: '',
-          label: 'Device Condition',
-          value: this.details?.conditionName,
-        },
         { type: 'date', label: 'Created At', value: this.details?.createDate },
         {
           type: 'date',
           label: 'Installed At',
           value: this.details?.installedAt,
         },
+        { type: '', label: 'Owner', value: this.details?.owner },
       ],
     ];
   }
@@ -87,13 +82,7 @@ export class DevicesDetailsComponent implements OnInit {
       name: this.details?.agent,
       phone: this.details?.agentPhone,
     });
-    this.details?.warehouseManagers?.forEach((user) => {
-      this.cards.push({
-        title: 'Warehouse Manager',
-        name: user.warehouseManager,
-        phone: user.warehouseManagerPhone,
-      });
-    });
+
     this.cards.push({
       title: 'Created By',
       name: this.details?.createdBy,
@@ -106,6 +95,6 @@ export class DevicesDetailsComponent implements OnInit {
     });
   }
   backToList() {
-    this.router.navigate(['main/inventory/devices/list']);
+    this.router.navigate(['main/inventory/simcards/list']);
   }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimcardsService } from '../../services/simcards.service';
 import { take } from 'rxjs';
+import { WarehousesService } from '../../services/warehouses.service';
 
 @Component({
   selector: 'app-simcards-form',
@@ -14,11 +15,16 @@ export class SimcardsFormComponent implements OnInit {
   details: any;
   id;
   formType = 'add';
+  statusesList = [];
+  warehousesList = [];
+  providersList = [];
+  typesList = [];
   constructor(
     private fb: FormBuilder,
     private service: SimcardsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private warehousesService: WarehousesService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -31,10 +37,68 @@ export class SimcardsFormComponent implements OnInit {
       }
     }
     this.form = this.fb.group({
-      nameEn: ['', [Validators.required]],
-
+      providerId: [null, [Validators.required]],
+      typeId: [null, [Validators.required]],
+      shipmentId: [null, [Validators.required]],
+      warehouseId: [null, [Validators.required]],
+      quota: [null, [Validators.required]],
+      serialNumber: [null, [Validators.required]],
+      imei: [null, [Validators.required]],
       id: [null],
     });
+    this.getLookupsDropdowns();
+  }
+  getLookupsDropdowns() {
+    this.getStatusDropDown();
+    this.getWarehouseDropDown();
+    this.getProviderDropDown();
+  }
+
+  getStatusDropDown() {
+    this.service
+      .getStatusDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.statusesList = resp.data;
+        }
+      });
+  }
+
+  getTypeDropDown(id) {
+    this.service
+      .getTypeDropDown(id)
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.typesList = resp.data;
+          if (this.formType == 'edit') {
+            this.form.get('typeId').setValue(this.details.typeId);
+          }
+        }
+      });
+  }
+
+  getWarehouseDropDown() {
+    this.warehousesService
+      .getAgentWarehouseDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.warehousesList = resp.data;
+        }
+      });
+  }
+
+  getProviderDropDown() {
+    this.service
+      .getProviderDropDown()
+      .pipe(take(1))
+      .subscribe((resp) => {
+        if (resp.success) {
+          this.providersList = resp.data;
+        }
+      });
   }
 
   getItemDetails() {
@@ -46,11 +110,22 @@ export class SimcardsFormComponent implements OnInit {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
+            this.form.get('providerId').setValue(this.details.providerId);
+            // this.getTypeDropDown(this.form.get('providerId').value);
             this.form.updateValueAndValidity();
           }
         }
       });
   }
+
+  onChangeProvider(event: any) {
+    this.typesList = [];
+    this.form.controls.typeId.setValue(null);
+    if (event) {
+      this.getTypeDropDown(event);
+    }
+  }
+
   get f() {
     return this.form.controls;
   }

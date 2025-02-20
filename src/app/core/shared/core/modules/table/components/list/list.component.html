@@ -298,7 +298,19 @@
                 {{ rowData[col.field] }}
               </a>
             </div>
-
+            <div *ngIf="col.customCell === 'navTo'">
+              <span
+                (click)="col.action(rowData)"
+                style="
+                  font-size: 14px;
+                  cursor: pointer;
+                  color: #2053a6;
+                  text-decoration: underline;
+                "
+              >
+                {{ rowData[col.field] }}
+              </span>
+            </div>
             <div style="font-size: 14px" *ngIf="col.customCell === 'percent'">
               {{ rowData[col.field] / 100 | percent }}
             </div>
