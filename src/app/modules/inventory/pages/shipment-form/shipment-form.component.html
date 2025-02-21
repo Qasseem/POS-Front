@@ -82,7 +82,7 @@
                       f.shipmentId?.errors?.required ||
                       f.shipmentId?.errors?.pattern
                   }"
-                  type="text"
+                  type="number"
                   pInputText
                   formControlName="shipmentId"
                 />
@@ -188,7 +188,7 @@
                   [formControlName]="ctrl?.name"
                   [optionValue]="'id'"
                   optionLabel="nameEn"
-                  (ngModelChange)="onSelectOption($event, ctrl?.name)"
+                  (onChange)="onSelectOption($event, ctrl?.name)"
                   filter="true"
                 />
                 <div
@@ -213,21 +213,25 @@
                 <input
                   [ngClass]="{
                     'ng-invalid ng-dirty':
-                      mf.qty?.errors?.required || mf.qty?.errors?.pattern
+                      mf.quantity?.errors?.required ||
+                      mf.quantity?.errors?.pattern
                   }"
                   type="number"
                   pInputText
-                  formControlName="qty"
+                  formControlName="quantity"
                 />
                 <div
-                  *ngIf="mf.qty.errors && (mf.qty.dirty || mf.qty.touched)"
+                  *ngIf="
+                    mf.quantity.errors &&
+                    (mf.quantity.dirty || mf.quantity.touched)
+                  "
                   class="invalid-feedback"
                 >
                   <div class="fs-10 color-red">
-                    <span *ngIf="mf.qty.errors.required">
+                    <span *ngIf="mf.quantity.errors.required">
                       QTY ID field is required
                     </span>
-                    <span *ngIf="mf.qty.errors.pattern">
+                    <span *ngIf="mf.quantity.errors.pattern">
                       Only English letters are allowed.
                     </span>
                   </div>
@@ -244,6 +248,7 @@
             [style]="{ width: '85px' }"
             size="small"
             label="Add"
+            (click)="addToModelTypes()"
             icon="pi pi-plus"
             [disabled]="!modelsForm.valid"
           />
@@ -252,7 +257,7 @@
           <div class="mt-3">
             <oc-list
               [clientSide]="true"
-              [data]="modeltypesList"
+              [data]="modeltypesFormList"
               [columnsI]="columns"
               [options]="{
                 check: false,

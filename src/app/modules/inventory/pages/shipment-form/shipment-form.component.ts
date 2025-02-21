@@ -25,45 +25,40 @@ export class ShipmentFormComponent implements OnInit {
   deviceConditionList = [];
   familiesList = [];
   modeltypeList = [];
-  modeltypesList = [];
+  modeltypesFormList = [];
   itemsFormControlsList = [
     {
-      name: 'family',
+      name: 'familyId',
       header: 'Inventory Family',
       data: this.familiesList,
     },
     {
-      name: 'category',
+      name: 'categoryId',
       header: 'Model Category',
       data: this.modelCategories,
     },
     {
-      name: 'modeltype',
+      name: 'modelTypeId',
       header: 'Model Type',
       data: this.modeltypeList,
     },
   ];
+  selectedModelType: any;
+  selectedFamily: any;
+  selectedCategory: any;
   constructor(
     private fb: FormBuilder,
     private service: ShipmentsService,
     private router: Router,
     private route: ActivatedRoute,
-    private modeltypesService: ModeltypesService,
     private warehousesService: WarehousesService
   ) {
     this.formType = this.route.snapshot.data.type;
-    this.modeltypesList.push({
-      id: 1,
-      family: 'Family 1',
-      category: 'Category 1',
-      modeltype: 'Model Type 1',
-      qty: 1,
-    });
   }
 
   public columns: ColumnsInterface[] = [
     {
-      field: 'id',
+      field: 'index',
       header: 'NO.',
       width: '50px',
     },
@@ -84,7 +79,7 @@ export class ShipmentFormComponent implements OnInit {
       width: '200px',
     },
     {
-      field: 'qty',
+      field: 'quantity',
       header: 'QTY',
       width: '200px',
     },
@@ -107,11 +102,10 @@ export class ShipmentFormComponent implements OnInit {
     });
 
     this.modelsForm = this.fb.group({
-      warehouseId: [null, [Validators.required]],
-      family: [null, [Validators.required]],
-      category: [null, [Validators.required]],
-      modeltype: [null, [Validators.required]],
-      qty: [null, [Validators.required]],
+      familyId: [null, [Validators.required]],
+      categoryId: [null, [Validators.required]],
+      modelTypeId: [null, [Validators.required]],
+      quantity: [null, [Validators.required]],
       id: [null],
     });
     this.getLookupsDropdowns();
@@ -121,8 +115,8 @@ export class ShipmentFormComponent implements OnInit {
     this.getFamilyDropDown();
   }
 
-  getCategoryDropDownByFamilyId(id) {
-    this.service
+  async getCategoryDropDownByFamilyId(id) {
+    await this.service
       .getCategoryDropDownByFamilyId(id)
       .pipe(take(1))
       .subscribe((resp) => {
@@ -153,8 +147,8 @@ export class ShipmentFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe((resp) => {
         if (resp.success) {
-          this.modeltypesList = resp.data;
-          this.itemsFormControlsList[2].data = [...this.modeltypesList];
+          this.modeltypeList = resp.data;
+          this.itemsFormControlsList[2].data = [...this.modeltypeList];
         }
       });
   }
@@ -186,15 +180,25 @@ export class ShipmentFormComponent implements OnInit {
   }
 
   onSelectOption(selectedOption: any, controlName: DDLControlType) {
-    if (selectedOption) {
-      switch (controlName) {
-        case DDLControlType.Family:
-          this.getCategoryDropDownByFamilyId(selectedOption);
-          break;
-        case DDLControlType.Category:
-          this.getModelTypeDropDownByCategoryId(selectedOption);
-          break;
-      }
+    if (!selectedOption) return;
+    switch (controlName) {
+      case DDLControlType.Family:
+        this.getCategoryDropDownByFamilyId(selectedOption?.value);
+        this.selectedFamily = this.familiesList.find(
+          (family) => family.id === selectedOption?.value
+        );
+        break;
+      case DDLControlType.Category:
+        this.getModelTypeDropDownByCategoryId(selectedOption?.value);
+        this.selectedCategory = this.modelCategories.find(
+          (category) => category.id === selectedOption?.value
+        );
+        break;
+      case DDLControlType.ModelType:
+        this.selectedModelType = this.modeltypeList.find(
+          (modelType) => modelType.id === selectedOption?.value
+        );
+        break;
     }
   }
   get f() {
@@ -210,6 +214,8 @@ export class ShipmentFormComponent implements OnInit {
       delete obj.id;
     }
     if (this.formType == 'add') {
+      let obj = this.form.value;
+      obj.shipmentDetails = this.modeltypesFormList;
       this.service
         .add(this.form.value)
         .pipe(take(1))
@@ -234,15 +240,59 @@ export class ShipmentFormComponent implements OnInit {
     }
   }
   backToList() {
-    this.router.navigate(['main/inventory/devices/list']);
+    this.router.navigate(['main/inventory/shipments/list']);
   }
-
+  addToModelTypes() {
+    this.modeltypesFormList.push({
+      family: this.selectedFamily?.nameEn,
+      category: this.selectedCategory?.nameEn,
+      modeltype: this.selectedModelType?.nameEn,
+      quantity: this.modelsForm.get('quantity').value,
+      familyId: this.selectedFamily?.id,
+      categoryId: this.selectedCategory?.id,
+      modelTypeId: this.selectedModelType?.id,
+    });
+    this.modelsForm.reset();
+    this.itemsFormControlsList[1].data = [];
+    this.itemsFormControlsList[2].data = [];
+    this.resolveModeltypesFormListIndex();
+  }
+  resolveModeltypesFormListIndex() {
+    this.modeltypesFormList.forEach((element, index) => {
+      element.index = index + 1;
+    });
+  }
   editmodel(model) {}
-  rowClickedAction(event) {}
+  async rowClickedAction(event) {
+    const index = this.modeltypesFormList.findIndex(
+      (item) =>
+        item.modelTypeId == event.rowData.modelTypeId &&
+        item.familyId == event.rowData.familyId &&
+        item.categoryId == event.rowData.categoryId &&
+        item.quantity == event.rowData.quantity
+    );
+    if (index !== -1) {
+      this.modeltypesFormList.splice(index, 1);
+    }
+    if (event.action == 'editForm') {
+      await this.getCategoryDropDownByFamilyId(event.rowData.familyId);
+      this.getModelTypeDropDownByCategoryId(event.rowData.categoryId);
+      this.selectedFamily = this.familiesList.find(
+        (family) => family.id === event.rowData.familyId
+      );
+      this.selectedCategory = this.modelCategories.find(
+        (category) => category.id === event.rowData.categoryId
+      );
+      this.selectedModelType = this.modeltypeList.find(
+        (modelType) => modelType.id === event.rowData.modelTypeId
+      );
+      this.modelsForm.patchValue(event.rowData);
+    }
+  }
 }
 
 export enum DDLControlType {
-  Family = 'family',
-  Category = 'category',
-  ModelType = 'modeltype',
+  Family = 'familyId',
+  Category = 'categoryId',
+  ModelType = 'modelTypeId',
 }
