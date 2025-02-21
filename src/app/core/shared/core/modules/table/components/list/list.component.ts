@@ -61,6 +61,7 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
   @Input() viewCustomPermission: ViewCustomPermission;
   @Input() service: any;
   @Input() modulePageName = '';
+  @Output() rowClickedAction = new EventEmitter();
   alive = true;
 
   displayBasic = false;
@@ -844,5 +845,8 @@ export class ListComponent implements OnInit, OnDestroy, OnChanges {
         rejectLabel: 'No, Cancel',
       });
     }
+  }
+  rowActionClicked(rowData, action) {
+    this.rowClickedAction.emit({ rowData, action });
   }
 }

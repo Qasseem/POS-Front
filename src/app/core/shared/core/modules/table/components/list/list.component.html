@@ -654,6 +654,27 @@
               <!-- <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon> -->
             </button>
             <button
+              *ngIf="options?.editForm"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="rowActionClicked(rowData, 'editForm')"
+            >
+              <oc-icon [icon]="'edit'" width="25px" height="25px"></oc-icon>
+            </button>
+            <button
+              *ngIf="options?.deleteForm"
+              style="cursor: pointer; margin-bottom: 7px"
+              type="button"
+              class="menu-btn mb-0"
+              (click)="rowActionClicked(rowData, 'deleteForm')"
+            >
+              <i
+                style="font-size: 1.2rem; color: #708090"
+                [class]="'pi pi-trash'"
+              ></i>
+            </button>
+            <button
               *ngIf="options?.hasActionMenu"
               type="button"
               pButton
@@ -701,6 +722,7 @@
         background-color: #fff;
         color: #344054;
         border: 1px solid #d0d5dd;
+        width: 120px;
       "
     >
       <i class="pi pi-arrow-left"></i>
