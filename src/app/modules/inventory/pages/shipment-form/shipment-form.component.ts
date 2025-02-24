@@ -6,6 +6,7 @@ import { ModeltypesService } from '../../services/modeltypes.service';
 import { WarehousesService } from '../../services/warehouses.service';
 import { take } from 'rxjs';
 import { ColumnsInterface } from 'src/app/core/shared/models/Interfaces';
+import { ExportExcelService } from 'src/app/modules/shared/Services/export-excel.service';
 
 @Component({
   selector: 'app-shipment-form',
@@ -51,7 +52,8 @@ export class ShipmentFormComponent implements OnInit {
     private service: ShipmentsService,
     private router: Router,
     private route: ActivatedRoute,
-    private warehousesService: WarehousesService
+    private warehousesService: WarehousesService,
+    private exportExcelService: ExportExcelService
   ) {
     this.formType = this.route.snapshot.data.type;
   }
@@ -288,6 +290,18 @@ export class ShipmentFormComponent implements OnInit {
       );
       this.modelsForm.patchValue(event.rowData);
     }
+  }
+  export() {
+    let obj = this.modeltypesFormList.map((item) => {
+      return {
+        ID: item.index,
+        Family: item.family,
+        Category: item.category,
+        Modeltype: item.modeltype,
+        Quantity: item.quantity,
+      };
+    });
+    this.exportExcelService.exportAsExcelFile(obj, 'Units');
   }
 }
 

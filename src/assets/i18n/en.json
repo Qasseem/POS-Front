@@ -225,6 +225,9 @@
     "types": "SIM type",
     "providers": "Provider",
     "qouta": "Qouta",
+    "supplier": "Supplier",
+    "shipmentId": "Shipment ID",
+    "shipmentDate": "Shipment Date",
     "": ""
   },
   "merchants": {

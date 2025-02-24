@@ -253,8 +253,20 @@
             [disabled]="!modelsForm.valid"
           />
         </div>
+        <div style="width: 100%" class="pl-4 pr-4">
+          <span style="font-size: 13px">Model Types And Items</span>
+          <p-button
+            label="Export"
+            class="float-right ml-3"
+            icon="pi pi-download"
+            size="small"
+            badgeClass="p-badge-contrast"
+            (click)="export()"
+            outlined="true"
+          />
+        </div>
         <div class="col-12 pl-4 pr-4">
-          <div class="mt-3">
+          <div class="mt-1">
             <oc-list
               [clientSide]="true"
               [data]="modeltypesFormList"
