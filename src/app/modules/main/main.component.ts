@@ -147,6 +147,13 @@ export class MainComponent implements OnInit {
           permission: [],
         },
         {
+          label: this.translateService.instant('Shipments'),
+          expanded: true,
+          routerLink: '/main/inventory/shipments/list',
+          active: false,
+          permission: [],
+        },
+        {
           label: this.translateService.instant('Transfer Custody'),
           expanded: true,
           routerLink: '/main/inventory/transfercustody/list',

@@ -46,8 +46,8 @@ export class SimcardsDetailsComponent implements OnInit {
         { type: '', label: 'SIM IMEI', value: this.details?.imei },
         { type: '', label: 'SIM Type', value: this.details?.typeName },
         { type: '', label: 'Provider', value: this.details?.providerName },
-        { type: '', label: 'Qouta', value: this.details?.qouta },
-        { type: '', label: 'Status', value: this.details?.deviceTypeName },
+        { type: '', label: 'Qouta', value: this.details?.quota },
+        { type: '', label: 'Status', value: this.details?.statusName },
         { type: '', label: 'Device Type', value: this.details?.statusName },
         {
           type: '',
@@ -86,7 +86,7 @@ export class SimcardsDetailsComponent implements OnInit {
     this.cards.push({
       title: 'Created By',
       name: this.details?.createdBy,
-      phone: this.details?.createdByPhone,
+      phone: this.details?.creatorPhone,
     });
     this.cards.push({
       title: 'Deployment Agent',

@@ -17,6 +17,9 @@ import { TransferCustodyFormComponent } from './pages/transfer-custody-form/tran
 import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
 import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-serial-warehouse/items-without-serial-warehouse.component';
 import { SimcardsDetailsComponent } from './pages/simcards-details/simcards-details.component';
+import { ShipmentListComponent } from './pages/shipment-list/shipment-list.component';
+import { ShipmentFormComponent } from './pages/shipment-form/shipment-form.component';
+import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
 
 const routes: Routes = [
   {
@@ -133,6 +136,33 @@ const routes: Routes = [
       {
         path: 'modeltypes/edit/:id',
         component: ModelTypesFormComponent,
+        data: {
+          type: 'edit',
+        },
+      },
+
+      //Shipment--------------------------------
+      {
+        path: 'shipments/list',
+        component: ShipmentListComponent,
+      },
+      {
+        path: 'shipments/add',
+        component: ShipmentFormComponent,
+        data: {
+          type: 'add',
+        },
+      },
+      {
+        path: 'shipments/edit/:id',
+        component: ShipmentFormComponent,
+        data: {
+          type: 'edit',
+        },
+      },
+      {
+        path: 'shipments/details/:id',
+        component: ShipmentDetailsComponent,
         data: {
           type: 'edit',
         },

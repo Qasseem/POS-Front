@@ -18,6 +18,9 @@ import { WarehousesListComponent } from './pages/warehouses-list/warehouses-list
 import { DevicesDetailsComponent } from './pages/devices-details/devices-details.component';
 import { ItemsWithoutSerialWarehouseComponent } from './pages/items-without-serial-warehouse/items-without-serial-warehouse.component';
 import { SimcardsDetailsComponent } from './pages/simcards-details/simcards-details.component';
+import { ShipmentDetailsComponent } from './pages/shipment-details/shipment-details.component';
+import { ShipmentFormComponent } from './pages/shipment-form/shipment-form.component';
+import { ShipmentListComponent } from './pages/shipment-list/shipment-list.component';
 
 @NgModule({
   imports: [CommonModule, InventoryRoutingModule, SharedModule],
@@ -38,6 +41,9 @@ import { SimcardsDetailsComponent } from './pages/simcards-details/simcards-deta
     DevicesDetailsComponent,
     ItemsWithoutSerialWarehouseComponent,
     SimcardsDetailsComponent,
+    ShipmentDetailsComponent,
+    ShipmentFormComponent,
+    ShipmentListComponent,
   ],
 })
 export class InventoryModule {}

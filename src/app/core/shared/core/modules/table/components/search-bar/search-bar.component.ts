@@ -421,6 +421,10 @@ export class SearchBarComponent implements OnInit, OnChanges, AfterViewInit {
     this.InputSearch$.pipe(debounceTime(700), distinctUntilChanged()).subscribe(
       (searchValue) => {
         this.emitSearchKeyValue.emit(searchValue);
+        if (this.url.refScope && this.url.refId) {
+          this.tableCoreService.refId = parseInt(this.url.refId);
+          this.tableCoreService.refScope = this.url.refScope;
+        }
 
         this.tableCoreService.pageOptions.searchKey = searchValue;
         this.tableCoreService.pageOptions.isSearchFilter = false;
