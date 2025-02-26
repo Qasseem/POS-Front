@@ -228,6 +228,7 @@
     "supplier": "Supplier",
     "shipmentId": "Shipment ID",
     "shipmentDate": "Shipment Date",
+    "simIMEI": "SIM IMEI",
     "": ""
   },
   "merchants": {
