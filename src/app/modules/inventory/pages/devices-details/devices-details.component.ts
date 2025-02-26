@@ -84,8 +84,8 @@ export class DevicesDetailsComponent implements OnInit {
   prepareCardsData() {
     this.cards.push({
       title: 'Owner',
-      name: this.details?.agent,
-      phone: this.details?.agentPhone,
+      name: this.details?.owner,
+      phone: this.details?.ownerPhone,
     });
     this.details?.warehouseManagers?.forEach((user) => {
       this.cards.push({
@@ -97,7 +97,7 @@ export class DevicesDetailsComponent implements OnInit {
     this.cards.push({
       title: 'Created By',
       name: this.details?.createdBy,
-      phone: this.details?.createdByPhone,
+      phone: this.details?.creatorPhone,
     });
     this.cards.push({
       title: 'Deployment Agent',

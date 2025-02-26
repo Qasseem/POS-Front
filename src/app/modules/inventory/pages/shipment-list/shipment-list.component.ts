@@ -161,20 +161,20 @@ export class ShipmentListComponent implements OnInit {
   //     customPermission: (row: any) => this.showBlock,
   //   },
   // ];
-  public gridActionsList: ActionsInterface[] = [
-    {
-      name: 'Bulk Add',
-      icon: 'pi pi-file-plus',
-      permission: 'inventory-shipments-add',
-      call: (row: any) => this.bulkAdd(row),
-      type: ActionsTypeEnum.File,
-      uploadFileData: {
-        url: '/Shipment/import',
-        header: 'Upload Bulk Shipments',
-        templateName: 'Import Add Shipment Template.xlsx',
-      },
-    },
-  ];
+  // public gridActionsList: ActionsInterface[] = [
+  //   {
+  //     name: 'Bulk Add',
+  //     icon: 'pi pi-file-plus',
+  //     permission: 'inventory-shipments-add',
+  //     call: (row: any) => this.bulkAdd(row),
+  //     type: ActionsTypeEnum.File,
+  //     uploadFileData: {
+  //       url: '/Shipment/import',
+  //       header: 'Upload Bulk Shipments',
+  //       templateName: 'Import Add Shipment Template.xlsx',
+  //     },
+  //   },
+  // ];
   bulkAdd(row: any): any {}
   showBlock = true;
   showEdit = true;

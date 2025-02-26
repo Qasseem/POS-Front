@@ -291,9 +291,9 @@ export class DevicesListComponent implements OnInit {
       call: (row: any) => this.bulkAdd(row),
       type: ActionsTypeEnum.File,
       uploadFileData: {
-        url: '/Device/importToUpdate',
+        url: '/Device/ImportToUpdate',
         header: 'Update Bulk Devices',
-        templateName: 'Import Update Device Template.xlsx',
+        templateName: 'Import Update Device.xlsx',
       },
     },
     {
@@ -309,7 +309,7 @@ export class DevicesListComponent implements OnInit {
       },
     },
     {
-      name: 'Import to fill data',
+      name: 'Import To Configure',
       icon: 'pi pi-desktop',
       permission: 'inventory-devices-add',
       call: (row: any) => this.bulkAdd(row),
@@ -317,7 +317,7 @@ export class DevicesListComponent implements OnInit {
       uploadFileData: {
         url: '/Device/ImportToConfigure',
         header: 'Import To Configure',
-        templateName: 'Import Fill Device Template.xlsx',
+        templateName: 'Import Configure Device Template.xlsx',
       },
     },
   ];

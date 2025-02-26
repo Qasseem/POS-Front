@@ -201,7 +201,7 @@ export class SimcardsListComponent implements OnInit {
       call: (row: any) => this.bulkAdd(row),
       type: ActionsTypeEnum.File,
       uploadFileData: {
-        url: '/warehouse/importToUpdate',
+        url: '/simcard/ImportToUpdate',
         header: 'Update Bulk SIMCards',
         templateName: 'Import Update SIMCard Template.xlsx',
       },

@@ -85,7 +85,7 @@ export class ShipmentDetailsComponent implements OnInit {
     this.cards.push({
       title: 'Created By',
       name: this.details?.creator,
-      phone: this.details?.createdByPhone,
+      phone: this.details?.creatorPhone,
     });
   }
   backToList() {
