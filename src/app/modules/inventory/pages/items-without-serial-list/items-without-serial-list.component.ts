@@ -54,9 +54,7 @@ export class ItemsWithoutSerialListComponent implements OnInit {
     this.showEdit = this.authService.hasPermission(
       'inventory-items-without-serial-edit'
     );
-    this.tableBtns.showImport = this.authService.hasPermission(
-      'inventory-items-without-serial-add'
-    );
+
     this.showWarehouseStock = this.authService.hasPermission(
       'inventory-items-without-serial-warehousestock'
     );
@@ -191,7 +189,7 @@ export class ItemsWithoutSerialListComponent implements OnInit {
       type: ActionsTypeEnum.File,
       uploadFileData: {
         url: '/ItemWithoutSerial/import',
-        header: 'Upload Bulk Warehouses',
+        header: 'Upload Bulk Items Without Serial',
         templateName: 'Import Item Without Serial Template.xlsx',
       },
     },

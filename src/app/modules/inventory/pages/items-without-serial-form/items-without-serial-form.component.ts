@@ -60,7 +60,7 @@ export class ItemsWithoutSerialFormComponent implements OnInit {
           this.details = resp.data;
           if (this.details) {
             this.form.patchValue(this.details);
-            this.form.controls['name'].setValue(this.details.categoryName);
+            this.form.controls['name'].setValue(this.details.modelTypeName);
             this.form.updateValueAndValidity();
           }
         }

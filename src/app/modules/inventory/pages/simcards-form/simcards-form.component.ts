@@ -39,7 +39,7 @@ export class SimcardsFormComponent implements OnInit {
     this.form = this.fb.group({
       providerId: [null, [Validators.required]],
       typeId: [null, [Validators.required]],
-      shipmentId: [null, [Validators.required]],
+      shipmentId: [null],
       warehouseId: [null, [Validators.required]],
       quota: [null, [Validators.required]],
       serialNumber: [null, [Validators.required]],

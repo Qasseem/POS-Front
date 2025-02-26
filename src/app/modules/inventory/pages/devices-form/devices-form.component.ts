@@ -47,7 +47,7 @@ export class DevicesFormComponent implements OnInit {
       modelTypeId: [null, [Validators.required]],
       conditionId: [null, [Validators.required]],
       errandChannelId: [null, [Validators.required]],
-      shipmentId: [null, [Validators.required]],
+      shipmentId: [null],
       warehouseId: [null, [Validators.required]],
       serialNumber: [null, [Validators.required]],
       imei: [null, [Validators.required]],

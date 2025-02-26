@@ -583,8 +583,15 @@ export class SearchBarComponent implements OnInit, OnChanges, AfterViewInit {
           const message = 'Import Completed Successfully';
           this.toaster.showSuccess(message);
           this.getListData.next(true);
+          if (resp.data) {
+            this.downloadFile(resp.data);
+          }
         }
       });
+  }
+
+  downloadFile(url: string): void {
+    window.open(url, '_blank');
   }
 
   customFilter(value: any, filter: string): boolean {
