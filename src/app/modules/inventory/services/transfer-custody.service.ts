@@ -5,7 +5,7 @@ import { HttpService } from 'src/app/core/http/http.service';
   providedIn: 'root',
 })
 export class TransferCustodyService {
-  controllerName = '/Device';
+  controllerName = '/transfer';
   constructor(private http: HttpService) {}
   add(data) {
     return this.http.postReq(this.controllerName + '/Add', data);
@@ -21,5 +21,26 @@ export class TransferCustodyService {
 
   Block(data) {
     return this.http.postReq(this.controllerName + '/Block', data);
+  }
+
+  getModelTypeDetails(data) {
+    return this.http.postReq(this.controllerName + '/ModelTypeDetails', data);
+  }
+
+  getModelTypeDropDown(id) {
+    return this.http.getHeaderReq(
+      this.controllerName + '/GetModelTypeDropDown',
+      id
+    );
+  }
+
+  getCategoryDropDown(id) {
+    return this.http.getHeaderReq(
+      this.controllerName + '/GetCategoryDropDown',
+      id
+    );
+  }
+  getModelFamilyDropDown() {
+    return this.http.getReq(this.controllerName + '/GetModelFamilyDropDown');
   }
 }
